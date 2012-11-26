@@ -5,6 +5,7 @@
 package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.PlantController;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -32,6 +33,21 @@ public class ParserTest {
     }
     MockController plantController;
 
+    private class MockRenderer implements TextRenderer {
+        private ArrayList<String> strings;
+        public MockRenderer() {
+            strings = new ArrayList<String>();
+        }
+        public void output(String s) {
+            strings.add(s);
+        }
+        public void hasOnly(String expected) {
+            assertEquals(1, strings.size());
+            assertEquals(expected, strings.get(0));
+        }
+    }
+    MockRenderer renderer;
+    
     public ParserTest() {
     }
 
@@ -46,6 +62,7 @@ public class ParserTest {
     @Before
     public void setUp() {
         plantController = new MockController();
+        renderer = new MockRenderer();
     }
 
     @After
@@ -53,9 +70,24 @@ public class ParserTest {
     }
 
     @Test
-    public void testTBD() {
-        Parser p = new Parser(plantController);
-        p.parseCommand("movecontrolrods 50%");
+    public void shouldMoveControlRods() {
+        Parser p = new Parser(plantController, renderer);
+        p.parseCommand("movecontrolrods 50");
         assertEquals(50, plantController.controlRodPosition());
+    }
+    
+    @Test
+    public void wrongCommandShouldNotMoveControlRods() {
+        Parser p = new Parser(plantController, renderer);
+        plantController.moveControlRods(37);
+        p.parseCommand("don'tmovecontrolrods 50");
+        assertEquals(37, plantController.controlRodPosition());
+    }
+    
+    @Test
+    public void wrongCommandShouldDisplayErrorMessage() {
+        Parser p = new Parser(plantController, renderer);
+        p.parseCommand("flibble 50");
+        renderer.hasOnly("Error: Unknown command 'flibble'");
     }
 }

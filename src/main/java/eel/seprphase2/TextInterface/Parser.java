@@ -13,12 +13,20 @@ import eel.seprphase2.Simulator.PlantController;
 public class Parser {
 
     private PlantController controller;
+    private TextRenderer renderer;
 
-    Parser(PlantController plantController) {
-        controller = plantController;
+    Parser(PlantController controller, TextRenderer renderer) {
+        this.controller = controller;
+        this.renderer = renderer;
     }
 
     void parseCommand(String command) {
-        String[] words = command.spli(" ");
+        String[] words = command.split(" ");
+        if (words[0].equals("movecontrolrods")) {
+            controller.moveControlRods(Integer.parseInt(words[1]));
+        } else {
+            renderer.output("Error: Unknown command '" + words[0] + "'");
+        }
+
     }
 }

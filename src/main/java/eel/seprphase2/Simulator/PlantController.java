@@ -10,4 +10,5 @@ package eel.seprphase2.Simulator;
  */
 public interface PlantController {
     public void moveControlRods(int position);
+    public int controlRodPosition();
 }

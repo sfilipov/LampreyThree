@@ -18,35 +18,8 @@ import static org.junit.Assert.*;
  * @author david
  */
 public class ParserTest {
-
-    private class MockController implements PlantController {
-
-        public int position;
-
-        public void moveControlRods(int position) {
-            this.position = position;
-        }
-
-        public int controlRodPosition() {
-            return position;
-        }
-    }
     MockController plantController;
-
-    private class MockRenderer implements TextRenderer {
-        private ArrayList<String> strings;
-        public MockRenderer() {
-            strings = new ArrayList<String>();
-        }
-        public void output(String s) {
-            strings.add(s);
-        }
-        public void hasOnly(String expected) {
-            assertEquals(1, strings.size());
-            assertEquals(expected, strings.get(0));
-        }
-    }
-    MockRenderer renderer;
+    MockRenderer textRenderer;
     
     public ParserTest() {
     }
@@ -62,7 +35,7 @@ public class ParserTest {
     @Before
     public void setUp() {
         plantController = new MockController();
-        renderer = new MockRenderer();
+        textRenderer = new MockRenderer();
     }
 
     @After
@@ -71,14 +44,14 @@ public class ParserTest {
 
     @Test
     public void shouldMoveControlRods() {
-        Parser p = new Parser(plantController, renderer);
+        Parser p = new Parser(plantController, textRenderer);
         p.parseCommand("movecontrolrods 50");
         assertEquals(50, plantController.controlRodPosition());
     }
     
     @Test
     public void wrongCommandShouldNotMoveControlRods() {
-        Parser p = new Parser(plantController, renderer);
+        Parser p = new Parser(plantController, textRenderer);
         plantController.moveControlRods(37);
         p.parseCommand("don'tmovecontrolrods 50");
         assertEquals(37, plantController.controlRodPosition());
@@ -86,8 +59,27 @@ public class ParserTest {
     
     @Test
     public void wrongCommandShouldDisplayErrorMessage() {
-        Parser p = new Parser(plantController, renderer);
+        Parser p = new Parser(plantController, textRenderer);
         p.parseCommand("flibble 50");
-        renderer.hasOnly("Error: Unknown command 'flibble'");
+        textRenderer.hasOnly("Error: Unknown command 'flibble'");
     }
+    
+    @Test
+    public void shouldNotAcceptControlRodsAbove100() {
+        Parser p = new Parser(plantController, textRenderer);
+        plantController.moveControlRods(37);
+        p.parseCommand("movecontrolrods 101");
+        assertEquals(37, plantController.position);
+        textRenderer.hasOnly("Error: Cannot move control rods above 100");
+    }
+    
+    @Test
+    public void shouldNotAcceptControlRodsBelow0() {
+        Parser p = new Parser(plantController, textRenderer);
+        plantController.moveControlRods(37);
+        p.parseCommand("movecontrolrods -1");
+        assertEquals(37, plantController.position);
+        textRenderer.hasOnly("Error: Cannot move control rods below 0");
+    }
+    
 }

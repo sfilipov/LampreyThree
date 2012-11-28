@@ -29,6 +29,11 @@ public class PercentageTest {
         Percentage p = new Percentage(-1);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldNotAllowConstructionFromMalformedString() {
+        Percentage p = new Percentage("asdga");
+    }
+
     @Test
     public void ratioConversionShouldWork() {
         Percentage p = new Percentage(57);

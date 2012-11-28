@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.TextInterface;
 
+import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Percentage;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -18,47 +19,25 @@ import org.junit.Ignore;
  * @author Yazidi
  */
 public class TextInterfaceTest {
-
-    MockController plantController;
-    MockRenderer textRenderer;
-    MockReader textReader;
-
-    public TextInterfaceTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-        plantController = new MockController();
-        textRenderer = new MockRenderer();
-        textReader = new MockReader();
-    }
-
-    @After
-    public void tearDown() {
-    }
+    
+    private MockController plantController = new MockController();
+    private MockStatus plantStatus = new MockStatus();
+    private MockRenderer textRenderer = new MockRenderer();
+    private MockReader textReader = new MockReader();
+    private final TextInterface textInterface =
+                                new TextInterface(plantController, plantStatus, textRenderer, textReader);
 
     @Test
     public void shouldShowStatus() {
-        TextInterface ti = new TextInterface(plantController, textRenderer, textReader);
-        plantController.moveControlRods(new Percentage(37));
-        ti.showStatus();
+        plantStatus.controlRodPosition = new Percentage(37);
+        textInterface.showStatus();
         textRenderer.hasOnly("Control Rod Position: 37%");
     }
 
     @Test
     public void shouldProcessACommand() {
-        TextInterface ti = new TextInterface(plantController, textRenderer, textReader);
-        plantController.moveControlRods(null);
         textReader.giveLine("movecontrolrods 50");
-        ti.processCommand();
-        assertEquals(new Percentage(50), plantController.controlRodPosition());
+        textInterface.processCommand();
+        assertEquals(new Percentage(50), plantController.controlRodPosition);
     }
 }

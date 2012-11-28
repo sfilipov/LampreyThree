@@ -14,5 +14,4 @@ public interface PlantController {
 
     public void moveControlRods(Percentage extracted);
 
-    public Percentage controlRodPosition();
 }

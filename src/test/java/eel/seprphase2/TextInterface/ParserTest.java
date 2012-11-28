@@ -47,7 +47,7 @@ public class ParserTest {
     public void shouldMoveControlRods() {
         Parser p = new Parser(plantController, textRenderer);
         p.parseCommand("movecontrolrods 50");
-        assertEquals(new Percentage(50), plantController.controlRodPosition());
+        assertEquals(new Percentage(50), plantController.controlRodPosition);
     }
     
     @Test
@@ -55,7 +55,7 @@ public class ParserTest {
         Parser p = new Parser(plantController, textRenderer);
         plantController.moveControlRods(new Percentage(37));
         p.parseCommand("don'tmovecontrolrods 50");
-        assertEquals(new Percentage(37), plantController.controlRodPosition());
+        assertEquals(new Percentage(37), plantController.controlRodPosition);
     }
     
     @Test
@@ -70,7 +70,7 @@ public class ParserTest {
         Parser p = new Parser(plantController, textRenderer);
         plantController.moveControlRods(new Percentage(37));
         p.parseCommand("movecontrolrods 101");
-        assertEquals(new Percentage(37), plantController.controlRodPosition());
+        assertEquals(new Percentage(37), plantController.controlRodPosition);
         textRenderer.hasOnly("Error: '101' is not a valid percentage.");
     }
     
@@ -79,7 +79,7 @@ public class ParserTest {
         Parser p = new Parser(plantController, textRenderer);
         plantController.moveControlRods(new Percentage(37));
         p.parseCommand("movecontrolrods -1");
-        assertEquals(new Percentage(37), plantController.controlRodPosition());
+        assertEquals(new Percentage(37), plantController.controlRodPosition);
         textRenderer.hasOnly("Error: '-1' is not a valid percentage.");
     }
     

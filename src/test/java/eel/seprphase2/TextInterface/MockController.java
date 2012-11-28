@@ -12,14 +12,10 @@ import eel.seprphase2.Utilities.Percentage;
  * @author Yazidi
  */
 class MockController implements PlantController {
-    public Percentage position;
+    public Percentage controlRodPosition;
 
     public void moveControlRods(Percentage extracted) {
-        this.position = extracted;
+        this.controlRodPosition = extracted;
     }
 
-    public Percentage controlRodPosition() {
-        return position;
-    }
-    
 }

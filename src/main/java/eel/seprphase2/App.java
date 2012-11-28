@@ -17,7 +17,7 @@ public class App {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();
         Reactor r = new Reactor();
-        TextInterface ti = new TextInterface(r, renderer, reader);
+        TextInterface ti = new TextInterface(r, r, renderer, reader);
         while (true) {
             ti.showStatus();
             ti.processCommand();

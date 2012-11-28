@@ -5,6 +5,8 @@
 package eel.seprphase2.Simulator;
 
 import eel.seprphase2.Utilities.Percentage;
+import eel.seprphase2.Utilities.Pressure;
+import eel.seprphase2.Utilities.Temperature;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -17,6 +19,7 @@ import static org.junit.Assert.*;
  * @author Yazidi
  */
 public class ReactorTest {
+    private final Reactor reactor = new Reactor();
     
     public ReactorTest() {
     }
@@ -38,16 +41,29 @@ public class ReactorTest {
     }
 
     @Test
-    public void controlRodsShouldMove() {
-        Reactor r = new Reactor();
-        r.moveControlRods(new Percentage(50));
-        assertEquals(new Percentage(50), r.controlRodPosition());
+    public void controlRodsShouldStartAt0Percent() {
+        assertEquals(new Percentage(0), reactor.controlRodPosition());
     }
     
     @Test
-    public void shouldHaveWaterLevel() {
-        Reactor r = new Reactor();
-        r.waterLevel();
+    public void controlRodsShouldMove() {
+        reactor.moveControlRods(new Percentage(50));
+        assertEquals(new Percentage(50), reactor.controlRodPosition());
+    }
+    
+    @Test
+    public void initialWaterLevelShouldBe100() {
+        assertEquals(new Percentage(100), reactor.waterLevel());
+    }
+    
+    @Test
+    public void initialTemperatureShouldBe25Degrees() {
+        assertEquals(new Temperature(25), reactor.temperature());
+    }
+    
+    @Test
+    public void initialPressureShouldBe() {
+        assertEquals(new Pressure(101325), reactor.pressure());
     }
     
 }

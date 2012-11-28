@@ -17,25 +17,6 @@ import static org.junit.Assert.*;
  * @author david
  */
 public class TerminalReaderTest {
-    
-    public TerminalReaderTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     private void setInputToString(String s) {
         System.setIn(new ByteArrayInputStream(s.getBytes()));

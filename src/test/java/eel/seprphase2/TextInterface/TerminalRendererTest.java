@@ -18,28 +18,13 @@ import static org.junit.Assert.*;
  * @author david
  */
 public class TerminalRendererTest {
-    
+
     private ByteArrayOutputStream outContent;
-    
-    public TerminalRendererTest() {
-    }
-    
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
+
     @Before
     public void setUp() {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**

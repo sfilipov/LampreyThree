@@ -21,5 +21,4 @@ public interface PlantStatus {
     public Temperature temperature();
 
     public Percentage waterLevel();
-    
 }

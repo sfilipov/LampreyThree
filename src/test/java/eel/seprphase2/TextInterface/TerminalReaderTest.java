@@ -5,12 +5,8 @@
 package eel.seprphase2.TextInterface;
 
 import java.io.ByteArrayInputStream;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -21,8 +17,7 @@ public class TerminalReaderTest {
     private void setInputToString(String s) {
         System.setIn(new ByteArrayInputStream(s.getBytes()));
     }
-    
-    
+
     /**
      * Test of readLine method, of class TerminalReader.
      */
@@ -32,5 +27,4 @@ public class TerminalReaderTest {
         setInputToString("test line\n");
         assertEquals("test line", tr.readLine());
     }
-    
 }

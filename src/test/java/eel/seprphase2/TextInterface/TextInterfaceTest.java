@@ -25,14 +25,12 @@ import org.junit.runner.RunWith;
 public class TextInterfaceTest {
 
     private final Mockery context = new JUnit4Mockery();
-    private final PlantController plantController = context
-            .mock(PlantController.class);
+    private final PlantController plantController = context.mock(PlantController.class);
     private final PlantStatus plantStatus = context.mock(PlantStatus.class);
     private final TextRenderer textRenderer = context.mock(TextRenderer.class);
-    private final LineReader textReader = context.mock(LineReader.class);
-    private final TextInterface textInterface =
-                                new TextInterface(plantController, plantStatus,
-                                                  textRenderer, textReader);
+    private final LineReader lineReader = context.mock(LineReader.class);
+    private final TextInterface textInterface = new TextInterface(plantController, plantStatus,
+                                                                  textRenderer, lineReader);
 
     @Test
     public void shouldShowStatus() {
@@ -47,14 +45,15 @@ public class TextInterfaceTest {
                 will(returnValue(new Pressure(101325)));
                 allowing(plantStatus).waterLevel();
                 will(returnValue(new Percentage(100)));
-                
+
                 oneOf(textRenderer).outputLine("Control Rod Position: 37%");
                 inSequence(lines);
                 oneOf(textRenderer).outputLine("Reactor Temperature: 25 degrees C");
                 inSequence(lines);
-                oneOf(textRenderer).outputLine("Reactor Pressure: 1 atm"); inSequence(lines);
-                oneOf(textRenderer).outputLine("Water Level: 100%"); inSequence(lines);
-
+                oneOf(textRenderer).outputLine("Reactor Pressure: 1 atm");
+                inSequence(lines);
+                oneOf(textRenderer).outputLine("Water Level: 100%");
+                inSequence(lines);
             }
         });
         textInterface.showStatus();
@@ -64,7 +63,7 @@ public class TextInterfaceTest {
     public void shouldProcessACommand() {
         context.checking(new Expectations() {
             {
-                oneOf(textReader).readLine();
+                oneOf(lineReader).readLine();
                 will(returnValue("movecontrolrods 50"));
                 oneOf(plantController).moveControlRods(new Percentage(50));
             }

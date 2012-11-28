@@ -13,5 +13,4 @@ import eel.seprphase2.Utilities.Percentage;
 public interface PlantController {
 
     public void moveControlRods(Percentage extracted);
-
 }

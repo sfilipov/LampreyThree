@@ -11,20 +11,20 @@ package eel.seprphase2.Utilities;
 public class Temperature {
 
     private int degreesCelsius;
-    
+
     public Temperature(int degreesCelsius) {
         this.degreesCelsius = degreesCelsius;
     }
-    
+
     int degreesCelsius() {
         return this.degreesCelsius;
     }
-    
+
     @Override
     public String toString() {
         return degreesCelsius + " degrees C";
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -39,10 +39,9 @@ public class Temperature {
         }
         return true;
     }
-    
+
     @Override
     public int hashCode() {
         return this.degreesCelsius;
     }
-
 }

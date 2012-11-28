@@ -4,7 +4,6 @@ import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.TextInterface.TerminalReader;
 import eel.seprphase2.TextInterface.TerminalRenderer;
 import eel.seprphase2.TextInterface.TextInterface;
-import java.io.DataInputStream;
 import java.io.IOException;
 
 /**

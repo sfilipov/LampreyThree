@@ -14,15 +14,15 @@ public class Pressure {
 
     private static final double pascalsPerAtmosphere = 101325;
     private int pascals;
-    
+
     public Pressure(int pascals) {
         this.pascals = pascals;
     }
-    
+
     public int pascals() {
         return this.pascals;
     }
-    
+
     public double atmospheres() {
         return this.pascals / pascalsPerAtmosphere;
     }
@@ -32,7 +32,7 @@ public class Pressure {
         DecimalFormat form = new DecimalFormat("#.###");
         return form.format(atmospheres()) + " atm";
     }
-    
+
     @Override
     public int hashCode() {
         return this.pascals;
@@ -52,5 +52,4 @@ public class Pressure {
         }
         return true;
     }
-    
 }

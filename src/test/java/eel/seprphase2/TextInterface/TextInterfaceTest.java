@@ -7,8 +7,11 @@ package eel.seprphase2.TextInterface;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Percentage;
+import eel.seprphase2.Utilities.Pressure;
+import eel.seprphase2.Utilities.Temperature;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
+import org.jmock.Sequence;
 import org.jmock.integration.junit4.JMock;
 import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Test;
@@ -35,9 +38,23 @@ public class TextInterfaceTest {
     public void shouldShowStatus() {
         context.checking(new Expectations() {
             {
+                final Sequence lines = context.sequence("lines");
                 allowing(plantStatus).controlRodPosition();
                 will(returnValue(new Percentage(37)));
+                allowing(plantStatus).temperature();
+                will(returnValue(new Temperature(25)));
+                allowing(plantStatus).pressure();
+                will(returnValue(new Pressure(101325)));
+                allowing(plantStatus).waterLevel();
+                will(returnValue(new Percentage(100)));
+                
                 oneOf(textRenderer).outputLine("Control Rod Position: 37%");
+                inSequence(lines);
+                oneOf(textRenderer).outputLine("Reactor Temperature: 25 degrees C");
+                inSequence(lines);
+                oneOf(textRenderer).outputLine("Reactor Pressure: 1 atm"); inSequence(lines);
+                oneOf(textRenderer).outputLine("Water Level: 100%"); inSequence(lines);
+
             }
         });
         textInterface.showStatus();

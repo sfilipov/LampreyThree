@@ -30,7 +30,7 @@ public class Pressure {
     @Override
     public String toString() {
         DecimalFormat form = new DecimalFormat("#.###");
-        return form.format(atmospheres()) + "atm";
+        return form.format(atmospheres()) + " atm";
     }
     
     @Override

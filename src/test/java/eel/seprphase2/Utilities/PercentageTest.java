@@ -132,4 +132,22 @@ public class PercentageTest {
         assertFalse(p1.hashCode() == p2.hashCode());
     }
     
+    @Test
+    public void shouldNotBeEqualToNull() {
+        Percentage p1 = new Percentage(57);
+        assertFalse(p1.equals(null));
+    }
+    
+    @Test
+    public void shouldNotBeEqualToWeirdThing() {
+        Percentage p1 = new Percentage(57);
+        assertFalse(p1.equals((Object)(new String("hello"))));
+    }
+    
+    @Test
+    public void shouldBeEqualToPercentageAsObject() {
+        Percentage p1 = new Percentage(57);
+        assertTrue(p1.equals((Object)(new Percentage(57))));
+    }
+    
 }

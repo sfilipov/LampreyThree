@@ -49,18 +49,23 @@ public class Percentage {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return (obj instanceof Percentage) &&
-               equals((Percentage)obj);
-    }
-
-    public boolean equals(Percentage other) {
-        return this.percentagePoints == other.percentagePoints;
+    public int hashCode() {
+        return this.percentagePoints;
     }
 
     @Override
-    public int hashCode() {
-        return this.percentagePoints;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Percentage other = (Percentage)obj;
+        if (this.percentagePoints != other.percentagePoints) {
+            return false;
+        }
+        return true;
     }
 
     public static boolean isValidPercentage(int points) {

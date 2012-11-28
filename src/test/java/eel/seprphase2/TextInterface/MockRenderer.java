@@ -19,7 +19,8 @@ class MockRenderer implements TextRenderer {
         strings = new ArrayList<String>();
     }
 
-    public void output(String s) {
+    @Override
+    public void outputLine(String s) {
         strings.add(s);
     }
 

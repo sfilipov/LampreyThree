@@ -9,5 +9,5 @@ package eel.seprphase2.TextInterface;
  * @author Yazidi
  */
 interface TextRenderer {
-    public void output(String s);
+    public void outputLine(String s);
 }

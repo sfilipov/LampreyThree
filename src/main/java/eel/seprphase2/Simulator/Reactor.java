@@ -8,7 +8,7 @@ package eel.seprphase2.Simulator;
  *
  * @author Yazidi
  */
-public class Reactor {
+public class Reactor implements PlantController {
 
     private int controlRodPosition;
     

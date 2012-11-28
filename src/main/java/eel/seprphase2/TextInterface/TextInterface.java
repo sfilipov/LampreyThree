@@ -20,9 +20,13 @@ public class TextInterface {
         this.textRenderer = textRenderer;
     }
 
-    public void begin() {
-        textRenderer.output("Control Rod Position: " +
-                            plantController.controlRodPosition() +
-                            "\n");
+    public void showStatus() {
+        textRenderer.outputLine("Control Rod Position: " +
+                            plantController.controlRodPosition());
+    }
+
+    public void processCommand(String command) {
+        Parser parser = new Parser(plantController, textRenderer);
+        parser.parseCommand(command);
     }
 }

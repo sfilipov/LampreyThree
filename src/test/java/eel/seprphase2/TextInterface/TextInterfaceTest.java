@@ -43,10 +43,19 @@ public class TextInterfaceTest {
     }
 
     @Test
-    public void shouldShowStatusOnStartup() {
+    public void shouldShowStatus() {
         TextInterface ti = new TextInterface(plantController, textRenderer);
         plantController.moveControlRods(37);
-        ti.begin();
-        textRenderer.hasOnly("Control Rod Position: 37\n");
+        ti.showStatus();
+        textRenderer.hasOnly("Control Rod Position: 37");
     }
+    
+    @Test
+    public void shouldProcessACommand() {
+        TextInterface ti = new TextInterface(plantController, textRenderer);
+        plantController.moveControlRods(38);
+        ti.processCommand("movecontrolrods 50");
+        assertEquals(50, plantController.controlRodPosition());
+    }
+    
 }

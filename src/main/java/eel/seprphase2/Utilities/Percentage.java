@@ -43,10 +43,25 @@ public class Percentage {
         return this.percentagePoints / 100.0;
     }
     
+    @Override
     public String toString() {
         return percentagePoints + "%";
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        return (obj instanceof Percentage) &&
+               equals((Percentage)obj);
+    }
+    
+    public boolean equals(Percentage other) {
+        return this.percentagePoints == other.percentagePoints;
+    }
+    
+    @Override
+    public int hashCode() {
+        return this.percentagePoints;
+    }
     
     
     public static boolean isValidPercentage(int points) {
@@ -75,5 +90,5 @@ public class Percentage {
         }
         return Integer.parseInt(m.group(1));
     }
-    
+        
 }

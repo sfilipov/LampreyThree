@@ -4,13 +4,8 @@
  */
 package eel.seprphase2.Utilities;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Ignore;
 
 /**
  *
@@ -107,6 +102,34 @@ public class PercentageTest {
     public void formattingToStringShouldWork() {
         Percentage p = new Percentage(57);
         assertEquals("57%", p.toString());
+    }
+    
+    @Test
+    public void equalPercentagesShouldBeEqual() {
+        Percentage p1 = new Percentage(57);
+        Percentage p2 = new Percentage(57);
+        assertTrue(p1.equals(p2));
+    }
+    
+    @Test
+    public void unequalPercentagesShouldBeUnequal() {
+        Percentage p1 = new Percentage(57);
+        Percentage p2 = new Percentage(58);
+        assertFalse(p1.equals(p2));
+    }
+    
+    @Test
+    public void equalPercentagesShouldHaveEqualHashCodes() {
+        Percentage p1 = new Percentage(57);
+        Percentage p2 = new Percentage(57);
+        assertEquals(p1.hashCode(), p2.hashCode());
+    }
+    
+    @Test
+    public void unequalPercentagesShouldHaveUnequalHashCodes() {
+        Percentage p1 = new Percentage(57);
+        Percentage p2 = new Percentage(58);
+        assertFalse(p1.hashCode() == p2.hashCode());
     }
     
 }

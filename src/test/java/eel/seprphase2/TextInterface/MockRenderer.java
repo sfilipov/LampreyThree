@@ -29,4 +29,8 @@ class MockRenderer implements TextRenderer {
         assertEquals(expected, strings.get(0));
     }
     
+    public void hasNone() {
+        assertEquals(0, strings.size());
+    }
+    
 }

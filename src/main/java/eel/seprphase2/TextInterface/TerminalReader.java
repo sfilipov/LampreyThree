@@ -23,9 +23,9 @@ public class TerminalReader implements LineReader {
         try {
             line = br.readLine();
         } catch (IOException ex) {
-            Logger.getLogger(TerminalReader.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TerminalReader.class.getName()).log(Level.SEVERE,
+                                                                 null, ex);
         }
         return line;
     }
-    
 }

@@ -5,19 +5,20 @@
 package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Utilities.Percentage;
 
 /**
  *
  * @author Yazidi
  */
 class MockController implements PlantController {
-    public int position;
+    public Percentage position;
 
-    public void moveControlRods(int position) {
-        this.position = position;
+    public void moveControlRods(Percentage extracted) {
+        this.position = extracted;
     }
 
-    public int controlRodPosition() {
+    public Percentage controlRodPosition() {
         return position;
     }
     

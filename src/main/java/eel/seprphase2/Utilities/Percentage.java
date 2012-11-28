@@ -28,7 +28,7 @@ public class Percentage {
     }
 
     public Percentage(double ratio) {
-        this((int) round(ratio * 100));
+        this((int)round(ratio * 100));
     }
 
     public Percentage(String representation) {
@@ -42,28 +42,27 @@ public class Percentage {
     public double ratio() {
         return this.percentagePoints / 100.0;
     }
-    
+
     @Override
     public String toString() {
         return percentagePoints + "%";
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         return (obj instanceof Percentage) &&
                equals((Percentage)obj);
     }
-    
+
     public boolean equals(Percentage other) {
         return this.percentagePoints == other.percentagePoints;
     }
-    
+
     @Override
     public int hashCode() {
         return this.percentagePoints;
     }
-    
-    
+
     public static boolean isValidPercentage(int points) {
         return points <= 100 && points >= 0;
     }
@@ -73,9 +72,6 @@ public class Percentage {
                isValidPercentage(pointsFromString(representation));
     }
 
-    
-    
-    
     private static boolean isWellFormedPercentage(String representation) {
         Matcher m = pattern.matcher(representation);
         return m.matches();
@@ -84,11 +80,11 @@ public class Percentage {
     private static int pointsFromString(String representation) {
         Matcher m = pattern.matcher(representation);
         if (!m.matches()) {
-            throw new IllegalArgumentException("The string '" +
-                                               representation +
-                                               "' is not a well-formed percentage.");
+            throw new IllegalArgumentException(
+                    "The string '" +
+                    representation +
+                    "' is not a well-formed percentage.");
         }
         return Integer.parseInt(m.group(1));
     }
-        
 }

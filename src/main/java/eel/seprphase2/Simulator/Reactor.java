@@ -4,23 +4,25 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Utilities.Percentage;
+
 /**
  *
  * @author Yazidi
  */
 public class Reactor implements PlantController {
 
-    private int controlRodPosition;
-    
-    public void moveControlRods(int position) {
-        if (position > 100 || position < 0) {
-            throw new IllegalArgumentException();
-        }
-        this.controlRodPosition = position;
+    private Percentage controlRodPosition;
+
+    public void moveControlRods(Percentage extracted) {
+        this.controlRodPosition = extracted;
     }
-    
-    public int controlRodPosition() {
+
+    public Percentage controlRodPosition() {
         return this.controlRodPosition;
     }
 
+    public Percentage waterLevel() {
+        return new Percentage(50);
+    }
 }

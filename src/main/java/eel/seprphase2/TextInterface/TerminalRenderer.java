@@ -14,5 +14,4 @@ public class TerminalRenderer implements TextRenderer {
     public void outputLine(String s) {
         System.out.println(s);
     }
-    
 }

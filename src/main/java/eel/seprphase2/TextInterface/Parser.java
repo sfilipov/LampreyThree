@@ -5,6 +5,7 @@
 package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Utilities.Percentage;
 
 /**
  *
@@ -24,18 +25,18 @@ public class Parser {
         String[] words = command.split(" ");
         if (words[0].equals("movecontrolrods")) {
             if (words.length != 2) {
-                renderer.outputLine("Error: wrong number of arguments to command '" +
-                                command + "'");
+                renderer
+                        .outputLine("Error: wrong number of arguments to command '" +
+                                    command + "'");
                 return;
             }
-            int position = Integer.parseInt(words[1]);
-            if (position > 100) {
-                renderer.outputLine("Error: Cannot move control rods above 100");
-            } else if (position < 0) {
-                renderer.outputLine("Error: Cannot move control rods below 0");
-            } else {
-                controller.moveControlRods(position);
+            if (!Percentage.isValidPercentage(words[1])) {
+                renderer.outputLine("Error: '" +
+                                    words[1] +
+                                    "' is not a valid percentage.");
+                return;
             }
+            controller.moveControlRods(new Percentage(words[1]));
         } else {
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
         }

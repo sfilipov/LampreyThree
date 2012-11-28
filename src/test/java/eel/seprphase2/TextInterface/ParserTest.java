@@ -5,6 +5,7 @@
 package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Utilities.Percentage;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -46,15 +47,15 @@ public class ParserTest {
     public void shouldMoveControlRods() {
         Parser p = new Parser(plantController, textRenderer);
         p.parseCommand("movecontrolrods 50");
-        assertEquals(50, plantController.controlRodPosition());
+        assertEquals(new Percentage(50), plantController.controlRodPosition());
     }
     
     @Test
     public void wrongCommandShouldNotMoveControlRods() {
         Parser p = new Parser(plantController, textRenderer);
-        plantController.moveControlRods(37);
+        plantController.moveControlRods(new Percentage(37));
         p.parseCommand("don'tmovecontrolrods 50");
-        assertEquals(37, plantController.controlRodPosition());
+        assertEquals(new Percentage(37), plantController.controlRodPosition());
     }
     
     @Test
@@ -67,19 +68,19 @@ public class ParserTest {
     @Test
     public void shouldNotAcceptControlRodsAbove100() {
         Parser p = new Parser(plantController, textRenderer);
-        plantController.moveControlRods(37);
+        plantController.moveControlRods(new Percentage(37));
         p.parseCommand("movecontrolrods 101");
-        assertEquals(37, plantController.position);
-        textRenderer.hasOnly("Error: Cannot move control rods above 100");
+        assertEquals(new Percentage(37), plantController.controlRodPosition());
+        textRenderer.hasOnly("Error: '101' is not a valid percentage.");
     }
     
     @Test
     public void shouldNotAcceptControlRodsBelow0() {
         Parser p = new Parser(plantController, textRenderer);
-        plantController.moveControlRods(37);
+        plantController.moveControlRods(new Percentage(37));
         p.parseCommand("movecontrolrods -1");
-        assertEquals(37, plantController.position);
-        textRenderer.hasOnly("Error: Cannot move control rods below 0");
+        assertEquals(new Percentage(37), plantController.controlRodPosition());
+        textRenderer.hasOnly("Error: '-1' is not a valid percentage.");
     }
     
     @Test

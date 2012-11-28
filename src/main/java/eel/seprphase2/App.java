@@ -11,10 +11,9 @@ import java.io.IOException;
  * Hello world!
  *
  */
-public class App 
-{
-    public static void main( String[] args ) throws IOException
-    {
+public class App {
+
+    public static void main(String[] args) throws IOException {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();
         Reactor r = new Reactor();

@@ -4,11 +4,15 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Utilities.Percentage;
+
 /**
  *
  * @author david
  */
 public interface PlantController {
-    public void moveControlRods(int position);
-    public int controlRodPosition();
+
+    public void moveControlRods(Percentage extracted);
+
+    public Percentage controlRodPosition();
 }

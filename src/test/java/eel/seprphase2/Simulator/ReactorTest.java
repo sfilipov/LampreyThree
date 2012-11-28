@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Utilities.Percentage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -39,20 +40,14 @@ public class ReactorTest {
     @Test
     public void controlRodsShouldMove() {
         Reactor r = new Reactor();
-        r.moveControlRods(50);
-        assertEquals(50, r.controlRodPosition());
+        r.moveControlRods(new Percentage(50));
+        assertEquals(new Percentage(50), r.controlRodPosition());
     }
     
-    @Test(expected=IllegalArgumentException.class)
-    public void cannotMoveControlRodsAbove100() {
+    @Test
+    public void shouldHaveWaterLevel() {
         Reactor r = new Reactor();
-        r.moveControlRods(101);
-    }
-
-    @Test(expected=IllegalArgumentException.class)
-    public void cannotMoveControlRodsBelow0() {
-        Reactor r = new Reactor();
-        r.moveControlRods(-1);
+        r.waterLevel();
     }
     
 }

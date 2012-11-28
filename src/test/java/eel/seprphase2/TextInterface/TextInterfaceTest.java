@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.TextInterface;
 
+import eel.seprphase2.Utilities.Percentage;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -47,17 +48,17 @@ public class TextInterfaceTest {
     @Test
     public void shouldShowStatus() {
         TextInterface ti = new TextInterface(plantController, textRenderer, textReader);
-        plantController.moveControlRods(37);
+        plantController.moveControlRods(new Percentage(37));
         ti.showStatus();
-        textRenderer.hasOnly("Control Rod Position: 37");
+        textRenderer.hasOnly("Control Rod Position: 37%");
     }
 
     @Test
     public void shouldProcessACommand() {
         TextInterface ti = new TextInterface(plantController, textRenderer, textReader);
-        plantController.moveControlRods(38);
+        plantController.moveControlRods(null);
         textReader.giveLine("movecontrolrods 50");
         ti.processCommand();
-        assertEquals(50, plantController.controlRodPosition());
+        assertEquals(new Percentage(50), plantController.controlRodPosition());
     }
 }

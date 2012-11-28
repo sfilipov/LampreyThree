@@ -34,6 +34,6 @@ public class TerminalRendererTest {
     public void testOutput() {
         TerminalRenderer tr = new TerminalRenderer();
         tr.outputLine("Test message");
-        assertEquals("Test message\n", outContent.toString());
+        assertEquals("Test message" + System.getProperty("line.separator"), outContent.toString());
     }
 }

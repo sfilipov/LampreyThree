@@ -20,6 +20,7 @@ public class TextInterfaceTest {
 
     MockController plantController;
     MockRenderer textRenderer;
+    MockReader textReader;
 
     public TextInterfaceTest() {
     }
@@ -36,6 +37,7 @@ public class TextInterfaceTest {
     public void setUp() {
         plantController = new MockController();
         textRenderer = new MockRenderer();
+        textReader = new MockReader();
     }
 
     @After
@@ -44,18 +46,18 @@ public class TextInterfaceTest {
 
     @Test
     public void shouldShowStatus() {
-        TextInterface ti = new TextInterface(plantController, textRenderer);
+        TextInterface ti = new TextInterface(plantController, textRenderer, textReader);
         plantController.moveControlRods(37);
         ti.showStatus();
         textRenderer.hasOnly("Control Rod Position: 37");
     }
-    
+
     @Test
     public void shouldProcessACommand() {
-        TextInterface ti = new TextInterface(plantController, textRenderer);
+        TextInterface ti = new TextInterface(plantController, textRenderer, textReader);
         plantController.moveControlRods(38);
-        ti.processCommand("movecontrolrods 50");
+        textReader.giveLine("movecontrolrods 50");
+        ti.processCommand();
         assertEquals(50, plantController.controlRodPosition());
     }
-    
 }

@@ -14,19 +14,23 @@ public class TextInterface {
 
     private PlantController plantController;
     private TextRenderer textRenderer;
+    private LineReader lineReader;
 
-    public TextInterface(PlantController plantController, TextRenderer textRenderer) {
+    public TextInterface(PlantController plantController,
+                         TextRenderer textRenderer,
+                         LineReader lineReader) {
         this.plantController = plantController;
         this.textRenderer = textRenderer;
+        this.lineReader = lineReader;
     }
 
     public void showStatus() {
         textRenderer.outputLine("Control Rod Position: " +
-                            plantController.controlRodPosition());
+                                plantController.controlRodPosition());
     }
 
-    public void processCommand(String command) {
+    public void processCommand() {
         Parser parser = new Parser(plantController, textRenderer);
-        parser.parseCommand(command);
+        parser.parseCommand(lineReader.readLine());
     }
 }

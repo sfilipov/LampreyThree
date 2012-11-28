@@ -82,4 +82,11 @@ public class ParserTest {
         textRenderer.hasOnly("Error: Cannot move control rods below 0");
     }
     
+    @Test
+    public void wrongNumberOfArgumentsShouldCauseAnError() {
+        Parser p = new Parser(plantController, textRenderer);
+        p.parseCommand("movecontrolrods");
+        textRenderer.hasOnly("Error: wrong number of arguments to command 'movecontrolrods'");
+    }
+    
 }

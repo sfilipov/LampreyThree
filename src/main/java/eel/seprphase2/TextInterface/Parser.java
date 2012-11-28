@@ -23,16 +23,21 @@ public class Parser {
     void parseCommand(String command) {
         String[] words = command.split(" ");
         if (words[0].equals("movecontrolrods")) {
+            if (words.length != 2) {
+                renderer.outputLine("Error: wrong number of arguments to command '" +
+                                command + "'");
+                return;
+            }
             int position = Integer.parseInt(words[1]);
             if (position > 100) {
-                renderer.output("Error: Cannot move control rods above 100");
+                renderer.outputLine("Error: Cannot move control rods above 100");
             } else if (position < 0) {
-                renderer.output("Error: Cannot move control rods below 0");
+                renderer.outputLine("Error: Cannot move control rods below 0");
             } else {
                 controller.moveControlRods(position);
             }
         } else {
-            renderer.output("Error: Unknown command '" + words[0] + "'");
+            renderer.outputLine("Error: Unknown command '" + words[0] + "'");
         }
     }
 }

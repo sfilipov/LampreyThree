@@ -10,33 +10,44 @@ import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import org.jmock.Expectations;
-import org.jmock.Mockery;
 import org.jmock.Sequence;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.auto.Auto;
+import org.jmock.auto.Mock;
+import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  *
  * @author Yazidi
  */
-@RunWith(JMock.class)
 public class TextInterfaceTest {
 
-    private final Mockery context = new JUnit4Mockery();
-    private final PlantController plantController = context.mock(PlantController.class);
-    private final PlantStatus plantStatus = context.mock(PlantStatus.class);
-    private final TextRenderer textRenderer = context.mock(TextRenderer.class);
-    private final LineReader lineReader = context.mock(LineReader.class);
-    private final TextInterface textInterface = new TextInterface(plantController, plantStatus,
-                                                                  textRenderer, lineReader);
+    @Rule
+    public final JUnitRuleMockery context = new JUnitRuleMockery();
+    @Mock
+    private PlantController plantController;
+    @Mock
+    private PlantStatus plantStatus;
+    @Mock
+    private TextRenderer textRenderer;
+    @Mock
+    private LineReader lineReader;
+    @Auto
+    private Sequence lines;
+    private TextInterface textInterface;
+
+    @Before
+    public void setup() {
+        textInterface = new TextInterface(plantController, plantStatus,
+                                          textRenderer, lineReader);
+    }
 
     @Test
     public void shouldShowStatus() {
         context.checking(new Expectations() {
             {
-                final Sequence lines = context.sequence("lines");
                 allowing(plantStatus).controlRodPosition();
                 will(returnValue(new Percentage(37)));
                 allowing(plantStatus).temperature();

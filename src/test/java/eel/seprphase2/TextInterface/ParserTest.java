@@ -7,25 +7,30 @@ package eel.seprphase2.TextInterface;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
 import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JMock;
-import org.jmock.integration.junit4.JUnit4Mockery;
+import org.jmock.auto.Mock;
+import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  *
  * @author david
  */
-@RunWith(JMock.class)
 public class ParserTest {
 
-    private final Mockery context = new JUnit4Mockery();
-    private final PlantController plantController = context
-            .mock(PlantController.class);
-    private final TextRenderer textRenderer = context.mock(TextRenderer.class);
-    private final Parser parser =
-                         new Parser(plantController, textRenderer);
+    @Rule
+    public final JUnitRuleMockery context = new JUnitRuleMockery();
+    @Mock
+    private PlantController plantController;
+    @Mock
+    private TextRenderer textRenderer;
+    private Parser parser;
+
+    @Before
+    public void setup() {
+        parser = new Parser(plantController, textRenderer);
+    }
 
     @Test
     public void shouldMoveControlRods() {

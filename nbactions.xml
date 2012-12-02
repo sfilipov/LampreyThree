@@ -8,10 +8,10 @@
         </goals>
     </action>
     <action>
-            <actionName>CUSTOM-Generate JavaNCSS Report</actionName>
-            <displayName>Generate JavaNCSS Report</displayName>
-            <goals>
-                <goal>javancss:report</goal>
-            </goals>
-        </action>
+        <actionName>CUSTOM-Generate JavaNCSS Report</actionName>
+        <displayName>Generate JavaNCSS Report</displayName>
+        <goals>
+            <goal>javancss:report</goal>
+        </goals>
+    </action>
 </actions>

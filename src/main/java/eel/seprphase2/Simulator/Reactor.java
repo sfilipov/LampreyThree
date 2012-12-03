@@ -7,6 +7,7 @@ package eel.seprphase2.Simulator;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
+import static eel.seprphase2.Simulator.PhysicalConstants.*;
 
 /**
  *
@@ -19,9 +20,6 @@ public class Reactor implements PlantController, PlantStatus {
     private int steamMass;
     private Temperature temperature;
     private Pressure pressure;
-    private final int specificHeatOfWater = 4181;
-    private final int latentHeatOfWater = 2260000;
-    private double gasConstant = 8.314;
     private final int maximumWaterMass = 1000;
     private final double volume = 2; // cubic metres
 

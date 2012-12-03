@@ -15,11 +15,12 @@ public class App {
     public static void main(String[] args) throws IOException {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();
-        Reactor r = new Reactor();
-        TextInterface ti = new TextInterface(r, r, renderer, reader);
+        Reactor reactor = new Reactor();
+        TextInterface ti = new TextInterface(reactor, reactor, renderer, reader);
         while (true) {
             ti.showStatus();
             ti.processCommand();
+            reactor.step();
         }
     }
 }

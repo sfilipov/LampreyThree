@@ -20,11 +20,11 @@ public class Temperature {
         this.degreesKelvin = degreesKelvin;
     }
     
-    double degreesCelsius() {
+    public double degreesCelsius() {
         return this.degreesKelvin - kelvinOffset;
     }
 
-    double degreesKelvin() {
+    public double degreesKelvin() {
         return this.degreesKelvin;
     }
     

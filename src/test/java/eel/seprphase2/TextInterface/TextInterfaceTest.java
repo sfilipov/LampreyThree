@@ -47,7 +47,7 @@ public class TextInterfaceTest {
                 allowing(plantStatus).controlRodPosition();
                 will(returnValue(new Percentage(37)));
                 allowing(plantStatus).temperature();
-                will(returnValue(new Temperature(25)));
+                will(returnValue(new Temperature(350)));
                 allowing(plantStatus).pressure();
                 will(returnValue(new Pressure(101325)));
                 allowing(plantStatus).waterLevel();
@@ -55,7 +55,7 @@ public class TextInterfaceTest {
 
                 oneOf(textRenderer).outputLine("Control Rod Position: 37%");
                 inSequence(lines);
-                oneOf(textRenderer).outputLine("Reactor Temperature: 25 degrees C");
+                oneOf(textRenderer).outputLine("Reactor Temperature: 76.85 degrees C");
                 inSequence(lines);
                 oneOf(textRenderer).outputLine("Reactor Pressure: 1 atm");
                 inSequence(lines);

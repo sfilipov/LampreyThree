@@ -20,13 +20,13 @@ public class TemperatureTest {
     private final Temperature temperature = new Temperature(786);
 
     @Test
-    public void degreesCelsisusShouldBeUnchanged() {
-        assertEquals(786, temperature.degreesCelsius());
+    public void degreesKelvinShouldBeUnchanged() {
+        assertEquals(786, temperature.degreesKelvin(), 0.00001);
     }
 
     @Test
     public void shouldConvertToStringWithUnits() {
-        assertEquals("786 degrees C", temperature.toString());
+        assertEquals("512.85 degrees C", temperature.toString());
     }
 
     @Test

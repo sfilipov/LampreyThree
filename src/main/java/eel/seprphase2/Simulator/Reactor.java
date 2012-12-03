@@ -14,10 +14,25 @@ import eel.seprphase2.Utilities.Temperature;
  */
 public class Reactor implements PlantController, PlantStatus {
 
-    private Percentage controlRodPosition = new Percentage(0);
-    private Percentage waterLevel = new Percentage(100);
-    private Temperature temperature = new Temperature(25);
-    private Pressure pressure = new Pressure(101325);
+    private Percentage controlRodPosition;
+    private Percentage waterLevel;
+    private Temperature temperature;
+    private Pressure pressure;
+
+    public Reactor() {
+        controlRodPosition = new Percentage(0);
+        waterLevel = new Percentage(100);
+        temperature = new Temperature(350);
+        pressure = new Pressure(101325);
+    }
+
+    public Reactor(Percentage controlRodPosition, Percentage waterLevel,
+                   Temperature temperature, Pressure pressure) {
+        this.controlRodPosition = controlRodPosition;
+        this.waterLevel = waterLevel;
+        this.temperature = temperature;
+        this.pressure = pressure;
+    }
 
     @Override
     public void moveControlRods(Percentage extracted) {
@@ -42,5 +57,8 @@ public class Reactor implements PlantController, PlantStatus {
     @Override
     public Pressure pressure() {
         return this.pressure;
+    }
+
+    public void step() {
     }
 }

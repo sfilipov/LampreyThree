@@ -4,25 +4,34 @@
  */
 package eel.seprphase2.Utilities;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author david
  */
 public class Temperature {
 
-    private int degreesCelsius;
+    static private final double kelvinOffset = 273.15;
+    
+    private double degreesKelvin;
 
-    public Temperature(int degreesCelsius) {
-        this.degreesCelsius = degreesCelsius;
+    public Temperature(double degreesKelvin) {
+        this.degreesKelvin = degreesKelvin;
+    }
+    
+    double degreesCelsius() {
+        return this.degreesKelvin - kelvinOffset;
     }
 
-    int degreesCelsius() {
-        return this.degreesCelsius;
+    double degreesKelvin() {
+        return this.degreesKelvin;
     }
-
+    
     @Override
     public String toString() {
-        return degreesCelsius + " degrees C";
+        DecimalFormat form = new DecimalFormat("#.###");
+        return form.format(degreesCelsius()) + " degrees C";
     }
 
     @Override
@@ -34,7 +43,7 @@ public class Temperature {
             return false;
         }
         final Temperature other = (Temperature)obj;
-        if (this.degreesCelsius != other.degreesCelsius) {
+        if (this.degreesKelvin != other.degreesKelvin) {
             return false;
         }
         return true;
@@ -42,6 +51,6 @@ public class Temperature {
 
     @Override
     public int hashCode() {
-        return this.degreesCelsius;
+        return (int)this.degreesKelvin;
     }
 }

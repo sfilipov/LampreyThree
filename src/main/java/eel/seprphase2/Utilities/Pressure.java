@@ -13,29 +13,28 @@ import java.text.DecimalFormat;
 public class Pressure {
 
     private static final double pascalsPerAtmosphere = 101325;
-    private int pascals;
+    private final double pascals;
 
-    public Pressure(int pascals) {
+    public Pressure(double pascals) {
         this.pascals = pascals;
     }
 
-    public int pascals() {
+    public double inPascals() {
         return this.pascals;
     }
 
-    public double atmospheres() {
+    public double inAtmospheres() {
         return this.pascals / pascalsPerAtmosphere;
     }
 
     @Override
     public String toString() {
-        DecimalFormat form = new DecimalFormat("#.###");
-        return form.format(atmospheres()) + " atm";
+        return Format.toThreeDecimalPlaces(inAtmospheres()) + " atm";
     }
 
     @Override
     public int hashCode() {
-        return this.pascals;
+        return (int)this.pascals;
     }
 
     @Override

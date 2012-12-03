@@ -21,7 +21,7 @@ public class TemperatureTest {
 
     @Test
     public void degreesKelvinShouldBeUnchanged() {
-        assertEquals(786, temperature.degreesKelvin(), 0.00001);
+        assertEquals(786, temperature.inKelvin(), 0.00001);
     }
 
     @Test

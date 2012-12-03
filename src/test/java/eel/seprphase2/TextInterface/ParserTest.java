@@ -8,7 +8,7 @@ import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
+import static eel.seprphase2.Utilities.Units.percent;
 /**
  *
  * @author david
@@ -32,7 +32,7 @@ public class ParserTest {
     public void shouldMoveControlRods() {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).moveControlRods(new Percentage(50));
+                oneOf(plantController).moveControlRods(percent(50));
             }
         });
         parser.parseCommand("movecontrolrods 50");

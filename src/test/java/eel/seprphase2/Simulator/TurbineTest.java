@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static eel.seprphase2.Utilities.Units.*;
 
 /**
  *
@@ -40,16 +41,16 @@ public class TurbineTest {
     @Test
     public void noPressureDeltaEqualsNoPower() {
         Turbine turbine = new Turbine();
-        turbine.setInputPressure(new Pressure(0));
-        turbine.setOutputPressure(new Pressure(0));
+        turbine.setInputPressure(pascals(0));
+        turbine.setOutputPressure(pascals(0));
         assertEquals(0, turbine.outputPower());
     }
     
     @Test
     public void somePressureDeltaGeneratesPower() {
         Turbine turbine = new Turbine();
-        turbine.setInputPressure(new Pressure(101325));
-        turbine.setOutputPressure(new Pressure(0));
+        turbine.setInputPressure(pascals(101325));
+        turbine.setOutputPressure(pascals(0));
         
     }
     

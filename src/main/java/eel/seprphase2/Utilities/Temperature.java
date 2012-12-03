@@ -14,24 +14,23 @@ public class Temperature {
 
     static private final double kelvinOffset = 273.15;
     
-    private double degreesKelvin;
+    private final double degreesKelvin;
 
     public Temperature(double degreesKelvin) {
         this.degreesKelvin = degreesKelvin;
     }
     
-    public double degreesCelsius() {
+    public double inCelsius() {
         return this.degreesKelvin - kelvinOffset;
     }
 
-    public double degreesKelvin() {
+    public double inKelvin() {
         return this.degreesKelvin;
     }
     
     @Override
     public String toString() {
-        DecimalFormat form = new DecimalFormat("#.###");
-        return form.format(degreesCelsius()) + " degrees C";
+        return Format.toThreeDecimalPlaces(inCelsius()) + " degrees C";
     }
 
     @Override

@@ -35,7 +35,7 @@ public class Percentage {
         this(pointsFromString(representation));
     }
 
-    public int percentagePoints() {
+    public int points() {
         return this.percentagePoints;
     }
 

@@ -13,12 +13,12 @@ public class PressureTest {
 
     @Test
     public void shouldNotAlterPascals() {
-        assertEquals(434900, pressure.pascals());
+        assertEquals(434900, pressure.inPascals(), 0.5);
     }
 
     @Test
     public void shouldConvertToAtmospheres() {
-        assertEquals(4.29213, pressure.atmospheres(), 0.00005);
+        assertEquals(4.29213, pressure.inAtmospheres(), 0.00005);
     }
 
     @Test

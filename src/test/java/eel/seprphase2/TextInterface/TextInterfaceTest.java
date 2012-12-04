@@ -2,6 +2,7 @@ package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
+import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
@@ -46,12 +47,14 @@ public class TextInterfaceTest {
             {
                 allowing(plantStatus).controlRodPosition();
                 will(returnValue(new Percentage(37)));
-                allowing(plantStatus).temperature();
+                allowing(plantStatus).reactorTemperature();
                 will(returnValue(new Temperature(350)));
-                allowing(plantStatus).pressure();
+                allowing(plantStatus).reactorPressure();
                 will(returnValue(new Pressure(101325)));
-                allowing(plantStatus).waterLevel();
+                allowing(plantStatus).reactorWaterLevel();
                 will(returnValue(new Percentage(100)));
+                allowing(plantStatus).energyGenerated();
+                will(returnValue(new Energy(0)));
 
                 oneOf(textRenderer).outputLine("Control Rod Position: 37%");
                 inSequence(lines);
@@ -60,6 +63,8 @@ public class TextInterfaceTest {
                 oneOf(textRenderer).outputLine("Reactor Pressure: 1 atm");
                 inSequence(lines);
                 oneOf(textRenderer).outputLine("Water Level: 100%");
+                inSequence(lines);
+                oneOf(textRenderer).outputLine("Energy Generated: 0 J");
                 inSequence(lines);
             }
         });

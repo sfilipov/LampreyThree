@@ -30,7 +30,7 @@ public class Energy {
 
     @Override
     public String toString() {
-        return Format.toThreeDecimalPlaces(joules) + "J";
+        return Format.toThreeDecimalPlaces(joules) + " J";
     }
 
     @Override

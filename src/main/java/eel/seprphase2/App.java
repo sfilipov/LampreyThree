@@ -1,5 +1,6 @@
 package eel.seprphase2;
 
+import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.TextInterface.TerminalReader;
 import eel.seprphase2.TextInterface.TerminalRenderer;
@@ -15,12 +16,12 @@ public class App {
     public static void main(String[] args) throws IOException {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();
-        Reactor reactor = new Reactor();
-        TextInterface ti = new TextInterface(reactor, reactor, renderer, reader);
+        PhysicalModel physicalModel = new PhysicalModel();
+        TextInterface ti = new TextInterface(physicalModel, physicalModel, renderer, reader);
         while (true) {
             ti.showStatus();
             ti.processCommand();
-            reactor.step();
+            physicalModel.step(1);
         }
     }
 }

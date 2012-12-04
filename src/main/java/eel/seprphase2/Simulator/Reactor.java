@@ -18,7 +18,7 @@ import eel.seprphase2.Utilities.Volume;
  *
  * @author Yazidi
  */
-public class Reactor implements PlantController, PlantStatus {
+public class Reactor {
 
     private FuelPile fuelPile = new FuelPile();
     private Mass waterMass;
@@ -45,27 +45,22 @@ public class Reactor implements PlantController, PlantStatus {
         this.pressure = pressure;
     }
 
-    @Override
     public void moveControlRods(Percentage extracted) {
         fuelPile.moveControlRods(extracted);
     }
 
-    @Override
     public Percentage controlRodPosition() {
         return fuelPile.controlRodPosition();
     }
 
-    @Override
     public Percentage waterLevel() {
         return new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
     }
 
-    @Override
     public Temperature temperature() {
         return this.temperature;
     }
 
-    @Override
     public Pressure pressure() {
         return this.pressure;
     }

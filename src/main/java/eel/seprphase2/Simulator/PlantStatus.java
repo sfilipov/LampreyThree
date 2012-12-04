@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
@@ -16,9 +17,11 @@ public interface PlantStatus {
 
     public Percentage controlRodPosition();
 
-    public Pressure pressure();
+    public Pressure reactorPressure();
 
-    public Temperature temperature();
+    public Temperature reactorTemperature();
 
-    public Percentage waterLevel();
+    public Percentage reactorWaterLevel();
+    
+    public Energy energyGenerated();
 }

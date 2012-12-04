@@ -30,7 +30,7 @@ public class PhysicalModelTest {
         PhysicalModel model = new PhysicalModel();
         model.moveControlRods(percent(100));
         model.step(100);
-        assertThat(model.outputEnergy().inJoules(), greaterThan(0.0));
+        assertThat(model.energyGenerated().inJoules(), greaterThan(0.0));
     }
     
 }

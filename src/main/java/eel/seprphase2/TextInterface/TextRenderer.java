@@ -8,7 +8,7 @@ package eel.seprphase2.TextInterface;
  *
  * @author Yazidi
  */
-interface TextRenderer {
+public interface TextRenderer {
 
     public void outputLine(String s);
 }

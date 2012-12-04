@@ -32,9 +32,10 @@ public class TextInterface {
         textRenderer.outputLine("Control Rod Position: " +
                                 plantStatus.controlRodPosition());
         textRenderer.outputLine("Reactor Temperature: " + plantStatus
-                .temperature());
-        textRenderer.outputLine("Reactor Pressure: " + plantStatus.pressure());
-        textRenderer.outputLine("Water Level: " + plantStatus.waterLevel());
+                .reactorTemperature());
+        textRenderer.outputLine("Reactor Pressure: " + plantStatus.reactorPressure());
+        textRenderer.outputLine("Water Level: " + plantStatus.reactorWaterLevel());
+        textRenderer.outputLine("Energy Generated: " + plantStatus.energyGenerated());
     }
 
     public void processCommand() {

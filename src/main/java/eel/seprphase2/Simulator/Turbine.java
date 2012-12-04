@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
+import eel.seprphase2.Utilities.Velocity;
 
 /**
  *
@@ -16,6 +17,8 @@ public class Turbine {
     private Pressure inputPressure;
     private Pressure outputPressure;
     private Temperature temperature;
+    private Velocity flowVelocity;
+    private double outputPower;
 
     public void setInputPressure(Pressure pressure) {
         this.inputPressure = pressure;
@@ -28,8 +31,16 @@ public class Turbine {
     public void setInputTemperature(Temperature temperature) {
         this.temperature = temperature;
     }
+    
+    public void setFlowVelocity(Velocity flowVelocity){
+        this.flowVelocity = flowVelocity;
+    }
+    
+    public void step(){
+        outputPower = 10 * flowVelocity.inMetresPerSecond();
+    }
 
-    public int outputPower() {
-        return 0;
+    public double outputPower() {
+        return outputPower;
     }
 }

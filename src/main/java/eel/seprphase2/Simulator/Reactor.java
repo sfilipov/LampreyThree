@@ -11,6 +11,7 @@ import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
+import eel.seprphase2.Utilities.Velocity;
 import eel.seprphase2.Utilities.Volume;
 
 /**
@@ -81,5 +82,9 @@ public class Reactor implements PlantController, PlantStatus {
             Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
             pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
         }
+    }
+
+    public Velocity outputFlowVelocity() {
+        return metresPerSecond(pressure().inPascals() / 100);
     }
 }

@@ -19,13 +19,18 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Reactor reactor = new Reactor();
     private Turbine turbine = new Turbine();
     private Energy energyGenerated = joules(0);
-
+    private Connection reactorToTurbine;
+    
+    public PhysicalModel() {
+        reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.04);
+    }
+    
     public void step(int steps) {
         for (int i = 0; i < steps; i++) {
             reactor.step();
-            turbine.setFlowVelocity(reactor.outputFlowVelocity());
             turbine.step();
             energyGenerated = joules(energyGenerated.inJoules() + turbine.outputPower());
+            reactorToTurbine.step();
         }
     }
 

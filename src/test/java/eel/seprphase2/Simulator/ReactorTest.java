@@ -81,6 +81,14 @@ public class ReactorTest {
     }
 
     @Test
+    public void shouldSetOutputPressure() {
+        Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
+                                      new Temperature(373.15), new Pressure(101325));
+        reactor.step();
+        assertEquals(reactor.pressure(), reactor.outputPort().pressure);
+    }
+    
+    @Test
     public void shouldSetOutputFlowRate() {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));

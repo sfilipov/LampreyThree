@@ -55,4 +55,10 @@ public class PressureTest {
     public void shouldBeEqualToEqualPressureAsObject() {
         assertTrue(pressure.equals((Object)(new Pressure(434900))));
     }
+    
+    @Test
+    public void canCreateLowPressure() {
+        Pressure p = new Pressure(1);
+    }
+    
 }

@@ -20,13 +20,15 @@ import eel.seprphase2.Utilities.Volume;
  */
 public class Reactor {
 
+    private final Mass maximumWaterMass = kilograms(1000);
+    private final Volume reactorVolume = cubicMetres(2);
     private FuelPile fuelPile = new FuelPile();
     private Mass waterMass;
     private Mass steamMass;
     private Temperature temperature;
     private Pressure pressure;
-    private final Mass maximumWaterMass = kilograms(1000);
-    private final Volume reactorVolume = cubicMetres(2);
+    private Density steamDensity;
+    private Port outputPort = new Port();
 
     public Reactor() {
         fuelPile.moveControlRods(new Percentage(0));
@@ -66,6 +68,7 @@ public class Reactor {
     }
 
     public void step() {
+        steamMass = steamMass.plus(outputPort.mass);
         if (temperature.inKelvin() < boilingPointOfWater) {
             temperature = kelvin(temperature.inKelvin() +
                                  fuelPile.output(1) / waterMass.inKilograms() /
@@ -76,10 +79,18 @@ public class Reactor {
             waterMass = waterMass.minus(deltaMass);
             Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
             pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
+            steamDensity = steamMass.densityAt(steamVolume);
+            outputPort.density = steamDensity;
+            outputPort.pressure = pressure;
+            outputPort.temperature = temperature;
         }
     }
 
     public Velocity outputFlowVelocity() {
         return metresPerSecond(pressure().inPascals() / 100);
+    }
+
+    public Port outputPort() {
+        return outputPort;
     }
 }

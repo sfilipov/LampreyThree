@@ -19,28 +19,29 @@ public class Turbine {
     private Temperature temperature;
     private Velocity flowVelocity;
     private double outputPower;
+    private Port inputPort = new Port();
+    private Port outputPort = new Port();
 
-    public void setInputPressure(Pressure pressure) {
-        this.inputPressure = pressure;
-    }
-
-    public void setOutputPressure(Pressure pressure) {
-        this.outputPressure = pressure;
-    }
-
-    public void setInputTemperature(Temperature temperature) {
-        this.temperature = temperature;
-    }
-    
-    public void setFlowVelocity(Velocity flowVelocity){
+    public void setFlowVelocity(Velocity flowVelocity) {
         this.flowVelocity = flowVelocity;
     }
-    
-    public void step(){
+
+    public void step() {
+        Pressure deltaPressure = inputPort.pressure
+                .minus(outputPort.pressure);
+        Velocity flowVelocity = Bernoulli.velocity(deltaPressure, inputPort.density);
         outputPower = 10 * flowVelocity.inMetresPerSecond();
     }
 
     public double outputPower() {
         return outputPower;
+    }
+
+    public Port inputPort() {
+        return inputPort;
+    }
+
+    public Port outputPort() {
+        return outputPort;
     }
 }

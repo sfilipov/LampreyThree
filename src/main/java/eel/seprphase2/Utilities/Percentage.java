@@ -8,6 +8,8 @@ import static java.lang.Math.round;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.annotation.*;
+
 /**
  *
  * @author drm
@@ -15,6 +17,7 @@ import java.util.regex.Pattern;
 public class Percentage {
 
     private static final Pattern pattern = Pattern.compile("^([0-9]+)%?$");
+    @JsonProperty
     private final int percentagePoints;
 
     public Percentage(int percentagePoints) {

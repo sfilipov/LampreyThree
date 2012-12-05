@@ -4,16 +4,20 @@
  */
 package FailureModel;
 
+import eel.seprphase2.Utilities.Percentage;
+
 /**
  *
  * @author Yazidi
  */
 public abstract class FailableComponent {
     private FailureState failureState;
-    
+    private Percentage wear;
+        
     public FailableComponent()
     {
         failureState = FailureState.Normal;
+        wear = new Percentage(0);
     }
     
     public FailureState getFailureState()
@@ -23,5 +27,16 @@ public abstract class FailableComponent {
     
     public void setFailureState(FailureState newFailureState){
         this.failureState=newFailureState;
+    }
+
+    public abstract Percentage calculateWearDelta();
+
+    public Percentage getWear() {
+        return wear;
+    }
+    
+    public void setWear(Percentage wearDelta)
+    {
+       wear = wear.plus(wearDelta);
     }
 }

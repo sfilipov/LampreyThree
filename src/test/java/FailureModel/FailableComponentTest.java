@@ -40,9 +40,26 @@ public class FailableComponentTest {
     }
     
     @Test
+    public void shouldSetReactorFailedStateToFailed() {
+        FailableComponent reactor;
+        reactor = new Reactor();
+        reactor.setFailureState(FailureState.Failed);
+        assertEquals(FailureState.Failed, reactor.getFailureState());
+    }
+    
+    @Test
     public void shouldInitializeTurbineComponentStateToNotFailed() {
         FailableComponent turbine;
         turbine = new Turbine();
         assertEquals(FailureState.Normal,turbine.getFailureState());
     }
+    
+    @Test
+    public void shouldSetTurbineFailedStateToFailed() {
+        FailableComponent turbine;
+        turbine = new Turbine();
+        turbine.setFailureState(FailureState.Failed);
+        assertEquals(FailureState.Failed, turbine.getFailureState());
+    }
+    
 }

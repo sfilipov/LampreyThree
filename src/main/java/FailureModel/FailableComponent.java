@@ -20,4 +20,8 @@ public abstract class FailableComponent {
     {
         return this.failureState;
     }
+    
+    public void setFailureState(FailureState newFailureState){
+        this.failureState=newFailureState;
+    }
 }

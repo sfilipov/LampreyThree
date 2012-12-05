@@ -85,8 +85,10 @@ public class Reactor extends FailableComponent{
             steamDensity = steamMass.densityAt(steamVolume);
             outputPort.density = steamDensity;
             outputPort.pressure = pressure;
-            outputPort.temperature = temperature;
+            outputPort.temperature = temperature;   
         }
+        Percentage wearDelta = calculateWearDelta();
+        setWear(wearDelta);
     }
 
     public Velocity outputFlowVelocity() {
@@ -95,5 +97,11 @@ public class Reactor extends FailableComponent{
 
     public Port outputPort() {
         return outputPort;
+    }
+    
+    @Override
+    public Percentage calculateWearDelta()
+    {
+        return new Percentage(1);
     }
 }

@@ -42,6 +42,14 @@ public class Percentage {
     public double ratio() {
         return this.percentagePoints / 100.0;
     }
+    
+    public Percentage plus(Percentage other) {
+        return new Percentage(percentagePoints + other.percentagePoints);
+    }
+
+    public Percentage minus(Percentage other) {
+        return new Percentage(percentagePoints - other.percentagePoints);
+    }
 
     @Override
     public String toString() {

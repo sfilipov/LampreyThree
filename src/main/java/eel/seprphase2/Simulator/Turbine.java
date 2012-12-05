@@ -5,6 +5,7 @@
 package eel.seprphase2.Simulator;
 
 import FailureModel.FailableComponent;
+import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import eel.seprphase2.Utilities.Velocity;
@@ -23,10 +24,10 @@ public class Turbine extends FailableComponent {
     private Port inputPort = new Port();
     private Port outputPort = new Port();
 
-    public Turbine(){
+    public Turbine() {
         super();
     }
-    
+
     public void setFlowVelocity(Velocity flowVelocity) {
         this.flowVelocity = flowVelocity;
     }
@@ -36,6 +37,9 @@ public class Turbine extends FailableComponent {
                 .minus(outputPort.pressure);
         Velocity flowVelocity = Bernoulli.velocity(deltaPressure, inputPort.density);
         outputPower = 10 * flowVelocity.inMetresPerSecond();
+
+        Percentage wearDelta = calculateWearDelta();
+        setWear(wearDelta);
     }
 
     public double outputPower() {
@@ -48,5 +52,10 @@ public class Turbine extends FailableComponent {
 
     public Port outputPort() {
         return outputPort;
+    }
+
+    @Override
+    public Percentage calculateWearDelta() {
+        return new Percentage(1);
     }
 }

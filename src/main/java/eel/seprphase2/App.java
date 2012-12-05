@@ -21,7 +21,7 @@ public class App {
         while (true) {
             ti.showStatus();
             ti.processCommand();
-            physicalModel.step(1);
+            physicalModel.step(1);            
         }
     }
 }

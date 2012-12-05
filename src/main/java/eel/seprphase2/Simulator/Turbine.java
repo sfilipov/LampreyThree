@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import FailureModel.FailableComponent;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import eel.seprphase2.Utilities.Velocity;
@@ -12,7 +13,7 @@ import eel.seprphase2.Utilities.Velocity;
  *
  * @author Yazidi
  */
-public class Turbine {
+public class Turbine extends FailableComponent {
 
     private Pressure inputPressure;
     private Pressure outputPressure;
@@ -22,6 +23,10 @@ public class Turbine {
     private Port inputPort = new Port();
     private Port outputPort = new Port();
 
+    public Turbine(){
+        super();
+    }
+    
     public void setFlowVelocity(Velocity flowVelocity) {
         this.flowVelocity = flowVelocity;
     }

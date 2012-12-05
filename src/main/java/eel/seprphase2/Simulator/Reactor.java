@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import FailureModel.FailableComponent;
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Mass;
@@ -18,7 +19,7 @@ import eel.seprphase2.Utilities.Volume;
  *
  * @author Yazidi
  */
-public class Reactor {
+public class Reactor extends FailableComponent{
 
     private final Mass maximumWaterMass = kilograms(1000);
     private final Volume reactorVolume = cubicMetres(2);
@@ -31,6 +32,7 @@ public class Reactor {
     private Port outputPort = new Port();
 
     public Reactor() {
+        super();
         fuelPile.moveControlRods(new Percentage(0));
         waterMass = maximumWaterMass;
         steamMass = kilograms(0);
@@ -40,6 +42,7 @@ public class Reactor {
 
     public Reactor(Percentage controlRodPosition, Percentage waterLevel,
                    Temperature temperature, Pressure pressure) {
+        super();
         fuelPile.moveControlRods(controlRodPosition);
         waterMass = kilograms(maximumWaterMass.inKilograms() * waterLevel.ratio());
         steamMass = kilograms(0);

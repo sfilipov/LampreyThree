@@ -8,6 +8,7 @@ package eel.seprphase2.Utilities;
  *
  * @author drm
  */
+
 public class Energy {
 
     private double joules;

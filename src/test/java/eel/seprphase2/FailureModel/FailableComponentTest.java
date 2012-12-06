@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package FailureModel;
+package eel.seprphase2.FailureModel;
 
+import eel.seprphase2.FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailureState;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.Simulator.Turbine;
 import eel.seprphase2.Utilities.Percentage;
@@ -97,5 +99,19 @@ public class FailableComponentTest {
         Turbine turbine = new Turbine();
         turbine.step();
         assertThat(turbine.getWear().ratio(), greaterThan(0.0));
+    }
+    
+    @Test
+    public void shouldNotIncreaseWearOver100() {
+        Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
+                                      new Temperature(400), new Pressure(101325));
+        Turbine turbine = new Turbine();
+        
+        for (int i = 0; i < 150; i++) {
+            reactor.step();
+            turbine.step();
+        }
+        assertEquals(percent(100), reactor.getWear());
+        assertEquals(percent(100), turbine.getWear());
     }
 }

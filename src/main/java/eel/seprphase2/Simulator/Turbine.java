@@ -4,7 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
-import FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailableComponent;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;

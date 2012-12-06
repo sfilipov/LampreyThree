@@ -16,8 +16,8 @@ import static eel.seprphase2.Utilities.Units.*;
  */
 public class PhysicalModel implements PlantController, PlantStatus {
 
-    private Reactor reactor = new Reactor();
-    private Turbine turbine = new Turbine();
+    public Reactor reactor = new Reactor();
+    public Turbine turbine = new Turbine();
     private Energy energyGenerated = joules(0);
     private Connection reactorToTurbine;
     

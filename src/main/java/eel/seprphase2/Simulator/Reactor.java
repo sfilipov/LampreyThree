@@ -4,7 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
-import FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailableComponent;
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Mass;

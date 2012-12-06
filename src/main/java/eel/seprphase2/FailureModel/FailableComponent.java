@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package FailureModel;
+package eel.seprphase2.FailureModel;
 
 import eel.seprphase2.Utilities.Percentage;
 
@@ -37,6 +37,8 @@ public abstract class FailableComponent {
     
     public void setWear(Percentage wearDelta)
     {
-       wear = wear.plus(wearDelta);
+       if (wear.points() < 100) {
+            wear = wear.plus(wearDelta);
+        }
     }
 }

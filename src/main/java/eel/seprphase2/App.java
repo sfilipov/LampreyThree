@@ -1,5 +1,6 @@
 package eel.seprphase2;
 
+import eel.seprphase2.FailureModel.FailureModel;
 import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.TextInterface.TerminalReader;
@@ -17,11 +18,12 @@ public class App {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();
         PhysicalModel physicalModel = new PhysicalModel();
+        FailureModel failureModel = new FailureModel(physicalModel);
         TextInterface ti = new TextInterface(physicalModel, physicalModel, renderer, reader);
         while (true) {
             ti.showStatus();
             ti.processCommand();
-            physicalModel.step(1);            
+            failureModel.step();            
         }
     }
 }

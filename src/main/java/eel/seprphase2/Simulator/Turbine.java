@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.FailureModel.FailableComponent;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -16,20 +17,15 @@ import eel.seprphase2.Utilities.Velocity;
  */
 public class Turbine extends FailableComponent {
 
-    private Pressure inputPressure;
-    private Pressure outputPressure;
-    private Temperature temperature;
-    private Velocity flowVelocity;
+    @JsonProperty
     private double outputPower;
+    @JsonProperty
     private Port inputPort = new Port();
+    @JsonProperty
     private Port outputPort = new Port();
 
     public Turbine() {
         super();
-    }
-
-    public void setFlowVelocity(Velocity flowVelocity) {
-        this.flowVelocity = flowVelocity;
     }
 
     public void step() {

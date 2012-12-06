@@ -4,6 +4,8 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
@@ -11,6 +13,7 @@ import static eel.seprphase2.Utilities.Units.*;
  *
  * @author david
  */
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Port {
 
     public Density density = Density.ofLiquidWater();

@@ -4,6 +4,8 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
@@ -14,8 +16,11 @@ import static eel.seprphase2.Utilities.Units.*;
  */
 public class Connection {
 
+    @JsonProperty
     private Port first;
+    @JsonProperty
     private Port second;
+    @JsonProperty
     private double area;
 
     public Connection(Port first, Port second, double area) {

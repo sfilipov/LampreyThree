@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Percentage;
 
 /**
@@ -13,7 +14,8 @@ import eel.seprphase2.Utilities.Percentage;
 public class FuelPile {
 
     private final int maximumOutput = 10000000;
-    private Percentage controlRodPosition;
+    @JsonProperty
+    private Percentage controlRodPosition = new Percentage(0);
 
     public void moveControlRods(Percentage extracted) {
         controlRodPosition = extracted;

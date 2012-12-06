@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.FailureModel.FailableComponent;
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
 import eel.seprphase2.Utilities.Density;
@@ -23,12 +24,19 @@ public class Reactor extends FailableComponent{
 
     private final Mass maximumWaterMass = kilograms(1000);
     private final Volume reactorVolume = cubicMetres(2);
+    @JsonProperty
     private FuelPile fuelPile = new FuelPile();
+    @JsonProperty
     private Mass waterMass;
+    @JsonProperty
     private Mass steamMass;
+    @JsonProperty
     private Temperature temperature;
+    @JsonProperty
     private Pressure pressure;
+    @JsonProperty
     private Density steamDensity;
+    @JsonProperty
     private Port outputPort = new Port();
 
     public Reactor() {

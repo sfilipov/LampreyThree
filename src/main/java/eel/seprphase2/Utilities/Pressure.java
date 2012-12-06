@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Utilities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.text.DecimalFormat;
 
 /**
@@ -13,6 +14,7 @@ import java.text.DecimalFormat;
 public class Pressure {
 
     private static final double pascalsPerAtmosphere = 101325;
+    @JsonProperty
     private final double pascals;
 
     public Pressure(double pascals) {

@@ -30,15 +30,52 @@ public class PersistenceTest {
         assertEquals("{\"percentagePoints\":50}", result);
     }
     
-    @Ignore @Test
+    @Test
     public void shouldSerializeDensity() throws JsonProcessingException {
         String result = persistence.serialize(kilogramsPerCubicMetre(10));
-        assertEquals("(\"\"", "");
+        assertEquals("{\"kilogramsPerCubicMetre\":10.0}", result);
     }
     
-    @Ignore @Test
+    @Test
+    public void shouldSerializeTemperature() throws JsonProcessingException {
+        String result = persistence.serialize(kelvin(300));
+        assertEquals("{\"degreesKelvin\":300.0}",result);
+    }
+    
+    @Test
+    public void shouldSerializeMass() throws JsonProcessingException {
+        String result = persistence.serialize(kilograms(40));
+        assertEquals("{\"kilograms\":40.0}",result);
+    }
+    
+    @Test
+    public void shouldSerializeEnergy() throws JsonProcessingException {
+        String result = persistence.serialize(joules(5));
+        assertEquals("{\"joules\":5.0}",result);
+    }
+    
+    @Test
     public void shouldSerializePort() throws JsonProcessingException {
         String result = persistence.serialize(new Port());
         assertNotSame("", result);
     }
+    
+    @Test
+    public void shouldSerializeFuelPile() throws JsonProcessingException {
+        String result = persistence.serialize(new FuelPile());
+        assertEquals("{\"controlRodPosition\":{\"percentagePoints\":0}}", result);
+    }
+    
+    @Test
+    public void shouldSerializeReactor() throws JsonProcessingException {
+        String result = persistence.serialize(new Reactor());
+        assertNotSame("", result);
+    }
+    
+    @Test
+    public void shouldSerializePhysicalModel() throws JsonProcessingException {
+        String result = persistence.serialize(new PhysicalModel());
+        assertNotSame("",result);
+    }
+    
 }

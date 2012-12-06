@@ -4,13 +4,15 @@
  */
 package eel.seprphase2.Utilities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author drm
  */
 
 public class Energy {
-
+    @JsonProperty
     private double joules;
 
     public Energy(double joules) {

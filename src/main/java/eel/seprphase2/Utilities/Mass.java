@@ -4,12 +4,15 @@
  */
 package eel.seprphase2.Utilities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author drm
  */
 public class Mass {
     
+    @JsonProperty
     private final double kilograms;
     
     public static Mass fromMolesOfWater(double moles) {

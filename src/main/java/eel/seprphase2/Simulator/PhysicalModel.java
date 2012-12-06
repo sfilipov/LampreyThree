@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -16,9 +17,13 @@ import static eel.seprphase2.Utilities.Units.*;
  */
 public class PhysicalModel implements PlantController, PlantStatus {
 
+    @JsonProperty
     public Reactor reactor = new Reactor();
+    @JsonProperty
     public Turbine turbine = new Turbine();
+    @JsonProperty
     private Energy energyGenerated = joules(0);
+    @JsonProperty
     private Connection reactorToTurbine;
     
     public PhysicalModel() {

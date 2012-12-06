@@ -4,12 +4,15 @@
  */
 package eel.seprphase2.Utilities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author drm
  */
 public class Density {
     
+    @JsonProperty
     private double kilogramsPerCubicMetre;
 
     public Density(double kilogramsPerCubicMetre) {

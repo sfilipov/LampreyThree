@@ -5,18 +5,26 @@
 package eel.seprphase2.Utilities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.text.DecimalFormat;
 
 /**
  *
  * @author david
  */
+@JsonTypeName(value="Temperature")
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
 public class Temperature {
 
     static private final double kelvinOffset = 273.15;
     @JsonProperty
     private final double degreesKelvin;
 
+    public Temperature() {
+        degreesKelvin = 0;
+    }
+    
     public Temperature(double degreesKelvin) {
         this.degreesKelvin = degreesKelvin;
     }

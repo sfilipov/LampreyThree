@@ -12,6 +12,10 @@ public class Velocity {
 
     private double metresPerSecond;
 
+    public Velocity() {
+        metresPerSecond = 0;
+    }
+    
     public Velocity(double metresPerSecond) {
         this.metresPerSecond = metresPerSecond;
     }

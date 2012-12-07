@@ -14,12 +14,19 @@ import com.fasterxml.jackson.annotation.*;
  *
  * @author drm
  */
+@JsonTypeName(value="Percentage")
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
 public class Percentage {
 
     private static final Pattern pattern = Pattern.compile("^([0-9]+)%?$");
     @JsonProperty
     private final int percentagePoints;
 
+    // default constructor required for serialization
+    public Percentage() {
+        percentagePoints = 0;
+    }
+    
     public Percentage(int percentagePoints) {
         if (!isValidPercentage(percentagePoints)) {
             throw new IllegalArgumentException("The argument (" +

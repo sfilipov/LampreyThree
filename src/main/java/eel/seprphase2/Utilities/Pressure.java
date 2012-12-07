@@ -17,6 +17,10 @@ public class Pressure {
     @JsonProperty
     private final double pascals;
 
+    public Pressure() {
+        pascals = 0;
+    }
+    
     public Pressure(double pascals) {
         this.pascals = pascals;
     }

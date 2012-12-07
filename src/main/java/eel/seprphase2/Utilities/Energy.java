@@ -5,16 +5,23 @@
 package eel.seprphase2.Utilities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  *
  * @author drm
  */
-
+@JsonTypeName(value="Energy")
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
 public class Energy {
     @JsonProperty
     private double joules;
 
+    public Energy() {
+        joules = 0;
+    }
+    
     public Energy(double joules) {
         this.joules = joules;
     }

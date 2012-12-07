@@ -5,15 +5,23 @@
 package eel.seprphase2.Utilities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  *
  * @author drm
  */
+@JsonTypeName(value = "Density")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Density {
-    
+
     @JsonProperty
-    private double kilogramsPerCubicMetre;
+    protected double kilogramsPerCubicMetre;
+
+    public Density() {
+        kilogramsPerCubicMetre = 1000;
+    }
 
     public Density(double kilogramsPerCubicMetre) {
         this.kilogramsPerCubicMetre = kilogramsPerCubicMetre;
@@ -22,27 +30,22 @@ public class Density {
     public double inKilogramsPerCubicMetre() {
         return kilogramsPerCubicMetre;
     }
-    
+
     public static final Density ofLiquidWater() {
         return new Density(1000);
-    }
-
-    public Density plus(Density other) {
-        return new Density(kilogramsPerCubicMetre + other.kilogramsPerCubicMetre);
     }
 
     public Density minus(Density other) {
         return new Density(kilogramsPerCubicMetre - other.kilogramsPerCubicMetre);
     }
 
-    @Override
-    public String toString() {
-        return Format.toThreeDecimalPlaces(kilogramsPerCubicMetre) + "kg/m^3";
+    public Density plus(Density other) {
+        return new Density(kilogramsPerCubicMetre + other.kilogramsPerCubicMetre);
     }
 
     @Override
-    public int hashCode() {
-        return (int)kilogramsPerCubicMetre;
+    public String toString() {
+        return Format.toThreeDecimalPlaces(kilogramsPerCubicMetre) + "kg/m^3";
     }
 
     @Override
@@ -59,5 +62,9 @@ public class Density {
         }
         return true;
     }
-    
+
+    @Override
+    public int hashCode() {
+        return (int)kilogramsPerCubicMetre;
+    }
 }

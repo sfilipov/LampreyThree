@@ -12,6 +12,10 @@ public class Volume {
     
     private final double cubicMetres;
     
+    public Volume() {
+        cubicMetres = 0;
+    }
+    
     public Volume(double cubicMetres) {
         this.cubicMetres = cubicMetres;
     }

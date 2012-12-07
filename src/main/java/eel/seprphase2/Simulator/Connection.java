@@ -23,6 +23,14 @@ public class Connection {
     @JsonProperty
     private double area;
 
+    
+    // default constructor for JSON deserialization
+    private Connection() {
+        first = null;
+        second = null;
+        area = 0;
+    }
+    
     public Connection(Port first, Port second, double area) {
         this.first = first;
         this.second = second;

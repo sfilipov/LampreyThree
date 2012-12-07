@@ -5,11 +5,15 @@
 package eel.seprphase2.Utilities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  *
  * @author drm
  */
+@JsonTypeName(value="Mass")
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
 public class Mass {
     
     @JsonProperty
@@ -17,6 +21,10 @@ public class Mass {
     
     public static Mass fromMolesOfWater(double moles) {
         return new Mass(moles * 18 / 1000);
+    }
+    
+    public Mass() {
+        kilograms = 0;
     }
     
     public Mass(double kilograms) {

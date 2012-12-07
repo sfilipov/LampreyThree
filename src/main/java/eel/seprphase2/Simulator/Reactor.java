@@ -91,6 +91,7 @@ public class Reactor extends FailableComponent{
             Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
             pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
             steamDensity = steamMass.densityAt(steamVolume);
+            outputPort.mass = steamMass;
             outputPort.density = steamDensity;
             outputPort.pressure = pressure;
             outputPort.temperature = temperature;   

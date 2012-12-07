@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
-
 /**
  *
  * @author david
@@ -23,14 +22,13 @@ public class Connection {
     @JsonProperty
     private double area;
 
-    
     // default constructor for JSON deserialization
     private Connection() {
         first = null;
         second = null;
         area = 0;
     }
-    
+
     public Connection(Port first, Port second, double area) {
         this.first = first;
         this.second = second;
@@ -51,8 +49,14 @@ public class Connection {
         Mass deltaMass = kilograms(input.density.inKilogramsPerCubicMetre() *
                                    flowVelocity.inMetresPerSecond() *
                                    area);
-        input.mass = input.mass.minus(deltaMass);
-        output.mass = output.mass.plus(deltaMass);
+        if (input.mass.inKilograms() < deltaMass.inKilograms()) {
+            input.mass = kilograms(0);
+            output.mass = input.mass;
+        } else {
+            input.mass = input.mass.minus(deltaMass);
+            output.mass = output.mass.plus(deltaMass);
+        }
+
         output.pressure = input.pressure;
     }
 }

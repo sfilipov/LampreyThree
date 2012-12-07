@@ -39,7 +39,7 @@ public class FailureModel {
 
         for (int i = 0; i <= 1; i++) {
             if (components.get(i).getFailureState() != FailureState.Failed) {
-                components.get(i).setFailureState(setFailState(components.get(i)));
+                components.get(i).setFailureState(failStateChance(components.get(i)));
                 if (components.get(i).getFailureState() == FailureState.Failed) {
                     i = 1;
                 }
@@ -48,7 +48,7 @@ public class FailureModel {
 
     }
 
-    public FailureState setFailState(FailableComponent component) {
+    public FailureState failStateChance(FailableComponent component) {
 
         if ((failChance.nextInt(100) * component.getWear().ratio()) < 20) {
             return FailureState.Failed;

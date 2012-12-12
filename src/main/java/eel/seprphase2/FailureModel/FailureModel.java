@@ -31,10 +31,10 @@ public class FailureModel {
     }
     
     public void failStateCheck() {
-        int failValue = failChance.nextInt(100);
+        int failValue = failChance.nextInt(10000);
         int componentsFailChance = 0;
         for (int i = 0; i < componentNumber; i++) {
-            componentsFailChance += components.get(i).getWear().points();
+            componentsFailChance += components.get(i).getWear().points()/componentNumber;
             if (componentsFailChance > failValue) {
                 components.get(i).setFailureState(FailureState.Failed);
             }

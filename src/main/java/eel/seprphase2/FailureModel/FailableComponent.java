@@ -37,11 +37,16 @@ public abstract class FailableComponent {
     
     public void setWear(Percentage wearDelta)
     {
-       if (wear.points() + wearDelta.points() < 100) {
+       if ((wear.points() + wearDelta.points()) < 100) {
             wear = wear.plus(wearDelta);
         }
        else {
             wear = new Percentage(100);
         }
+       if (wearDelta.points() == 0)
+       {
+           wear = new Percentage(0);
+       }
+       System.out.println("Wear = " + wear);
     }
 }

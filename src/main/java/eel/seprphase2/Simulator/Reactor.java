@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailureState;
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Mass;
@@ -79,6 +80,7 @@ public class Reactor extends FailableComponent{
     }
 
     public void step() {
+        if (getFailureState() == FailureState.Normal){
         steamMass = steamMass.plus(outputPort.mass);
         if (temperature.inKelvin() < boilingPointOfWater) {
             temperature = kelvin(temperature.inKelvin() +
@@ -98,6 +100,12 @@ public class Reactor extends FailableComponent{
         }
         Percentage wearDelta = calculateWearDelta();
         setWear(wearDelta);
+        }
+        else 
+        {
+            System.exit(0);
+            
+        }
     }
 
     public Velocity outputFlowVelocity() {

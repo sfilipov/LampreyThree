@@ -31,7 +31,8 @@ public class FailureModelTest {
         for (int i = 0; i < 1000; i++) {
              failureModel.step();
         }
-        assertEquals(FailureState.Failed, phys.reactor.getFailureState());
+        assertEquals(FailureState.Failed, phys.components.get(0).getFailureState());
+        assertEquals(FailureState.Failed, phys.components.get(1).getFailureState());
     }
     
 }

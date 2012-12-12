@@ -13,47 +13,31 @@ import java.util.Random;
  * @author Yazidi
  */
 public class FailureModel {
-
+    
     PhysicalModel physicalModel = new PhysicalModel();
-    public Random failChance = new Random();
-
+    private Random failChance = new Random();
+    private static int componentNumber = 2;
+    ArrayList<FailableComponent> components;
+    
     public FailureModel(PhysicalModel physicalModel) {
         this.physicalModel = physicalModel;
-    }
-
+        this.components = physicalModel.components;
+    }    
+    
     public void step() {
         physicalModel.step(1);
         failStateCheck();
-
+        
     }
-
+    
     public void failStateCheck() {
-
-        ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();
-        components.add(physicalModel.reactor);
-        if (physicalModel.turbine.getWear().ratio() >= physicalModel.reactor.getWear().ratio()) {
-            components.add(0, physicalModel.turbine);
-        } else {
-            components.add(1, physicalModel.turbine);
-        }
-
-        for (int i = 0; i <= 1; i++) {
-            if (components.get(i).getFailureState() != FailureState.Failed) {
-                components.get(i).setFailureState(failStateChance(components.get(i)));
-                if (components.get(i).getFailureState() == FailureState.Failed) {
-                    i = 1;
-                }
+        int failValue = failChance.nextInt(100);
+        int componentsFailChance = 0;
+        for (int i = 0; i < componentNumber; i++) {
+            componentsFailChance += components.get(i).getWear().points();
+            if (componentsFailChance > failValue) {
+                components.get(i).setFailureState(FailureState.Failed);
             }
-        }
-
-    }
-
-    public FailureState failStateChance(FailableComponent component) {
-
-        if ((failChance.nextInt(100) * component.getWear().ratio()) < 20) {
-            return FailureState.Failed;
-        } else {
-            return FailureState.Normal;
         }
     }
 }

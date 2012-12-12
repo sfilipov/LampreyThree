@@ -47,6 +47,6 @@ public abstract class FailableComponent {
        {
            wear = new Percentage(0);
        }
-       System.out.println("Wear = " + wear);
+       //System.out.println("Wear = " + wear);
     }
 }

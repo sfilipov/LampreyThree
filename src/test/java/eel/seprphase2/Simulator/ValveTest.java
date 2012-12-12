@@ -38,14 +38,14 @@ public class ValveTest {
     
     @Test
     public void shouldInitialiseValve() {
-        IValve valve = new MockValve();
+        IValve valve = new Valve();
         assertEquals(false, valve.GetOpen());
         
     }
 
     @Test
     public void shouldSetClosed() {
-        IValve valve = new MockValve();
+        IValve valve = new Valve();
         valve.SetOpen(false);
         assertEquals(false, valve.GetOpen());
         
@@ -54,7 +54,7 @@ public class ValveTest {
     
     @Test
     public void shouldSetOpen() {
-        IValve valve = new MockValve();
+        IValve valve = new Valve();
         valve.SetOpen(true);
         assertEquals(true, valve.GetOpen());
         

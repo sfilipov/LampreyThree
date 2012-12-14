@@ -13,7 +13,7 @@ import eel.seprphase2.Utilities.Percentage;
  */
 public class Parser {
 
-    private PlantController controller;
+    private static PlantController controller;
     private TextRenderer renderer;
 
     Parser(PlantController controller, TextRenderer renderer) {
@@ -39,5 +39,10 @@ public class Parser {
         } else {
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
         }
+    }
+    
+    public static PlantController returnController()
+    {
+        return controller;
     }
 }

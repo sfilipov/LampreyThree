@@ -100,7 +100,7 @@ public class Reactor extends FailableComponent{
         }
         Percentage wearDelta = calculateWearDelta();
         setWear(wearDelta);
-        }
+       }
         else 
         {
             System.exit(0);

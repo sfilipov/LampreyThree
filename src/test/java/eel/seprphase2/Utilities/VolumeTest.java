@@ -152,4 +152,16 @@ public class VolumeTest {
         assertEquals(expResult, result);
 
     }
+    /**
+     * Test of equals method, of class Volume.
+     */
+    @Test
+    public void testEquals4() {
+        Object obj = new Density(10);
+        Volume instance = new Volume(10);
+        boolean expResult = false;
+        boolean result = instance.equals(obj);
+        assertEquals(expResult, result);
+
+    }
 }

@@ -11,6 +11,6 @@ import eel.seprphase2.Utilities.Percentage;
  * @author david
  */
 public interface PlantController {
-
+    public void setUsername(String username);
     public void moveControlRods(Percentage extracted);
 }

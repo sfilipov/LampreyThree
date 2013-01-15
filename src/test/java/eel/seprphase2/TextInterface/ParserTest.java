@@ -48,6 +48,8 @@ public class ParserTest {
         parser.parseCommand("don'tmovecontrolrods 50");
     }
 
+ 
+    
     @Test
     public void wrongCommandShouldDisplayErrorMessage() {
         context.checking(new Expectations() {

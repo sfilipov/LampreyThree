@@ -29,9 +29,9 @@ public class TextInterface {
         this.lineReader = lineReader;
     }
     
-    public void askForUsername(PhysicalModel model){
+    public void askForUsername(){
         textRenderer.outputLine("Please Enter Username:");
-        model.username = lineReader.readLine();
+        this.plantController.setUsername(lineReader.readLine());
     }
 
     public void showStatus() {

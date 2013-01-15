@@ -20,7 +20,7 @@ public class App {
         PhysicalModel physicalModel = new PhysicalModel();
         FailureModel failureModel = new FailureModel(physicalModel);
         TextInterface ti = new TextInterface(physicalModel, physicalModel, renderer, reader);
-        ti.askForUsername(physicalModel);
+        ti.askForUsername();
         while (true) {
             ti.showStatus();
             ti.processCommand();

@@ -1,5 +1,6 @@
 package eel.seprphase2.TextInterface;
 
+import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Energy;
@@ -25,6 +26,7 @@ public class TextInterfaceTest {
     public final JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
     private PlantController plantController;
+
     @Mock
     private PlantStatus plantStatus;
     @Mock
@@ -71,6 +73,22 @@ public class TextInterfaceTest {
         textInterface.showStatus();
     }
 
+    
+    @Test 
+    public void shouldCheckUsername(){
+        
+        context.checking(new Expectations(){
+            {
+                oneOf(textRenderer).outputLine("Please Enter Username:");
+                inSequence(lines);
+                oneOf(lineReader).readLine();
+                will(returnValue("James"));
+            }
+        });
+        textInterface.askForUsername();
+    }
+    
+       
     @Test
     public void shouldProcessACommand() {
         context.checking(new Expectations() {

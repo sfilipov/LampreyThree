@@ -51,7 +51,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     @Override
     public void setUsername(String username){
-        throw new UnsupportedOperationException ();
+        this.username = username;
     }
 
     @Override

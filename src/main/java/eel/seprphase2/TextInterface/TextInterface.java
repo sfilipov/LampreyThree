@@ -30,8 +30,9 @@ public class TextInterface {
     }
     
     public void askForUsername(){
+        Parser parser = new Parser(plantController, textRenderer);
         textRenderer.outputLine("Please Enter Username:");
-        this.plantController.setUsername(lineReader.readLine());
+        parser.setUsername(lineReader.readLine());
     }
 
     public void showStatus() {

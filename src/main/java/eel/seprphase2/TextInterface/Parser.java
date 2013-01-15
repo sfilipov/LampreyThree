@@ -41,6 +41,11 @@ public class Parser {
         }
     }
     
+    public void setUsername(String username)
+    {
+        controller.setUsername(username);
+    }
+    
     public static PlantController returnController()
     {
         return controller;

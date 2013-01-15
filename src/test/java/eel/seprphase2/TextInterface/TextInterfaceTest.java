@@ -75,17 +75,16 @@ public class TextInterfaceTest {
 
     
     @Test 
-    public void shouldCheckUsername(){
-        /*
+    public void shouldSetUsername(){
+        
         context.checking(new Expectations(){
             {
-                oneOf(textRenderer).outputLine("Please Enter Username:");
-              
-                allowing(lineReader).readLine();
+                allowing(textRenderer).outputLine("Please Enter Username:");
+                oneOf(lineReader).readLine();
                 will(returnValue("James"));
+                oneOf(plantController).setUsername("James");
             }
         });
-        */
         textInterface.askForUsername();
     }
     
@@ -93,7 +92,8 @@ public class TextInterfaceTest {
     @Test
     public void shouldProcessACommand() {
         context.checking(new Expectations() {
-            {
+            {   
+                 
                 oneOf(lineReader).readLine();
                 will(returnValue("movecontrolrods 50"));
                 oneOf(plantController).moveControlRods(new Percentage(50));

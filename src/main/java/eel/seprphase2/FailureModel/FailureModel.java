@@ -27,8 +27,7 @@ public class FailureModel {
     public void step() {
         physicalModel.step(1);
         failStateCheck();
-        
-    }
+       }
     
     public void failStateCheck() {
         int failValue = failChance.nextInt(10000);

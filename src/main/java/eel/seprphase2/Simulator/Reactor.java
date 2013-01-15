@@ -89,7 +89,9 @@ public class Reactor extends FailableComponent{
         } else {
             Mass deltaMass = kilograms(fuelPile.output(1) / latentHeatOfWater);
             steamMass = steamMass.plus(deltaMass);
-            waterMass = waterMass.minus(deltaMass);
+            if (waterMass.inKilograms() > 10) {
+                waterMass = waterMass.minus(deltaMass);
+            }
             Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
             pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
             steamDensity = steamMass.densityAt(steamVolume);

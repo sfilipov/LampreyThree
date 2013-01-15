@@ -24,4 +24,8 @@ public interface PlantStatus {
     public Percentage reactorWaterLevel();
     
     public Energy energyGenerated();
+    
+    public void setReactorToTurbine(boolean open);
+    
+    public boolean getReactorToTurbine();
 }

@@ -13,7 +13,7 @@ import static eel.seprphase2.Utilities.Units.*;
  *
  * @author david
  */
-public class Connection {
+public class Connection extends Valve{
 
     @JsonProperty
     private Port first;
@@ -24,6 +24,7 @@ public class Connection {
 
     // default constructor for JSON deserialization
     private Connection() {
+        super();
         first = null;
         second = null;
         area = 0;
@@ -37,6 +38,7 @@ public class Connection {
 
     public void step() {
         Port input, output;
+        if (getOpen()){
         if (first.pressure.greaterThan(second.pressure)) {
             input = first;
             output = second;
@@ -58,5 +60,6 @@ public class Connection {
         }
 
         output.pressure = input.pressure;
+    }
     }
 }

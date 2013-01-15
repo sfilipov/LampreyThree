@@ -9,6 +9,6 @@ package eel.seprphase2.Simulator;
  * @author james
  */
 public interface IValve {
-    public void SetOpen(boolean Open);
-    public boolean GetOpen();
+    public void setOpen(boolean Open);
+    public boolean getOpen();
 }

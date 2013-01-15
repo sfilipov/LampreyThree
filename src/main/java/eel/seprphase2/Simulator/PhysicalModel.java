@@ -76,4 +76,15 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage reactorWaterLevel() {
         return reactor.waterLevel();
     }
+   
+    @Override
+    public void setReactorToTurbine(boolean open){
+        reactorToTurbine.setOpen(open);
+    }
+    
+    @Override
+    public boolean getReactorToTurbine(){
+        return reactorToTurbine.getOpen();
+    }
+            
 }

@@ -33,4 +33,12 @@ public class PhysicalModelTest {
         assertThat(model.energyGenerated().inJoules(), greaterThan(0.0));
     }
     
+    @Test
+    public void shouldSetConnectionToClosed(){
+        PhysicalModel model = new PhysicalModel();
+        model.setReactorToTurbine(false);
+        assertEquals(false, model.getReactorToTurbine());
+        
+    }
+    
 }

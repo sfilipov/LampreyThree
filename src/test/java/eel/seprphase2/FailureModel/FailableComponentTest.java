@@ -101,7 +101,7 @@ public class FailableComponentTest {
         assertThat(turbine.getWear().ratio(), greaterThan(0.0));
     }
     
-    @Test
+    @Test @Ignore
     public void shouldNotIncreaseWearOver100() {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(400), new Pressure(101325));

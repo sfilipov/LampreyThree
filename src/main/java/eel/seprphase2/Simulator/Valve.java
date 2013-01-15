@@ -4,23 +4,24 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  *
  * @author james
  */
 public class Valve implements IValve{
-        
-    private boolean open = false;
-
+    
+    @JsonProperty
+    private boolean open = true;
+    
     @Override
-    public boolean GetOpen() {
+    public boolean getOpen() {
         return open;
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
+       }
 
     @Override
-    public void SetOpen(boolean Open) {
+    public void setOpen(boolean Open) {
         open = Open;
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
+       }
 }

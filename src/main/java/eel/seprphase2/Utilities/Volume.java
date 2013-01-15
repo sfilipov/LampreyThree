@@ -38,7 +38,7 @@ public class Volume {
     
     @Override
     public String toString() {
-        return Format.toThreeDecimalPlaces(cubicMetres) + "cubic metres";
+        return Format.toThreeDecimalPlaces(cubicMetres) + "m^3";
     }
     
     @Override

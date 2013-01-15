@@ -29,7 +29,7 @@ public class Velocity {
     }
     
     public Velocity minus(Velocity other) {
-        return new Velocity(metresPerSecond + other.metresPerSecond);
+        return new Velocity(metresPerSecond - other.metresPerSecond);
     }
 
     @Override

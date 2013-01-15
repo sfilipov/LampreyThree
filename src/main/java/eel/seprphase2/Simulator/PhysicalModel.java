@@ -28,6 +28,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Energy energyGenerated = joules(0);
     @JsonProperty
     private Connection reactorToTurbine;
+    @JsonProperty
+    public String username;
     @JsonIgnore
     public ArrayList<FailableComponent> components;
     public PhysicalModel() {
@@ -45,6 +47,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
             energyGenerated = joules(energyGenerated.inJoules() + turbine.outputPower());
             reactorToTurbine.step();
         }
+    }
+    
+    @Override
+    public void setUsername(String username){
+        throw new UnsupportedOperationException ();
     }
 
     @Override

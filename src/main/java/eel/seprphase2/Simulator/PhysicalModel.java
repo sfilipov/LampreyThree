@@ -48,6 +48,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
             reactorToTurbine.step();
         }
     }
+    
+    @Override
+    public void setUsername(String username){
+        throw new UnsupportedOperationException ();
+    }
 
     @Override
     public void moveControlRods(Percentage percent) {

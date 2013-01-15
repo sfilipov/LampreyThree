@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.TextInterface;
 
+import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 
@@ -26,6 +27,11 @@ public class TextInterface {
         this.plantStatus = plantStatus;
         this.textRenderer = textRenderer;
         this.lineReader = lineReader;
+    }
+    
+    public void askForUsername(PhysicalModel model){
+        textRenderer.outputLine("Please Enter Username:");
+        model.username = lineReader.readLine();
     }
 
     public void showStatus() {

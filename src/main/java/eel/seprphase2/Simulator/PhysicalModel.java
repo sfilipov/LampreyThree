@@ -28,6 +28,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Energy energyGenerated = joules(0);
     @JsonProperty
     private Connection reactorToTurbine;
+    @JsonProperty
+    public String username;
     @JsonIgnore
     public ArrayList<FailableComponent> components;
     public PhysicalModel() {

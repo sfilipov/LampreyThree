@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Persistence;
 
+import java.io.File;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -38,13 +39,29 @@ public class SaveGameFileTest {
 
     /**
      * Test of SaveToDisk method, of class SaveGameFile.
-     */
+    
     @Test
     public void testSaveToDisk() {
-        System.out.println("SaveToDisk");
-        SaveGameFile instance = null;
+   
+        SaveGameFile instance = new SaveGameFile("filename","data");
         instance.SaveToDisk();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    
+    }*/
+    
+    @Test
+    public void shouldCreateDir()
+    {
+        SaveGameFile instance = new SaveGameFile("test","test");
+        File f = new File(instance.FullSavePath());
+        try
+        {
+            instance.CreateSavePath();
+        }
+        catch(Exception e)
+        {
+            fail(e.getMessage());
+        }
+        
+        assertTrue(f.exists());
     }
 }

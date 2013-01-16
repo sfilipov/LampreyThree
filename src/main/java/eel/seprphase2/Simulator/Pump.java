@@ -23,6 +23,7 @@ public class Pump extends FailableComponent {
     public Pump(Port input, Port output) {
         inputPort = input;
         outputPort = output;
+        
     }
 
     public void step() {
@@ -35,14 +36,15 @@ public class Pump extends FailableComponent {
             }
 
             outputPort.temperature = inputPort.temperature;
-
+            setWear(calculateWearDelta());
         }
-
+        
+        
     }
 
     @Override
     public Percentage calculateWearDelta() {
-        return percent(0);
+        return percent(1);
     }
 
     public void setStatus(boolean newStatus) {
@@ -52,4 +54,10 @@ public class Pump extends FailableComponent {
     public void setCapacity(Mass newCapacity) {
         capacity = newCapacity;
     }
+    
+    public boolean getStatus()
+    {
+        return status;
+    }
+    
 }

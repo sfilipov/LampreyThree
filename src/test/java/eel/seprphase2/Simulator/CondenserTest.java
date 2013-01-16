@@ -201,17 +201,17 @@ public class CondenserTest {
         }
         
     }
-    /**
-     * Test of calculateWearDelta method, of class Condenser.
-     
-    @Test 
-    public void testCalculateWearDelta() {
-        
+    
+    @Test
+    public void shouldIncreaseWaterMassWithWaterOnInputPort()
+    {
         Condenser instance = new Condenser();
-        Percentage expResult = null;
-        Percentage result = instance.calculateWearDelta();
-        assertEquals(expResult, result);
-
+        instance.step();
+        instance.waterPort().mass = kilograms(5);
+        instance.step();
+        assertTrue(instance.waterLevel().ratio() > 0);
+        
     }
-    * */
+    
+    
 }

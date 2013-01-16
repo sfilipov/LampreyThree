@@ -45,7 +45,10 @@ public class Condenser extends FailableComponent {
     private Density steamDensity;
     @JsonProperty
     private Port inputPort = new Port();
-    
+    @JsonProperty 
+    private Port coolantInputPort = new Port();
+    @JsonProperty 
+    private Port coolantOutputPort = new Port();
     
     public Condenser() {
         super();
@@ -53,6 +56,7 @@ public class Condenser extends FailableComponent {
         steamMass = kilograms(0);
         temperature = kelvin(350);
         pressure = pascals(101325);
+        
     }
     
     public Percentage waterLevel() {
@@ -71,6 +75,9 @@ public class Condenser extends FailableComponent {
         return this.inputPort;
     }
     
+    public Port coolantInputPort(){
+        return this.coolantInputPort;
+    }
     
     public void step()
     {
@@ -88,10 +95,15 @@ public class Condenser extends FailableComponent {
                 
                 /*
                  * 4.19 kJ/kg = c_w of water (specific heat of water)
-                 * h_fg = c_w * (t_w - t_0) = specific enthalpy of water
+                 * h_fg = c_w * (t_f - t_0) = enthalpy of water
+                 * t_f = steam saturation temperature = 100C
+                 * t_0 = reference temperature = 0C
+                 * 
+                 * m_s*h_fg = mass of steam * enthalpy = thermal energy
                  */
-                temperature = temperature.plus(new Temperature(((4.19*(100-0))/1000)*steamMass.inKilograms()));
-                 
+                temperature = temperature.plus(new Temperature(((4.19*(inputPort.temperature.inCelsius()-0))/1000)*steamMass.inKilograms()));         
+                temperature = temperature.minus(new Temperature(coolantInputPort.mass.inKilograms()*4.19*coolantInputPort.temperature.inCelsius()/1000));
+                
                 steamMass = kilograms(0);
                
                 pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);

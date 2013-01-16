@@ -74,6 +74,54 @@ public class CondenserTest {
         assertEquals(expResult, result);
 
     }
+    
+    @Test
+    public void shouldKeepConstantTemperatureWithNoCoolantOrSteam(){
+        Condenser instance = new Condenser();
+        Temperature expResult = new Temperature(350);
+        Temperature result = instance.temperature();
+        assertEquals(expResult, result);
+        for(int i=0; i<100; i++)
+        {
+            instance.step();
+            assertEquals(expResult, result);
+        }
+    }
+    
+    @Test
+    public void shouldIncreaseTemperatureWhenNoCoolantPresentAndHasSteam()
+    {
+        Condenser instance = new Condenser();
+        instance.inputPort().pressure = new Pressure(201325);
+        instance.inputPort().mass =  kilograms(5);
+        instance.inputPort().temperature = kelvin(373.15);
+        instance.step();  
+        double previous = instance.temperature().inKelvin();
+        for(int i=0; i<5; i++)
+        {
+            instance.step();
+            assertTrue(instance.temperature().inKelvin()>previous);
+            previous = instance.temperature().inKelvin();
+        }
+    
+    }
+    
+    @Test
+    public void shouldDecreaseTemperatureWhenOnlyHasCoolant()
+    {
+        Condenser instance = new Condenser();
+        instance.coolantInputPort().mass =  kilograms(5);
+        instance.coolantInputPort().temperature = kelvin(285.15);
+        instance.step();  
+        double previous = instance.temperature().inKelvin();
+        for(int i=0; i<100; i++)
+        {
+            instance.step();
+            assertTrue(instance.temperature().inKelvin()<previous);
+            previous = instance.temperature().inKelvin();
+        }
+    
+    }
 
     /**
      * Test of pressure method, of class Condenser.

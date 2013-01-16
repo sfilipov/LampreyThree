@@ -185,6 +185,22 @@ public class CondenserTest {
         assertEquals(instance.waterPort().mass, kilograms(0));
         
     }
+    
+    
+    @Test
+    public void shouldWear()
+    {
+        Condenser instance = new Condenser();
+        
+        double previous = instance.getWear().ratio();
+        for(int i=0; i<100; i++)
+        {
+            instance.step();  
+            assertTrue(instance.getWear().ratio()>previous);
+            previous = instance.getWear().ratio();
+        }
+        
+    }
     /**
      * Test of calculateWearDelta method, of class Condenser.
      

@@ -31,7 +31,7 @@ import eel.seprphase2.Utilities.Volume;
 public class Condenser extends FailableComponent {
 
     private final Mass maximumWaterMass = kilograms(1000);
-    private final Volume reactorVolume = cubicMetres(2);
+    private final Volume condenserVolume = cubicMetres(2);
 
     @JsonProperty
     private Mass waterMass;
@@ -67,6 +67,10 @@ public class Condenser extends FailableComponent {
         return this.pressure;
     }
     
+    public Port inputPort(){
+        return this.inputPort;
+    }
+    
     
     public void step()
     {
@@ -95,7 +99,7 @@ public class Condenser extends FailableComponent {
      */
     private Volume calculateSteamVolume()
     {
-        return reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
+        return condenserVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
     }
     
     @Override

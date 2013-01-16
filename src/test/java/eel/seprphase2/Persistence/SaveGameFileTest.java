@@ -64,4 +64,33 @@ public class SaveGameFileTest {
         
         assertTrue(f.exists());
     }
+    
+    @Test
+    public void shouldNotBreakIfTryingToCreateTheSameFolderTwice()
+    {
+        SaveGameFile instance = new SaveGameFile("test","test");
+        File f = new File(instance.FullSavePath());
+        try
+        {
+            instance.CreateSavePath();
+        }
+        catch(Exception e)
+        {
+            fail(e.getMessage());
+        }
+        
+        assertTrue(f.exists());
+        
+        
+        try
+        {
+            instance.CreateSavePath();
+        }
+        catch(Exception e)
+        {
+            fail(e.getMessage());
+        }
+        
+        assertTrue(f.exists());
+    }
 }

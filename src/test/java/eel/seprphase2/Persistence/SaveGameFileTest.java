@@ -51,7 +51,7 @@ public class SaveGameFileTest {
     @Test
     public void shouldCreateDir()
     {
-        SaveGameFile instance = new SaveGameFile("test","test");
+        SaveGameFile instance = new SaveGameFile();
         File f = new File(instance.FullSavePath());
         try
         {
@@ -68,7 +68,7 @@ public class SaveGameFileTest {
     @Test
     public void shouldNotBreakIfTryingToCreateTheSameFolderTwice()
     {
-        SaveGameFile instance = new SaveGameFile("test","test");
+        SaveGameFile instance = new SaveGameFile();
         File f = new File(instance.FullSavePath());
         try
         {

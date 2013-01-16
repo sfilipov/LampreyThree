@@ -12,11 +12,17 @@ class SaveGameFile {
     private String fileName;
     private String persistData;
     
+    
+    public SaveGameFile()
+    {
+        
+    }
     public SaveGameFile(String fileName, String persistData)
     {
         this.fileName = fileName;
         this.persistData = persistData;
      
+        
         try
         {
             CreateSavePath();
@@ -25,7 +31,6 @@ class SaveGameFile {
         {
             
         }
-        
     }
     
     public void CreateSavePath() throws IOException

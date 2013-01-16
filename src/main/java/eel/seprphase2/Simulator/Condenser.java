@@ -45,6 +45,8 @@ public class Condenser extends FailableComponent {
     private Port steamPort = new Port();
     @JsonProperty
     private Port waterPort = new Port();
+    @JsonProperty
+    private Port previousWaterPort = new Port();
     @JsonProperty 
     private Port coolantInputPort = new Port();
     @JsonProperty 
@@ -89,6 +91,13 @@ public class Condenser extends FailableComponent {
             steamMass = steamMass.plus(steamPort.mass);
             pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
             
+            if((waterPort.pressure.inPascals() > previousWaterPort.pressure.inPascals()) || (waterPort.mass.inKilograms() > previousWaterPort.mass.inKilograms()) )
+            {
+                    waterMass = waterPort.mass;
+                 
+            }
+                
+            
             if(temperature.inKelvin()>373.15)
             {
                 
@@ -117,6 +126,12 @@ public class Condenser extends FailableComponent {
                 waterPort.mass = waterMass;
                 waterPort.pressure = pressure;
                 waterPort.temperature = temperature;
+                
+                previousWaterPort = new Port();
+                previousWaterPort.density = waterPort.density;
+                previousWaterPort.mass = waterPort.mass;
+                previousWaterPort.temperature = waterPort.temperature;
+                previousWaterPort.pressure = waterPort.pressure;
             }
             
    

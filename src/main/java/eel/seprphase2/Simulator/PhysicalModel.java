@@ -44,6 +44,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         for (int i = 0; i < steps; i++) {
             reactor.step();
             turbine.step();
+            
             energyGenerated = joules(energyGenerated.inJoules() + turbine.outputPower());
             reactorToTurbine.step();
         }

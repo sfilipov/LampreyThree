@@ -42,9 +42,9 @@ public class Condenser extends FailableComponent {
     @JsonProperty
     private Pressure pressure;
     @JsonProperty
-    private Port inputPort = new Port();
+    private Port steamPort = new Port();
     @JsonProperty
-    private Port outputPort = new Port();
+    private Port waterPort = new Port();
     @JsonProperty 
     private Port coolantInputPort = new Port();
     @JsonProperty 
@@ -71,8 +71,12 @@ public class Condenser extends FailableComponent {
         return this.pressure;
     }
     
-    public Port inputPort(){
-        return this.inputPort;
+    public Port steamPort(){
+        return this.steamPort;
+    }
+    
+    public Port waterPort(){
+        return this.waterPort;
     }
     
     public Port coolantInputPort(){
@@ -82,7 +86,7 @@ public class Condenser extends FailableComponent {
     public void step()
     {
         if (getFailureState() == FailureState.Normal){
-            steamMass = steamMass.plus(inputPort.mass);
+            steamMass = steamMass.plus(steamPort.mass);
             pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
             
             if(temperature.inKelvin()>373.15)
@@ -101,7 +105,7 @@ public class Condenser extends FailableComponent {
                  * 
                  * m_s*h_fg = mass of steam * enthalpy = thermal energy
                  */
-                temperature = temperature.plus(new Temperature(((4.19*(inputPort.temperature.inCelsius()-temperature.inCelsius()))/1000)*steamMass.inKilograms()));         
+                temperature = temperature.plus(new Temperature(((4.19*(steamPort.temperature.inCelsius()-temperature.inCelsius()))/1000)*steamMass.inKilograms()));         
                 temperature = temperature.plus(new Temperature(coolantInputPort.mass.inKilograms()*4.19*(coolantInputPort.temperature.inCelsius()-temperature.inCelsius())/1000));
                 
                 steamMass = kilograms(0);
@@ -109,10 +113,10 @@ public class Condenser extends FailableComponent {
                 pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
             
                 
-                outputPort.density = Density.ofLiquidWater();
-                outputPort.mass = waterMass;
-                outputPort.pressure = pressure;
-                outputPort.temperature = temperature;
+                waterPort.density = Density.ofLiquidWater();
+                waterPort.mass = waterMass;
+                waterPort.pressure = pressure;
+                waterPort.temperature = temperature;
             }
             
    

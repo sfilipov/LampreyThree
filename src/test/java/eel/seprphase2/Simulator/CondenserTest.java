@@ -61,6 +61,8 @@ public class CondenserTest {
         assertEquals(expResult, result);
        
     }
+    
+    
 
     /**
      * Test of temperature method, of class Condenser.
@@ -92,9 +94,9 @@ public class CondenserTest {
     public void shouldIncreaseTemperatureWhenNoCoolantPresentAndHasSteam()
     {
         Condenser instance = new Condenser();
-        instance.inputPort().pressure = new Pressure(201325);
-        instance.inputPort().mass =  kilograms(5);
-        instance.inputPort().temperature = kelvin(373.15);
+        instance.steamPort().pressure = new Pressure(201325);
+        instance.steamPort().mass =  kilograms(5);
+        instance.steamPort().temperature = kelvin(373.15);
         instance.step();  
         double previous = instance.temperature().inKelvin();
         for(int i=0; i<1000; i++)
@@ -105,6 +107,8 @@ public class CondenserTest {
         }
     
     }
+    
+    
     
     @Test
     public void shouldDecreaseTemperatureWhenOnlyHasCoolant()
@@ -142,8 +146,8 @@ public class CondenserTest {
     public void shouldIncreaseWaterMassWithMoreSteam() {
         
         Condenser instance = new Condenser();
-        instance.inputPort().pressure = new Pressure(201325);
-        instance.inputPort().mass =  kilograms(5);
+        instance.steamPort().pressure = new Pressure(201325);
+        instance.steamPort().mass =  kilograms(5);
         instance.step();    
         Percentage p = instance.waterLevel();
         assertNotSame(instance.waterLevel(), new Percentage(0));
@@ -159,6 +163,28 @@ public class CondenserTest {
         assertSame(instance.waterLevel().points(), new Percentage(0).points());
     }
     
+    
+    @Test
+    public void shouldPutWaterToOutputPortWithSteam()
+    {
+        Condenser instance = new Condenser();
+        instance.steamPort().pressure = new Pressure(201325);
+        instance.steamPort().mass =  kilograms(5);
+        instance.step();    
+        
+        assertTrue(instance.waterPort().mass.hashCode() > 0);
+        
+    }
+    
+    @Test
+    public void shouldNotPutWaterToOutputPortWithNoSteam()
+    {
+        Condenser instance = new Condenser();
+        instance.step();    
+        
+        assertEquals(instance.waterPort().mass, kilograms(0));
+        
+    }
     /**
      * Test of calculateWearDelta method, of class Condenser.
      

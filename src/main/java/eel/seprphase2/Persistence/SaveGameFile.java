@@ -19,10 +19,8 @@ class SaveGameFile {
         
     }
     
-    
-    public SaveGameFile(String fileName, String persistData)
+    public void save(String persistData)
     {
-        this.fileName = fileName;
         this.persistData = persistData;
      
         
@@ -35,6 +33,17 @@ class SaveGameFile {
         {
             
         }
+    }
+    
+    public String load() throws IOException
+    {
+        return Utils.readFile(FilePath());
+    }
+    
+    public SaveGameFile(String fileName)
+    {
+        this.fileName = fileName;
+        
         
         
     }

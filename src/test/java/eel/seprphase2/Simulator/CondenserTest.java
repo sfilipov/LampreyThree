@@ -97,7 +97,7 @@ public class CondenserTest {
         instance.inputPort().temperature = kelvin(373.15);
         instance.step();  
         double previous = instance.temperature().inKelvin();
-        for(int i=0; i<5; i++)
+        for(int i=0; i<1000; i++)
         {
             instance.step();
             assertTrue(instance.temperature().inKelvin()>previous);

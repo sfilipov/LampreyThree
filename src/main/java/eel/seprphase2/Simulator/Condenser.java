@@ -42,9 +42,9 @@ public class Condenser extends FailableComponent {
     @JsonProperty
     private Pressure pressure;
     @JsonProperty
-    private Density steamDensity;
-    @JsonProperty
     private Port inputPort = new Port();
+    @JsonProperty
+    private Port outputPort = new Port();
     @JsonProperty 
     private Port coolantInputPort = new Port();
     @JsonProperty 
@@ -101,13 +101,18 @@ public class Condenser extends FailableComponent {
                  * 
                  * m_s*h_fg = mass of steam * enthalpy = thermal energy
                  */
-                temperature = temperature.plus(new Temperature(((4.19*(inputPort.temperature.inCelsius()-0))/1000)*steamMass.inKilograms()));         
-                temperature = temperature.minus(new Temperature(coolantInputPort.mass.inKilograms()*4.19*coolantInputPort.temperature.inCelsius()/1000));
+                temperature = temperature.plus(new Temperature(((4.19*(inputPort.temperature.inCelsius()-temperature.inCelsius()))/1000)*steamMass.inKilograms()));         
+                temperature = temperature.plus(new Temperature(coolantInputPort.mass.inKilograms()*4.19*(coolantInputPort.temperature.inCelsius()-temperature.inCelsius())/1000));
                 
                 steamMass = kilograms(0);
                
                 pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
             
+                
+                outputPort.density = Density.ofLiquidWater();
+                outputPort.mass = waterMass;
+                outputPort.pressure = pressure;
+                outputPort.temperature = temperature;
             }
             
    

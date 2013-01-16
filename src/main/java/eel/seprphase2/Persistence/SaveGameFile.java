@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Persistence;
 import java.io.*;
+
 /**
  *
  * @author James
@@ -17,6 +18,8 @@ class SaveGameFile {
     {
         
     }
+    
+    
     public SaveGameFile(String fileName, String persistData)
     {
         this.fileName = fileName;
@@ -26,11 +29,26 @@ class SaveGameFile {
         try
         {
             CreateSavePath();
+            Store();
         }
         catch(Exception e)
         {
             
         }
+        
+        
+    }
+    
+    public String FilePath()
+    {
+        return FullSavePath()+fileName;
+    }
+    
+    public void Store() throws IOException
+    {
+        PrintWriter out = new PrintWriter(FilePath());
+        out.print(persistData);
+        out.close();
     }
     
     public void CreateSavePath() throws IOException

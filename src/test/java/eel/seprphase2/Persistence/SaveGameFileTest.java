@@ -5,13 +5,14 @@
 package eel.seprphase2.Persistence;
 
 import java.io.File;
+import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-
+import eel.seprphase2.Persistence.Utils;
 /**
  *
  * @author James
@@ -92,5 +93,37 @@ public class SaveGameFileTest {
         }
         
         assertTrue(f.exists());
+    }
+    
+    @Test
+    public void shouldCreateAnEmptyFile()
+    {
+        
+        Calendar cal = Calendar.getInstance();
+        long time = cal.getTimeInMillis();
+        SaveGameFile instance = new SaveGameFile("test_"+time,"");
+        
+        assertTrue(new File(instance.FilePath()).exists());
+    }
+    
+    @Test
+    public void shouldCreateAFileWithContent()
+    {
+        
+        Calendar cal = Calendar.getInstance();
+        long time = cal.getTimeInMillis();
+        SaveGameFile instance = new SaveGameFile("test_"+time,"hello");
+        
+        assertTrue(new File(instance.FilePath()).exists());
+        
+        try
+        {
+            assertEquals(Utils.readFile(instance.FilePath()),"hello");
+        }
+        catch(Exception e)
+        {
+            fail("Reading file failed");
+        }
+        
     }
 }

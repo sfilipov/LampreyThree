@@ -9,14 +9,15 @@ import eel.seprphase2.Utilities.Percentage;
  * @author Marius Dumetrescu
  */
 public abstract class FailableComponent {
-    private FailureState failureState;
-    private Percentage wear;
+    private FailureState failureState;      //The state of the component
+    private Percentage wear;                //Current wear level - capped at 100%
         
     /**
      * Constructor for the FailableComponent. Sets default percentage to 0 and a normal FailureState
      */
     public FailableComponent()
     {
+        //Initialize to a normal state
         failureState = FailureState.Normal;
         wear = new Percentage(0);
     }
@@ -25,8 +26,7 @@ public abstract class FailableComponent {
      * getFailureState returns the component's failureState of type FailureState.
      * @return The current failure state of this FailableComponent
      */
-    public FailureState getFailureState()
-    {
+    public FailureState getFailureState(){
         return this.failureState;
     }
     

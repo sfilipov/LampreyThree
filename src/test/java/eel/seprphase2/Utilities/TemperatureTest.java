@@ -58,4 +58,30 @@ public class TemperatureTest {
     public void hashCodeShouldBeEqualToDegreesCelsius() {
         assertEquals(786, temperature.hashCode());
     }
+    
+    /**
+     * Test of plus method, of class Temperature.
+     */
+    @Test
+    public void testPlus() {
+        Temperature other = new Temperature(10);
+        Temperature instance = new Temperature(10);
+        Temperature expResult = new Temperature(20);
+        Temperature result = instance.plus(other);
+        assertEquals(expResult, result);
+        
+    }
+
+    /**
+     * Test of minus method, of class Temperature.
+     */
+    @Test
+    public void testMinus() {
+        
+        Temperature other = new Temperature(10);
+        Temperature instance = new Temperature(10);
+        Temperature expResult = new Temperature();
+        Temperature result = instance.minus(other);
+        assertEquals(expResult, result);
+    }
 }

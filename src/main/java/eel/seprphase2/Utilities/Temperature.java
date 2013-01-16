@@ -56,6 +56,14 @@ public class Temperature {
         }
         return true;
     }
+    
+    public Temperature plus(Temperature other) {
+        return new Temperature(this.degreesKelvin + other.degreesKelvin);
+    }
+    
+    public Temperature minus(Temperature other) {
+        return new Temperature(this.degreesKelvin - other.degreesKelvin);
+    }
 
     @Override
     public int hashCode() {

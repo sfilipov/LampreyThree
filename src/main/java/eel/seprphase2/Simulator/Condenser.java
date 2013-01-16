@@ -72,8 +72,30 @@ public class Condenser extends FailableComponent {
     {
         if (getFailureState() == FailureState.Normal){
             steamMass = steamMass.plus(inputPort.mass);
+            pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
+            
+            
+            
+            waterMass = waterMass.plus(steamMass);
+            steamMass = kilograms(0);
+            
            
+            pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
+            
+            
+            Percentage wearDelta = calculateWearDelta();
+            setWear(wearDelta);
         }
+        
+        
+    }
+    
+    /*
+     * @Todo subtract water volume
+     */
+    private Volume calculateSteamVolume()
+    {
+        return reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
     }
     
     @Override

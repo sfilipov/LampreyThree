@@ -78,14 +78,27 @@ public class Condenser extends FailableComponent {
             steamMass = steamMass.plus(inputPort.mass);
             pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
             
+            if(temperature.inKelvin()>373.15)
+            {
+                
+            }
+            else
+            {
+                waterMass = waterMass.plus(steamMass);
+                
+                /*
+                 * 4.19 kJ/kg = c_w of water (specific heat of water)
+                 * h_fg = c_w * (t_w - t_0) = specific enthalpy of water
+                 */
+                temperature = temperature.plus(new Temperature(((4.19*(100-0))/1000)*steamMass.inKilograms()));
+                 
+                steamMass = kilograms(0);
+               
+                pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
             
+            }
             
-            waterMass = waterMass.plus(steamMass);
-            steamMass = kilograms(0);
-            
-           
-            pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
-            
+   
             
             Percentage wearDelta = calculateWearDelta();
             setWear(wearDelta);

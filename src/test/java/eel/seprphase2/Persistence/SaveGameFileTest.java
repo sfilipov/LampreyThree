@@ -197,4 +197,48 @@ public class SaveGameFileTest {
         }
         
     }
+    
+    @Test
+    public void shouldListOneFileWithARandomUserName()
+    {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        
+        
+        SaveGameFile instance = new SaveGameFile("sepr.teameel."+time+".0.nuke");
+        instance.save("");
+        
+        assertTrue(SaveGameFile.listSaveGames(time).length==1);
+    }
+    
+    
+    @Test
+    public void shouldListTwoFIlesWithARandomAndSequentialUserName()
+    {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        
+        
+        SaveGameFile instance1 = new SaveGameFile("sepr.teameel."+time+".0.nuke");
+        instance1.save("");
+        SaveGameFile instance2 = new SaveGameFile("sepr.teameel."+time+".1.nuke");
+        instance2.save("");
+        
+        artifacts.add(instance1.filePath());
+        artifacts.add(instance2.filePath());
+        
+        assertTrue(SaveGameFile.listSaveGames(time).length==2);
+    }
+    
+    
+    @Test
+    public void shouldListNoFilesWithARandomUserName()
+    {
+        
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        assertTrue(SaveGameFile.listSaveGames(time).length==0);
+    }
+    
+    
 }

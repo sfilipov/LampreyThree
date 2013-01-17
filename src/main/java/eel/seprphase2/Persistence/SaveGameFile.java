@@ -1,5 +1,6 @@
 package eel.seprphase2.Persistence;
 import java.io.*;
+import java.util.ArrayList;
 
 /**
  * SaveGameFile is a persistence provider that saves the game file to the user's file system.
@@ -98,8 +99,33 @@ class SaveGameFile implements ISaveGame {
      * Returns the folder on disk in which game files will be saved to 
      * @return Absolute path to folder with trailing slash
      */
-    public String savePath()
+    public static String savePath()
     {
         return System.getProperty("user.home")+System.getProperty("file.separator")+"sepr.teameel.gamesaves"+System.getProperty("file.separator");
+    }
+    
+    
+   /**
+    * Lists all files stored under a player's username in the default save path
+    * @param userName The Player's username
+    * @return A list of file names (not paths) in the directory that match the username
+    */
+    public static String[] listSaveGames(String userName) {
+        File saveDir = new File(savePath());
+        File[] allFiles = saveDir.listFiles(); 
+        ArrayList<String> acceptableSaveGameFiles = new ArrayList<String>();
+        for(File file : allFiles)
+        {
+            if(file.isFile())
+            {
+                //sepr.teameel. = 13 chars long
+                if(file.getName().toLowerCase().endsWith(".nuke") && file.getName().startsWith(userName, 13))
+                {
+                    acceptableSaveGameFiles.add(file.getName());
+                }
+                
+            }
+        }
+        return acceptableSaveGameFiles.toArray(new String[acceptableSaveGameFiles.size()]);
     }
 }

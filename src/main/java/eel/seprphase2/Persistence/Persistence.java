@@ -46,4 +46,15 @@ public class Persistence {
         Calendar cal = Calendar.getInstance();
         return "sepr.teameel."+ username + "." + cal.getTimeInMillis() +".nuke";
     }
+    
+    /**
+     * Pass-through to get saved games from data source
+     * @see SaveGameFile
+     * @param username
+     * @return List of save game files
+     */
+    public static String[] GetSaveGames(String username)
+    {
+        return SaveGameFile.listSaveGames(username);
+    }
 }

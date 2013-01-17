@@ -107,10 +107,10 @@ class SaveGameFile implements ISaveGame {
     
    /**
     * Lists all files stored under a player's username in the default save path
-    * @param userName The Player's username
+    * @param username The Player's username
     * @return A list of file names (not paths) in the directory that match the username
     */
-    public static String[] listSaveGames(String userName) {
+    public static String[] listSaveGames(String username) {
         File saveDir = new File(savePath());
         File[] allFiles = saveDir.listFiles(); 
         ArrayList<String> acceptableSaveGameFiles = new ArrayList<String>();
@@ -119,7 +119,8 @@ class SaveGameFile implements ISaveGame {
             if(file.isFile())
             {
                 //sepr.teameel. = 13 chars long
-                if(file.getName().toLowerCase().endsWith(".nuke") && file.getName().startsWith(userName, 13))
+                //if(file.getName().toLowerCase().endsWith(".nuke") && file.getName().startsWith(userName, 13))
+                if(file.getName().matches("sepr.teameel."+username+".([0-9]+).nuke") )
                 {
                     acceptableSaveGameFiles.add(file.getName());
                 }

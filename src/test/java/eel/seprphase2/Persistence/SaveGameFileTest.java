@@ -232,6 +232,28 @@ public class SaveGameFileTest {
     
     
     @Test
+    public void shouldListTwoFIlesWithAUniqueAndSequentialUserName()
+    {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        
+        
+        SaveGameFile instance1 = new SaveGameFile("sepr.teameel."+time+".0.nuke");
+        instance1.save("");
+        SaveGameFile instance2 = new SaveGameFile("sepr.teameel."+time+"1.1.nuke");
+        instance2.save("");
+        SaveGameFile instance3 = new SaveGameFile("sepr.teameel."+time+".1.nuke");
+        instance3.save("");
+        
+        artifacts.add(instance1.filePath());
+        artifacts.add(instance2.filePath());
+        artifacts.add(instance3.filePath());
+        
+        assertTrue(SaveGameFile.listSaveGames(time).length==2);
+    }
+    
+    
+    @Test
     public void shouldListNoFilesWithARandomUserName()
     {
         
@@ -239,6 +261,8 @@ public class SaveGameFileTest {
         String time = String.valueOf(cal.getTimeInMillis());
         assertTrue(SaveGameFile.listSaveGames(time).length==0);
     }
+    
+    
     
     
 }

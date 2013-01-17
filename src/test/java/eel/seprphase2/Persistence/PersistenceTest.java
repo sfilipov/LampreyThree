@@ -4,6 +4,8 @@
  */
 package eel.seprphase2.Persistence;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,6 +24,8 @@ public class PersistenceTest {
     public PersistenceTest() {
     }
     
+    ArrayList<String> artifacts;
+    
     @BeforeClass
     public static void setUpClass() {
     }
@@ -32,11 +36,22 @@ public class PersistenceTest {
     
     @Before
     public void setUp() {
-        
+        artifacts = new ArrayList<String>();
     }
     
     @After
     public void tearDown() {
+        for(String path:artifacts)
+        {
+           
+            File rem = new File(path);
+            if(rem.exists())
+            {
+                rem.delete();
+            }
+           
+        }
+        
     }
 
     /**
@@ -94,5 +109,36 @@ public class PersistenceTest {
         String resultFileName = Persistence.GenerateFileName(username);
         String resultFileName2 = Persistence.GenerateFileName(username);
         assertTrue(resultFileName.substring(0,21).equals(resultFileName2.substring(0,21)));
+    }
+    
+    @Test 
+    public void shouldCreateASaveGameForSomeUser() {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        String file = Persistence.SaveGameState("test_"+time, "test");
+        artifacts.add(file);
+        assertTrue(Persistence.GetSaveGames("test_"+time).length==1);
+        
+    }
+    
+    
+    
+    @Test 
+    public void shouldCreateASaveGameAndReadCorrectContent() {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        String file = Persistence.SaveGameState("test_"+time, "test");
+        
+        assertTrue(Persistence.GetSaveGames("test_"+time).length==1);
+        artifacts.add(file);
+        
+        try
+        {
+            assertEquals(Persistence.LoadGameState(file),"test");
+        }
+        catch(IOException e)
+        {
+            fail("Could not read target file");
+        }
     }
 }

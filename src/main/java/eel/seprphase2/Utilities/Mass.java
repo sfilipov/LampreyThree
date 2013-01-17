@@ -19,38 +19,78 @@ public class Mass {
     @JsonProperty
     private final double kilograms;
     
+    /**
+     *
+     * @param moles
+     * @return
+     */
     public static Mass fromMolesOfWater(double moles) {
         return new Mass(moles * 18 / 1000);
     }
     
+    /**
+     *
+     */
     public Mass() {
         kilograms = 0;
     }
     
+    /**
+     *
+     * @param kilograms
+     */
     public Mass(double kilograms) {
         this.kilograms = kilograms;
     }
     
+    /**
+     *
+     * @return
+     */
     public double inKilograms() {
         return kilograms;
     }
     
+    /**
+     *
+     * @return
+     */
     public double inMolesOfWater() {
         return kilograms * 1000 / 18;
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Mass plus(Mass other) {
         return new Mass(kilograms + other.kilograms);
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Mass minus(Mass other) {
         return new Mass(kilograms - other.kilograms);
     }
     
+    /**
+     *
+     * @param volume
+     * @return
+     */
     public Density densityAt(Volume volume) {
         return new Density(kilograms / volume.inCubicMetres());
     }
     
+    /**
+     *
+     * @param density
+     * @return
+     */
     public Volume volumeAt(Density density) {
         return new Volume(kilograms / density.inKilogramsPerCubicMetre());
     }

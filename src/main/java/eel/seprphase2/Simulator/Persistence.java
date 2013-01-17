@@ -19,14 +19,34 @@ public class Persistence {
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     *
+     * @param obj
+     * @return
+     * @throws JsonProcessingException
+     */
     public String serialize(Object obj) throws JsonProcessingException {
         return mapper.writeValueAsString(obj);
     }
 
+    /**
+     *
+     * @param representation
+     * @return
+     * @throws JsonParseException
+     * @throws JsonMappingException
+     * @throws IOException
+     */
     public PhysicalModel deserializePhysicalModel(String representation) throws JsonParseException, JsonMappingException, IOException {
         return mapper.readValue(representation, PhysicalModel.class);
     }
 
+    /**
+     *
+     * @param representation
+     * @return
+     * @throws IOException
+     */
     public Percentage deserializePercentage(String representation) throws IOException {
         return mapper.readValue(representation, Percentage.class);
     }

@@ -10,5 +10,9 @@ package eel.seprphase2.TextInterface;
  */
 public interface LineReader {
 
+    /**
+     *
+     * @return
+     */
     public String readLine();
 }

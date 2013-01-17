@@ -10,5 +10,9 @@ package eel.seprphase2.TextInterface;
  */
 public interface TextRenderer {
 
+    /**
+     *
+     * @param s
+     */
     public void outputLine(String s);
 }

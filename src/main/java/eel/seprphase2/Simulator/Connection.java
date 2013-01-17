@@ -30,12 +30,21 @@ public class Connection extends Valve{
         area = 0;
     }
 
+    /**
+     *
+     * @param first
+     * @param second
+     * @param area
+     */
     public Connection(Port first, Port second, double area) {
         this.first = first;
         this.second = second;
         this.area = area;
     }
 
+    /**
+     *
+     */
     public void step() {
         Port input, output;
         if (getOpen()){

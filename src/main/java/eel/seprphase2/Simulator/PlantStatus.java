@@ -15,17 +15,45 @@ import eel.seprphase2.Utilities.Temperature;
  */
 public interface PlantStatus {
 
+    /**
+     *
+     * @return
+     */
     public Percentage controlRodPosition();
 
+    /**
+     *
+     * @return
+     */
     public Pressure reactorPressure();
 
+    /**
+     *
+     * @return
+     */
     public Temperature reactorTemperature();
 
+    /**
+     *
+     * @return
+     */
     public Percentage reactorWaterLevel();
     
+    /**
+     *
+     * @return
+     */
     public Energy energyGenerated();
     
+    /**
+     *
+     * @param open
+     */
     public void setReactorToTurbine(boolean open);
     
+    /**
+     *
+     * @return
+     */
     public boolean getReactorToTurbine();
 }

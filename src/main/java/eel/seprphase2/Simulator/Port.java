@@ -16,8 +16,20 @@ import static eel.seprphase2.Utilities.Units.*;
 @JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class Port {
 
+    /**
+     *
+     */
     public Density density = Density.ofLiquidWater();
+    /**
+     *
+     */
     public Pressure pressure = pascals(101325);
+    /**
+     *
+     */
     public Temperature temperature = kelvin(300);
+    /**
+     *
+     */
     public Mass mass = kilograms(0);
 }

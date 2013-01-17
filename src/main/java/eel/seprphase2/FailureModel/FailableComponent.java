@@ -64,11 +64,11 @@ public abstract class FailableComponent {
             wear = wear.plus(wearDelta);
         }
        else {
-            wear = new Percentage(100);
+            wear = new Percentage(100);     //Cap at 100%
         }
        if (wearDelta.points() == 0)
        {
-           wear = new Percentage(0);
+           wear = new Percentage(0);        //Cap at 0%
        }
        
     }

@@ -52,6 +52,9 @@ public class Condenser extends FailableComponent {
     @JsonProperty 
     private Port coolantOutputPort = new Port();
     
+    /**
+     *
+     */
     public Condenser() {
         super();
         waterMass = kilograms(0);
@@ -61,30 +64,57 @@ public class Condenser extends FailableComponent {
         
     }
     
+    /**
+     *
+     * @return
+     */
     public Percentage waterLevel() {
         return new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
     }
 
+    /**
+     *
+     * @return
+     */
     public Temperature temperature() {
         return this.temperature;
     }
 
+    /**
+     *
+     * @return
+     */
     public Pressure pressure() {
         return this.pressure;
     }
     
+    /**
+     *
+     * @return
+     */
     public Port steamPort(){
         return this.steamPort;
     }
     
+    /**
+     *
+     * @return
+     */
     public Port waterPort(){
         return this.waterPort;
     }
     
+    /**
+     *
+     * @return
+     */
     public Port coolantInputPort(){
         return this.coolantInputPort;
     }
     
+    /**
+     *
+     */
     public void step()
     {
         if (getFailureState() == FailureState.Normal){
@@ -151,6 +181,10 @@ public class Condenser extends FailableComponent {
         return condenserVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public Percentage calculateWearDelta()
     {

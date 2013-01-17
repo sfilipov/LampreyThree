@@ -21,18 +21,33 @@ public class Temperature {
     @JsonProperty
     private final double degreesKelvin;
 
+    /**
+     *
+     */
     public Temperature() {
         degreesKelvin = 0;
     }
     
+    /**
+     *
+     * @param degreesKelvin
+     */
     public Temperature(double degreesKelvin) {
         this.degreesKelvin = degreesKelvin;
     }
     
+    /**
+     *
+     * @return
+     */
     public double inCelsius() {
         return this.degreesKelvin - kelvinOffset;
     }
 
+    /**
+     *
+     * @return
+     */
     public double inKelvin() {
         return this.degreesKelvin;
     }
@@ -57,10 +72,20 @@ public class Temperature {
         return true;
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Temperature plus(Temperature other) {
         return new Temperature(this.degreesKelvin + other.degreesKelvin);
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Temperature minus(Temperature other) {
         return new Temperature(this.degreesKelvin - other.degreesKelvin);
     }

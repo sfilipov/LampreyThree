@@ -21,15 +21,28 @@ public class FuelPile {
     @JsonProperty
     private Percentage controlRodPosition = new Percentage(0);
 
+    /**
+     *
+     * @param extracted
+     */
     public void moveControlRods(Percentage extracted) {
         controlRodPosition = extracted;
 
     }
 
+    /**
+     *
+     * @param seconds
+     * @return
+     */
     public int output(int seconds) {
         return (int)(maximumOutput * controlRodPosition.ratio() * seconds);
     }
     
+    /**
+     *
+     * @return
+     */
     public Percentage controlRodPosition() {
         return this.controlRodPosition;
     }

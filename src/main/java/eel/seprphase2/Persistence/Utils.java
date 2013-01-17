@@ -20,6 +20,12 @@ public class Utils {
      * @author erickson
      * @url http://stackoverflow.com/questions/326390/how-to-create-a-java-string-from-the-contents-of-a-file
      */
+    /**
+     *
+     * @param path
+     * @return
+     * @throws IOException
+     */
     public static String readFile(String path) throws IOException {
         FileInputStream stream = new FileInputStream(new File(path));
         try {

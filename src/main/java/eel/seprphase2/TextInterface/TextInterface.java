@@ -19,6 +19,13 @@ public class TextInterface {
     private TextRenderer textRenderer;
     private LineReader lineReader;
 
+    /**
+     *
+     * @param plantController
+     * @param plantStatus
+     * @param textRenderer
+     * @param lineReader
+     */
     public TextInterface(PlantController plantController,
                          PlantStatus plantStatus,
                          TextRenderer textRenderer,
@@ -29,12 +36,18 @@ public class TextInterface {
         this.lineReader = lineReader;
     }
     
+    /**
+     *
+     */
     public void askForUsername(){
         Parser parser = new Parser(plantController, textRenderer);
         textRenderer.outputLine("Please Enter Username:");
         parser.setUsername(lineReader.readLine());
     }
 
+    /**
+     *
+     */
     public void showStatus() {
         textRenderer.outputLine("Control Rod Position: " +
                                 plantStatus.controlRodPosition());
@@ -45,6 +58,9 @@ public class TextInterface {
         textRenderer.outputLine("Energy Generated: " + plantStatus.energyGenerated());
     }
 
+    /**
+     *
+     */
     public void processCommand() {
         Parser parser = new Parser(plantController, textRenderer);
         parser.parseCommand(lineReader.readLine());

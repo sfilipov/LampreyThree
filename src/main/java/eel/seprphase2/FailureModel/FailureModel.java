@@ -40,7 +40,7 @@ public class FailureModel {
      * TODO: future teams to add software fail routine.
      */
     public void failStateCheck() {
-        int failValue = failChance.nextInt(10000);
+        int failValue = failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
         int componentsFailChance = 0;
         for (int i = 0; i < components.size(); i++) {
             componentsFailChance += components.get(i).getWear().points()/components.size();

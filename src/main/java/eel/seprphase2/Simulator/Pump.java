@@ -20,12 +20,20 @@ public class Pump extends FailableComponent {
     private Mass capacity = kilograms(2);
     private boolean status = true;
 
+    /**
+     *
+     * @param input
+     * @param output
+     */
     public Pump(Port input, Port output) {
         inputPort = input;
         outputPort = output;
         
     }
 
+    /**
+     *
+     */
     public void step() {
 
         if (status) {
@@ -42,19 +50,35 @@ public class Pump extends FailableComponent {
         
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Percentage calculateWearDelta() {
         return percent(1);
     }
 
+    /**
+     *
+     * @param newStatus
+     */
     public void setStatus(boolean newStatus) {
         status = newStatus;
     }
 
+    /**
+     *
+     * @param newCapacity
+     */
     public void setCapacity(Mass newCapacity) {
         capacity = newCapacity;
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean getStatus()
     {
         return status;

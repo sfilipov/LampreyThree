@@ -29,10 +29,16 @@ public class Turbine extends FailableComponent {
     @JsonIgnore
     private static PlantController controller;   
     
+    /**
+     *
+     */
     public Turbine() {
         super();
     }
 
+    /**
+     *
+     */
     public void step() {
 
         Pressure deltaPressure = inputPort.pressure
@@ -50,18 +56,34 @@ public class Turbine extends FailableComponent {
             }
     }
 
+    /**
+     *
+     * @return
+     */
     public double outputPower() {
         return outputPower;
     }
 
+    /**
+     *
+     * @return
+     */
     public Port inputPort() {
         return inputPort;
     }
 
+    /**
+     *
+     * @return
+     */
     public Port outputPort() {
         return outputPort;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Percentage calculateWearDelta() {
         return new Percentage(1);

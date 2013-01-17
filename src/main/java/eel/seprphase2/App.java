@@ -14,6 +14,11 @@ import java.io.IOException;
  */
 public class App {
 
+    /**
+     * The main entry point for the application
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();

@@ -12,26 +12,52 @@ public class Volume {
     
     private final double cubicMetres;
     
+    /**
+     *
+     */
     public Volume() {
         cubicMetres = 0;
     }
     
+    /**
+     *
+     * @param cubicMetres
+     */
     public Volume(double cubicMetres) {
         this.cubicMetres = cubicMetres;
     }
     
+    /**
+     *
+     * @return
+     */
     public double inCubicMetres() {
         return this.cubicMetres;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Volume plus(Volume other) {
         return new Volume(cubicMetres + other.cubicMetres);
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Volume minus(Volume other) {
         return new Volume(cubicMetres - other.cubicMetres);
     }
     
+    /**
+     *
+     * @param density
+     * @return
+     */
     public Mass massAt(Density density) {
         return new Mass(cubicMetres * density.inKilogramsPerCubicMetre());
     }

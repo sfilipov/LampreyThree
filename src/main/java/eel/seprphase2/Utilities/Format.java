@@ -12,6 +12,11 @@ import java.text.DecimalFormat;
  */
 public class Format {
 
+    /**
+     *
+     * @param number
+     * @return
+     */
     public static String toThreeDecimalPlaces(double number) {
         DecimalFormat form = new DecimalFormat("#.###");
         return form.format(number);

@@ -15,11 +15,19 @@ public class Valve implements IValve{
     @JsonProperty
     private boolean open = true;
     
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean getOpen() {
         return open;
        }
 
+    /**
+     *
+     * @param Open
+     */
     @Override
     public void setOpen(boolean Open) {
         open = Open;

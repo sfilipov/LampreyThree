@@ -18,22 +18,43 @@ public class Energy {
     @JsonProperty
     private double joules;
 
+    /**
+     *
+     */
     public Energy() {
         joules = 0;
     }
     
+    /**
+     *
+     * @param joules
+     */
     public Energy(double joules) {
         this.joules = joules;
     }
 
+    /**
+     *
+     * @return
+     */
     public double inJoules() {
         return joules;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Energy plus(Energy other) {
         return new Energy(joules + other.joules);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Energy minus(Energy other) {
         return new Energy(joules - other.joules);
     }

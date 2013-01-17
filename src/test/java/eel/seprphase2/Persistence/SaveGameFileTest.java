@@ -5,6 +5,7 @@
 package eel.seprphase2.Persistence;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,12 +16,13 @@ import static org.junit.Assert.*;
 import eel.seprphase2.Persistence.Utils;
 import java.security.SecureRandom;
 import java.math.BigInteger;
+import java.util.ArrayList;
 /**
  *
  * @author James
  */
 public class SaveGameFileTest {
-    
+    ArrayList<String> artifacts;
     public SaveGameFileTest() {
     }
     
@@ -34,10 +36,22 @@ public class SaveGameFileTest {
     
     @Before
     public void setUp() {
+        artifacts = new ArrayList<String>();
     }
     
     @After
     public void tearDown() {
+        for(String path:artifacts)
+        {
+           
+            File rem = new File(path);
+            if(rem.exists())
+            {
+                rem.delete();
+            }
+           
+        }
+        
     }
 
     /**
@@ -55,10 +69,11 @@ public class SaveGameFileTest {
     public void shouldCreateDir()
     {
         SaveGameFile instance = new SaveGameFile();
-        File f = new File(instance.FullSavePath());
+        File f = new File(instance.savePath());
+        
         try
         {
-            instance.CreateSavePath();
+            instance.createSavePath();
         }
         catch(Exception e)
         {
@@ -72,10 +87,11 @@ public class SaveGameFileTest {
     public void shouldNotBreakIfTryingToCreateTheSameFolderTwice()
     {
         SaveGameFile instance = new SaveGameFile();
-        File f = new File(instance.FullSavePath());
+        File f = new File(instance.savePath());
+        
         try
         {
-            instance.CreateSavePath();
+            instance.createSavePath();
         }
         catch(Exception e)
         {
@@ -87,7 +103,7 @@ public class SaveGameFileTest {
         
         try
         {
-            instance.CreateSavePath();
+            instance.createSavePath();
         }
         catch(Exception e)
         {
@@ -105,7 +121,8 @@ public class SaveGameFileTest {
         long time = cal.getTimeInMillis();
         SaveGameFile instance = new SaveGameFile("test_"+time);
         instance.save("");
-        assertTrue(new File(instance.FilePath()).exists());
+        artifacts.add(instance.filePath());
+        assertTrue(new File(instance.filePath()).exists());
     }
     
     @Test
@@ -116,12 +133,13 @@ public class SaveGameFileTest {
         long time = cal.getTimeInMillis();
         SaveGameFile instance = new SaveGameFile("test_"+time);
         instance.save("hello");
+        artifacts.add(instance.filePath());
         
-        assertTrue(new File(instance.FilePath()).exists());
+        assertTrue(new File(instance.filePath()).exists());
         
         try
         {
-            assertEquals(Utils.readFile(instance.FilePath()),"hello");
+            assertEquals(Utils.readFile(instance.filePath()),"hello");
         }
         catch(Exception e)
         {
@@ -138,8 +156,8 @@ public class SaveGameFileTest {
         long time = cal.getTimeInMillis();
         SaveGameFile instance = new SaveGameFile("test_"+time);
         instance.save("hello");
-        
-        assertTrue(new File(instance.FilePath()).exists());
+        artifacts.add(instance.filePath());
+        assertTrue(new File(instance.filePath()).exists());
         
         
         
@@ -166,8 +184,8 @@ public class SaveGameFileTest {
         long time = cal.getTimeInMillis();
         SaveGameFile instance = new SaveGameFile("test_"+time);
         instance.save(rdm);
-        
-        assertTrue(new File(instance.FilePath()).exists());
+        artifacts.add(instance.filePath());
+        assertTrue(new File(instance.filePath()).exists());
         
         try
         {

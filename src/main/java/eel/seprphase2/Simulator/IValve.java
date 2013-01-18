@@ -9,6 +9,14 @@ package eel.seprphase2.Simulator;
  * @author james
  */
 public interface IValve {
+    /**
+     *
+     * @param Open
+     */
     public void setOpen(boolean Open);
+    /**
+     *
+     * @return
+     */
     public boolean getOpen();
 }

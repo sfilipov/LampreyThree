@@ -16,12 +16,12 @@ public class Valve implements IValve{
     private boolean open = true;
     
     @Override
-    public boolean getOpen() {
-        return open;
-       }
-
-    @Override
     public void setOpen(boolean Open) {
         open = Open;
+       }
+    
+    @Override
+    public boolean getOpen() {
+        return open;
        }
 }

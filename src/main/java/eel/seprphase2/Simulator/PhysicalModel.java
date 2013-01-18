@@ -55,13 +55,14 @@ public class PhysicalModel implements PlantController, PlantStatus {
         components.add(0, turbine);
         components.add(1, reactor);
         components.add(2, condenser);
-        reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.04);
-        turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.04);
+        reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.05);
+        turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.05);
         condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
         reactorToCondenser = new Pump(reactor.outputPort(), condenser.inputPort());
         reactorToCondenser.setStatus(false);
         
-        
+        condenser.coolantInputPort().temperature = kelvin(310.15);
+        condenser.inputPort().mass = kilograms(5);
         
     }
     

@@ -21,7 +21,7 @@ public class Pump extends FailableComponent {
     @JsonProperty
     private Port outputPort;
     @JsonProperty
-    private Mass capacity = kilograms(4);
+    private Mass capacity = kilograms(3);
     @JsonProperty
     private boolean status = true;
 

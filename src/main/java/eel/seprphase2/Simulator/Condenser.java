@@ -17,13 +17,17 @@ import static eel.seprphase2.Utilities.Units.*;
 public class Condenser extends FailableComponent {
     
     @JsonProperty
+    private Mass steamMass;
+    @JsonProperty
     private Mass waterMass;
     @JsonProperty
     private final Mass maximumWaterMass = kilograms(1000);
     @JsonProperty
-    private Port inputPort = new Port();
-    @JsonProperty
     private Port outputPort = new Port();
+    @JsonProperty
+    private Port steamInputPort = new Port();
+    @JsonProperty
+    private Port coolantInputPort = new Port();
     @JsonProperty
     private Port reactorInputPort = new Port();
     @JsonProperty
@@ -36,42 +40,117 @@ public class Condenser extends FailableComponent {
     private Percentage waterLevel = percent(0);
 
     public Condenser() {
+        pressure = pascals(101325);
         waterMass = kilograms(0);
-        inputPort.mass = kilograms(0);
+        steamMass = kilograms(0);
+        /*
+        steamInputPort.mass = kilograms(0);
         reactorInputPort.mass = kilograms(0);
         outputPort.mass = kilograms(0);
-        inputPort.temperature = kelvin(0);
+        steamInputPort.temperature = kelvin(0);
         reactorInputPort.temperature = kelvin(0);
-        temperature = kelvin(373.15);
+        */
+        temperature = kelvin(298.15);  //Start at room temp
     }
 
     public void step() {
-        waterMass = inputPort.mass;
+        waterMass = kilograms(0);
+
+        //steamMass = steamMass.plus(steamInputPort.mass);
+        steamMass = steamInputPort.mass;
         
-        System.out.println("Condenser Steam Mass: " + inputPort.mass);
         
-        if (inputPort.mass.inKilograms() > 0 || reactorInputPort.mass.inKilograms() > 0){
-        calculateNewTemperature(inputPort);       
-        calculateNewTemperature(reactorInputPort);
+        System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
+        
+        if (reactorInputPort.mass.inKilograms() > 0)
+        {
+            calculateNewTemperature(reactorInputPort);
         }
-        outputPort.mass = waterMass;
-        reduceTemperature(tempDelta);
-        outputPort.temperature = temperature;
+        else if(steamInputPort.mass.inKilograms()>0)
+        {
+            calculateNewTemperature(steamInputPort);        
+        }
+        calculateNewTemperature(coolantInputPort);
+     
+           
         
-        pressure = inputPort.pressure;
-        waterLevel = new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
+        pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
+      
+        
+        
+        try
+        {
+            
+            if(steamMass.inKilograms()>0)
+            {
+                
+                waterMass = waterMass.plus(steamMass);
+                steamMass = kilograms(0);
+            }
+        
+            if(reactorInputPort.mass.inKilograms() >0)
+            {
+                waterMass = waterMass.plus(reactorInputPort.mass);
+            }
+            
+            waterLevel = new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
+            
+        }
+        catch(Exception e)
+        {
+            //OVER PRESSURE FAIL STATE
+        }
+       
+        
+        if(pressure.inAtmospheres()>450)
+        {
+            //OVER PRESSURE SO END GAME
+        }
+        
+        //pressure = steamInputPort.pressure;
+        
+        
+        outputPort.mass = waterMass;
+        outputPort.temperature = temperature;
+        outputPort.pressure = pressure;
         setWear(calculateWearDelta());
         
+        System.out.println("--! Condenser Pressure: " + pressure);
         System.out.println("Condenser Water Level: " + waterLevel);
         System.out.println("Condenser output Mass: " + outputPort.mass);
         System.out.println("Condenser Temperature " + temperature);
         
         
     }
-
+    
+    
+    /*
+     * @Todo subtract water volume
+     */
+    private Volume calculateSteamVolume()
+    {
+        return maximumWaterMass.volumeAt(Density.ofLiquidWater()).minus(waterMass.volumeAt(Density.ofLiquidWater()));
+    }
+    
+    
     public void calculateNewTemperature(Port in) {
+        /*
         temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * in.mass
                               .inKilograms()) / (waterMass.inKilograms() + in.mass.inKilograms()));
+        */
+        
+        
+        /*
+         * 4.19 kJ/kg = c_w of water (specific heat of water)
+         * h_fg = c_w * (t_f - t_0) = enthalpy of water
+         * t_f = steam saturation temperature = 100C
+         * t_0 = reference temperature = 0C
+         * 
+         * m_s*h_fg = mass of steam * enthalpy = thermal energy
+         */
+        temperature = temperature.plus(new Temperature(((4.19*(in.temperature.inKelvin()-temperature.inKelvin()))/1000)* in.mass.inKilograms()));         
+        
+
     }
 
     public void reduceTemperature(int delta) {
@@ -100,11 +179,15 @@ public class Condenser extends FailableComponent {
     
     public Port inputPort()
     {
-        return inputPort;
+        return steamInputPort;
     }
     public Port outputPort()
     {
         return outputPort;
+    }
+    public Port coolantInputPort()
+    {
+        return coolantInputPort;
     }
     
     public Percentage getWaterLevel()

@@ -30,7 +30,7 @@ public class FailureModel {
      */
     public void step() {
         physicalModel.step(1);
-        failStateCheck();
+        //testtestfailStateCheck();
        }
     
     /**

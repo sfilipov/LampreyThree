@@ -49,10 +49,9 @@ public class TurbineTest {
     }
 
     @Test
-    public void somePressureDeltaGeneratesPower() {
+    public void someMassGeneratesPower() {
         Turbine turbine = new Turbine();
-        turbine.inputPort().pressure = pascals(200000);
-        turbine.outputPort().pressure = pascals(101325);
+        turbine.inputPort().mass = kilograms(5);
         turbine.step();
         assertThat(turbine.outputPower(), greaterThan(0.0));
     }

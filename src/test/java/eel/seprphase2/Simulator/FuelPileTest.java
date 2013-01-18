@@ -34,10 +34,10 @@ public class FuelPileTest {
     }
     
     @Test
-    public void shouldOutput10MegaWattsWhenControlRodsAt100() {
+    public void shouldOutput20MegaWattsWhenControlRodsAt100() {
         FuelPile fuelPile = new FuelPile();
         fuelPile.moveControlRods(new Percentage(100));
-        assertEquals(10000000, fuelPile.output(1));
+        assertEquals(20000000, fuelPile.output(1));
     }
     
 }

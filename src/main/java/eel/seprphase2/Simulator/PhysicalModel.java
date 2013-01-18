@@ -38,8 +38,14 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Pump reactorToCondenser;
     @JsonProperty
     public String username;
+    /**
+     *
+     */
     @JsonIgnore
     public ArrayList<FailableComponent> components;
+    /**
+     *
+     */
     public PhysicalModel() {
         
         
@@ -54,6 +60,10 @@ public class PhysicalModel implements PlantController, PlantStatus {
         reactorToCondenser.setStatus(false);
     }
     
+    /**
+     *
+     * @param steps
+     */
     public void step(int steps) {
         for (int i = 0; i < steps; i++) {
             reactor.step();
@@ -67,46 +77,82 @@ public class PhysicalModel implements PlantController, PlantStatus {
         }
     }
     
+    /**
+     *
+     * @param username
+     */
     @Override
     public void setUsername(String username){
         this.username = username;
     }
 
+    /**
+     *
+     * @param percent
+     */
     @Override
     public void moveControlRods(Percentage percent) {
         reactor.moveControlRods(percent);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Temperature reactorTemperature() {
         return reactor.temperature();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Energy energyGenerated() {
         return energyGenerated;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Percentage controlRodPosition() {
         return reactor.controlRodPosition();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Pressure reactorPressure() {
         return reactor.pressure();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Percentage reactorWaterLevel() {
         return reactor.waterLevel();
     }
    
+    /**
+     *
+     * @param open
+     */
     @Override
     public void setReactorToTurbine(boolean open){
         reactorToTurbine.setOpen(open);
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean getReactorToTurbine(){
         return reactorToTurbine.getOpen();

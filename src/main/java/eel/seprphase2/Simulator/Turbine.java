@@ -29,10 +29,16 @@ public class Turbine extends FailableComponent {
     @JsonIgnore
     private static PlantController controller;   
     
+    /**
+     *
+     */
     public Turbine() {
         super();
     }
 
+    /**
+     *
+     */
     public void step() {
         System.out.println("Turbine Input Water Mass " + inputPort.mass);
         System.out.println("Turbine Output Water Mass 1 " + outputPort.mass);
@@ -52,18 +58,34 @@ public class Turbine extends FailableComponent {
         System.out.println("Turbine Output Water Mass 2 " + outputPort.mass);
     }
 
+    /**
+     *
+     * @return
+     */
     public double outputPower() {
         return outputPower;
     }
 
+    /**
+     *
+     * @return
+     */
     public Port inputPort() {
         return inputPort;
     }
 
+    /**
+     *
+     * @return
+     */
     public Port outputPort() {
         return outputPort;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Percentage calculateWearDelta() {
         return new Percentage(1);

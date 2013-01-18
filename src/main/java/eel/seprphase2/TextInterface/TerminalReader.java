@@ -16,6 +16,10 @@ import java.util.logging.Logger;
  */
 public class TerminalReader implements LineReader {
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String readLine() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));

@@ -41,11 +41,19 @@ public class Parser {
         }
     }
     
+    /**
+     *
+     * @param username
+     */
     public void setUsername(String username)
     {
         controller.setUsername(username);
     }
     
+    /**
+     *
+     * @return
+     */
     public static PlantController returnController()
     {
         return controller;

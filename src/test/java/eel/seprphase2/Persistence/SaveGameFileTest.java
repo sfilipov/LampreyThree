@@ -5,6 +5,7 @@
 package eel.seprphase2.Persistence;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,12 +14,15 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import eel.seprphase2.Persistence.Utils;
+import java.security.SecureRandom;
+import java.math.BigInteger;
+import java.util.ArrayList;
 /**
  *
  * @author James
  */
 public class SaveGameFileTest {
-    
+    ArrayList<String> artifacts;
     public SaveGameFileTest() {
     }
     
@@ -32,10 +36,22 @@ public class SaveGameFileTest {
     
     @Before
     public void setUp() {
+        artifacts = new ArrayList<String>();
     }
     
     @After
     public void tearDown() {
+        for(String path:artifacts)
+        {
+           
+            File rem = new File(path);
+            if(rem.exists())
+            {
+                rem.delete();
+            }
+           
+        }
+        
     }
 
     /**
@@ -53,10 +69,11 @@ public class SaveGameFileTest {
     public void shouldCreateDir()
     {
         SaveGameFile instance = new SaveGameFile();
-        File f = new File(instance.FullSavePath());
+        File f = new File(instance.savePath());
+        
         try
         {
-            instance.CreateSavePath();
+            instance.createSavePath();
         }
         catch(Exception e)
         {
@@ -70,10 +87,11 @@ public class SaveGameFileTest {
     public void shouldNotBreakIfTryingToCreateTheSameFolderTwice()
     {
         SaveGameFile instance = new SaveGameFile();
-        File f = new File(instance.FullSavePath());
+        File f = new File(instance.savePath());
+        
         try
         {
-            instance.CreateSavePath();
+            instance.createSavePath();
         }
         catch(Exception e)
         {
@@ -85,7 +103,7 @@ public class SaveGameFileTest {
         
         try
         {
-            instance.CreateSavePath();
+            instance.createSavePath();
         }
         catch(Exception e)
         {
@@ -101,9 +119,10 @@ public class SaveGameFileTest {
         
         Calendar cal = Calendar.getInstance();
         long time = cal.getTimeInMillis();
-        SaveGameFile instance = new SaveGameFile("test_"+time,"");
-        
-        assertTrue(new File(instance.FilePath()).exists());
+        SaveGameFile instance = new SaveGameFile("test_"+time);
+        instance.save("");
+        artifacts.add(instance.filePath());
+        assertTrue(new File(instance.filePath()).exists());
     }
     
     @Test
@@ -112,13 +131,65 @@ public class SaveGameFileTest {
         
         Calendar cal = Calendar.getInstance();
         long time = cal.getTimeInMillis();
-        SaveGameFile instance = new SaveGameFile("test_"+time,"hello");
+        SaveGameFile instance = new SaveGameFile("test_"+time);
+        instance.save("hello");
+        artifacts.add(instance.filePath());
         
-        assertTrue(new File(instance.FilePath()).exists());
+        assertTrue(new File(instance.filePath()).exists());
         
         try
         {
-            assertEquals(Utils.readFile(instance.FilePath()),"hello");
+            assertEquals(Utils.readFile(instance.filePath()),"hello");
+        }
+        catch(Exception e)
+        {
+            fail("Reading file failed - " +e.getMessage());
+        }
+        
+    }
+    
+    @Test
+    public void shouldReadSameContent()
+    {
+        
+        Calendar cal = Calendar.getInstance();
+        long time = cal.getTimeInMillis();
+        SaveGameFile instance = new SaveGameFile("test_"+time);
+        instance.save("hello");
+        artifacts.add(instance.filePath());
+        assertTrue(new File(instance.filePath()).exists());
+        
+        
+        
+        try
+        {
+            assertEquals(instance.load(),"hello");
+        }
+        catch(Exception e)
+        {
+            fail("Reading file failed - " + e.getMessage());
+        }
+        
+    }
+    
+    @Test
+    public void shouldReadandWriteLongContent()
+    {
+        SecureRandom random = new SecureRandom();
+
+        
+        String rdm = new BigInteger(2500, random).toString(2);
+  
+        Calendar cal = Calendar.getInstance();
+        long time = cal.getTimeInMillis();
+        SaveGameFile instance = new SaveGameFile("test_"+time);
+        instance.save(rdm);
+        artifacts.add(instance.filePath());
+        assertTrue(new File(instance.filePath()).exists());
+        
+        try
+        {
+            assertEquals(instance.load(),rdm);
         }
         catch(Exception e)
         {
@@ -126,4 +197,72 @@ public class SaveGameFileTest {
         }
         
     }
+    
+    @Test
+    public void shouldListOneFileWithARandomUserName()
+    {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        
+        
+        SaveGameFile instance = new SaveGameFile("sepr.teameel."+time+".0.nuke");
+        instance.save("");
+        
+        assertTrue(SaveGameFile.listSaveGames(time).length==1);
+    }
+    
+    
+    @Test
+    public void shouldListTwoFIlesWithARandomAndSequentialUserName()
+    {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        
+        
+        SaveGameFile instance1 = new SaveGameFile("sepr.teameel."+time+".0.nuke");
+        instance1.save("");
+        SaveGameFile instance2 = new SaveGameFile("sepr.teameel."+time+".1.nuke");
+        instance2.save("");
+        
+        artifacts.add(instance1.filePath());
+        artifacts.add(instance2.filePath());
+        
+        assertTrue(SaveGameFile.listSaveGames(time).length==2);
+    }
+    
+    
+    @Test
+    public void shouldListTwoFIlesWithAUniqueAndSequentialUserName()
+    {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        
+        
+        SaveGameFile instance1 = new SaveGameFile("sepr.teameel."+time+".0.nuke");
+        instance1.save("");
+        SaveGameFile instance2 = new SaveGameFile("sepr.teameel."+time+"1.1.nuke");
+        instance2.save("");
+        SaveGameFile instance3 = new SaveGameFile("sepr.teameel."+time+".1.nuke");
+        instance3.save("");
+        
+        artifacts.add(instance1.filePath());
+        artifacts.add(instance2.filePath());
+        artifacts.add(instance3.filePath());
+        
+        assertTrue(SaveGameFile.listSaveGames(time).length==2);
+    }
+    
+    
+    @Test
+    public void shouldListNoFilesWithARandomUserName()
+    {
+        
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        assertTrue(SaveGameFile.listSaveGames(time).length==0);
+    }
+    
+    
+    
+    
 }

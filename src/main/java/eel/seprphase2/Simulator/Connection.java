@@ -36,6 +36,9 @@ public class Connection extends Valve{
         this.area = area;
     }
 
+    /**
+     *
+     */
     public void step() {
     
     second.mass = first.mass;   

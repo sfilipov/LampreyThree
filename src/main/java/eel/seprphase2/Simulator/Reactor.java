@@ -42,6 +42,9 @@ public class Reactor extends FailableComponent {
     @JsonProperty
     private Port inputPort = new Port();
 
+    /**
+     *
+     */
     public Reactor() {
         super();
         fuelPile.moveControlRods(new Percentage(0));
@@ -51,6 +54,13 @@ public class Reactor extends FailableComponent {
         pressure = pascals(101325);
     }
 
+    /**
+     *
+     * @param controlRodPosition
+     * @param waterLevel
+     * @param temperature
+     * @param pressure
+     */
     public Reactor(Percentage controlRodPosition, Percentage waterLevel,
                    Temperature temperature, Pressure pressure) {
         super();
@@ -61,26 +71,49 @@ public class Reactor extends FailableComponent {
         this.pressure = pressure;
     }
 
+    /**
+     *
+     * @param extracted
+     */
     public void moveControlRods(Percentage extracted) {
         fuelPile.moveControlRods(extracted);
     }
 
+    /**
+     *
+     * @return
+     */
     public Percentage controlRodPosition() {
         return fuelPile.controlRodPosition();
     }
 
+    /**
+     *
+     * @return
+     */
     public Percentage waterLevel() {
         return new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
     }
 
+    /**
+     *
+     * @return
+     */
     public Temperature temperature() {
         return this.temperature;
     }
 
+    /**
+     *
+     * @return
+     */
     public Pressure pressure() {
         return this.pressure;
     }
 
+    /**
+     *
+     */
     public void step() {
 
         if (steamMass.inKilograms() > inputPort.mass.inKilograms()) {
@@ -153,10 +186,18 @@ public class Reactor extends FailableComponent {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Velocity outputFlowVelocity() {
         return metresPerSecond(pressure().inPascals() / 100);
     }
 
+    /**
+     *
+     * @return
+     */
     public Port outputPort() {
         return outputPort;
     }

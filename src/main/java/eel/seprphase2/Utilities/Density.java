@@ -16,29 +16,57 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Density {
 
+    /**
+     *
+     */
     @JsonProperty
     protected double kilogramsPerCubicMetre;
 
+    /**
+     *
+     */
     public Density() {
         kilogramsPerCubicMetre = 1000;
     }
 
+    /**
+     *
+     * @param kilogramsPerCubicMetre
+     */
     public Density(double kilogramsPerCubicMetre) {
         this.kilogramsPerCubicMetre = kilogramsPerCubicMetre;
     }
 
+    /**
+     *
+     * @return
+     */
     public double inKilogramsPerCubicMetre() {
         return kilogramsPerCubicMetre;
     }
 
+    /**
+     *
+     * @return
+     */
     public static final Density ofLiquidWater() {
         return new Density(1000);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Density minus(Density other) {
         return new Density(kilogramsPerCubicMetre - other.kilogramsPerCubicMetre);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Density plus(Density other) {
         return new Density(kilogramsPerCubicMetre + other.kilogramsPerCubicMetre);
     }

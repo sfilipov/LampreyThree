@@ -17,30 +17,60 @@ public class Pressure {
     @JsonProperty
     private final double pascals;
 
+    /**
+     *
+     */
     public Pressure() {
         pascals = 0;
     }
     
+    /**
+     *
+     * @param pascals
+     */
     public Pressure(double pascals) {
         this.pascals = pascals;
     }
 
+    /**
+     *
+     * @return
+     */
     public double inPascals() {
         return this.pascals;
     }
 
+    /**
+     *
+     * @return
+     */
     public double inAtmospheres() {
         return this.pascals / pascalsPerAtmosphere;
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Pressure plus(Pressure other) {
         return new Pressure(pascals + other.pascals);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Pressure minus(Pressure other) {
         return new Pressure(pascals - other.pascals);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public boolean greaterThan(Pressure other) {
         return pascals > other.pascals;
     }

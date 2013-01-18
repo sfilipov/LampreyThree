@@ -23,10 +23,17 @@ public class Percentage {
     private final int percentagePoints;
 
     // default constructor required for serialization
+    /**
+     *
+     */
     public Percentage() {
         percentagePoints = 0;
     }
     
+    /**
+     *
+     * @param percentagePoints
+     */
     public Percentage(int percentagePoints) {
         if (!isValidPercentage(percentagePoints)) {
             throw new IllegalArgumentException("The argument (" +
@@ -37,26 +44,52 @@ public class Percentage {
         this.percentagePoints = percentagePoints;
     }
 
+    /**
+     *
+     * @param ratio
+     */
     public Percentage(double ratio) {
         this((int)round(ratio * 100));
     }
 
+    /**
+     *
+     * @param representation
+     */
     public Percentage(String representation) {
         this(pointsFromString(representation));
     }
 
+    /**
+     *
+     * @return
+     */
     public int points() {
         return this.percentagePoints;
     }
 
+    /**
+     *
+     * @return
+     */
     public double ratio() {
         return this.percentagePoints / 100.0;
     }
     
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Percentage plus(Percentage other) {
         return new Percentage(percentagePoints + other.percentagePoints);
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     public Percentage minus(Percentage other) {
         return new Percentage(percentagePoints - other.percentagePoints);
     }
@@ -86,10 +119,20 @@ public class Percentage {
         return true;
     }
 
+    /**
+     *
+     * @param points
+     * @return
+     */
     public static boolean isValidPercentage(int points) {
         return points <= 100 && points >= 0;
     }
 
+    /**
+     *
+     * @param representation
+     * @return
+     */
     public static boolean isValidPercentage(String representation) {
         return isWellFormedPercentage(representation) &&
                isValidPercentage(pointsFromString(representation));

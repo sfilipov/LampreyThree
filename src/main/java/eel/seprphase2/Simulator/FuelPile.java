@@ -17,7 +17,7 @@ import eel.seprphase2.Utilities.Percentage;
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
 public class FuelPile {
 
-    private final int maximumOutput = 10000000;
+    private final int maximumOutput = 20000000;
     @JsonProperty
     private Percentage controlRodPosition = new Percentage(0);
 

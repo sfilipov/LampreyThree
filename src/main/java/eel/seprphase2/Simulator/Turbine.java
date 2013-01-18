@@ -34,20 +34,22 @@ public class Turbine extends FailableComponent {
     }
 
     public void step() {
-
-        Pressure deltaPressure = inputPort.pressure
-                .minus(outputPort.pressure);
-        Velocity flowVelocity = Bernoulli.velocity(deltaPressure, inputPort.density);
-        
+        System.out.println("Turbine Input Water Mass " + inputPort.mass);
+        System.out.println("Turbine Output Water Mass 1 " + outputPort.mass);
+            
         if (getFailureState() == FailureState.Normal) {
-            outputPower = 10 * flowVelocity.inMetresPerSecond();
-            Percentage wearDelta = calculateWearDelta();
-            setWear(wearDelta);
+            outputPower = 10 * inputPort.mass.inKilograms();
+            outputPort.mass = inputPort.mass;
+            outputPort.pressure = inputPort.pressure;
+            outputPort.temperature = inputPort.temperature;
+            setWear(calculateWearDelta());
         } else {
             controller = Parser.returnController();
             controller.moveControlRods(new Percentage(0));
             setWear(new Percentage(100));
             }
+        
+        System.out.println("Turbine Output Water Mass 2 " + outputPort.mass);
     }
 
     public double outputPower() {

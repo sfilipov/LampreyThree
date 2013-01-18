@@ -30,36 +30,19 @@ public class Connection extends Valve{
         area = 0;
     }
 
-    public Connection(Port first, Port second, double area) {
-        this.first = first;
-        this.second = second;
+    public Connection(Port input, Port output, double area) {
+        first = input;
+        second = output;
         this.area = area;
     }
 
     public void step() {
-        Port input, output;
-        if (getOpen()){
-        if (first.pressure.greaterThan(second.pressure)) {
-            input = first;
-            output = second;
-        } else {
-            input = second;
-            output = first;
-        }
-        Pressure deltaPressure = input.pressure.minus(output.pressure);
-        Velocity flowVelocity = Bernoulli.velocity(deltaPressure, input.density);
-        Mass deltaMass = kilograms(input.density.inKilogramsPerCubicMetre() *
-                                   flowVelocity.inMetresPerSecond() *
-                                   area);
-        if (input.mass.inKilograms() < deltaMass.inKilograms()) {
-            input.mass = kilograms(0);
-            output.mass = input.mass;
-        } else {
-            input.mass = input.mass.minus(deltaMass);
-            output.mass = output.mass.plus(deltaMass);
-        }
-
-        output.pressure = input.pressure;
-    }
+    
+    second.mass = first.mass;   
+    second.temperature = first.temperature;
+    second.pressure = pascals(second.pressure.inPascals() - second.pressure.inPascals()*4/3);
+    
+            
+    
     }
 }

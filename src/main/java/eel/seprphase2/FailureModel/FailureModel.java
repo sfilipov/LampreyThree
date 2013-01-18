@@ -35,7 +35,7 @@ public class FailureModel {
         for (int i = 0; i < componentNumber; i++) {
             componentsFailChance += components.get(i).getWear().points()/componentNumber;
             if (componentsFailChance > failValue) {
-                components.get(i).setFailureState(FailureState.Failed);
+                //components.get(i).setFailureState(FailureState.Failed);
             }
         }
     }

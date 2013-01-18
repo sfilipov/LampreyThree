@@ -21,7 +21,7 @@ import eel.seprphase2.Utilities.Volume;
  *
  * @author Yazidi
  */
-public class Reactor extends FailableComponent{
+public class Reactor extends FailableComponent {
 
     private final Mass maximumWaterMass = kilograms(1000);
     private final Volume reactorVolume = cubicMetres(2);
@@ -39,6 +39,8 @@ public class Reactor extends FailableComponent{
     private Density steamDensity;
     @JsonProperty
     private Port outputPort = new Port();
+    @JsonProperty
+    private Port inputPort = new Port();
 
     public Reactor() {
         super();
@@ -80,33 +82,74 @@ public class Reactor extends FailableComponent{
     }
 
     public void step() {
-        if (getFailureState() == FailureState.Normal){
-        steamMass = steamMass.plus(outputPort.mass);
-        if (temperature.inKelvin() < boilingPointOfWater) {
-            temperature = kelvin(temperature.inKelvin() +
-                                 fuelPile.output(1) / waterMass.inKilograms() /
-                                 specificHeatOfWater);
-        } else {
-            Mass deltaMass = kilograms(fuelPile.output(1) / latentHeatOfWater);
-            steamMass = steamMass.plus(deltaMass);
-            if (waterMass.inKilograms() > 10) {
+
+        if (steamMass.inKilograms() > inputPort.mass.inKilograms()) {
+            steamMass = steamMass.minus(inputPort.mass);
+            waterMass = waterMass.plus(inputPort.mass);
+            calculateNewTemperature(inputPort);
+        }
+        else {
+            waterMass = waterMass.plus(steamMass);
+            steamMass = kilograms(0);
+            calculateNewTemperature(inputPort);
+            
+        }
+        
+        
+        if (getFailureState() == FailureState.Normal) {
+
+            if (temperature.inKelvin() < boilingPointOfWater) {
+                
+                /*
+                 * Calculates how much the water heats if it's not at boiling point
+                 */
+                
+                temperature = kelvin(temperature.inKelvin() +
+                                     fuelPile.output(1) / waterMass.inKilograms() /
+                                     specificHeatOfWater);
+            } else {
+
+                /*
+                 * Calculates how much water turns to steam in one timestep at boiling point
+                 */
+
+                Mass deltaMass = kilograms(fuelPile.output(1) / latentHeatOfWater);
+                steamMass = steamMass.plus(deltaMass);
                 waterMass = waterMass.minus(deltaMass);
             }
+
+            /*
+             * Calculates volume of steam in this particular timestep
+             * Calculates pressure of said steam
+             */
+            
             Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
             pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
             steamDensity = steamMass.densityAt(steamVolume);
+            
+            /*
+             * Sends information to output port
+             */
+            
             outputPort.mass = steamMass;
             outputPort.density = steamDensity;
             outputPort.pressure = pressure;
-            outputPort.temperature = temperature;   
-        }
-        Percentage wearDelta = calculateWearDelta();
-        setWear(wearDelta);
-       }
-        else 
-        {
-            System.exit(0);
+            outputPort.temperature = temperature;
             
+            System.out.println("Reactor Water Mass " + waterMass);
+            System.out.println("Reactor Steam Mass " + steamMass);
+            
+        
+            
+            /*
+             * Calculates component wear after a time step
+             */
+            
+            Percentage wearDelta = calculateWearDelta();
+            setWear(wearDelta);
+        } else {
+            System.exit(0);
+
         }
     }
 
@@ -118,9 +161,19 @@ public class Reactor extends FailableComponent{
         return outputPort;
     }
     
+    public Port inputPort() {
+        return inputPort;
+    }
+
+    public void calculateNewTemperature(Port in) {
+        temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * in.mass
+                              .inKilograms()) / (waterMass.inKilograms() + in.mass.inKilograms()));
+    }
+    
     @Override
-    public Percentage calculateWearDelta()
-    {
+    public Percentage calculateWearDelta() {
         return new Percentage(1);
     }
+    
+    
 }

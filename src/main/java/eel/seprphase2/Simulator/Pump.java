@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.FailureModel.FailableComponent;
 import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
@@ -14,13 +15,24 @@ import static eel.seprphase2.Utilities.Units.*;
  * @author Yazidi
  */
 public class Pump extends FailableComponent {
-
+    
+    @JsonProperty
     private Port inputPort;
+    @JsonProperty
     private Port outputPort;
-    private Mass capacity = kilograms(2);
+    @JsonProperty
+    private Mass capacity = kilograms(4);
+    @JsonProperty
     private boolean status = true;
 
+    private Pump() {
+        super();
+        inputPort = null;
+        outputPort = null;
+    }
+    
     public Pump(Port input, Port output) {
+        
         inputPort = input;
         outputPort = output;
         
@@ -58,6 +70,14 @@ public class Pump extends FailableComponent {
     public boolean getStatus()
     {
         return status;
+    }
+    
+    public Port inputPort(){
+        return inputPort;
+    }
+    
+    public Port outputPort(){
+        return outputPort;
     }
     
 }

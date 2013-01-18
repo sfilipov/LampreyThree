@@ -25,28 +25,45 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @JsonProperty
     private Turbine turbine = new Turbine();
     @JsonProperty
+    private Condenser condenser = new Condenser();
+    @JsonProperty
     private Energy energyGenerated = joules(0);
     @JsonProperty
     private Connection reactorToTurbine;
+    @JsonProperty
+    private Connection turbineToCondenser;
+    @JsonProperty
+    private Pump condenserToReactor;
+    @JsonProperty
+    private Pump reactorToCondenser;
     @JsonProperty
     public String username;
     @JsonIgnore
     public ArrayList<FailableComponent> components;
     public PhysicalModel() {
-       
+        
+        
         components = new ArrayList<FailableComponent>();
         components.add(0, turbine);
         components.add(1, reactor);
+        components.add(2, condenser);
         reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.04);
+        turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.04);
+        condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
+        reactorToCondenser = new Pump(reactor.outputPort(), condenser.inputPort());
+        reactorToCondenser.setStatus(false);
     }
     
     public void step(int steps) {
         for (int i = 0; i < steps; i++) {
             reactor.step();
             turbine.step();
-            
+            condenser.step();
             energyGenerated = joules(energyGenerated.inJoules() + turbine.outputPower());
             reactorToTurbine.step();
+            turbineToCondenser.step();
+            condenserToReactor.step();
+            reactorToCondenser.step();
         }
     }
     

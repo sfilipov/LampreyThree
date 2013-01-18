@@ -113,7 +113,7 @@ public class ParserTest {
             }
         });
         
-            parser.parseCommand("openvalve 1");
+        parser.parseCommand("openvalve 1");
         
     }
     @Test
@@ -146,9 +146,10 @@ public class ParserTest {
             }
         });
         
-            parser.parseCommand("closevalve 1");
+        parser.parseCommand("closevalve 1");
         
     }
+
     @Test
     public void wrongNumberOfArgumentsInCloseValveShouldCauseAnError() {
         context.checking(new Expectations() {
@@ -156,10 +157,11 @@ public class ParserTest {
                 oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'closevalve'");
             }
         });
-       
-            parser.parseCommand("closevalve");
+        parser.parseCommand("closevalve");
         
     }
+    
+    
     @Test
     public void shouldTurnPumpOn() {
         context.checking(new Expectations() {
@@ -168,7 +170,7 @@ public class ParserTest {
             }
         });
        
-            parser.parseCommand("pumpon 1");
+        parser.parseCommand("pumpon 1");
        
     }
     @Test
@@ -179,14 +181,14 @@ public class ParserTest {
             }
         });
        
-            parser.parseCommand("pumpon");
+        parser.parseCommand("pumpon");
         
     }
     @Test
     public void shouldNotAcceptPumpsBelow0() {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid percentage.");
+                oneOf(textRenderer).outputLine("Error: '-1' is not a valid pump.");
             }
         });
        
@@ -239,7 +241,7 @@ public class ParserTest {
             }
         });
         
-            parser.parseCommand("load");
+        parser.parseCommand("load");
         
     }
 }

@@ -58,6 +58,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
         condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
         reactorToCondenser = new Pump(reactor.outputPort(), condenser.inputPort());
         reactorToCondenser.setStatus(false);
+        
+        
+        
     }
     
     /**
@@ -74,6 +77,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
             turbineToCondenser.step();
             condenserToReactor.step();
             reactorToCondenser.step();
+            
+        System.out.println("Turbine Fail State: " + turbine.getFailureState());
+        System.out.println("Condenser Fail State: " + condenser.getFailureState());
         }
     }
     

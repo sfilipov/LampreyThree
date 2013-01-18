@@ -63,6 +63,7 @@ public class TextInterface {
      */
     public void processCommand() {
         Parser parser = new Parser(plantController, textRenderer);
+        
         parser.parseCommand(lineReader.readLine());
     }
 }

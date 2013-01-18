@@ -13,6 +13,7 @@ import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import eel.seprphase2.Utilities.Velocity;
+import static eel.seprphase2.Utilities.Units.*;
 
 /**
  *
@@ -50,6 +51,7 @@ public class Turbine extends FailableComponent {
             outputPort.temperature = inputPort.temperature;
             setWear(calculateWearDelta());
         } else {
+            outputPower = 0;
             controller = Parser.returnController();
             controller.moveControlRods(new Percentage(0));
             setWear(new Percentage(100));

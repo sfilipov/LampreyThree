@@ -44,41 +44,62 @@ public class Parser {
                                     command + "'");
                     return;
                 }
-                if(Integer.parseInt(words[1])>0 & Integer.parseInt(words[1])<10) {
-                    renderer.outputLine("Error: '" + 
+                try
+                {
+                    if(Integer.parseInt(words[1])<=0){
+                        renderer.outputLine("Error: '" +
                                         words[1] +
                                         "' is not a valid valve number.");
-                    return;
+                        return;
+                    }
+                } 
+                catch (NumberFormatException e)
+                {
+                    renderer.outputLine("Error: '" +
+                                        words[1] +
+                                        "' is not a valid valve number.");
+                        return;
                 }
                 controller.changeValveState(Integer.parseInt(words[1]), true);
         } else if (words[0].equals("closevalve")) {
             if(words.length != 2) {
-                renderer.outputLine("Error: worng number of arguments to command '" +
+                renderer.outputLine("Error: wrong number of arguments to command '" +
                                     command + "'");
                 return;
             }
-            if(Integer.parseInt(words[1])>0 & Integer.parseInt(words[1])<10){
+            try
+            {
+                if(Integer.parseInt(words[1])<=0){
+                    renderer.outputLine("Error: '" +
+                                    words[1] +
+                                    "' is not a valid valve number.");
+                    return;
+                }
+            } 
+            catch (NumberFormatException e)
+            {
                 renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid valve number.");
-                return;
+                    return;
             }
             controller.changeValveState(Integer.parseInt(words[1]), false);
         } else if(words[0].equals("pumpon")) {
             if(words.length !=2) {
-                renderer.outputLine("Error: worng number of arguments to command '" +
+                renderer.outputLine("Error: wrong number of arguments to command '" +
                                 words[0] + "'");
                 return;
             }
             try
             {
-                if(Integer.parseInt(words[1])==0){
+                if(Integer.parseInt(words[1])<=0){
                     renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
                     return;
                 }
-            } catch (NumberFormatException e)
+            } 
+            catch (NumberFormatException e)
             {
                 renderer.outputLine("Error: '" +
                                     words[1] +
@@ -89,26 +110,27 @@ public class Parser {
             controller.changePumpState(Integer.parseInt(words[1]), true);
         } else if(words[0].equals("pumpoff")) {
             if(words.length !=2) {
-                renderer.outputLine("Error: worng number of arguments to command '" +
-                                command + "'");
-            return;
+                renderer.outputLine("Error: wrong number of arguments to command '" +
+                                words[0] + "'");
+                return;
             }
             
             
             try
             {
-                if(Integer.parseInt(words[1])==0){
+                if(Integer.parseInt(words[1])<=0){
                     renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
                     return;
                 }
-            } catch (NumberFormatException e)
+            } 
+            catch (NumberFormatException e)
             {
                 renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
-                    return;
+                return;
             }
             
             
@@ -116,8 +138,8 @@ public class Parser {
         } else if(words[0].equals("repair")) {
             if(words[1].equals("pump")) {
                 if(words.length != 3) {
-                    renderer.outputLine("Error: worng number of arguments to command '" +
-                          command + "'");
+                    renderer.outputLine("Error: wrong number of arguments to command '" +
+                          words[0] + "'");
                     return;
                 }
                 

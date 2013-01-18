@@ -131,7 +131,7 @@ public class ParserTest {
     public void shouldNotAcceptValvesBelow0() {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid percentage.");
+                oneOf(textRenderer).outputLine("Error: '-1' is not a valid valve number.");
             }
         });
        
@@ -188,11 +188,11 @@ public class ParserTest {
     public void shouldNotAcceptPumpsBelow0() {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid pump.");
+                oneOf(textRenderer).outputLine("Error: '-1' is not a valid pump number.");
             }
         });
        
-            parser.parseCommand("pumpon -1");
+        parser.parseCommand("pumpon -1");
         
     }
     @Test
@@ -214,7 +214,7 @@ public class ParserTest {
             }
         });
        
-            parser.parseCommand("pumpoff");
+        parser.parseCommand("pumpoff");
         
     }
     @Test

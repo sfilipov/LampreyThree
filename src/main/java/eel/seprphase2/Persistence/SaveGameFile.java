@@ -120,9 +120,9 @@ class SaveGameFile implements ISaveGame {
             {
                 //sepr.teameel. = 13 chars long
                 //if(file.getName().toLowerCase().endsWith(".nuke") && file.getName().startsWith(userName, 13))
-                if(file.getName().matches("sepr.teameel."+username+".([0-9]+).nuke") )
-                {
-                    acceptableSaveGameFiles.add(file.getName());
+                    if(file.getName().matches("sepr.teameel."+username+".([0-9]+).nuke") )
+                    {
+                        acceptableSaveGameFiles.add(file.getName());
                 }
                 
             }

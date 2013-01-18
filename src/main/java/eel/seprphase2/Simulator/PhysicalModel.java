@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.FailureModel.FailableComponent;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
@@ -13,6 +14,7 @@ import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
+import eel.seprphase2.Persistence.Persistence;
 
 /**
  *
@@ -162,6 +164,31 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public boolean getReactorToTurbine(){
         return reactorToTurbine.getOpen();
+    }
+
+    @Override
+    public void changeValveState(int valveNumber, boolean isOpen) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void changePumpState(int pumpNumber, boolean isPumping) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveGame() throws JsonProcessingException {
+        eel.seprphase2.Simulator.Persistence p = new eel.seprphase2.Simulator.Persistence();
+        
+        String r = p.serialize(this);
+        Persistence.SaveGameState(username, r); 
+        
+                
+    }
+
+    @Override
+    public void loadGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
             
 }

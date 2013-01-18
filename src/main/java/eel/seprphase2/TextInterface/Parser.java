@@ -23,6 +23,7 @@ public class Parser {
 
     void parseCommand(String command) {
         String[] words = command.split(" ");
+        
         if (words[0].equals("movecontrolrods")) {
             if (words.length != 2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +

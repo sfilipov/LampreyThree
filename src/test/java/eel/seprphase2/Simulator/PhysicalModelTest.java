@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
+import java.util.Calendar;
 import static org.hamcrest.Matchers.*;
 /**
  *
@@ -39,6 +40,24 @@ public class PhysicalModelTest {
         model.setReactorToTurbine(false);
         assertEquals(false, model.getReactorToTurbine());
         
+    }
+    
+    @Test
+    public void shouldSerializeToFile() {
+        Calendar cal = Calendar.getInstance();
+        String time = String.valueOf(cal.getTimeInMillis());
+        PhysicalModel model = new PhysicalModel();
+        model.setUsername(time);
+        
+        try
+        {
+            model.saveGame();
+        }
+        catch(Exception e)
+        {
+            
+            fail("Error occure while saving file");
+        }
     }
     
 }

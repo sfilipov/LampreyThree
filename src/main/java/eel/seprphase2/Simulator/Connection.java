@@ -40,12 +40,18 @@ public class Connection extends Valve{
      *
      */
     public void step() {
-    
-    second.mass = first.mass;   
-    second.temperature = first.temperature;
-    second.pressure = pascals(second.pressure.inPascals() - second.pressure.inPascals()*4/3);
-    
-            
+        if(this.getOpen())
+        {
+            second.mass = first.mass;   
+            second.temperature = first.temperature;
+            second.pressure = pascals(second.pressure.inPascals() - second.pressure.inPascals()*4/3);
+        }
+        else
+        {
+            second.mass = kilograms(0);
+            second.temperature = first.temperature;
+            second.pressure = pascals(101325);
+        }
     
     }
 }

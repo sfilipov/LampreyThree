@@ -196,12 +196,26 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     @Override
     public void changeValveState(int valveNumber, boolean isOpen) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(allConnections.containsKey(valveNumber))
+        {
+            allConnections.get(valveNumber).setOpen(isOpen);
+        }
+        else
+        {
+            //Throw KeyNotFoundException
+        }
     }
 
     @Override
     public void changePumpState(int pumpNumber, boolean isPumping) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(allPumps.containsKey(pumpNumber))
+        {
+            allPumps.get(pumpNumber).setStatus(isPumping);
+        }
+        else
+        {
+            //Throw KeyNotFoundException
+        }
     }
 
     @Override
@@ -216,6 +230,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     @Override
     public void loadGame() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+          
+    @Override
+    public String[] listGames() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
             

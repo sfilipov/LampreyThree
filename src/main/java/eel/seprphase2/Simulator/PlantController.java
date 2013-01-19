@@ -30,4 +30,5 @@ public interface PlantController {
     public void changePumpState(int pumpNumber, boolean isPumping);
     public void saveGame() throws JsonProcessingException;
     public void loadGame();
+    public String[] listGames();
 }

@@ -5,10 +5,7 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eel.seprphase2.Utilities.Units;
 import eel.seprphase2.Utilities.Density;
-import eel.seprphase2.Utilities.Temperature;
-import eel.seprphase2.Utilities.Mass;
 
 /**
  *

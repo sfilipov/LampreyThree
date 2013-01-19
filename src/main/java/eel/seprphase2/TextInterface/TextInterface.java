@@ -63,6 +63,18 @@ public class TextInterface {
         textRenderer.outputLine(String.format("%25s : %f", 
                                                   "Energy Generated", plantStatus.energyGenerated().inKJoules()));
         
+        
+        
+        /*
+         * 
+         */
+        if(plantStatus.reactorWaterLevel().points()<plantStatus.reactorMinimumWaterLevel().points())
+        {
+            textRenderer.outputLine("WARNING: REACTOR WATER LEVEL TOO LOW");
+        }
+        
+        
+        
         /*
         textRenderer.outputLine("Control Rod Position: " +
                                 plantStatus.controlRodPosition());

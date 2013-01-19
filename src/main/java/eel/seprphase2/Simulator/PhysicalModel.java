@@ -153,6 +153,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return reactor.maximumWaterMass();
     }
     
+    @Override
     public Percentage reactorMinimumWaterLevel() {
         return reactor.minimumWaterLevel();
     }

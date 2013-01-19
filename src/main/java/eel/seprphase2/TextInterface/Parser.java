@@ -160,14 +160,14 @@ public class Parser {
                         return;
                 }
                 
-                controller.repairPump(Integer.parseInt(words[2]);
+                controller.repairPump(Integer.parseInt(words[2]));
             }
             if(words[1].equals("reactor")) {
-            //controller.repairReactor();
+                controller.repairReactor();
             } else if(words[1].equals("condenser")) {
-                    //controller.repairCondenser();
+                renderer.outputLine("The condenser cannot be repaired");
             } else if (words[1].equals("turbine")) {
-                        //controller.repairTurbine();
+                controller.repairTurbine();
             } else {
                 renderer.outputLine("Invalid Component");
             }

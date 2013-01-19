@@ -253,10 +253,6 @@ public class PhysicalModel implements PlantController, PlantStatus {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
-    public void repairCondenser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
    
     
 }

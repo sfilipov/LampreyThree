@@ -31,7 +31,7 @@ public interface PlantController {
     public void repairPump(int pumpNumber);
     public void repairReactor();
     public void repairTurbine();
-    public void repairCondenser();
+   
     
     public void saveGame() throws JsonProcessingException;
     public void loadGame();

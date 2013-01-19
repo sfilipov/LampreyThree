@@ -235,7 +235,28 @@ public class PhysicalModel implements PlantController, PlantStatus {
           
     @Override
     public String[] listGames() {
+        return Persistence.GetSaveGames(username);
+    }
+
+    @Override
+    public void repairPump(int pumpNumber) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-            
+
+    @Override
+    public void repairReactor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void repairTurbine() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void repairCondenser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+   
+    
 }

@@ -91,7 +91,7 @@ public class TextInterfaceTest {
     
        
     @Test
-    public void shouldProcessACommand() {
+    public void shouldProcessACommand()  throws DoNotStep {
         context.checking(new Expectations() {
             {   
                  

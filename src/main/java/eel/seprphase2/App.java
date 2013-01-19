@@ -3,6 +3,7 @@ package eel.seprphase2;
 import eel.seprphase2.FailureModel.FailureModel;
 import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.Reactor;
+import eel.seprphase2.TextInterface.DoNotStep;
 import eel.seprphase2.TextInterface.TerminalReader;
 import eel.seprphase2.TextInterface.TerminalRenderer;
 import eel.seprphase2.TextInterface.TextInterface;
@@ -28,8 +29,15 @@ public class App {
         ti.askForUsername();
         while (true) {
             ti.showStatus();
-            ti.processCommand();
-            failureModel.step();            
+            try
+            {
+                ti.processCommand();
+                failureModel.step();            
+            }
+            catch(DoNotStep n)
+            {
+                
+            }
         }
     }
 }

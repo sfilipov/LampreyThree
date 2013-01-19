@@ -97,7 +97,7 @@ public class TextInterface {
     /**
      *
      */
-    public void processCommand() {
+    public void processCommand() throws DoNotStep {
         Parser parser = new Parser(plantController, textRenderer);
         
         parser.parseCommand(lineReader.readLine());

@@ -26,27 +26,27 @@ public class Parser {
         this.renderer = renderer;
     }
 
-    void parseCommand(String command) {
+    void parseCommand(String command) throws DoNotStep {
         String[] words = command.split(" ");
         
         if (words[0].equals("movecontrolrods")) {
             if (words.length != 2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
                                     words[0] + "'");
-                return;
+                throw new DoNotStep();
             }
             if (!Percentage.isValidPercentage(words[1])) {
                 renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid percentage.");
-                return;
+                throw new DoNotStep();
             }
             controller.moveControlRods(new Percentage(words[1]));
         } else if(words[0].equals("openvalve")) {
                 if(words.length != 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                                     words[0] + "'");
-                    return;
+                    throw new DoNotStep();
                 }
                 try
                 {
@@ -54,7 +54,7 @@ public class Parser {
                         renderer.outputLine("Error: '" +
                                         words[1] +
                                         "' is not a valid valve number.");
-                        return;
+                        throw new DoNotStep();
                     }
                 } 
                 catch (NumberFormatException e)
@@ -62,14 +62,14 @@ public class Parser {
                     renderer.outputLine("Error: '" +
                                         words[1] +
                                         "' is not a valid valve number.");
-                        return;
+                        throw new DoNotStep();
                 }
                 controller.changeValveState(Integer.parseInt(words[1]), true);
         } else if (words[0].equals("closevalve")) {
             if(words.length != 2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
                                     words[0] + "'");
-                return;
+                throw new DoNotStep();
             }
             try
             {
@@ -77,7 +77,7 @@ public class Parser {
                     renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid valve number.");
-                    return;
+                    throw new DoNotStep();
                 }
             } 
             catch (NumberFormatException e)
@@ -85,14 +85,14 @@ public class Parser {
                 renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid valve number.");
-                    return;
+                    throw new DoNotStep();
             }
             controller.changeValveState(Integer.parseInt(words[1]), false);
         } else if(words[0].equals("pumpon")) {
             if(words.length !=2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
                                 words[0] + "'");
-                return;
+                throw new DoNotStep();
             }
             try
             {
@@ -100,7 +100,7 @@ public class Parser {
                     renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
-                    return;
+                    throw new DoNotStep();
                 }
             } 
             catch (NumberFormatException e)
@@ -108,7 +108,7 @@ public class Parser {
                 renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
-                    return;
+                throw new DoNotStep();
             }
             
             controller.changePumpState(Integer.parseInt(words[1]), true);
@@ -116,7 +116,7 @@ public class Parser {
             if(words.length !=2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
                                 words[0] + "'");
-                return;
+                throw new DoNotStep();
             }
             
             
@@ -126,7 +126,7 @@ public class Parser {
                     renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
-                    return;
+                    throw new DoNotStep();
                 }
             } 
             catch (NumberFormatException e)
@@ -134,7 +134,7 @@ public class Parser {
                 renderer.outputLine("Error: '" +
                                     words[1] +
                                     "' is not a valid pump number.");
-                return;
+                throw new DoNotStep();
             }
             
             
@@ -144,7 +144,7 @@ public class Parser {
                 if(words.length != 3) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                           words[0] + "'");
-                    return;
+                    throw new DoNotStep();
                 }
                 
                 try
@@ -153,7 +153,7 @@ public class Parser {
                         renderer.outputLine("Error: '" +
                                         words[2] +
                                         "' is not a valid number.");
-                        return;
+                        throw new DoNotStep();
                     }
                 } 
                 catch (NumberFormatException e)
@@ -161,7 +161,7 @@ public class Parser {
                     renderer.outputLine("Error: '" +
                                         words[2] +
                                         "' is not a valid number.");
-                        return;
+                        throw new DoNotStep();
                 }
                 
                 controller.repairPump(Integer.parseInt(words[2]));
@@ -169,14 +169,14 @@ public class Parser {
                 if(words.length != 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                           words[0] + "'");
-                    return;
+                    throw new DoNotStep();
                 }
                 controller.repairCondenser();
             } else if (words[1].equals("turbine")) {
                 if(words.length != 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                           words[0] + "'");
-                    return;
+                    throw new DoNotStep();
                 }
                 controller.repairTurbine();
             } else {
@@ -187,21 +187,24 @@ public class Parser {
             if(words.length != 1) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
                       words[0] + "'");
-                return;
+                throw new DoNotStep();
             }
             try
             {
                 controller.saveGame();
+                renderer.outputLine("Game Saved!");
+                throw new DoNotStep();
             }
             catch(JsonProcessingException err)
             {
                 renderer.outputLine("Unable to save file");
+                throw new DoNotStep();
             }
         } else if(words[0].equals("load")) {
                 if(words.length > 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                           words[0] + "'");
-                    return;
+                    throw new DoNotStep();
                 }
                 else if(words.length == 2)
                 {
@@ -211,7 +214,7 @@ public class Parser {
                         renderer.outputLine("Error: Game '" +
                                         words[1] +
                                         "' does not exist.");
-                        return;
+                        throw new DoNotStep();
                     }
                 } 
                 catch (NumberFormatException e)
@@ -219,9 +222,10 @@ public class Parser {
                     renderer.outputLine("Error: '" +
                                         words[1] +
                                         "' is not a valid number.");
-                        return;
+                        throw new DoNotStep();
                 }
                 controller.loadGame(Integer.parseInt(words[1]));
+                throw new DoNotStep();
                 }
                 else if(words.length==1)
                 {
@@ -238,9 +242,11 @@ public class Parser {
                         renderer.outputLine(String.format("[%d] Saved: %s", i++, date.format(d)));
                         //renderer.outputLine(game);
                     }
+                    throw new DoNotStep();
                 }
         } else {       
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
+            throw new DoNotStep();
         }
     }
    

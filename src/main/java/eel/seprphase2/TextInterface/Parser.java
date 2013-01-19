@@ -151,13 +151,16 @@ public class Parser {
                                         "' is not a valid number.");
                         return;
                     }
-                } catch (NumberFormatException e)
+                } 
+                catch (NumberFormatException e)
                 {
                     renderer.outputLine("Error: '" +
                                         words[2] +
                                         "' is not a valid number.");
                         return;
                 }
+                
+                controller.repairPump(Integer.parseInt(words[2]]);
             }
             if(words[1].equals("reactor")) {
             //controller.repairReactor();

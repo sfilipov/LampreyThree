@@ -28,6 +28,11 @@ public interface PlantController {
      */
     public void changeValveState(int valveNumber, boolean isOpen);
     public void changePumpState(int pumpNumber, boolean isPumping);
+    public void repairPump(int pumpNumber);
+    public void repairReactor();
+    public void repairTurbine();
+    public void repairCondenser();
+    
     public void saveGame() throws JsonProcessingException;
     public void loadGame();
     public String[] listGames();

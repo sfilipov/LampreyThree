@@ -370,6 +370,18 @@ public class ParserTest {
     }
     
     @Test
+    public void wrongNumberofArgsToSaveShouldCauseError() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'save'");
+            }
+        });
+        
+        parser.parseCommand("save 1");
+        
+    }
+    
+    @Test
     public void wrongNumberOfArgumentsOnLoad0Args() {
         context.checking(new Expectations() {
             {
@@ -433,4 +445,42 @@ public class ParserTest {
         parser.parseCommand("load 0");
         
     }
+    
+    @Test 
+    public void shouldRepairPump1() {
+        context.checking(new Expectations() {
+            {
+                oneOf(plantController).repairPump(1);
+                
+            }
+        });
+        
+        parser.parseCommand("repair pump 1");
+    }
+    
+    @Test 
+    public void shouldRepairTurbine() {
+        context.checking(new Expectations() {
+            {
+                oneOf(plantController).repairTurbine();
+                
+            }
+        });
+        
+        parser.parseCommand("repair turbine");
+    }
+    
+    @Test 
+    public void shouldRepairCondenser() {
+        context.checking(new Expectations() {
+            {
+                oneOf(plantController).repairCondenser();
+                
+            }
+        });
+        
+        parser.parseCommand("repair condenser");
+    }
+    
+    
 }

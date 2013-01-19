@@ -31,7 +31,6 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Turbine turbine = new Turbine();
     @JsonProperty
     private Condenser condenser = new Condenser();
-    
     @JsonProperty
     private Energy energyGenerated = joules(0);
     @JsonProperty
@@ -50,7 +49,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private HashMap<Integer,Pump> allPumps;
     @JsonProperty
     private HashMap<Integer,Connection> allConnections;
-    
+    @JsonProperty
     private HeatSink heatSink;
     
     /**

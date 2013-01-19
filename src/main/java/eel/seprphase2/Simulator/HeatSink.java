@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Units;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Temperature;
@@ -14,8 +15,11 @@ import eel.seprphase2.Utilities.Mass;
  * @author James
  */
 public class HeatSink {
+    
+    @JsonProperty
     private Port outputPort;
     
+
     public HeatSink() {
         outputPort = new Port();
         outputPort.temperature = eel.seprphase2.Utilities.Units.kelvin(308.15);

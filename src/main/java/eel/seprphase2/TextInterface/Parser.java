@@ -7,6 +7,10 @@ package eel.seprphase2.TextInterface;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -194,12 +198,13 @@ public class Parser {
                 renderer.outputLine("Unable to save file");
             }
         } else if(words[0].equals("load")) {
-                if(words.length != 2) {
+                if(words.length > 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                           words[0] + "'");
                     return;
                 }
-                
+                else if(words.length == 2)
+                {
                 try
                 {
                     if(Integer.parseInt(words[1])==0){
@@ -216,7 +221,24 @@ public class Parser {
                                         "' is not a valid number.");
                         return;
                 }
-            controller.loadGame(Integer.parseInt(words[1]));
+                controller.loadGame(Integer.parseInt(words[1]));
+                }
+                else if(words.length==1)
+                {
+                    renderer.outputLine("Please chose a game to load and enter the following command:");
+                    renderer.outputLine("load <game id>");
+                    int i = 1;
+                    for(String game : controller.listGames())
+                    {
+                        String[] bits = game.split("\\.");
+                        Timestamp t = new Timestamp(Long.parseLong(bits[3]));
+                        Date d = new Date(t.getTime());
+                        
+                        SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+                        renderer.outputLine(String.format("[%d] Saved: %s", i++, date.format(d)));
+                        //renderer.outputLine(game);
+                    }
+                }
         } else {       
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
         }

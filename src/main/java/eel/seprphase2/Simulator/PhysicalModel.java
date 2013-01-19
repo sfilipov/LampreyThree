@@ -252,6 +252,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         
                 
     }
+    
 
     @Override
     public void loadGame(int gameNumber) {
@@ -291,6 +292,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage condenserWaterLevel() {
         return condenser.getWaterLevel();
+    }
+
+    @Override
+    public void repairCondenser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 

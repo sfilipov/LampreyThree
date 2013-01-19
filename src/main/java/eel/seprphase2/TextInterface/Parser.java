@@ -145,7 +145,7 @@ public class Parser {
                 
                 try
                 {
-                    if(Integer.parseInt(words[2])==0){
+                    if(Integer.parseInt(words[2])<=0){
                         renderer.outputLine("Error: '" +
                                         words[2] +
                                         "' is not a valid number.");
@@ -161,18 +161,30 @@ public class Parser {
                 }
                 
                 controller.repairPump(Integer.parseInt(words[2]));
-            }
-            if(words[1].equals("reactor")) {
-                controller.repairReactor();
             } else if(words[1].equals("condenser")) {
-                renderer.outputLine("The condenser cannot be repaired");
+                if(words.length != 2) {
+                    renderer.outputLine("Error: wrong number of arguments to command '" +
+                          words[0] + "'");
+                    return;
+                }
+                controller.repairCondenser();
             } else if (words[1].equals("turbine")) {
+                if(words.length != 2) {
+                    renderer.outputLine("Error: wrong number of arguments to command '" +
+                          words[0] + "'");
+                    return;
+                }
                 controller.repairTurbine();
             } else {
                 renderer.outputLine("Invalid Component");
             }
         
         } else if(words[0].equals("save")) {
+            if(words.length != 1) {
+                renderer.outputLine("Error: wrong number of arguments to command '" +
+                      words[0] + "'");
+                return;
+            }
             try
             {
                 controller.saveGame();

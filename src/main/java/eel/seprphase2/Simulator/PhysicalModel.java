@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailureState;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -15,6 +16,7 @@ import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
 import eel.seprphase2.Persistence.Persistence;
+import eel.seprphase2.Utilities.Mass;
 import java.util.HashMap;
 
 /**
@@ -140,6 +142,24 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return reactor.temperature();
     }
 
+    
+    public Mass reactorMinimumWaterMass() {
+        return reactor.minimumWaterMass();
+    }
+    
+    
+    public Mass reactorMaximumWaterMass() {
+        return reactor.maximumWaterMass();
+    }
+    
+    public Percentage reactorMinimumWaterLevel() {
+        return reactor.minimumWaterLevel();
+    }
+    
+    public void failReactor() {
+        reactor.setFailureState(FailureState.Failed);
+    }
+    
     /**
      *
      * @return
@@ -177,7 +197,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
    
     /**
-     *
+     * 
      * @param open
      */
     @Override

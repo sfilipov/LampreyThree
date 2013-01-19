@@ -24,6 +24,7 @@ import eel.seprphase2.Utilities.Volume;
 public class Reactor extends FailableComponent {
 
     private final Mass maximumWaterMass = kilograms(1000);
+    private final Mass minimumWaterMass = kilograms(800);
     private final Volume reactorVolume = cubicMetres(2);
     @JsonProperty
     private FuelPile fuelPile = new FuelPile();
@@ -205,7 +206,14 @@ public class Reactor extends FailableComponent {
     public Port inputPort() {
         return inputPort;
     }
+    
+    public Mass maximumWaterMass() {
+        return maximumWaterMass;
+    }
 
+    public Mass minimumWaterMass() { 
+        return minimumWaterMass;
+    }
     public void calculateNewTemperature(Port in) {
         temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * in.mass
                               .inKilograms()) / (waterMass.inKilograms() + in.mass.inKilograms()));
@@ -214,6 +222,10 @@ public class Reactor extends FailableComponent {
     @Override
     public Percentage calculateWearDelta() {
         return new Percentage(1);
+    }
+
+    Percentage minimumWaterLevel() {
+        return new Percentage(this.minimumWaterMass.inKilograms()/this.maximumWaterMass.inKilograms());
     }
     
     

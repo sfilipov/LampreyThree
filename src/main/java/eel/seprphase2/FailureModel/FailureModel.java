@@ -13,6 +13,8 @@ public class FailureModel {
     
     PhysicalModel physicalModel = new PhysicalModel();
     private Random failChance = new Random();
+    private int numberOfTimesWaterLevelIsTooLow;
+    private final int reactorOverheatThreshold = 8;
     ArrayList<FailableComponent> components;
     
     /**
@@ -30,8 +32,11 @@ public class FailureModel {
      */
     public void step() {
         physicalModel.step(1);
-        //testtestfailStateCheck();
-       }
+        failStateCheck();
+        checkReactorWaterLevel();
+    }
+    
+    
     
     /**
      * Check to see if we can fail any components. We use an accumulator which adds the component's current wear points.
@@ -48,6 +53,21 @@ public class FailureModel {
                 components.get(i).setFailureState(FailureState.Failed);
             }
             break; //We only want to induce one hardware failure! Break here.
+        }
+    }
+
+    private void checkReactorWaterLevel() {
+        if(physicalModel.reactorWaterLevel().points()<physicalModel.reactorMinimumWaterLevel().points())
+        {
+            numberOfTimesWaterLevelIsTooLow +=1;
+            if(numberOfTimesWaterLevelIsTooLow>reactorOverheatThreshold)
+            {
+                physicalModel.failReactor();
+            }
+        }
+        else
+        {
+            numberOfTimesWaterLevelIsTooLow = 0;
         }
     }
 }

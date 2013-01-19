@@ -40,6 +40,10 @@ public class Energy {
     public double inJoules() {
         return joules;
     }
+    
+    public double inKJoules() {
+        return joules/1000;
+    }
 
     /**
      *

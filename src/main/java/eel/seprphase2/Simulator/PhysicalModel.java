@@ -62,6 +62,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
      *
      */
     public PhysicalModel() {
+        
         heatSink = new HeatSink();
         
         allPumps =  new HashMap<Integer, Pump>();
@@ -110,8 +111,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
             reactorToCondenser.step();
             heatsinkToCondenser.step();
             
-        System.out.println("Turbine Fail State: " + turbine.getFailureState());
-        System.out.println("Condenser Fail State: " + condenser.getFailureState());
+        //System.out.println("Turbine Fail State: " + turbine.getFailureState());
+        //System.out.println("Condenser Fail State: " + condenser.getFailureState());
         }
     }
     
@@ -231,6 +232,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         if(allPumps.containsKey(pumpNumber))
         {
             allPumps.get(pumpNumber).setStatus(isPumping);
+            
         }
         else
         {
@@ -271,6 +273,21 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public void repairTurbine() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Temperature condenserTemperature() {
+        return condenser.getTemperature();
+    }
+
+    @Override
+    public Pressure condenserPressure() {
+        return condenser.getPressure();
+    }
+
+    @Override
+    public Percentage condenserWaterLevel() {
+        return condenser.getWaterLevel();
     }
 
    

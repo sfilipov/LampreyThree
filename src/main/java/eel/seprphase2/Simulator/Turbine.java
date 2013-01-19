@@ -41,8 +41,8 @@ public class Turbine extends FailableComponent {
      *
      */
     public void step() {
-        System.out.println("Turbine Input Water Mass " + inputPort.mass);
-        System.out.println("Turbine Output Water Mass 1 " + outputPort.mass);
+        //System.out.println("Turbine Input Water Mass " + inputPort.mass);
+        //System.out.println("Turbine Output Water Mass 1 " + outputPort.mass);
             
         if (getFailureState() == FailureState.Normal) {
             outputPower = 10 * inputPort.mass.inKilograms();
@@ -57,7 +57,7 @@ public class Turbine extends FailableComponent {
             setWear(new Percentage(100));
             }
         
-        System.out.println("Turbine Output Water Mass 2 " + outputPort.mass);
+        //System.out.println("Turbine Output Water Mass 2 " + outputPort.mass);
     }
 
     /**

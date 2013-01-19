@@ -56,4 +56,9 @@ public interface PlantStatus {
      * @return
      */
     public boolean getReactorToTurbine();
+    
+    public Temperature condenserTemperature();
+    
+    public Pressure condenserPressure();
+    public Percentage condenserWaterLevel();
 }

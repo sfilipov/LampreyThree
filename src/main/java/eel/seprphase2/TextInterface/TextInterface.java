@@ -49,6 +49,21 @@ public class TextInterface {
      *
      */
     public void showStatus() {
+        textRenderer.outputLine(String.format("%25s : %8d     %22s : %8d", 
+                                                  "Control Rod Position", plantStatus.controlRodPosition().points(),
+                                                  "Reactor Water Level",plantStatus.reactorWaterLevel().points()));
+        textRenderer.outputLine(String.format("%25s : %-8f    %22s : %8f", 
+                                                  "Reactor Temperature", plantStatus.reactorTemperature().inCelsius(),
+                                                  "Reactor Pressure",plantStatus.reactorPressure().inAtmospheres()));
+        textRenderer.outputLine(String.format("%25s : %8f    %22s : %8f", 
+                                                  "Condenser Temperature", plantStatus.condenserTemperature().inCelsius(),
+                                                  "Condenser Pressure", plantStatus.condenserPressure().inAtmospheres()));
+        textRenderer.outputLine(String.format("%25s : %8d", 
+                                                  "Condenser Water Level", plantStatus.condenserWaterLevel().points()));
+        textRenderer.outputLine(String.format("%25s : %f", 
+                                                  "Energy Generated", plantStatus.energyGenerated().inKJoules()));
+        
+        /*
         textRenderer.outputLine("Control Rod Position: " +
                                 plantStatus.controlRodPosition());
         textRenderer.outputLine("Reactor Temperature: " + plantStatus
@@ -56,6 +71,7 @@ public class TextInterface {
         textRenderer.outputLine("Reactor Pressure: " + plantStatus.reactorPressure());
         textRenderer.outputLine("Water Level: " + plantStatus.reactorWaterLevel());
         textRenderer.outputLine("Energy Generated: " + plantStatus.energyGenerated());
+        */
     }
 
     /**

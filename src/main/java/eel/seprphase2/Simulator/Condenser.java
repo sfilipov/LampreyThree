@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailureState;
 import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
@@ -54,73 +55,76 @@ public class Condenser extends FailableComponent {
     }
 
     public void step() {
-        waterMass = kilograms(0);
+        if(this.getFailureState()==FailureState.Normal)
+        {
+            waterMass = kilograms(0);
 
-        //steamMass = steamMass.plus(steamInputPort.mass);
-        steamMass = steamInputPort.mass;
-        
-        
-        System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
-        
-        if (reactorInputPort.mass.inKilograms() > 0)
-        {
-            calculateNewTemperature(reactorInputPort);
-        }
-        else if(steamInputPort.mass.inKilograms()>0)
-        {
-            calculateNewTemperature(steamInputPort);        
-        }
-        calculateNewTemperature(coolantInputPort);
-     
-           
-        
-        pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
-      
-        
-        
-        try
-        {
-            
-            if(steamMass.inKilograms()>0)
+            //steamMass = steamMass.plus(steamInputPort.mass);
+            steamMass = steamInputPort.mass;
+
+
+            //System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
+
+            if (reactorInputPort.mass.inKilograms() > 0)
             {
-                
-                waterMass = waterMass.plus(steamMass);
-                steamMass = kilograms(0);
+                calculateNewTemperature(reactorInputPort);
+            }
+            else if(steamInputPort.mass.inKilograms()>0)
+            {
+                calculateNewTemperature(steamInputPort);        
+            }
+            calculateNewTemperature(coolantInputPort);
+
+
+
+            pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
+
+
+
+            try
+            {
+
+                if(steamMass.inKilograms()>0)
+                {
+
+                    waterMass = waterMass.plus(steamMass);
+                    steamMass = kilograms(0);
+                }
+
+                if(reactorInputPort.mass.inKilograms() >0)
+                {
+                    waterMass = waterMass.plus(reactorInputPort.mass);
+                }
+
+                waterLevel = new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
+
+            }
+            catch(Exception e)
+            {
+                //SET OVER PRESSURE
+            }
+            
+            outputPort.mass = waterMass;
+            outputPort.temperature = temperature;
+            outputPort.pressure = pressure;
+            
+            setWear(calculateWearDelta());
+        
+            if(pressure.inAtmospheres()>450)
+            {
+                      //OVER PRESSURE 
             }
         
-            if(reactorInputPort.mass.inKilograms() >0)
-            {
-                waterMass = waterMass.plus(reactorInputPort.mass);
-            }
-            
-            waterLevel = new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
-            
+        
         }
-        catch(Exception e)
+        else
         {
-            //OVER PRESSURE FAIL STATE
+            //Do nothing until the condenser has been repaired
+            
+            outputPort.mass = kilograms(0);
+            outputPort.pressure = pascals(101325);
+            
         }
-       
-        
-        if(pressure.inAtmospheres()>450)
-        {
-            //OVER PRESSURE SO END GAME
-        }
-        
-        //pressure = steamInputPort.pressure;
-        
-        
-        outputPort.mass = waterMass;
-        outputPort.temperature = temperature;
-        outputPort.pressure = pressure;
-        setWear(calculateWearDelta());
-        
-        System.out.println("--! Condenser Pressure: " + pressure);
-        System.out.println("Condenser Water Level: " + waterLevel);
-        System.out.println("Condenser output Mass: " + outputPort.mass);
-        System.out.println("Condenser Temperature " + temperature);
-        
-        
     }
     
     

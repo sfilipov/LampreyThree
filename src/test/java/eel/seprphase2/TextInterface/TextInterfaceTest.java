@@ -13,6 +13,7 @@ import org.jmock.auto.Auto;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -43,7 +44,7 @@ public class TextInterfaceTest {
                                           textRenderer, lineReader);
     }
 
-    @Test
+    @Ignore @Test 
     public void shouldShowStatus() {
         context.checking(new Expectations() {
             {

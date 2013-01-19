@@ -160,7 +160,7 @@ public class Parser {
                         return;
                 }
                 
-                controller.repairPump(Integer.parseInt(words[2]]);
+                controller.repairPump(Integer.parseInt(words[2]);
             }
             if(words[1].equals("reactor")) {
             //controller.repairReactor();

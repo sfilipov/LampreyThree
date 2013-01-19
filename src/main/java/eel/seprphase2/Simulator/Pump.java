@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.FailureModel.FailableComponent;
+import eel.seprphase2.FailureModel.FailureState;
 import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
 import static eel.seprphase2.Utilities.Units.*;
@@ -40,17 +41,24 @@ public class Pump extends FailableComponent {
 
     public void step() {
 
-        if (status) {
-            if (inputPort.mass.inKilograms() > capacity.inKilograms()) {
-                outputPort.mass = capacity;
-            } else {
-                outputPort.mass = inputPort.mass;
-            }
+        if(getFailureState()==FailureState.Normal)
+        {
+            if (status) {
+                if (inputPort.mass.inKilograms() > capacity.inKilograms()) {
+                    outputPort.mass = capacity;
+                } else {
+                    outputPort.mass = inputPort.mass;
+                }
 
-            outputPort.temperature = inputPort.temperature;
-            setWear(calculateWearDelta());
+                outputPort.temperature = inputPort.temperature;
+                setWear(calculateWearDelta());
+            }
         }
-        
+        else
+        {
+            outputPort.mass = kilograms(0);
+            
+        }
         
     }
 

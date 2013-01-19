@@ -28,7 +28,7 @@ public class Parser {
         if (words[0].equals("movecontrolrods")) {
             if (words.length != 2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
-                                    command + "'");
+                                    words[0] + "'");
                 return;
             }
             if (!Percentage.isValidPercentage(words[1])) {
@@ -41,7 +41,7 @@ public class Parser {
         } else if(words[0].equals("openvalve")) {
                 if(words.length != 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
-                                    command + "'");
+                                    words[0] + "'");
                     return;
                 }
                 try
@@ -64,7 +64,7 @@ public class Parser {
         } else if (words[0].equals("closevalve")) {
             if(words.length != 2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
-                                    command + "'");
+                                    words[0] + "'");
                 return;
             }
             try
@@ -182,7 +182,29 @@ public class Parser {
                 renderer.outputLine("Unable to save file");
             }
         } else if(words[0].equals("load")) {
-            controller.loadGame();
+                if(words.length != 2) {
+                    renderer.outputLine("Error: wrong number of arguments to command '" +
+                          words[0] + "'");
+                    return;
+                }
+                
+                try
+                {
+                    if(Integer.parseInt(words[1])==0){
+                        renderer.outputLine("Error: Game '" +
+                                        words[1] +
+                                        "' does not exist.");
+                        return;
+                    }
+                } 
+                catch (NumberFormatException e)
+                {
+                    renderer.outputLine("Error: '" +
+                                        words[1] +
+                                        "' is not a valid number.");
+                        return;
+                }
+            controller.loadGame(Integer.parseInt(words[1]));
         } else {       
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
         }

@@ -254,7 +254,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void loadGame() {
+    public void loadGame(int gameNumber) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
           

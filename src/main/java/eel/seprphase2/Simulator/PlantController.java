@@ -34,6 +34,6 @@ public interface PlantController {
    
     
     public void saveGame() throws JsonProcessingException;
-    public void loadGame();
+    public void loadGame(int gameNumber);
     public String[] listGames();
 }

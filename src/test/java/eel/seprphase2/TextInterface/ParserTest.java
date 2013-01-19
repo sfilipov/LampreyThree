@@ -116,8 +116,9 @@ public class ParserTest {
         parser.parseCommand("openvalve 1");
         
     }
+    
     @Test
-    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnError() {
+    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithOneArg() {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'openvalve'");
@@ -127,6 +128,19 @@ public class ParserTest {
             parser.parseCommand("openvalve");
         
     }
+    
+    @Test
+    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithThreeArgs() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'openvalve'");
+            }
+        });
+       
+            parser.parseCommand("openvalve 0 0");
+        
+    }
+    
     @Test
     public void shouldNotAcceptValvesBelow0() {
         context.checking(new Expectations() {
@@ -138,6 +152,21 @@ public class ParserTest {
             parser.parseCommand("openvalve -1");
         
     }
+    
+    @Test
+    public void shouldNotAcceptValvesWithStringNames() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid valve number.");
+            }
+        });
+       
+            parser.parseCommand("openvalve foo");
+        
+    }
+    
+
+    
     @Test
     public void shouldCloseValve() {
         context.checking(new Expectations() {
@@ -149,18 +178,58 @@ public class ParserTest {
         parser.parseCommand("closevalve 1");
         
     }
-
+    
     @Test
-    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnError() {
+    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithOneArg() {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'closevalve'");
             }
         });
-        parser.parseCommand("closevalve");
+       
+            parser.parseCommand("closevalve");
         
     }
     
+    @Test
+    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithThreeArgs() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'closevalve'");
+            }
+        });
+       
+            parser.parseCommand("closevalve 0 0");
+        
+    }
+    
+    @Test
+    public void shouldNotAcceptValvesBelow0InCloseValve() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: '-1' is not a valid valve number.");
+            }
+        });
+       
+            parser.parseCommand("closevalve -1");
+        
+    }
+    
+    @Test
+    public void shouldNotAcceptValvesWithStringNamesInCloseValve() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid valve number.");
+            }
+        });
+       
+            parser.parseCommand("closevalve foo");
+        
+    }
+    
+    
+
+
     
     @Test
     public void shouldTurnPumpOn() {
@@ -174,7 +243,7 @@ public class ParserTest {
        
     }
     @Test
-    public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError() {
+    public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError0Args() {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpon'");
@@ -184,6 +253,20 @@ public class ParserTest {
         parser.parseCommand("pumpon");
         
     }
+    
+    @Test
+    public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError2Args() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpon'");
+            }
+        });
+       
+        parser.parseCommand("pumpon 0 0");
+        
+    }
+    
+    
     @Test
     public void shouldNotAcceptPumpsBelow0() {
         context.checking(new Expectations() {
@@ -195,6 +278,20 @@ public class ParserTest {
         parser.parseCommand("pumpon -1");
         
     }
+    
+    @Test
+    public void shouldNotAcceptStringPumpNames() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid pump number.");
+            }
+        });
+       
+        parser.parseCommand("pumpon foo");
+        
+    }
+    
+    
     @Test
     public void shouldTurnPumpOff() {
         context.checking(new Expectations() {
@@ -207,7 +304,7 @@ public class ParserTest {
        
     }
     @Test
-    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError() {
+    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError0Args() {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpoff'");
@@ -217,6 +314,45 @@ public class ParserTest {
         parser.parseCommand("pumpoff");
         
     }
+    
+    @Test
+    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError2Args() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpoff'");
+            }
+        });
+       
+        parser.parseCommand("pumpoff 0 0");
+        
+    }
+    
+    @Test
+    public void shoudNotAcceptStringPumpNamesForPumpOff() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid pump number.");
+            }
+        });
+       
+        parser.parseCommand("pumpoff foo");
+        
+    }
+    
+    @Test
+    public void shouldNotAcceptPumpsBelow0ForPumpOff() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: '-1' is not a valid pump number.");
+            }
+        });
+       
+        parser.parseCommand("pumpon -1");
+        
+    }
+    
+    
+    
     @Test
     public void shouldSaveGame() {
         context.checking(new Expectations() {
@@ -234,14 +370,67 @@ public class ParserTest {
     }
     
     @Test
-    public void shouldLoadGame() {
+    public void wrongNumberOfArgumentsOnLoad0Args() {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).loadGame();
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'load'");
+                
             }
         });
         
         parser.parseCommand("load");
+        
+    }
+     
+    @Test
+    public void wrongNumberOfArgumentsOnLoad3Args() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'load'");
+                
+            }
+        });
+        
+        parser.parseCommand("load 0 0");
+        
+    }
+    
+    @Test
+    public void shouldLoadGameWithNumber() {
+        context.checking(new Expectations() {
+            {
+                
+                oneOf(plantController).loadGame(1);
+            }
+        });
+        
+        parser.parseCommand("load 1");
+        
+    }
+    
+    @Test
+    public void shouldNotLoadStringGameNames() {
+        context.checking(new Expectations() {
+            {
+                
+                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid number.");
+            }
+        });
+        
+        parser.parseCommand("load foo");
+        
+    }
+    
+    @Test
+    public void shoulNotLoadGameZero() {
+        context.checking(new Expectations() {
+            {
+                oneOf(textRenderer).outputLine("Error: Game '0' does not exist.");
+                
+            }
+        });
+        
+        parser.parseCommand("load 0");
         
     }
 }

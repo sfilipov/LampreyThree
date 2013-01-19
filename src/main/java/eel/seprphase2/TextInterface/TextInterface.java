@@ -7,6 +7,7 @@ package eel.seprphase2.TextInterface;
 import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
+import eel.seprphase2.Utilities.Pressure;
 
 /**
  *
@@ -18,7 +19,7 @@ public class TextInterface {
     private PlantStatus plantStatus;
     private TextRenderer textRenderer;
     private LineReader lineReader;
-
+    private final Pressure condenserWarningPressure = new Pressure(40530000);
     /**
      *
      * @param plantController
@@ -74,6 +75,13 @@ public class TextInterface {
         }
         
         
+        /*
+         * 
+         */
+        if(plantStatus.condenserPressure().greaterThan(condenserWarningPressure))
+        {
+           textRenderer.outputLine("WARNING: CONDENSER PRESSURE TOO HIGH"); 
+        }
         
         /*
         textRenderer.outputLine("Control Rod Position: " +

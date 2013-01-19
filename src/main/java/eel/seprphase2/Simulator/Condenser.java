@@ -110,11 +110,7 @@ public class Condenser extends FailableComponent {
             
             setWear(calculateWearDelta());
         
-            if(pressure.inAtmospheres()>450)
-            {
-                      //OVER PRESSURE 
-            }
-        
+         
         
         }
         else

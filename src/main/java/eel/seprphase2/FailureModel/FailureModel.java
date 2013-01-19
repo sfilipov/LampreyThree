@@ -1,6 +1,7 @@
 package eel.seprphase2.FailureModel;
 
 import eel.seprphase2.Simulator.PhysicalModel;
+import eel.seprphase2.Utilities.Pressure;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public class FailureModel {
     private Random failChance = new Random();
     private int numberOfTimesWaterLevelIsTooLow;
     private final int reactorOverheatThreshold = 8;
+    private final Pressure condenserMaxPressure = new Pressure(50662500);
     ArrayList<FailableComponent> components;
     
     /**
@@ -34,6 +36,7 @@ public class FailureModel {
         physicalModel.step(1);
         failStateCheck();
         checkReactorWaterLevel();
+        checkCondenserPressure();
     }
     
     
@@ -68,6 +71,13 @@ public class FailureModel {
         else
         {
             numberOfTimesWaterLevelIsTooLow = 0;
+        }
+    }
+
+    private void checkCondenserPressure() {
+        if(physicalModel.condenserPressure().greaterThan(condenserMaxPressure))
+        {
+            physicalModel.failCondenser();
         }
     }
 }

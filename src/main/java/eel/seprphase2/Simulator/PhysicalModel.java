@@ -162,6 +162,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
         reactor.setFailureState(FailureState.Failed);
     }
     
+    public void failCOndenser() {
+        condenser.setFailureState(FailureState.Failed);
+    }
     /**
      *
      * @return
@@ -289,6 +292,10 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage condenserWaterLevel() {
         return condenser.getWaterLevel();
+    }
+
+    public void failCondenser() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
    

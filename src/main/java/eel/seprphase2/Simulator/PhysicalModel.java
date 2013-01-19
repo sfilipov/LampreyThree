@@ -15,6 +15,7 @@ import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
 import eel.seprphase2.Persistence.Persistence;
+import java.util.HashMap;
 
 /**
  *
@@ -28,6 +29,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Turbine turbine = new Turbine();
     @JsonProperty
     private Condenser condenser = new Condenser();
+    
     @JsonProperty
     private Energy energyGenerated = joules(0);
     @JsonProperty
@@ -39,7 +41,16 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @JsonProperty
     private Pump reactorToCondenser;
     @JsonProperty
-    public String username;
+    private Pump heatsinkToCondenser;
+    @JsonProperty
+    private String username;
+    @JsonProperty
+    private HashMap<Integer,Pump> allPumps;
+    @JsonProperty
+    private HashMap<Integer,Connection> allConnections;
+    
+    private HeatSink heatSink;
+    
     /**
      *
      */
@@ -49,20 +60,35 @@ public class PhysicalModel implements PlantController, PlantStatus {
      *
      */
     public PhysicalModel() {
+        heatSink = new HeatSink();
         
+        allPumps =  new HashMap<Integer, Pump>();
+        allConnections = new HashMap<Integer, Connection>();
         
         components = new ArrayList<FailableComponent>();
         components.add(0, turbine);
         components.add(1, reactor);
         components.add(2, condenser);
+        
         reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.05);
         turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.05);
+        
+        
         condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
         reactorToCondenser = new Pump(reactor.outputPort(), condenser.inputPort());
+        heatsinkToCondenser = new Pump(heatSink.outputPort(), condenser.coolantInputPort());
+        
         reactorToCondenser.setStatus(false);
         
-        condenser.coolantInputPort().temperature = kelvin(310.15);
-        condenser.inputPort().mass = kilograms(5);
+        
+        
+        
+        allConnections.put(1,reactorToTurbine);
+        allConnections.put(2,turbineToCondenser);
+        
+        allPumps.put(1, reactorToCondenser);
+        allPumps.put(2, condenserToReactor);
+        allPumps.put(3, heatsinkToCondenser);
         
     }
     
@@ -80,6 +106,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
             turbineToCondenser.step();
             condenserToReactor.step();
             reactorToCondenser.step();
+            heatsinkToCondenser.step();
             
         System.out.println("Turbine Fail State: " + turbine.getFailureState());
         System.out.println("Condenser Fail State: " + condenser.getFailureState());

@@ -27,12 +27,16 @@ public class App {
         FailureModel failureModel = new FailureModel(physicalModel);
         TextInterface ti = new TextInterface(physicalModel, physicalModel, renderer, reader);
         ti.askForUsername();
+        ti.showStatus();
         while (true) {
-            ti.showStatus();
+            
             try
             {
                 ti.processCommand();
+                
                 failureModel.step();            
+                
+                ti.showStatus();
             }
             catch(DoNotStep n)
             {

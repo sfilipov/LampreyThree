@@ -244,7 +244,10 @@ public class Parser {
                     }
                     throw new DoNotStep();
                 }
-        } else {       
+        } else if(command.isEmpty() && command.trim().isEmpty()) 
+        {
+            
+        }else {       
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
             throw new DoNotStep();
         }

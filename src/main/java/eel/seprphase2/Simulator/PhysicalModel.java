@@ -318,6 +318,10 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return condenser.getWaterLevel();
     }
 
+    public boolean turbineHasFailed() {
+        return turbine.hasFailed();
+    }
+
     
 
    

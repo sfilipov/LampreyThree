@@ -4,6 +4,7 @@ import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Utilities.Pressure;
 import java.util.ArrayList;
 import java.util.Random;
+import static eel.seprphase2.Utilities.Units.*;
 
 /**
  * The FailureModel is the class responsible for injecting both software and hardware failures into the reactor 
@@ -81,4 +82,11 @@ public class FailureModel {
             physicalModel.failCondenser();
         }
     }
+    
+    private void checkTurbineFailure() {
+        if (physicalModel.turbineHasFailed()) {
+            physicalModel.moveControlRods(percent(0));
+        }
+    }
+    
 }

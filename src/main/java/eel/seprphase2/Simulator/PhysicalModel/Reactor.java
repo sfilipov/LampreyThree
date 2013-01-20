@@ -239,7 +239,7 @@ public class Reactor extends FailableComponent {
     
     @Override
     public Percentage calculateWearDelta() {
-        return new Percentage(1);
+        return new Percentage(0);
     }
 
     Percentage minimumWaterLevel() {

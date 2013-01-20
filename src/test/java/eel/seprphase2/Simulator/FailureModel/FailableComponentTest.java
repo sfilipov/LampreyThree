@@ -86,7 +86,7 @@ public class FailableComponentTest {
     }
      
 
-    @Test
+    @Test @Ignore
     public void shouldIncreaseWearOfReactorWhenRunning() {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(400), new Pressure(101325));

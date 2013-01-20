@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import static eel.seprphase2.Utilities.Units.percent;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Ignore;
@@ -420,7 +421,7 @@ public class ParserTest {
     }
     
     @Test (expected = DoNotStep.class)
-    public void shouldLoadGameWithNumber() throws DoNotStep {
+    public void shouldLoadGameWithNumber() throws DoNotStep, IOException {
         context.checking(new Expectations() {
             {
                 

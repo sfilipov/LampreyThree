@@ -55,14 +55,14 @@ public class PersistenceTest {
     }
 
     /**
-     * Test of SaveGameState method, of class Persistence.
+     * Test of saveGameState method, of class Persistence.
      */
     @Test
     public void shouldGenerateFileNameThatContainsUsername() {
      
         String username = "testing";
         
-        String resultFileName = Persistence.GenerateFileName(username);
+        String resultFileName = Persistence.generateFileName(username);
         
         
         Calendar cal = Calendar.getInstance();
@@ -79,7 +79,7 @@ public class PersistenceTest {
      
         String username = "testing";
         
-        String resultFileName = Persistence.GenerateFileName(username);
+        String resultFileName = Persistence.generateFileName(username);
         
              
         String fileName = "sepr.teameel."+ username + ".0.nuke";
@@ -92,7 +92,7 @@ public class PersistenceTest {
      
         String username = "testing";
         
-        String resultFileName = Persistence.GenerateFileName(username);
+        String resultFileName = Persistence.generateFileName(username);
         
         
  
@@ -106,8 +106,8 @@ public class PersistenceTest {
     public void shouldGenerateFileNameWithNearlyUniqueTimestamp() {
      
         String username = "testing";
-        String resultFileName = Persistence.GenerateFileName(username);
-        String resultFileName2 = Persistence.GenerateFileName(username);
+        String resultFileName = Persistence.generateFileName(username);
+        String resultFileName2 = Persistence.generateFileName(username);
         assertTrue(resultFileName.substring(0,21).equals(resultFileName2.substring(0,21)));
     }
     
@@ -115,9 +115,9 @@ public class PersistenceTest {
     public void shouldCreateASaveGameForSomeUser() {
         Calendar cal = Calendar.getInstance();
         String time = String.valueOf(cal.getTimeInMillis());
-        String file = Persistence.SaveGameState("test_"+time, "test");
+        String file = Persistence.saveGameState("test_"+time, "test");
         artifacts.add(file);
-        assertTrue(Persistence.GetSaveGames("test_"+time).length==1);
+        assertTrue(Persistence.getSaveGames("test_"+time).length==1);
         
     }
     
@@ -127,14 +127,14 @@ public class PersistenceTest {
     public void shouldCreateASaveGameAndReadCorrectContent() {
         Calendar cal = Calendar.getInstance();
         String time = String.valueOf(cal.getTimeInMillis());
-        String file = Persistence.SaveGameState("test_"+time, "test");
+        String file = Persistence.saveGameState("test_"+time, "test");
         
-        assertTrue(Persistence.GetSaveGames("test_"+time).length==1);
+        assertTrue(Persistence.getSaveGames("test_"+time).length==1);
         artifacts.add(file);
         
         try
         {
-            assertEquals(Persistence.LoadGameState(file),"test");
+            assertEquals(Persistence.loadGameState(file),"test");
         }
         catch(IOException e)
         {

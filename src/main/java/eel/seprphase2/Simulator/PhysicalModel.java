@@ -255,7 +255,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         eel.seprphase2.Simulator.Persistence p = new eel.seprphase2.Simulator.Persistence();
         
         String r = p.serialize(this);
-        Persistence.SaveGameState(username, r); 
+        Persistence.saveGameState(username, r); 
         
                 
     }
@@ -268,7 +268,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
           
     @Override
     public String[] listGames() {
-        return Persistence.GetSaveGames(username);
+        return Persistence.getSaveGames(username);
     }
 
     @Override

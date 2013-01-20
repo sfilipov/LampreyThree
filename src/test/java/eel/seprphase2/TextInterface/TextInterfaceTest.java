@@ -1,7 +1,7 @@
 package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.GameManager;
-import eel.seprphase2.Simulator.PhysicalModel;
+import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Energy;

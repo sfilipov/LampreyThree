@@ -1,7 +1,7 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.FailureModel.CannotControlException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;

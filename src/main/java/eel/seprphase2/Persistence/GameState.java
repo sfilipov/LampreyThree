@@ -4,7 +4,7 @@
  */
 package eel.seprphase2.Persistence;
 
-import eel.seprphase2.FailureModel.FailureModel;
+import eel.seprphase2.Simulator.FailureModel.FailureModel;
 
 /**
  *

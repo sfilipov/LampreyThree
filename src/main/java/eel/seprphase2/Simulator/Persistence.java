@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;

@@ -4,9 +4,10 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.FailureModel.CannotControlException;
-import eel.seprphase2.FailureModel.FailureModel;
+import eel.seprphase2.Simulator.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.FailureModel.FailureModel;
 import eel.seprphase2.Persistence.GameState;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;

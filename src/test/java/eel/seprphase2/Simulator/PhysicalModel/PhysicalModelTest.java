@@ -68,16 +68,16 @@ public class PhysicalModelTest {
         PhysicalModel model = new PhysicalModel();
         model.failCondenser();
         model.repairCondenser();
-        assertFalse(model.components.get(2).hasFailed());
+        assertFalse(model.components().get(2).hasFailed());
     }
     
     
     @Test
     public void shouldSetTurbineBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();
-        model.components.get(0).fail();
+        model.components().get(0).fail();
         model.repairTurbine();
-        assertFalse(model.components.get(0).hasFailed());
+        assertFalse(model.components().get(0).hasFailed());
     }
     
     /*@Test

@@ -31,8 +31,8 @@ public class FailureModelTest {
         for (int i = 0; i < 1000; i++) {
              failureModel.step();
         }
-        assertTrue(phys.components.get(0).hasFailed());
-        assertTrue(phys.components.get(1).hasFailed());
+        assertTrue(phys.components().get(0).hasFailed());
+        assertTrue(phys.components().get(1).hasFailed());
     }
     
 }

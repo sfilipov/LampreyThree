@@ -16,7 +16,6 @@ import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
-import eel.seprphase2.Persistence.Persistence;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -60,22 +59,12 @@ public class PhysicalModel implements PlantController, PlantStatus {
     /**
      *
      */
-    @JsonIgnore
-    public ArrayList<FailableComponent> components;
-    /**
-     *
-     */
     public PhysicalModel() {
         
         heatSink = new HeatSink();
         
         allPumps =  new HashMap<Integer, Pump>();
         allConnections = new HashMap<Integer, Connection>();
-        
-        components = new ArrayList<FailableComponent>();
-        components.add(0, turbine);
-        components.add(1, reactor);
-        components.add(2, condenser);
         
         reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.05);
         turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.05);
@@ -86,9 +75,6 @@ public class PhysicalModel implements PlantController, PlantStatus {
         heatsinkToCondenser = new Pump(heatSink.outputPort(), condenser.coolantInputPort());
         
         reactorToCondenser.setStatus(false);
-        
-        
-        
         
         allConnections.put(1,reactorToTurbine);
         allConnections.put(2,turbineToCondenser);
@@ -214,6 +200,14 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return reactorToTurbine.getOpen();
     }
 
+    public ArrayList<FailableComponent> components() {
+        ArrayList<FailableComponent> c = new ArrayList<FailableComponent>();
+        c.add(0, turbine);
+        c.add(1, reactor);
+        c.add(2, condenser);       
+        return c;
+    } 
+    
     @Override
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
         if(allConnections.containsKey(valveNumber))

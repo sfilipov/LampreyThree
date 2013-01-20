@@ -37,7 +37,7 @@ public class PersistenceTest {
     @Test
     public void shouldSerializePercentage() throws JsonProcessingException {
         String result = persistence.serialize(percent(50));
-        assertEquals("{\"@class\":\"Percentage\",\"percentagePoints\":50}", result);
+        assertEquals("{\"@class\":\"Percentage\",\"percentagePoints\":50.0}", result);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PersistenceTest {
     @Test
     public void shouldSerializeFuelPile() throws JsonProcessingException {
         String result = persistence.serialize(new FuelPile());
-        assertEquals("{\"@class\":\"FuelPile\",\"controlRodPosition\":{\"@class\":\"Percentage\",\"percentagePoints\":0}}", result);
+        assertEquals("{\"@class\":\"FuelPile\",\"controlRodPosition\":{\"@class\":\"Percentage\",\"percentagePoints\":0.0}}", result);
     }
 
     @Test

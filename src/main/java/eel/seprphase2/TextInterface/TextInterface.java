@@ -19,7 +19,7 @@ public class TextInterface {
     private PlantStatus plantStatus;
     private TextRenderer textRenderer;
     private LineReader lineReader;
-    private final Pressure condenserWarningPressure = new Pressure(40530000);
+    private final Pressure condenserWarningPressure = new Pressure(25530000);
     /**
      *
      * @param plantController
@@ -50,7 +50,7 @@ public class TextInterface {
      *
      */
     public void showStatus() {
-        textRenderer.outputLine(String.format("%25s : %8d     %22s : %8d", 
+        textRenderer.outputLine(String.format("%25s : %8f     %22s : %8f", 
                                                   "Control Rod Position", plantStatus.controlRodPosition().points(),
                                                   "Reactor Water Level",plantStatus.reactorWaterLevel().points()));
         textRenderer.outputLine(String.format("%25s : %-8f    %22s : %8f", 
@@ -59,7 +59,7 @@ public class TextInterface {
         textRenderer.outputLine(String.format("%25s : %8f    %22s : %8f", 
                                                   "Condenser Temperature", plantStatus.condenserTemperature().inCelsius(),
                                                   "Condenser Pressure", plantStatus.condenserPressure().inAtmospheres()));
-        textRenderer.outputLine(String.format("%25s : %8d", 
+        textRenderer.outputLine(String.format("%25s : %8f", 
                                                   "Condenser Water Level", plantStatus.condenserWaterLevel().points()));
         textRenderer.outputLine(String.format("%25s : %f", 
                                                   "Energy Generated", plantStatus.energyGenerated().inKJoules()));

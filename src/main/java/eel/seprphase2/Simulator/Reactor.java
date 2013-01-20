@@ -93,7 +93,7 @@ public class Reactor extends FailableComponent {
      * @return
      */
     public Percentage waterLevel() {
-        return new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
+        return new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms())*100);
     }
 
     /**
@@ -225,7 +225,7 @@ public class Reactor extends FailableComponent {
     }
 
     Percentage minimumWaterLevel() {
-        return new Percentage(this.minimumWaterMass.inKilograms()/this.maximumWaterMass.inKilograms());
+        return new Percentage((this.minimumWaterMass.inKilograms()/this.maximumWaterMass.inKilograms())*100);
     }
     
     

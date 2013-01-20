@@ -18,9 +18,9 @@ import com.fasterxml.jackson.annotation.*;
 @JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
 public class Percentage {
 
-    private static final Pattern pattern = Pattern.compile("^([0-9]+)%?$");
+    private static final Pattern pattern = Pattern.compile("^([0-9]+(\\.[0-9])?)%?$");
     @JsonProperty
-    private final int percentagePoints;
+    private final double percentagePoints;
 
     // default constructor required for serialization
     /**
@@ -34,7 +34,7 @@ public class Percentage {
      *
      * @param percentagePoints
      */
-    public Percentage(int percentagePoints) {
+    public Percentage(double percentagePoints) {
         if (!isValidPercentage(percentagePoints)) {
             throw new IllegalArgumentException("The argument (" +
                                                percentagePoints +
@@ -47,11 +47,11 @@ public class Percentage {
     /**
      *
      * @param ratio
-     */
+     
     public Percentage(double ratio) {
         this((int)round(ratio * 100));
     }
-
+*/
     /**
      *
      * @param representation
@@ -64,7 +64,7 @@ public class Percentage {
      *
      * @return
      */
-    public int points() {
+    public double points() {
         return this.percentagePoints;
     }
 
@@ -101,7 +101,7 @@ public class Percentage {
 
     @Override
     public int hashCode() {
-        return this.percentagePoints;
+        return ((int)round(this.percentagePoints));
     }
 
     @Override
@@ -124,7 +124,7 @@ public class Percentage {
      * @param points
      * @return
      */
-    public static boolean isValidPercentage(int points) {
+    public static boolean isValidPercentage(double points) {
         return points <= 100 && points >= 0;
     }
 

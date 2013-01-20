@@ -116,6 +116,7 @@ public class ReactorTest {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
         reactor.step();
-        assertThat(reactor.waterLevel().points(), not(equalTo(100)));
+        assertThat(reactor.waterLevel().points(), not(equalTo(100.0)));
+        
     }
 }

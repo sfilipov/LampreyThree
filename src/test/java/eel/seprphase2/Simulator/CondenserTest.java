@@ -136,7 +136,7 @@ public class CondenserTest {
         Condenser instance = new Condenser();
         instance.step();    
         Percentage p = instance.getWaterLevel();
-        assertSame(instance.getWaterLevel().points(), new Percentage(0).points());
+        assertTrue(instance.getWaterLevel().equals( new Percentage(0)));
     }
     
     
@@ -183,7 +183,7 @@ public class CondenserTest {
     {
         Condenser instance = new Condenser();
         instance.step();
-        instance.inputPort().mass = kilograms(5);
+        instance.inputPort().mass = kilograms(10);
         instance.step();
         assertTrue(instance.getWaterLevel().ratio() > 0);
         

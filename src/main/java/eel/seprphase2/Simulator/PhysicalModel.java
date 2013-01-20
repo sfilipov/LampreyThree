@@ -268,10 +268,14 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public void repairPump(int pumpNumber) {
         if(allPumps.containsKey(pumpNumber))
         {
-            allPumps.get(pumpNumber).setCapacity(kilograms(3));
-            allPumps.get(pumpNumber).setFailureState(FailureState.Normal);
-            allPumps.get(pumpNumber).setStatus(true);
-            allPumps.get(pumpNumber).setWear(new Percentage(0));
+            allPumps.get(pumpNumber).repair();
+            
+            
+            //These shouldn't need to be changed
+            //allPumps.get(pumpNumber).setStatus(true);
+            //allPumps.get(pumpNumber).setCapacity(kilograms(3));
+            //allPumps.get(pumpNumber).setWear(new Percentage(0));
+            
         }
         else
         {
@@ -281,31 +285,15 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     @Override
     public void repairCondenser() {
-        condenser.setFailureState(FailureState.Normal);
-        condenser.setWear(new Percentage(0));
-        condenser = new Condenser();
+        condenser.repair();
     }
 
     @Override
     public void repairTurbine() {
-        turbine.setFailureState(FailureState.Normal);
-        turbine.setWear(new Percentage(0));
-        turbine = new Turbine();
+        turbine.repair();
     }
     
-    @Override
-    public void help() {
-        System.out.println("\n" + "Possible Commands: " + "\n" + "movecontrolrods <Percentage>" + "\n" +
-                                              "openvalve <ValveNumber>" + "\n" + 
-                                              "closevalve <ValveNumber>" + "\n" + 
-                                              "pumpon <PumpNumber>" + "\n" + 
-                                              "pumpoff <PumpNumber>" + "\n" + 
-                                              "repair pump <PumpNumber>" + "\n" + 
-                                              "repair turbine" + "\n" + 
-                                              "repair condenser" + "\n" + 
-                                              "save" + 
-                                              "load <GameNumber>" +"\n" + "\n");
-    }
+
 
     @Override
     public Temperature condenserTemperature() {

@@ -12,7 +12,7 @@ public class PercentageTest {
     @Test
     public void commonCaseShouldWork() {
         Percentage p = new Percentage(57);
-        assertEquals(57, p.points());
+        assertEquals(p.points(),57.0,0.1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -39,14 +39,10 @@ public class PercentageTest {
     @Test
     public void ratioConstructionShouldWork() {
         Percentage p = new Percentage(0.57);
-        assertEquals(57, p.points());
+        assertEquals(0.57, p.points(),0.1);
     }
 
-    @Test
-    public void ratioToRatioShouldWork() {
-        Percentage p = new Percentage(0.57);
-        assertEquals(0.57, p.ratio(), 0.5);
-    }
+   
 
     @Test
     public void validPercentageNumbersShouldBeValid() {
@@ -96,13 +92,13 @@ public class PercentageTest {
     @Test
     public void constructionFromStringShouldWork() {
         Percentage p = new Percentage("57%");
-        assertEquals(57, p.points());
+        assertTrue(p.equals(new Percentage(57)));
     }
 
     @Test
     public void formattingToStringShouldWork() {
         Percentage p = new Percentage(57);
-        assertEquals("57%", p.toString());
+        assertEquals("57.0%", p.toString());
     }
 
     @Test

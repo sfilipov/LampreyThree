@@ -244,11 +244,22 @@ public class Parser {
                     }
                     throw new DoNotStep();
                 }
-        } else if(words[0].equals("help"))
-                 {controller.help();}
-               else if(command.isEmpty() && command.trim().isEmpty()) 
+        } else if(words[0].equals("help")) {
+            renderer.outputLine("Possible Commands: " + "\n" + "movecontrolrods <Percentage>" + "\n" +
+                                              "openvalve <ValveNumber>" + "\n" + 
+                                              "closevalve <ValveNumber>" + "\n" + 
+                                              "pumpon <PumpNumber>" + "\n" + 
+                                              "pumpoff <PumpNumber>" + "\n" + 
+                                              "repair pump <PumpNumber>" + "\n" + 
+                                              "repair turbine" + "\n" + 
+                                              "repair condenser" + "\n" + 
+                                              "save" + 
+                                              "load <GameNumber>" +"\n" + "\n");
+            throw new DoNotStep();
+        }
+        else if(command.isEmpty() && command.trim().isEmpty()) 
         {
-            
+            //Just skip
         }else {       
             renderer.outputLine("Error: Unknown command '" + words[0] + "'");
             throw new DoNotStep();

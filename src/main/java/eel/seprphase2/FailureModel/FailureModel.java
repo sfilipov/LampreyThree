@@ -16,7 +16,7 @@ public class FailureModel {
     private Random failChance = new Random();
     private int numberOfTimesWaterLevelIsTooLow;
     private final int reactorOverheatThreshold = 8;
-    private final Pressure condenserMaxPressure = new Pressure(50662500);
+    private final Pressure condenserMaxPressure = new Pressure(30662500);
     ArrayList<FailableComponent> components;
     
     /**

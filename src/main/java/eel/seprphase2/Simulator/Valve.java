@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author james
  */
-public class Valve implements IValve{
+public class Valve extends Component implements IValve {
     
     @JsonProperty
     private boolean open = true;

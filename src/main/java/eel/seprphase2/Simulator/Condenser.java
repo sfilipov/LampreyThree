@@ -41,6 +41,10 @@ public class Condenser extends FailableComponent {
     private Percentage waterLevel = percent(0);
 
     public Condenser() {
+        InitVariables();
+    }
+    
+    public void InitVariables() {
         pressure = pascals(101325);
         waterMass = kilograms(0);
         steamMass = kilograms(0);
@@ -96,12 +100,13 @@ public class Condenser extends FailableComponent {
                     waterMass = waterMass.plus(reactorInputPort.mass);
                 }
 
-                waterLevel = new Percentage(waterMass.inKilograms() / maximumWaterMass.inKilograms());
+                waterLevel = new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms())*100);
 
             }
             catch(Exception e)
             {
-                //SET OVER PRESSURE
+                waterLevel = new Percentage(100);
+                //This is over-pressure condition, however will be handeled by failure model and not needed to be done here
             }
             
             outputPort.mass = waterMass;
@@ -198,5 +203,11 @@ public class Condenser extends FailableComponent {
     @Override
     public Percentage calculateWearDelta() {
         return percent(1);
+    }
+    
+    @Override
+    public void repair() {
+        super.repair();
+        InitVariables();
     }
 }

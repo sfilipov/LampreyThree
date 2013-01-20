@@ -11,7 +11,7 @@ import eel.seprphase2.Utilities.Density;
  *
  * @author James
  */
-public class HeatSink {
+public class HeatSink extends Component {
     
     @JsonProperty
     private Port outputPort;

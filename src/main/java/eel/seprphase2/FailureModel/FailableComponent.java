@@ -1,5 +1,6 @@
 package eel.seprphase2.FailureModel;
 
+import eel.seprphase2.Simulator.Component;
 import eel.seprphase2.Utilities.Percentage;
 
 /**
@@ -8,7 +9,7 @@ import eel.seprphase2.Utilities.Percentage;
  * child class that derives this
  * @author Marius Dumetrescu
  */
-public abstract class FailableComponent {
+public abstract class FailableComponent extends Component {
     private FailureState failureState;      //The state of the component
     private Percentage wear;                //Current wear level - capped at 100%
         
@@ -71,5 +72,10 @@ public abstract class FailableComponent {
            wear = new Percentage(0);        //Cap at 0%
        }
        
+    }
+    
+    public void repair() {
+        failureState = FailureState.Normal;
+        wear = new Percentage(0);
     }
 }

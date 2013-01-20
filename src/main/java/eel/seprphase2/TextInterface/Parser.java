@@ -244,7 +244,9 @@ public class Parser {
                     }
                     throw new DoNotStep();
                 }
-        } else if(command.isEmpty() && command.trim().isEmpty()) 
+        } else if(words[0].equals("help"))
+                 {controller.help();}
+               else if(command.isEmpty() && command.trim().isEmpty()) 
         {
             
         }else {       

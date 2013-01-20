@@ -292,6 +292,20 @@ public class PhysicalModel implements PlantController, PlantStatus {
         turbine.setWear(new Percentage(0));
         turbine = new Turbine();
     }
+    
+    @Override
+    public void help() {
+        System.out.println("\n" + "Possible Commands: " + "\n" + "movecontrolrods <Percentage>" + "\n" +
+                                              "openvalve <ValveNumber>" + "\n" + 
+                                              "closevalve <ValveNumber>" + "\n" + 
+                                              "pumpon <PumpNumber>" + "\n" + 
+                                              "pumpoff <PumpNumber>" + "\n" + 
+                                              "repair pump <PumpNumber>" + "\n" + 
+                                              "repair turbine" + "\n" + 
+                                              "repair condenser" + "\n" + 
+                                              "save" + 
+                                              "load <GameNumber>" +"\n" + "\n");
+    }
 
     @Override
     public Temperature condenserTemperature() {

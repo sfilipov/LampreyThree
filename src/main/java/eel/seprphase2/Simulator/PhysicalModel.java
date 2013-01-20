@@ -233,21 +233,15 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
-        if(allPumps.containsKey(pumpNumber))
-        {
-            if(!allPumps.get(pumpNumber).hasFailed())
-            {
-                allPumps.get(pumpNumber).setStatus(isPumping);
-            }
-            else
-            {
-                throw new CannotControlException("Pump "+pumpNumber+ " is failed");
-            }
+        if (!allPumps.containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
         }
-        else
-        {
-            throw new KeyNotFoundException("Pump "+pumpNumber+ " does not exist");
+
+        if (allPumps.get(pumpNumber).hasFailed()) {
+            throw new CannotControlException("Pump " + pumpNumber + " is failed");
         }
+        
+        allPumps.get(pumpNumber).setStatus(isPumping);
     }
 
     @Override

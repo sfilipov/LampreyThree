@@ -40,26 +40,19 @@ public class Pump extends FailableComponent {
     }
 
     public void step() {
-
-        if(!hasFailed())
-        {
-            if (status) {
-                if (inputPort.mass.inKilograms() > capacity.inKilograms()) {
-                    outputPort.mass = capacity;
-                } else {
-                    outputPort.mass = inputPort.mass;
-                }
-
-                outputPort.temperature = inputPort.temperature;
-                setWear(calculateWearDelta());
-            }
-        }
-        else
-        {
+        if (hasFailed()) {
             outputPort.mass = kilograms(0);
-            
         }
-        
+        if (status) {
+            if (inputPort.mass.inKilograms() > capacity.inKilograms()) {
+                outputPort.mass = capacity;
+            } else {
+                outputPort.mass = inputPort.mass;
+            }
+
+            outputPort.temperature = inputPort.temperature;
+            setWear(calculateWearDelta());
+        }
     }
 
     @Override

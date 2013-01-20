@@ -59,73 +59,60 @@ public class Condenser extends FailableComponent {
     }
 
     public void step() {
-        if(!hasFailed())
-        {
-            waterMass = kilograms(0);
-
-            //steamMass = steamMass.plus(steamInputPort.mass);
-            steamMass = steamInputPort.mass;
-
-
-            //System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
-
-            if (reactorInputPort.mass.inKilograms() > 0)
-            {
-                calculateNewTemperature(reactorInputPort);
-            }
-            else if(steamInputPort.mass.inKilograms()>0)
-            {
-                calculateNewTemperature(steamInputPort);        
-            }
-            calculateNewTemperature(coolantInputPort);
-
-
-
-            pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
-
-
-
-            try
-            {
-
-                if(steamMass.inKilograms()>0)
-                {
-
-                    waterMass = waterMass.plus(steamMass);
-                    steamMass = kilograms(0);
-                }
-
-                if(reactorInputPort.mass.inKilograms() >0)
-                {
-                    waterMass = waterMass.plus(reactorInputPort.mass);
-                }
-
-                waterLevel = new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms())*100);
-
-            }
-            catch(Exception e)
-            {
-                waterLevel = new Percentage(100);
-                //This is over-pressure condition, however will be handeled by failure model and not needed to be done here
-            }
-            
-            outputPort.mass = waterMass;
-            outputPort.temperature = temperature;
-            outputPort.pressure = pressure;
-            
-            setWear(calculateWearDelta());
-        
-         
-        
-        }
-        else
-        {
+        if (hasFailed()) {
             //Do nothing until the condenser has been repaired
-            
+
             outputPort.mass = kilograms(0);
             outputPort.pressure = pascals(101325);
-            
+
         }
+
+        waterMass = kilograms(0);
+
+        //steamMass = steamMass.plus(steamInputPort.mass);
+        steamMass = steamInputPort.mass;
+
+
+        //System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
+
+        if (reactorInputPort.mass.inKilograms() > 0) {
+            calculateNewTemperature(reactorInputPort);
+        } else if (steamInputPort.mass.inKilograms() > 0) {
+            calculateNewTemperature(steamInputPort);
+        }
+        calculateNewTemperature(coolantInputPort);
+
+
+
+        pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
+
+
+
+        try {
+
+            if (steamMass.inKilograms() > 0) {
+
+                waterMass = waterMass.plus(steamMass);
+                steamMass = kilograms(0);
+            }
+
+            if (reactorInputPort.mass.inKilograms() > 0) {
+                waterMass = waterMass.plus(reactorInputPort.mass);
+            }
+
+            waterLevel = new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms()) * 100);
+
+        } catch (Exception e) {
+            waterLevel = new Percentage(100);
+            //This is over-pressure condition, however will be handeled by failure model and not needed to be done here
+        }
+
+        outputPort.mass = waterMass;
+        outputPort.temperature = temperature;
+        outputPort.pressure = pressure;
+
+        setWear(calculateWearDelta());
+
     }
     
     

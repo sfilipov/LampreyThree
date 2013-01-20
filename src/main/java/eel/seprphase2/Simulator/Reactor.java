@@ -130,61 +130,59 @@ public class Reactor extends FailableComponent {
         }
         
         
-        if (!hasFailed()) {
-
-            if (temperature.inKelvin() < boilingPointOfWater) {
-                
-                /*
-                 * Calculates how much the water heats if it's not at boiling point
-                 */
-                
-                temperature = kelvin(temperature.inKelvin() +
-                                     fuelPile.output(1) / waterMass.inKilograms() /
-                                     specificHeatOfWater);
-            } else {
-
-                /*
-                 * Calculates how much water turns to steam in one timestep at boiling point
-                 */
-
-                Mass deltaMass = kilograms(fuelPile.output(1) / latentHeatOfWater);
-                steamMass = steamMass.plus(deltaMass);
-                waterMass = waterMass.minus(deltaMass);
-            }
-
-            /*
-             * Calculates volume of steam in this particular timestep
-             * Calculates pressure of said steam
-             */
-            
-            Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
-            pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
-            steamDensity = steamMass.densityAt(steamVolume);
-            
-            /*
-             * Sends information to output port
-             */
-            
-            outputPort.mass = steamMass;
-            outputPort.density = steamDensity;
-            outputPort.pressure = pressure;
-            outputPort.temperature = temperature;
-            
-            //System.out.println("Reactor Water Mass " + waterMass);
-            //System.out.println("Reactor Steam Mass " + steamMass);
-            
-        
-            
-            /*
-             * Calculates component wear after a time step
-             */
-            
-            Percentage wearDelta = calculateWearDelta();
-            setWear(wearDelta);
-        } else {
+        if (hasFailed()) {
             System.exit(0);
-
         }
+
+        if (temperature.inKelvin() < boilingPointOfWater) {
+
+            /*
+             * Calculates how much the water heats if it's not at boiling point
+             */
+
+            temperature = kelvin(temperature.inKelvin() +
+                                 fuelPile.output(1) / waterMass.inKilograms() /
+                                 specificHeatOfWater);
+        } else {
+
+            /*
+             * Calculates how much water turns to steam in one timestep at boiling point
+             */
+
+            Mass deltaMass = kilograms(fuelPile.output(1) / latentHeatOfWater);
+            steamMass = steamMass.plus(deltaMass);
+            waterMass = waterMass.minus(deltaMass);
+        }
+
+        /*
+         * Calculates volume of steam in this particular timestep
+         * Calculates pressure of said steam
+         */
+
+        Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
+        pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
+        steamDensity = steamMass.densityAt(steamVolume);
+
+        /*
+         * Sends information to output port
+         */
+
+        outputPort.mass = steamMass;
+        outputPort.density = steamDensity;
+        outputPort.pressure = pressure;
+        outputPort.temperature = temperature;
+
+        //System.out.println("Reactor Water Mass " + waterMass);
+        //System.out.println("Reactor Steam Mass " + steamMass);
+
+
+
+        /*
+         * Calculates component wear after a time step
+         */
+
+        Percentage wearDelta = calculateWearDelta();
+        setWear(wearDelta);
     }
 
     /**

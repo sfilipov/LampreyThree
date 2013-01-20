@@ -1,6 +1,8 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
 import org.jmock.Expectations;
@@ -107,7 +109,7 @@ public class ParserTest {
     }
     
     @Test
-    public void shouldOpenValve() throws DoNotStep {
+    public void shouldOpenValve() throws DoNotStep, KeyNotFoundException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changeValveState(1,true);
@@ -169,7 +171,7 @@ public class ParserTest {
 
     
     @Test
-    public void shouldCloseValve()  throws DoNotStep{
+    public void shouldCloseValve()  throws DoNotStep, KeyNotFoundException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changeValveState(1,false);
@@ -237,7 +239,7 @@ public class ParserTest {
 
     
     @Test
-    public void shouldTurnPumpOn()  throws DoNotStep {
+    public void shouldTurnPumpOn()  throws DoNotStep, KeyNotFoundException, CannotControlException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changePumpState(1,true);
@@ -299,7 +301,7 @@ public class ParserTest {
     
     
     
-    public void shouldTurnPumpOff()  throws DoNotStep{
+    public void shouldTurnPumpOff()  throws DoNotStep, KeyNotFoundException, CannotControlException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changePumpState(1,false);
@@ -455,7 +457,7 @@ public class ParserTest {
     }
     
     @Test 
-    public void shouldRepairPump1()  throws DoNotStep{
+    public void shouldRepairPump1()  throws DoNotStep, KeyNotFoundException{
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairPump(1);

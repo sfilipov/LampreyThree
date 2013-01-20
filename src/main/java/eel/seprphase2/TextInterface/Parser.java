@@ -5,6 +5,8 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
 import java.sql.Timestamp;
@@ -64,7 +66,16 @@ public class Parser {
                                         "' is not a valid valve number.");
                         throw new DoNotStep();
                 }
-                controller.changeValveState(Integer.parseInt(words[1]), true);
+                
+                try
+                {
+                    controller.changeValveState(Integer.parseInt(words[1]), true);
+                }
+                catch (KeyNotFoundException e)
+                {
+                    renderer.outputLine(e.getMessage());
+                    throw new DoNotStep();
+                }
         } else if (words[0].equals("closevalve")) {
             if(words.length != 2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
@@ -87,7 +98,16 @@ public class Parser {
                                     "' is not a valid valve number.");
                     throw new DoNotStep();
             }
-            controller.changeValveState(Integer.parseInt(words[1]), false);
+            
+            try
+            {
+                controller.changeValveState(Integer.parseInt(words[1]), false);
+            }
+            catch (KeyNotFoundException e)
+            {
+                renderer.outputLine(e.getMessage());
+                throw new DoNotStep();
+            }
         } else if(words[0].equals("pumpon")) {
             if(words.length !=2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
@@ -111,7 +131,20 @@ public class Parser {
                 throw new DoNotStep();
             }
             
-            controller.changePumpState(Integer.parseInt(words[1]), true);
+            try
+            {
+                controller.changePumpState(Integer.parseInt(words[1]), true);
+            }
+            catch(CannotControlException e)
+            {
+                renderer.outputLine(e.getMessage());
+                throw new DoNotStep();
+            }
+            catch (KeyNotFoundException e)
+            {
+                renderer.outputLine(e.getMessage());
+                throw new DoNotStep();
+            }
         } else if(words[0].equals("pumpoff")) {
             if(words.length !=2) {
                 renderer.outputLine("Error: wrong number of arguments to command '" +
@@ -137,8 +170,21 @@ public class Parser {
                 throw new DoNotStep();
             }
             
+            try
+            {
+                controller.changePumpState(Integer.parseInt(words[1]), false);  
+            }
+            catch(CannotControlException e)
+            {
+                renderer.outputLine(e.getMessage());
+                throw new DoNotStep();
+            }
+            catch (KeyNotFoundException e)
+            {
+                renderer.outputLine(e.getMessage());
+                throw new DoNotStep();
+            }
             
-            controller.changePumpState(Integer.parseInt(words[1]), false);  
         } else if(words[0].equals("repair")) {
             if(words[1].equals("pump")) {
                 if(words.length != 3) {
@@ -164,7 +210,16 @@ public class Parser {
                         throw new DoNotStep();
                 }
                 
-                controller.repairPump(Integer.parseInt(words[2]));
+                try
+                {
+                    controller.repairPump(Integer.parseInt(words[2]));
+                }
+                catch (KeyNotFoundException e)
+                {
+                    renderer.outputLine(e.getMessage());
+                    throw new DoNotStep();
+                }
+                    
             } else if(words[1].equals("condenser")) {
                 if(words.length != 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +

@@ -7,6 +7,7 @@ package eel.seprphase2.Simulator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.FailureModel.CannotControlException;
 import eel.seprphase2.FailureModel.FailableComponent;
 import eel.seprphase2.FailureModel.FailureState;
 import eel.seprphase2.Utilities.Energy;
@@ -219,27 +220,33 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void changeValveState(int valveNumber, boolean isOpen) {
+    public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
         if(allConnections.containsKey(valveNumber))
         {
             allConnections.get(valveNumber).setOpen(isOpen);
         }
         else
         {
-            //Throw KeyNotFoundException
+            throw new KeyNotFoundException("Valve "+valveNumber+ " does not exist");
         }
     }
 
     @Override
-    public void changePumpState(int pumpNumber, boolean isPumping) {
+    public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
         if(allPumps.containsKey(pumpNumber))
         {
-            allPumps.get(pumpNumber).setStatus(isPumping);
-            
+            if(allPumps.get(pumpNumber).getFailureState() == FailureState.Normal)
+            {
+                allPumps.get(pumpNumber).setStatus(isPumping);
+            }
+            else
+            {
+                throw new CannotControlException("Pump "+pumpNumber+ " is failed");
+            }
         }
         else
         {
-            //Throw KeyNotFoundException
+            throw new KeyNotFoundException("Pump "+pumpNumber+ " does not exist");
         }
     }
 
@@ -265,7 +272,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void repairPump(int pumpNumber) {
+    public void repairPump(int pumpNumber) throws KeyNotFoundException{
         if(allPumps.containsKey(pumpNumber))
         {
             allPumps.get(pumpNumber).repair();
@@ -279,7 +286,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         }
         else
         {
-            //Throw KeyNotFoundException
+            throw new KeyNotFoundException("Pump "+pumpNumber+ " does not exist");
         }
     }
 

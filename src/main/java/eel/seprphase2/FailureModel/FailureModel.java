@@ -54,8 +54,9 @@ public class FailureModel {
             componentsFailChance += components.get(i).getWear().points()/components.size();
             if (componentsFailChance > failValue) {
                 components.get(i).setFailureState(FailureState.Failed);
+                 break; //We only want to induce one hardware failure! Break here.
             }
-            break; //We only want to induce one hardware failure! Break here.
+           
         }
     }
 

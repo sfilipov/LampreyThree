@@ -16,6 +16,7 @@ import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import eel.seprphase2.Utilities.Velocity;
 import eel.seprphase2.Utilities.Volume;
+import java.lang.Math.*;
 
 /**
  *
@@ -42,6 +43,10 @@ public class Reactor extends FailableComponent {
     private Port outputPort = new Port();
     @JsonProperty
     private Port inputPort = new Port();
+    @JsonProperty
+    private double boilingPtAtPressure;
+    @JsonProperty
+    private double neededEnergy;
 
     /**
      *
@@ -133,23 +138,35 @@ public class Reactor extends FailableComponent {
         if (hasFailed()) {
             System.exit(0);
         }
-
-        if (temperature.inKelvin() < boilingPointOfWater) {
+        
+        /*
+         * Calculates the boiling point at the current pressure,
+         * then it calculates the needed enegry to reach that boiling point
+         */
+        
+        boilingPtAtPressure = boilingPointOfWater + 10*Math.log(pressure.inPascals()/atmosphericPressure);
+        
+        neededEnergy = (boilingPtAtPressure - temperature.inKelvin()) * waterMass.inKilograms() * specificHeatOfWater;
+        
+        
+       if (neededEnergy >= fuelPile.output(1)) {
 
             /*
              * Calculates how much the water heats if it's not at boiling point
              */
-
+                     
             temperature = kelvin(temperature.inKelvin() +
                                  fuelPile.output(1) / waterMass.inKilograms() /
                                  specificHeatOfWater);
         } else {
 
             /*
-             * Calculates how much water turns to steam in one timestep at boiling point
+             * Sets temperature to boiling point
+             * If any energy is left from the fuelpile after heating up:
+             * Calculates how much water turns to steam in one timestep at boiling point using remaining energy
              */
-
-            Mass deltaMass = kilograms(fuelPile.output(1) / latentHeatOfWater);
+            temperature = kelvin(boilingPtAtPressure);
+            Mass deltaMass = kilograms((fuelPile.output(1) - neededEnergy) / latentHeatOfWater);
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
         }
@@ -161,6 +178,9 @@ public class Reactor extends FailableComponent {
 
         Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
         pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
+        if (pressure.inPascals() < atmosphericPressure) {
+            pressure = pascals(atmosphericPressure);
+        }
         steamDensity = steamMass.densityAt(steamVolume);
 
         /*

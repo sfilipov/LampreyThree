@@ -28,7 +28,8 @@ public class FailureModel implements PlantController, PlantStatus {
     private int numberOfTimesWaterLevelIsTooLow;
     private final int reactorOverheatThreshold = 8;
     private final Pressure condenserMaxPressure = new Pressure(30662500);
-    ArrayList<FailableComponent> components;
+
+    private FailureModel() {}
     
     /**
      * Constructor for the FailureModel. Uses the physicalModel (model of the nuclear power plant) at a parameter
@@ -36,7 +37,6 @@ public class FailureModel implements PlantController, PlantStatus {
      */
     public FailureModel(PhysicalModel physicalModel) {
         this.physicalModel = physicalModel;
-        this.components = physicalModel.components;
     }    
     
     /**
@@ -59,6 +59,7 @@ public class FailureModel implements PlantController, PlantStatus {
      * TODO: future teams to add software fail routine.
      */
     public void failStateCheck() {
+        ArrayList<FailableComponent> components = physicalModel.components();
         int failValue = failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
         int componentsFailChance = 0;
         for (int i = 0; i < components.size(); i++) {

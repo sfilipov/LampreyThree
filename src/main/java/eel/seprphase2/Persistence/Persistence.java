@@ -1,60 +1,81 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package eel.seprphase2.Persistence;
+
+import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import eel.seprphase2.Persistence.SaveGame;
+import eel.seprphase2.Simulator.FailureModel.FailureModel;
+import eel.seprphase2.Utilities.Percentage;
 import java.io.IOException;
-import java.util.Calendar;
 
 /**
- * Persistence class is a wrapper class that manages saving to disk. Use saveGameState to generate a new save file for
- * a player's username and loadGameState with the unique name to load it again. 
- * @author James Thorne
+ *
+ * @author drm511
  */
 public class Persistence {
+
+    private ObjectMapper mapper = new ObjectMapper();
+
     /**
-     * saveGameState will create a new randomly generated file containing the player's username and save the persistData
-     * to it.
-     * @param username The players username
-     * @param persistData Model data that is serialized.
+     *
+     * @param obj
      * @return
+     * @throws JsonProcessingException
      */
-    public static String saveGameState(String username, String persistData)
-    {
-        String fileName = generateFileName(username);       //Create a unique file name
-        SaveGameFile file = new SaveGameFile(fileName);     //Create that file
-        file.save(persistData);                             //And save the data
-        return fileName;                                    //Because file name is unique, we return the value.
+    public String serialize(Object obj) throws JsonProcessingException {
+        return mapper.writeValueAsString(obj);
     }
-    
-    
+
     /**
-     * loadGameState will open a save file by fileName and return the string that it contains.
-     * @param fileName The name of the file in the user's save directory.
-     * @return The contents of the stored file
-     * @throws IOException For file read error etc
+     *
+     * @param representation
+     * @return
+     * @throws JsonParseException
+     * @throws JsonMappingException
+     * @throws IOException
      */
-    public static String loadGameState(String fileName) throws IOException
-    {
-        SaveGameFile file = new SaveGameFile(fileName);
-        return file.load();   
+    public SaveGame deserializeSaveGame(String representation) throws JsonParseException, JsonMappingException, IOException {
+        return mapper.readValue(representation, SaveGame.class);
     }
     
     /**
-     * generateFileName generates a new unique file name using getTimeInMillis
-     * @param username The player's username, prepended to the file
-     * @return The newly generated random file name
+     *
+     * @param representation
+     * @return
+     * @throws JsonParseException
+     * @throws JsonMappingException
+     * @throws IOException
      */
-    public static String generateFileName(String username)
-    {
-        Calendar cal = Calendar.getInstance();
-        return "sepr.teameel."+ username + "." + cal.getTimeInMillis() +".nuke";
+    public FailureModel deserializeFailureModel(String representation) throws JsonParseException, JsonMappingException, IOException {
+        return mapper.readValue(representation, FailureModel.class);
     }
+
     
     /**
-     * Pass-through to get saved games from data source
-     * @see SaveGameFile
-     * @param username
-     * @return List of save game files
+     *
+     * @param representation
+     * @return
+     * @throws JsonParseException
+     * @throws JsonMappingException
+     * @throws IOException
      */
-    public static String[] getSaveGames(String username)
-    {
-        return SaveGameFile.listSaveGames(username);
+    public PhysicalModel deserializePhysicalModel(String representation) throws JsonParseException, JsonMappingException, IOException {
+        return mapper.readValue(representation, PhysicalModel.class);
+    }
+
+    /**
+     *
+     * @param representation
+     * @return
+     * @throws IOException
+     */
+    public Percentage deserializePercentage(String representation) throws IOException {
+        return mapper.readValue(representation, Percentage.class);
     }
 }

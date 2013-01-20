@@ -4,15 +4,21 @@
  */
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.Persistence.FileSystem;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
 import eel.seprphase2.Simulator.FailureModel.FailureModel;
-import eel.seprphase2.Persistence.GameState;
+import eel.seprphase2.Persistence.SaveGame;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,23 +42,32 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
 
     @Override
     public void saveGame() throws JsonProcessingException {
-        GameState gameState = new GameState();
-        gameState.failureModel = failureModel;
-        gameState.userName = userName;
-        Persistence p = new Persistence();
-
-        String r = p.serialize(gameState);
-        eel.seprphase2.Persistence.Persistence.saveGameState(userName, r);
+        SaveGame saveGame = new SaveGame(failureModel, userName);
+        try {
+            saveGame.save();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void loadGame(int gameNumber) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            SaveGame saveGame = SaveGame.load(listGames()[gameNumber]);
+            this.failureModel = saveGame.getFailureModel();
+            this.userName = saveGame.getUserName();
+        } catch (JsonParseException ex) {
+            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     @Override
     public String[] listGames() {
-        return eel.seprphase2.Persistence.Persistence.getSaveGames(userName);
+        return FileSystem.listSaveGames(userName);
     }
 
     public void step() {
@@ -130,5 +145,4 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
-
 }

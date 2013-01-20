@@ -32,6 +32,7 @@ public abstract class FailableComponent extends Component {
     
     public void fail() {
         failureState = FailureState.Failed;
+        setWear(new Percentage(100));
     }
     
     public void repair() {

@@ -46,8 +46,6 @@ public class Turbine extends FailableComponent {
 
         if (hasFailed()) {
             outputPower = 0;
-            controller = Parser.returnController();
-            controller.moveControlRods(new Percentage(0));
             setWear(new Percentage(100));
             return;
         }

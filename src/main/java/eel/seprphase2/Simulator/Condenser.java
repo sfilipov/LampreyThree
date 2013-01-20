@@ -59,7 +59,7 @@ public class Condenser extends FailableComponent {
     }
 
     public void step() {
-        if(this.getFailureState()==FailureState.Normal)
+        if(!hasFailed())
         {
             waterMass = kilograms(0);
 

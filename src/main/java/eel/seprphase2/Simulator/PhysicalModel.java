@@ -159,11 +159,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     public void failReactor() {
-        reactor.setFailureState(FailureState.Failed);
+        reactor.fail();
     }
     
     public void failCondenser() {
-        condenser.setFailureState(FailureState.Failed);
+        condenser.fail();
     }
     /**
      *
@@ -235,7 +235,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
         if(allPumps.containsKey(pumpNumber))
         {
-            if(allPumps.get(pumpNumber).getFailureState() == FailureState.Normal)
+            if(!allPumps.get(pumpNumber).hasFailed())
             {
                 allPumps.get(pumpNumber).setStatus(isPumping);
             }

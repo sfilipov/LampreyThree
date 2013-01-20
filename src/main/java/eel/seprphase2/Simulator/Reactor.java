@@ -130,7 +130,7 @@ public class Reactor extends FailableComponent {
         }
         
         
-        if (getFailureState() == FailureState.Normal) {
+        if (!hasFailed()) {
 
             if (temperature.inKelvin() < boilingPointOfWater) {
                 

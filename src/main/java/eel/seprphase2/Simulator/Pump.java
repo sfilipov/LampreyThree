@@ -41,7 +41,7 @@ public class Pump extends FailableComponent {
 
     public void step() {
 
-        if(getFailureState()==FailureState.Normal)
+        if(!hasFailed())
         {
             if (status) {
                 if (inputPort.mass.inKilograms() > capacity.inKilograms()) {

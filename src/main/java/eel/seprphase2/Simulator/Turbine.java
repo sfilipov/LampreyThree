@@ -44,7 +44,7 @@ public class Turbine extends FailableComponent {
         //System.out.println("Turbine Input Water Mass " + inputPort.mass);
         //System.out.println("Turbine Output Water Mass 1 " + outputPort.mass);
             
-        if (getFailureState() == FailureState.Normal) {
+        if (!hasFailed()) {
             outputPower = 10 * inputPort.mass.inKilograms();
             outputPort.mass = inputPort.mass;
             outputPort.pressure = inputPort.pressure;

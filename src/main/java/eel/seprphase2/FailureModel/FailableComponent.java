@@ -1,5 +1,6 @@
 package eel.seprphase2.FailureModel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Simulator.Component;
 import eel.seprphase2.Utilities.Percentage;
 
@@ -10,7 +11,9 @@ import eel.seprphase2.Utilities.Percentage;
  * @author Marius Dumetrescu
  */
 public abstract class FailableComponent extends Component {
+    @JsonProperty
     private FailureState failureState;      //The state of the component
+    @JsonProperty
     private Percentage wear;                //Current wear level - capped at 100%
         
     /**
@@ -22,23 +25,20 @@ public abstract class FailableComponent extends Component {
         failureState = FailureState.Normal;
         wear = new Percentage(0);
     }
-    
-    /**
-     * getFailureState returns the component's failureState of type FailureState.
-     * @return The current failure state of this FailableComponent
-     */
-    public FailureState getFailureState(){
-        return this.failureState;
-    }
-    
-    /**
-     * setFailureState sets the component's failure state. Must of type FailureState.
-     * @param newFailureState The new failure state that the component will adopt.
-     */
-    public void setFailureState(FailureState newFailureState){
-        this.failureState=newFailureState;
-    }
 
+    public boolean hasFailed() {
+        return failureState == FailureState.Failed;
+    }
+    
+    public void fail() {
+        failureState = FailureState.Failed;
+    }
+    
+    public void repair() {
+        failureState = FailureState.Normal;
+        wear = new Percentage(0);
+    }
+    
     /**
      * CalculateWearDelta must be overridden by any child classes. It should be used to calculate a minute
      * change in wear level for the component to be added onto it. This is normally calculated within a 
@@ -74,8 +74,4 @@ public abstract class FailableComponent extends Component {
        
     }
     
-    public void repair() {
-        failureState = FailureState.Normal;
-        wear = new Percentage(0);
-    }
 }

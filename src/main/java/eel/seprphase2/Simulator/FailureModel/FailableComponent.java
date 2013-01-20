@@ -36,7 +36,7 @@ public abstract class FailableComponent extends Component {
     }
     
     public void repair() throws CannotRepairException {
-        if(failureState == FailureState.Failed)
+        if(failureState == FailureState.Normal)
         {
             throw new CannotRepairException("This component cannot be repaired");
         }

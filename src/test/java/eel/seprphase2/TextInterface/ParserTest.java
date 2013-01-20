@@ -2,6 +2,7 @@ package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
@@ -461,7 +462,7 @@ public class ParserTest {
     }
     
     @Test 
-    public void shouldRepairPump1()  throws DoNotStep, KeyNotFoundException{
+    public void shouldRepairPump1()  throws DoNotStep, KeyNotFoundException, CannotRepairException{
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairPump(1);
@@ -474,7 +475,7 @@ public class ParserTest {
     
  
     @Test 
-    public void shouldRepairTurbine()  throws DoNotStep{
+    public void shouldRepairTurbine()  throws DoNotStep,CannotRepairException{
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairTurbine();
@@ -486,7 +487,7 @@ public class ParserTest {
     }
     
     @Test 
-    public void shouldRepairCondenser() throws DoNotStep {
+    public void shouldRepairCondenser() throws DoNotStep,CannotRepairException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairCondenser();

@@ -13,11 +13,7 @@ import eel.seprphase2.Utilities.Percentage;
  * @author david
  */
 public interface PlantController {
-    /**
-     *
-     * @param username
-     */
-    public void setUsername(String username);
+    
     /**
      *
      * @param extracted
@@ -33,10 +29,6 @@ public interface PlantController {
     public void repairCondenser();
     public void repairTurbine();
    
-    
-    public void saveGame() throws JsonProcessingException;
-    public void loadGame(int gameNumber);
-    public String[] listGames();
     
 
 }

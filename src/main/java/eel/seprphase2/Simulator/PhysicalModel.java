@@ -118,15 +118,6 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     /**
      *
-     * @param username
-     */
-    @Override
-    public void setUsername(String username){
-        this.username = username;
-    }
-
-    /**
-     *
      * @param percent
      */
     @Override
@@ -243,28 +234,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         
         allPumps.get(pumpNumber).setStatus(isPumping);
     }
-
-    @Override
-    public void saveGame() throws JsonProcessingException {
-        eel.seprphase2.Simulator.Persistence p = new eel.seprphase2.Simulator.Persistence();
-        
-        String r = p.serialize(this);
-        Persistence.saveGameState(username, r); 
-        
-                
-    }
     
-
-    @Override
-    public void loadGame(int gameNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-          
-    @Override
-    public String[] listGames() {
-        return Persistence.getSaveGames(username);
-    }
-
     @Override
     public void repairPump(int pumpNumber) throws KeyNotFoundException{
         if(allPumps.containsKey(pumpNumber))

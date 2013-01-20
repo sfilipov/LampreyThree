@@ -1,5 +1,6 @@
 package eel.seprphase2.TextInterface;
 
+import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -27,7 +28,8 @@ public class TextInterfaceTest {
     public final JUnitRuleMockery context = new JUnitRuleMockery();
     @Mock
     private PlantController plantController;
-
+    @Mock
+    private GameManager gameManager;
     @Mock
     private PlantStatus plantStatus;
     @Mock
@@ -40,7 +42,7 @@ public class TextInterfaceTest {
 
     @Before
     public void setup() {
-        textInterface = new TextInterface(plantController, plantStatus,
+        textInterface = new TextInterface(plantController, plantStatus, gameManager,
                                           textRenderer, lineReader);
     }
 
@@ -83,7 +85,7 @@ public class TextInterfaceTest {
                 allowing(textRenderer).outputLine("Please Enter Username:");
                 oneOf(lineReader).readLine();
                 will(returnValue("James"));
-                oneOf(plantController).setUsername("James");
+                oneOf(gameManager).setUsername("James");
             }
         });
         textInterface.askForUsername();

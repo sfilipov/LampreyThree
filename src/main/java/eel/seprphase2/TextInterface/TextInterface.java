@@ -4,7 +4,8 @@
  */
 package eel.seprphase2.TextInterface;
 
-import eel.seprphase2.Simulator.PhysicalModel;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Pressure;
@@ -17,6 +18,7 @@ public class TextInterface {
 
     private PlantController plantController;
     private PlantStatus plantStatus;
+    private GameManager gameManager;
     private TextRenderer textRenderer;
     private LineReader lineReader;
     private final Pressure condenserWarningPressure = new Pressure(25530000);
@@ -27,12 +29,11 @@ public class TextInterface {
      * @param textRenderer
      * @param lineReader
      */
-    public TextInterface(PlantController plantController,
-                         PlantStatus plantStatus,
-                         TextRenderer textRenderer,
-                         LineReader lineReader) {
+    public TextInterface(PlantController plantController, PlantStatus plantStatus, GameManager gameManager,
+                         TextRenderer textRenderer, LineReader lineReader) {
         this.plantController = plantController;
         this.plantStatus = plantStatus;
+        this.gameManager = gameManager;
         this.textRenderer = textRenderer;
         this.lineReader = lineReader;
     }
@@ -41,7 +42,7 @@ public class TextInterface {
      *
      */
     public void askForUsername(){
-        Parser parser = new Parser(plantController, textRenderer);
+        Parser parser = new Parser(plantController, gameManager, textRenderer);
         textRenderer.outputLine("Please Enter Username:");
         parser.setUsername(lineReader.readLine());
     }
@@ -98,7 +99,7 @@ public class TextInterface {
      *
      */
     public void processCommand() throws DoNotStep {
-        Parser parser = new Parser(plantController, textRenderer);
+        Parser parser = new Parser(plantController, gameManager, textRenderer);
         
         parser.parseCommand(lineReader.readLine());
     }

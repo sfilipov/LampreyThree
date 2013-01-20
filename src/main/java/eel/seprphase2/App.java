@@ -3,6 +3,7 @@ package eel.seprphase2;
 import eel.seprphase2.FailureModel.FailureModel;
 import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Simulator.Reactor;
+import eel.seprphase2.Simulator.Simulator;
 import eel.seprphase2.TextInterface.DoNotStep;
 import eel.seprphase2.TextInterface.TerminalReader;
 import eel.seprphase2.TextInterface.TerminalRenderer;
@@ -23,9 +24,8 @@ public class App {
     public static void main(String[] args) throws IOException {
         TerminalRenderer renderer = new TerminalRenderer();
         TerminalReader reader = new TerminalReader();
-        PhysicalModel physicalModel = new PhysicalModel();
-        FailureModel failureModel = new FailureModel(physicalModel);
-        TextInterface ti = new TextInterface(physicalModel, physicalModel, renderer, reader);
+        Simulator simulator = new Simulator();
+        TextInterface ti = new TextInterface(simulator, simulator, simulator, renderer, reader);
         ti.askForUsername();
         ti.showStatus();
         while (true) {
@@ -34,7 +34,7 @@ public class App {
             {
                 ti.processCommand();
                 
-                failureModel.step();            
+                simulator.step();            
                 
                 ti.showStatus();
             }

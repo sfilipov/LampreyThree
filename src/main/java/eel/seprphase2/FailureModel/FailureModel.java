@@ -1,7 +1,15 @@
 package eel.seprphase2.FailureModel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PhysicalModel;
+import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Simulator.PlantStatus;
+import eel.seprphase2.Utilities.Energy;
+import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
+import eel.seprphase2.Utilities.Temperature;
 import java.util.ArrayList;
 import java.util.Random;
 import static eel.seprphase2.Utilities.Units.*;
@@ -11,10 +19,12 @@ import static eel.seprphase2.Utilities.Units.*;
  * components when a command is executed. It will only induce at most 1 software and 1 hardware failure per step.
  * @author Marius Dumitrescu
  */
-public class FailureModel {
+public class FailureModel implements PlantController, PlantStatus {
     
-    PhysicalModel physicalModel = new PhysicalModel();
+    @JsonProperty
+    PhysicalModel physicalModel;
     private Random failChance = new Random();
+    @JsonProperty
     private int numberOfTimesWaterLevelIsTooLow;
     private final int reactorOverheatThreshold = 8;
     private final Pressure condenserMaxPressure = new Pressure(30662500);
@@ -59,6 +69,91 @@ public class FailureModel {
             }
            
         }
+    }
+
+    @Override
+    public void moveControlRods(Percentage extracted) {
+        physicalModel.moveControlRods(extracted);
+    }
+
+    @Override
+    public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
+        physicalModel.changeValveState(valveNumber, isOpen);
+    }
+
+    @Override
+    public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
+        physicalModel.changePumpState(pumpNumber, isPumping);
+    }
+
+    @Override
+    public void repairPump(int pumpNumber) throws KeyNotFoundException {
+        physicalModel.repairPump(pumpNumber);
+    }
+
+    @Override
+    public void repairCondenser() {
+        physicalModel.repairCondenser();
+    }
+
+    @Override
+    public void repairTurbine() {
+        physicalModel.repairTurbine();
+    }
+
+    @Override
+    public Percentage controlRodPosition() {
+        return physicalModel.controlRodPosition();
+    }
+
+    @Override
+    public Pressure reactorPressure() {
+        return physicalModel.reactorPressure();
+    }
+
+    @Override
+    public Temperature reactorTemperature() {
+        return physicalModel.reactorTemperature();
+    }
+
+    @Override
+    public Percentage reactorWaterLevel() {
+        return physicalModel.reactorWaterLevel();
+    }
+
+    @Override
+    public Energy energyGenerated() {
+        return physicalModel.energyGenerated();
+    }
+
+    @Override
+    public void setReactorToTurbine(boolean open) {
+        physicalModel.setReactorToTurbine(open);
+    }
+
+    @Override
+    public boolean getReactorToTurbine() {
+        return physicalModel.getReactorToTurbine();
+    }
+
+    @Override
+    public Temperature condenserTemperature() {
+        return physicalModel.condenserTemperature();
+    }
+
+    @Override
+    public Pressure condenserPressure() {
+        return physicalModel.condenserPressure();
+    }
+
+    @Override
+    public Percentage condenserWaterLevel() {
+        return physicalModel.condenserWaterLevel();
+    }
+
+    @Override
+    public Percentage reactorMinimumWaterLevel() {
+        return physicalModel.reactorMinimumWaterLevel();
     }
 
     private void checkReactorWaterLevel() {

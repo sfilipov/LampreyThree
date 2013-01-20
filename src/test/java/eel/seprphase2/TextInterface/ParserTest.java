@@ -2,6 +2,7 @@ package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
@@ -26,12 +27,14 @@ public class ParserTest {
     @Mock
     private PlantController plantController;
     @Mock
+    private GameManager gameManager;
+    @Mock
     private TextRenderer textRenderer;
     private Parser parser;
 
     @Before
     public void setup() {
-        parser = new Parser(plantController, textRenderer);
+        parser = new Parser(plantController, gameManager, textRenderer);
     }
 
     @Test
@@ -366,7 +369,7 @@ public class ParserTest {
         context.checking(new Expectations() {
             {
                 try {
-                    oneOf(plantController).saveGame();
+                    oneOf(gameManager).saveGame();
                 } catch (JsonProcessingException ex) {
                     Logger.getLogger(ParserTest.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -421,7 +424,7 @@ public class ParserTest {
         context.checking(new Expectations() {
             {
                 
-                allowing(plantController).loadGame(1);
+                allowing(gameManager).loadGame(1);
                 
             }
         });

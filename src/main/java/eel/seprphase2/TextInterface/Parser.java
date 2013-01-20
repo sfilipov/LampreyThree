@@ -6,6 +6,7 @@ package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
@@ -20,11 +21,13 @@ import java.util.Date;
  */
 public class Parser {
 
-    private static PlantController controller;
+    private PlantController controller;
+    private GameManager manager;
     private TextRenderer renderer;
 
-    Parser(PlantController controller, TextRenderer renderer) {
+    Parser(PlantController controller, GameManager manager, TextRenderer renderer) {
         this.controller = controller;
+        this.manager = manager;
         this.renderer = renderer;
     }
 
@@ -246,7 +249,7 @@ public class Parser {
             }
             try
             {
-                controller.saveGame();
+                manager.saveGame();
                 renderer.outputLine("Game Saved!");
                 throw new DoNotStep();
             }
@@ -279,7 +282,7 @@ public class Parser {
                                         "' is not a valid number.");
                         throw new DoNotStep();
                 }
-                controller.loadGame(Integer.parseInt(words[1]));
+                manager.loadGame(Integer.parseInt(words[1]));
                 throw new DoNotStep();
                 }
                 else if(words.length==1)
@@ -287,7 +290,7 @@ public class Parser {
                     renderer.outputLine("Please chose a game to load and enter the following command:");
                     renderer.outputLine("load <game id>");
                     int i = 1;
-                    for(String game : controller.listGames())
+                    for(String game : manager.listGames())
                     {
                         String[] bits = game.split("\\.");
                         Timestamp t = new Timestamp(Long.parseLong(bits[3]));
@@ -328,15 +331,7 @@ public class Parser {
      */
     public void setUsername(String username)
     {
-        controller.setUsername(username);
+        manager.setUsername(username);
     }
     
-    /**
-     *
-     * @return
-     */
-    public static PlantController returnController()
-    {
-        return controller;
-    }
 }

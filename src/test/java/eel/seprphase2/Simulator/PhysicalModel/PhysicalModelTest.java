@@ -4,8 +4,10 @@
  */
 package eel.seprphase2.Simulator.PhysicalModel;
 
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import eel.seprphase2.Simulator.FailureModel.FailureState;
+import eel.seprphase2.Simulator.KeyNotFoundException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -67,7 +69,14 @@ public class PhysicalModelTest {
     public void shouldSetCondenserBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();
         model.failCondenser();
-        model.repairCondenser();
+        try
+        {
+            model.repairCondenser();
+        }
+        catch(CannotRepairException e)
+        {
+            fail(e.getMessage());
+        }
         assertFalse(model.components().get(2).hasFailed());
     }
     
@@ -76,8 +85,44 @@ public class PhysicalModelTest {
     public void shouldSetTurbineBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();
         model.components().get(0).fail();
-        model.repairTurbine();
+        try
+        {
+            model.repairTurbine();
+        }
+        catch(CannotRepairException e)
+        {
+            fail(e.getMessage());
+        }
         assertFalse(model.components().get(0).hasFailed());
+    }
+    
+    
+    @Test (expected=CannotRepairException.class)
+    public void shouldNotSetCondenserBackToNormalFailureState() throws CannotRepairException {
+        PhysicalModel model = new PhysicalModel();
+        
+        
+        model.repairCondenser();
+        
+    }
+
+    @Test (expected=CannotRepairException.class)
+    public void shouldNotSetTurbineBackToNormalFailureState() throws CannotRepairException {
+        PhysicalModel model = new PhysicalModel();
+        
+        
+        model.repairCondenser();
+        
+    }
+
+    @Test (expected=CannotRepairException.class)
+    public void shouldNotSetPumpBackToNormalFailureState() throws CannotRepairException,KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        
+      
+        model.repairPump(1);
+      
+        
     }
     
     /*@Test

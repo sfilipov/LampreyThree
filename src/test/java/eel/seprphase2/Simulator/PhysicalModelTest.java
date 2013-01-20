@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.FailureModel.FailureState;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -60,4 +61,28 @@ public class PhysicalModelTest {
         }
     }
     
+    @Test
+    public void shouldSetCondenserBackToNormalFailureState() {
+        PhysicalModel model = new PhysicalModel();
+        model.failCondenser();
+        model.repairCondenser();
+        assertEquals(FailureState.Normal, model.components.get(2).getFailureState());
+    }
+    
+    
+    @Test
+    public void shouldSetTurbineBackToNormalFailureState() {
+        PhysicalModel model = new PhysicalModel();
+        model.components.get(0).setFailureState(FailureState.Failed);
+        model.repairTurbine();
+        assertEquals(FailureState.Normal, model.components.get(0).getFailureState());
+    }
+    
+    /*@Test
+    public void shouldSetPumpBackToPumping() {
+        PhysicalModel model = new PhysicalModel();
+        model.changePumpState(1, false);
+        model.repairPump(1);
+        assertEquals(true, model.);
+    }*/
 }

@@ -29,7 +29,7 @@ public interface PlantController {
     public void changeValveState(int valveNumber, boolean isOpen);
     public void changePumpState(int pumpNumber, boolean isPumping);
     public void repairPump(int pumpNumber);
-    public void repairReactor();
+    public void repairCondenser();
     public void repairTurbine();
    
     
@@ -37,5 +37,4 @@ public interface PlantController {
     public void loadGame(int gameNumber);
     public String[] listGames();
 
-    public void repairCondenser();
 }

@@ -266,17 +266,31 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     @Override
     public void repairPump(int pumpNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(allPumps.containsKey(pumpNumber))
+        {
+            allPumps.get(pumpNumber).setCapacity(kilograms(3));
+            allPumps.get(pumpNumber).setFailureState(FailureState.Normal);
+            allPumps.get(pumpNumber).setStatus(true);
+            allPumps.get(pumpNumber).setWear(new Percentage(0));
+        }
+        else
+        {
+            //Throw KeyNotFoundException
+        }
     }
 
     @Override
-    public void repairReactor() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void repairCondenser() {
+        condenser.setFailureState(FailureState.Normal);
+        condenser.setWear(new Percentage(0));
+        condenser = new Condenser();
     }
 
     @Override
     public void repairTurbine() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        turbine.setFailureState(FailureState.Normal);
+        turbine.setWear(new Percentage(0));
+        turbine = new Turbine();
     }
 
     @Override
@@ -294,11 +308,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return condenser.getWaterLevel();
     }
 
-    @Override
-    public void repairCondenser() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
 
    
     

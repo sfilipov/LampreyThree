@@ -9,6 +9,7 @@ import eel.seprphase2.FailureModel.CannotControlException;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Utilities.Percentage;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -279,7 +280,14 @@ public class Parser {
                                         "' is not a valid number.");
                         throw new DoNotStep();
                 }
-                controller.loadGame(Integer.parseInt(words[1]));
+                try
+                {
+                    controller.loadGame(Integer.parseInt(words[1]));
+                }
+                catch(IOException e)
+                {
+                    renderer.outputLine("Could not read saved game");
+                }
                 throw new DoNotStep();
                 }
                 else if(words.length==1)

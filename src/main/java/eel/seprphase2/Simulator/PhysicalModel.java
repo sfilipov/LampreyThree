@@ -18,6 +18,7 @@ import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
 import eel.seprphase2.Persistence.Persistence;
 import eel.seprphase2.Utilities.Mass;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -256,8 +257,14 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
 
     @Override
-    public void loadGame(int gameNumber) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void loadGame(int gameNumber) throws IOException {
+        String[] gameList = Persistence.getSaveGames(username);
+        if(gameNumber<gameList.length)
+        {
+            String loadedJsonData = Persistence.loadGameState(gameList[0]);
+            eel.seprphase2.Simulator.Persistence p = new eel.seprphase2.Simulator.Persistence();
+            //this = p.deserializePhysicalModel(loadedJsonData);
+        }
     }
           
     @Override

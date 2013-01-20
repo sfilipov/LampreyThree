@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Simulator.FailureModel.FailableComponent;
 import eel.seprphase2.Simulator.FailureModel.FailureState;
 import eel.seprphase2.Utilities.Energy;
@@ -234,7 +235,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public void repairPump(int pumpNumber) throws KeyNotFoundException{
+    public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException{
         if(allPumps.containsKey(pumpNumber))
         {
             allPumps.get(pumpNumber).repair();
@@ -253,12 +254,12 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void repairCondenser() {
+    public void repairCondenser() throws CannotRepairException {
         condenser.repair();
     }
 
     @Override
-    public void repairTurbine() {
+    public void repairTurbine() throws CannotRepairException {
         turbine.repair();
     }
     

@@ -35,7 +35,12 @@ public abstract class FailableComponent extends Component {
         setWear(new Percentage(100));
     }
     
-    public void repair() {
+    public void repair() throws CannotRepairException {
+        if(failureState == FailureState.Failed)
+        {
+            throw new CannotRepairException("This component cannot be repaired");
+        }
+        
         failureState = FailureState.Normal;
         wear = new Percentage(0);
     }

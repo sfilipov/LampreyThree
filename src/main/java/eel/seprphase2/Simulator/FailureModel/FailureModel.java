@@ -88,17 +88,17 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void repairPump(int pumpNumber) throws KeyNotFoundException {
+    public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
         physicalModel.repairPump(pumpNumber);
     }
 
     @Override
-    public void repairCondenser() {
+    public void repairCondenser() throws CannotRepairException{
         physicalModel.repairCondenser();
     }
 
     @Override
-    public void repairTurbine() {
+    public void repairTurbine() throws CannotRepairException {
         physicalModel.repairTurbine();
     }
 

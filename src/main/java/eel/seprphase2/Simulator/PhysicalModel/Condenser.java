@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator.PhysicalModel;
 
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Simulator.FailureModel.FailableComponent;
 import eel.seprphase2.Simulator.FailureModel.FailureState;
@@ -193,7 +194,7 @@ public class Condenser extends FailableComponent {
     }
     
     @Override
-    public void repair() {
+    public void repair() throws CannotRepairException {
         super.repair();
         InitVariables();
     }

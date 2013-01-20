@@ -6,6 +6,7 @@ package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
@@ -223,6 +224,11 @@ public class Parser {
                     renderer.outputLine(e.getMessage());
                     throw new DoNotStep();
                 }
+                catch (CannotRepairException e)
+                {
+                    renderer.outputLine(e.getMessage());
+                    throw new DoNotStep();
+                }
                     
             } else if(words[1].equals("condenser")) {
                 if(words.length != 2) {
@@ -230,14 +236,30 @@ public class Parser {
                           words[0] + "'");
                     throw new DoNotStep();
                 }
-                controller.repairCondenser();
+                try
+                {
+                    controller.repairCondenser();
+                }
+                catch (CannotRepairException e)
+                {
+                    renderer.outputLine(e.getMessage());
+                    throw new DoNotStep();
+                }
             } else if (words[1].equals("turbine")) {
                 if(words.length != 2) {
                     renderer.outputLine("Error: wrong number of arguments to command '" +
                           words[0] + "'");
                     throw new DoNotStep();
                 }
+                try
+                {
                 controller.repairTurbine();
+                }
+                catch (CannotRepairException e)
+                {
+                    renderer.outputLine(e.getMessage());
+                    throw new DoNotStep();
+                }
             } else {
                 renderer.outputLine("Invalid Component");
             }

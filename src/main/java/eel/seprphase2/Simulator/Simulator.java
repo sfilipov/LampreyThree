@@ -11,6 +11,7 @@ import eel.seprphase2.Persistence.FileSystem;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
 import eel.seprphase2.Simulator.FailureModel.FailureModel;
 import eel.seprphase2.Persistence.SaveGame;
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -90,15 +91,15 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         failureModel.changePumpState(pumpNumber, isPumping);
     }
 
-    public void repairPump(int pumpNumber) throws KeyNotFoundException {
+    public void repairPump(int pumpNumber) throws KeyNotFoundException,CannotRepairException  {
         failureModel.repairPump(pumpNumber);
     }
 
-    public void repairCondenser() {
+    public void repairCondenser() throws CannotRepairException {
         failureModel.repairCondenser();
     }
 
-    public void repairTurbine() {
+    public void repairTurbine() throws CannotRepairException  {
         failureModel.repairTurbine();
     }
 

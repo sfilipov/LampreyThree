@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Utilities.Percentage;
 import java.io.IOException;
 
@@ -26,9 +27,9 @@ public interface PlantController {
      */
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException;
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException;
-    public void repairPump(int pumpNumber) throws KeyNotFoundException;
-    public void repairCondenser();
-    public void repairTurbine();
+    public void repairPump(int pumpNumber) throws KeyNotFoundException,  CannotRepairException;
+    public void repairCondenser() throws CannotRepairException;
+    public void repairTurbine() throws CannotRepairException;
    
     
 

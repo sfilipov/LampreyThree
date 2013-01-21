@@ -22,26 +22,6 @@ public class App {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        TerminalRenderer renderer = new TerminalRenderer();
-        TerminalReader reader = new TerminalReader();
-        Simulator simulator = new Simulator();
-        TextInterface ti = new TextInterface(simulator, simulator, simulator, renderer, reader);
-        ti.askForUsername();
-        ti.showStatus();
-        while (true) {
-            
-            try
-            {
-                ti.processCommand();
-                
-                simulator.step();            
-                
-                ti.showStatus();
-            }
-            catch(DoNotStep n)
-            {
-                
-            }
-        }
+        Game game = new Game();
     }
 }

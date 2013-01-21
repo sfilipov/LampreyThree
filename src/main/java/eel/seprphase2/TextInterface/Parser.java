@@ -357,4 +357,15 @@ public class Parser {
         manager.setUsername(username);
     }
     
+    public int chooseAction(String action) {
+        
+        try
+        {
+            return Integer.parseInt(action);
+        }
+        catch(NumberFormatException n)
+        {
+            return 0;
+        }
+    }
 }

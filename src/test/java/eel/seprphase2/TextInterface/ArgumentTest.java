@@ -18,6 +18,12 @@ import static org.junit.Assert.*;
 public class ArgumentTest {
     
     @Test
+    public void shouldHaveStringEquality() {
+        Argument a = new Argument("foo");
+        assertTrue(a.equals("foo"));
+    }
+    
+    @Test
     public void shouldConvertToInteger() throws ArgumentConversionException {
         Argument a = new Argument("10");
         assertEquals(10, a.asInteger());
@@ -39,6 +45,12 @@ public class ArgumentTest {
     public void shouldThrowArgumentConversionExceptionOnConversionToPercentage() throws ArgumentConversionException {
         Argument a = new Argument("boo");
         a.asPercentage();
+    }
+    
+    @Test(expected=ArgumentConversionException.class)
+    public void shouldThrowArgumentConversionExceptionOnNegativeInteger() throws ArgumentConversionException {
+        Argument a = new Argument("-1");
+        a.asPositiveInteger();
     }
     
 }

@@ -8,7 +8,7 @@ package eel.seprphase2.Simulator.FailureModel;
  *
  * @author James
  */
-public class CannotControlException extends Exception {
+public class CannotControlException extends ControlException {
     public CannotControlException(String message)
     {
         super(message);

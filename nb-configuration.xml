@@ -63,5 +63,6 @@
         <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.classMembersOrder>CLASS;STATIC CLASS;FIELD;STATIC FIELD;INSTANCE_INIT;CONSTRUCTOR;METHOD;STATIC_INIT;STATIC METHOD</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.classMembersOrder>
         <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.importGroupsOrder>*</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.importGroupsOrder>
         <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapThrowsList>WRAP_IF_LONG</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.wrapThrowsList>
+        <org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.classMemberInsertionPoint>LAST_IN_CATEGORY</org-netbeans-modules-editor-indent.text.x-java.CodeStyle.project.classMemberInsertionPoint>
     </properties>
 </project-shared-configuration>

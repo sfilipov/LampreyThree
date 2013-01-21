@@ -7,6 +7,7 @@ package eel.seprphase2.TextInterface;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel.CannotControlException;
 import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
+import eel.seprphase2.Simulator.FailureModel.ControlException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
@@ -33,339 +34,138 @@ public class Parser {
         this.renderer = renderer;
     }
 
-    void parseCommand(String command) throws DoNotStep {
-        String[] words = command.split(" ");
-        
-        if (words[0].equals("movecontrolrods")) {
-            if (words.length != 2) {
-                renderer.outputLine("Error: wrong number of arguments to command '" +
-                                    words[0] + "'");
-                throw new DoNotStep();
-            }
-            if (!Percentage.isValidPercentage(words[1])) {
-                renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid percentage.");
-                throw new DoNotStep();
-            }
-            controller.moveControlRods(new Percentage(words[1]));
-        } else if(words[0].equals("openvalve")) {
-                if(words.length != 2) {
-                    renderer.outputLine("Error: wrong number of arguments to command '" +
-                                    words[0] + "'");
-                    throw new DoNotStep();
-                }
-                try
-                {
-                    if(Integer.parseInt(words[1])<=0){
-                        renderer.outputLine("Error: '" +
-                                        words[1] +
-                                        "' is not a valid valve number.");
-                        throw new DoNotStep();
-                    }
-                } 
-                catch (NumberFormatException e)
-                {
-                    renderer.outputLine("Error: '" +
-                                        words[1] +
-                                        "' is not a valid valve number.");
-                        throw new DoNotStep();
-                }
-                
-                try
-                {
-                    controller.changeValveState(Integer.parseInt(words[1]), true);
-                }
-                catch (KeyNotFoundException e)
-                {
-                    renderer.outputLine(e.getMessage());
-                    throw new DoNotStep();
-                }
-        } else if (words[0].equals("closevalve")) {
-            if(words.length != 2) {
-                renderer.outputLine("Error: wrong number of arguments to command '" +
-                                    words[0] + "'");
-                throw new DoNotStep();
-            }
-            try
-            {
-                if(Integer.parseInt(words[1])<=0){
-                    renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid valve number.");
-                    throw new DoNotStep();
-                }
-            } 
-            catch (NumberFormatException e)
-            {
-                renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid valve number.");
-                    throw new DoNotStep();
-            }
-            
-            try
-            {
-                controller.changeValveState(Integer.parseInt(words[1]), false);
-            }
-            catch (KeyNotFoundException e)
-            {
-                renderer.outputLine(e.getMessage());
-                throw new DoNotStep();
-            }
-        } else if(words[0].equals("pumpon")) {
-            if(words.length !=2) {
-                renderer.outputLine("Error: wrong number of arguments to command '" +
-                                words[0] + "'");
-                throw new DoNotStep();
-            }
-            try
-            {
-                if(Integer.parseInt(words[1])<=0){
-                    renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid pump number.");
-                    throw new DoNotStep();
-                }
-            } 
-            catch (NumberFormatException e)
-            {
-                renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid pump number.");
-                throw new DoNotStep();
-            }
-            
-            try
-            {
-                controller.changePumpState(Integer.parseInt(words[1]), true);
-            }
-            catch(CannotControlException e)
-            {
-                renderer.outputLine(e.getMessage());
-                throw new DoNotStep();
-            }
-            catch (KeyNotFoundException e)
-            {
-                renderer.outputLine(e.getMessage());
-                throw new DoNotStep();
-            }
-        } else if(words[0].equals("pumpoff")) {
-            if(words.length !=2) {
-                renderer.outputLine("Error: wrong number of arguments to command '" +
-                                words[0] + "'");
-                throw new DoNotStep();
-            }
-            
-            
-            try
-            {
-                if(Integer.parseInt(words[1])<=0){
-                    renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid pump number.");
-                    throw new DoNotStep();
-                }
-            } 
-            catch (NumberFormatException e)
-            {
-                renderer.outputLine("Error: '" +
-                                    words[1] +
-                                    "' is not a valid pump number.");
-                throw new DoNotStep();
-            }
-            
-            try
-            {
-                controller.changePumpState(Integer.parseInt(words[1]), false);  
-            }
-            catch(CannotControlException e)
-            {
-                renderer.outputLine(e.getMessage());
-                throw new DoNotStep();
-            }
-            catch (KeyNotFoundException e)
-            {
-                renderer.outputLine(e.getMessage());
-                throw new DoNotStep();
-            }
-            
-        } else if(words[0].equals("repair")) {
-            if(words[1].equals("pump")) {
-                if(words.length != 3) {
-                    renderer.outputLine("Error: wrong number of arguments to command '" +
-                          words[0] + "'");
-                    throw new DoNotStep();
-                }
-                
-                try
-                {
-                    if(Integer.parseInt(words[2])<=0){
-                        renderer.outputLine("Error: '" +
-                                        words[2] +
-                                        "' is not a valid number.");
-                        throw new DoNotStep();
-                    }
-                } 
-                catch (NumberFormatException e)
-                {
-                    renderer.outputLine("Error: '" +
-                                        words[2] +
-                                        "' is not a valid number.");
-                        throw new DoNotStep();
-                }
-                
-                try
-                {
-                    controller.repairPump(Integer.parseInt(words[2]));
-                }
-                catch (KeyNotFoundException e)
-                {
-                    renderer.outputLine(e.getMessage());
-                    throw new DoNotStep();
-                }
-                catch (CannotRepairException e)
-                {
-                    renderer.outputLine(e.getMessage());
-                    throw new DoNotStep();
-                }
-                    
-            } else if(words[1].equals("condenser")) {
-                if(words.length != 2) {
-                    renderer.outputLine("Error: wrong number of arguments to command '" +
-                          words[0] + "'");
-                    throw new DoNotStep();
-                }
-                try
-                {
-                    controller.repairCondenser();
-                }
-                catch (CannotRepairException e)
-                {
-                    renderer.outputLine(e.getMessage());
-                    throw new DoNotStep();
-                }
-            } else if (words[1].equals("turbine")) {
-                if(words.length != 2) {
-                    renderer.outputLine("Error: wrong number of arguments to command '" +
-                          words[0] + "'");
-                    throw new DoNotStep();
-                }
-                try
-                {
-                controller.repairTurbine();
-                }
-                catch (CannotRepairException e)
-                {
-                    renderer.outputLine(e.getMessage());
-                    throw new DoNotStep();
-                }
-            } else {
-                renderer.outputLine("Invalid Component");
-            }
-        
-        } else if(words[0].equals("save")) {
-            if(words.length != 1) {
-                renderer.outputLine("Error: wrong number of arguments to command '" +
-                      words[0] + "'");
-                throw new DoNotStep();
-            }
-            try
-            {
-                manager.saveGame();
-                renderer.outputLine("Game Saved!");
-                throw new DoNotStep();
-            }
-            catch(JsonProcessingException err)
-            {
-                renderer.outputLine("Unable to save file");
-                throw new DoNotStep();
-            }
-        } else if(words[0].equals("load")) {
-                if(words.length > 2) {
-                    renderer.outputLine("Error: wrong number of arguments to command '" +
-                          words[0] + "'");
-                    throw new DoNotStep();
-                }
-                else if(words.length == 2)
-                {
-                try
-                {
-                    if(Integer.parseInt(words[1])==0){
-                        renderer.outputLine("Error: Game '" +
-                                        words[1] +
-                                        "' does not exist.");
-                        throw new DoNotStep();
-                    }
-                } 
-                catch (NumberFormatException e)
-                {
-                    renderer.outputLine("Error: '" +
-                                        words[1] +
-                                        "' is not a valid number.");
-                        throw new DoNotStep();
-                }
-                manager.loadGame(Integer.parseInt(words[1]));
-                throw new DoNotStep();
-                }
-                else if(words.length==1)
-                {
-                    renderer.outputLine("Please chose a game to load and enter the following command:");
-                    renderer.outputLine("load <game id>");
-                    int i = 1;
-                    for(String game : manager.listGames())
-                    {
-                        String[] bits = game.split("\\.");
-                        Timestamp t = new Timestamp(Long.parseLong(bits[3]));
-                        Date d = new Date(t.getTime());
-                        
-                        SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
-                        renderer.outputLine(String.format("[%d] Saved: %s", i++, date.format(d)));
-                        //renderer.outputLine(game);
-                    }
-                    throw new DoNotStep();
-                }
-        } else if(words[0].equals("help")) {
-            renderer.outputLine("Possible Commands: " + "\n" + "movecontrolrods <Percentage>" + "\n" +
-                                              "openvalve <ValveNumber>" + "\n" + 
-                                              "closevalve <ValveNumber>" + "\n" + 
-                                              "pumpon <PumpNumber>" + "\n" + 
-                                              "pumpoff <PumpNumber>" + "\n" + 
-                                              "repair pump <PumpNumber>" + "\n" + 
-                                              "repair turbine" + "\n" + 
-                                              "repair condenser" + "\n" + 
-                                              "save" + 
-                                              "load <GameNumber>" +"\n" + "\n");
-            throw new DoNotStep();
+    public void executeCommand(String commandLine) throws DoNotStep {
+        String[] words = commandLine.trim().split(" ");
+
+        String command = words[0];
+        ArgumentList arguments = new ArgumentList(command);
+        for (int i = 1; i < words.length; i++) {
+            arguments.add(words[i]);
         }
-        else if(command.isEmpty() && command.trim().isEmpty()) 
-        {
-            //Just skip
-        }else {       
-            renderer.outputLine("Error: Unknown command '" + words[0] + "'");
+
+        try {
+            parseCommand(command, arguments);
+        } catch (ArgumentException e) {
+            renderer.outputLine("ERROR: " + e.getMessage());
+            throw new DoNotStep();
+        } catch (KeyNotFoundException e) {
+            renderer.outputLine(e.getMessage());
+            throw new DoNotStep();
+        } catch (ControlException e) {
+            renderer.outputLine(e.getMessage());
             throw new DoNotStep();
         }
     }
-   
-  
+
+    private void parseCommand(String command, ArgumentList arguments)
+            throws DoNotStep,
+                   ArgumentException,
+                   KeyNotFoundException,
+                   ControlException {
+
+        if (command.isEmpty()) {
+            return;
+        }
+        
+        if (command.equals("movecontrolrods")) {
+            controller.moveControlRods(arguments.at(0).asPercentage());
+        } else if (command.equals("openvalve")) {
+            controller.changeValveState(arguments.at(0).asPositiveInteger(), true);
+        } else if (command.equals("closevalve")) {
+            controller.changeValveState(arguments.at(0).asPositiveInteger(), false);
+        } else if (command.equals("pumpon")) {
+            controller.changePumpState(arguments.at(0).asPositiveInteger(), true);
+        } else if (command.equals("pumpoff")) {
+            controller.changePumpState(arguments.at(0).asPositiveInteger(), false);
+        } else if (command.equals("repair")) {
+            repair(arguments);
+        } else if (command.equals("save")) {
+            saveGame();
+            throw new DoNotStep();
+        } else if (command.equals("load")) {
+            if (arguments.count() == 1) {
+                manager.loadGame(arguments.at(0).asPositiveInteger());
+                throw new DoNotStep();
+            } else if (arguments.count() == 1) {
+                chooseGame();
+                throw new DoNotStep();
+            }
+        } else if (command.equals("help")) {
+            showHelp();
+            throw new DoNotStep();
+        } else {
+            renderer.outputLine("Error: Unknown command '" + command + "'");
+            throw new DoNotStep();
+        }
+    }
+
     /**
      *
      * @param username
      */
-    public void setUsername(String username)
-    {
+    public void setUsername(String username) {
         manager.setUsername(username);
     }
-    
+
     public int chooseAction(String action) {
-        
-        try
-        {
+
+        try {
             return Integer.parseInt(action);
-        }
-        catch(NumberFormatException n)
-        {
+        } catch (NumberFormatException n) {
             return 0;
         }
+    }
+
+    private void chooseGame() throws NumberFormatException {
+        renderer.outputLine("Please choose a game to load and enter the following command:");
+        renderer.outputLine("load <game id>");
+        int i = 0;
+        for (String game : manager.listGames()) {
+            String[] bits = game.split("\\.");
+            Timestamp t = new Timestamp(Long.parseLong(bits[3]));
+            Date d = new Date(t.getTime());
+
+            SimpleDateFormat date = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+            renderer.outputLine(String.format("[%d] Saved: %s", i++, date.format(d)));
+        }
+    }
+
+    private void saveGame() throws DoNotStep {
+        try {
+            manager.saveGame();
+            renderer.outputLine("Game Saved!");
+        } catch (JsonProcessingException err) {
+            renderer.outputLine("Unable to save file");
+        }
+    }
+
+    private void repair(ArgumentList arguments)
+            throws KeyNotFoundException,
+                   ArgumentException,
+                   ControlException {
+        if (arguments.at(0).equals("pump")) {
+            controller.repairPump(arguments.at(1).asPositiveInteger());
+        } else if (arguments.at(0).equals("condenser")) {
+            controller.repairCondenser();
+        } else if (arguments.at(0).equals("turbine")) {
+            controller.repairTurbine();
+        } else {
+            renderer.outputLine("Invalid Component to repair");
+        }
+    }
+
+    private void showHelp() {
+        renderer.outputLine("Possible Commands:\n" +
+                            "movecontrolrods <Percentage>\n" +
+                            "openvalve <ValveNumber>\n" +
+                            "closevalve <ValveNumber>\n" +
+                            "pumpon <PumpNumber>\n" +
+                            "pumpoff <PumpNumber>\n" +
+                            "repair pump <PumpNumber>\n" +
+                            "repair turbine\n" +
+                            "repair condenser\n" +
+                            "save" +
+                            "load <GameNumber>\n" +
+                            "\n");
     }
 }

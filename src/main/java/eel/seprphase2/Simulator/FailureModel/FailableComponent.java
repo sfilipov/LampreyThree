@@ -80,4 +80,8 @@ public abstract class FailableComponent extends Component {
        
     }
     
+    public FailureState getFailureState() {
+        return this.failureState;
+    }
+    
 }

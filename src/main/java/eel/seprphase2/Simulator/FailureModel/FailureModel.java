@@ -71,6 +71,11 @@ public class FailureModel implements PlantController, PlantStatus {
            
         }
     }
+    
+    @Override
+    public String[] listFailedComponents() {
+        return physicalModel.listFailedComponents();
+    }
 
     @Override
     public void moveControlRods(Percentage extracted) {

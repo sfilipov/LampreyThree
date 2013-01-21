@@ -35,7 +35,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         failureModel = new FailureModel(physicalModel);
         userName = "";
     }
-
+    
     @Override
     public void setUsername(String userName) {
         this.userName = userName;
@@ -69,6 +69,10 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     @Override
     public String[] listGames() {
         return FileSystem.listSaveGames(userName);
+    }
+    
+    public String[] listFailedComponents() {
+        return failureModel.listFailedComponents();
     }
 
     public void step() {
@@ -146,4 +150,5 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
+
 }

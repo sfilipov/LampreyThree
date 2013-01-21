@@ -23,6 +23,8 @@ import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Mass;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  *
@@ -83,6 +85,47 @@ public class PhysicalModel implements PlantController, PlantStatus {
         allPumps.put(1, reactorToCondenser);
         allPumps.put(2, condenserToReactor);
         allPumps.put(3, heatsinkToCondenser);
+        
+    }
+    
+    public String[] listFailedComponents() {
+        ArrayList<String> out = new ArrayList<String>();
+        
+        /*
+         * Iterate through all pumps to get their IDs
+         */
+        Iterator pumpIterator = allPumps.entrySet().iterator();
+        while (pumpIterator.hasNext()) {
+            Map.Entry pump = (Map.Entry)pumpIterator.next();
+            
+            if(((Pump)pump.getValue()).hasFailed()) {
+                out.add("Pump " + pump.getKey());
+            }
+            pumpIterator.remove();
+        }
+        
+        /*
+         * Check if reactor failed
+         */
+        if(reactor.hasFailed()) {
+            out.add("Reactor");
+        }
+        
+        /*
+         * Check if turbine failed
+         */
+        if(turbine.hasFailed()) {
+            out.add("Turbine");
+        }
+        
+        /*
+         * Check if condenser failed
+         */
+        if(condenser.hasFailed()) {
+            out.add("Condenser");
+        }
+        
+        return out.toArray(new String[out.size()]);
         
     }
     

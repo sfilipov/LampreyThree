@@ -85,6 +85,18 @@ public class TextInterface {
         }
         
         /*
+         * 
+         */
+        if(plantStatus.listFailedComponents().length>0)
+        {
+            for(String failedComponent : plantStatus.listFailedComponents()) {
+                textRenderer.outputLine("WARNING: "+ failedComponent + " HAS FAILED"); 
+            }
+           
+        }
+        
+        
+        /*
         textRenderer.outputLine("Control Rod Position: " +
                                 plantStatus.controlRodPosition());
         textRenderer.outputLine("Reactor Temperature: " + plantStatus

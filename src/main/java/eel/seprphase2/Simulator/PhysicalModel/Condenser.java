@@ -61,7 +61,7 @@ public class Condenser extends FailableComponent {
 
     public void step() {
 
-        waterMass = outputPort.mass.plus(buildUp);
+        waterMass = buildUp.plus(outputPort.mass);
         steamMass = steamInputPort.flow;
         buildUp = kilograms(0);
         //Debug
@@ -112,7 +112,7 @@ public class Condenser extends FailableComponent {
 
             outputPort.mass = kilograms(0);
             outputPort.pressure = pascals(101325);
-            buildUp = waterMass.plus(steamInputPort.mass);
+            buildUp = waterMass;
 
         }
         else

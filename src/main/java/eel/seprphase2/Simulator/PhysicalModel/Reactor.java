@@ -128,7 +128,7 @@ public class Reactor extends FailableComponent {
             calculateNewTemperature(inputPort);
         }
         else {
-            waterMass = waterMass.plus(steamMass);
+            waterMass = waterMass.plus(inputPort.mass);
             steamMass = kilograms(0);
             calculateNewTemperature(inputPort);
             

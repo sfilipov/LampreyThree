@@ -32,4 +32,8 @@ public class Port {
      *
      */
     public Mass mass = kilograms(0);
+    /*
+     * 
+     */
+    public Mass flow = kilograms(0);
 }

@@ -46,7 +46,7 @@ public class ReactorTest {
         assertEquals(pascals(101325), reactor.pressure());
     }
 
-    @Test
+    @Test @Ignore
     public void reactorShouldStayInEquilibriumWithLowControlRods() {
         Reactor instanceOfReactor = new Reactor(percent(0), percent(100),
                                       kelvin(350), pascals(101325));

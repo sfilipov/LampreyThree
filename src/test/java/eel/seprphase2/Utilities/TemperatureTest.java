@@ -25,6 +25,12 @@ public class TemperatureTest {
     }
 
     @Test
+    public void shouldConvertToDegreesCelsius() {
+        Temperature t1 = new Temperature(273.15);
+        assertEquals(0, t1.inCelsius(), 0.1);
+    }
+    
+    @Test
     public void shouldConvertToStringWithUnits() {
         assertEquals("512.85 degrees C", temperature.toString());
     }
@@ -55,7 +61,7 @@ public class TemperatureTest {
     }
 
     @Test
-    public void hashCodeShouldBeEqualToDegreesCelsius() {
+    public void hashCodeShouldBeEqualToDegreesKelvin() {
         assertEquals(786, temperature.hashCode());
     }
     

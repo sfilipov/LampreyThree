@@ -309,4 +309,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public boolean turbineHasFailed() {
         return turbine.hasFailed();
     }
+    
+    public boolean getPumpStatus(int pumpNumber) {
+        return allPumps.get(pumpNumber).getStatus();
+    }
 }

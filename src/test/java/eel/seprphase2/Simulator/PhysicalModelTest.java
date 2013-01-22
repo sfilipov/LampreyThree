@@ -4,9 +4,6 @@
  */
 package eel.seprphase2.Simulator;
 
-import eel.seprphase2.Simulator.CannotRepairException;
-import eel.seprphase2.Simulator.PhysicalModel;
-import eel.seprphase2.Simulator.KeyNotFoundException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
@@ -84,16 +81,6 @@ public class PhysicalModelTest {
 
     }
 
-    @Test(expected = CannotRepairException.class)
-    public void shouldNotSetPumpBackToNormalFailureState() throws CannotRepairException, KeyNotFoundException {
-        PhysicalModel model = new PhysicalModel();
-
-
-        model.repairPump(1);
-
-
-    }
-
     /*@Test
      public void shouldSetPumpBackToPumping() {
      PhysicalModel model = new PhysicalModel();
@@ -114,5 +101,32 @@ public class PhysicalModelTest {
         pm.failReactor();
         String[] expected = {"Reactor", "Condenser"};
         assertArrayEquals(expected, pm.listFailedComponents());
+    }
+
+    @Test(expected = CannotRepairException.class)
+    public void shouldNotSetPumpBackToNormalFailureState() throws CannotRepairException, KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        model.repairPump(1);
+    }
+
+    @Test
+    public void shouldInitializePump1ToNotPumping() {
+        PhysicalModel model = new PhysicalModel();
+        assertFalse(model.getPumpStatus(1));
+    }
+
+    @Test
+    public void shouldInitializePump2ToPumping() {
+        PhysicalModel model = new PhysicalModel();
+        assertTrue(model.getPumpStatus(2));
+
+    }
+
+    @Test
+    public void shouldSetPumpStateToOff() throws CannotControlException, KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        assertTrue(model.getPumpStatus(2));
+        model.changePumpState(2, false);
+        assertFalse(model.getPumpStatus(2));
     }
 }

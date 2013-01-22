@@ -38,6 +38,8 @@ public class Condenser extends FailableComponent {
     private Pressure pressure;
     @JsonProperty
     private Percentage waterLevel = percent(0);
+    @JsonProperty
+    private Mass buildUp = kilograms(0);
 
     public Condenser() {
         InitVariables();
@@ -59,19 +61,23 @@ public class Condenser extends FailableComponent {
 
     public void step() {
 
-        waterMass = outputPort.mass;
+        waterMass = outputPort.mass.plus(buildUp);
         steamMass = steamInputPort.flow;
-        
+        buildUp = kilograms(0);
         //Debug
         
         System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
-
+        
+        
+        
         if (reactorInputPort.mass.inKilograms() > 0) {
             calculateNewTemperature(reactorInputPort);
         } else if (steamInputPort.mass.inKilograms() > 0) {
             calculateNewTemperature(steamInputPort);
         }
+        if (!hasFailed()){
         calculateNewTemperature(coolantInputPort);
+        }
 
 
 
@@ -106,6 +112,7 @@ public class Condenser extends FailableComponent {
 
             outputPort.mass = kilograms(0);
             outputPort.pressure = pascals(101325);
+            buildUp = waterMass.plus(steamInputPort.mass);
 
         }
         else

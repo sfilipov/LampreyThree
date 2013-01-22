@@ -101,7 +101,6 @@ public class PhysicalModel implements PlantController, PlantStatus {
             if(((Pump)pump.getValue()).hasFailed()) {
                 out.add("Pump " + pump.getKey());
             }
-            pumpIterator.remove();
         }
         
         /*

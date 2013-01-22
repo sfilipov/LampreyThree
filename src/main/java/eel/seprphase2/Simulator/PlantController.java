@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  *
- * @author david
+ * @author David
  */
 public interface PlantController {
 

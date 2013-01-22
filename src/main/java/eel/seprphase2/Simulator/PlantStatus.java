@@ -11,7 +11,7 @@ import eel.seprphase2.Utilities.Temperature;
 
 /**
  *
- * @author david
+ * @author David
  */
 public interface PlantStatus {
 

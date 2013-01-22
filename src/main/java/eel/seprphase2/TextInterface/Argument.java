@@ -4,7 +4,7 @@ import eel.seprphase2.Utilities.Percentage;
 
 /**
  *
- * @author drm
+ * @author David
  */
 public class Argument {
 

@@ -1,17 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Simulator;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
 /**
- *
- * @author david
+ * Fluid flow connection between two components.
+ * 
+ * Optionally, can be turned on/off to form a valve.
+ * 
+ * @author David
  */
 public class Connection extends Valve {
 
@@ -56,10 +54,5 @@ public class Connection extends Valve {
             second.flow = kilograms(0);
             buildUp = buildUp.plus(first.mass);
         }
-
-        //debug
-        //System.out.println("Connection input mass - flow: " + first.mass + " - " + first.flow);
-        //System.out.println("Connection output mass - flow: " + second.mass + " - " + second.flow);
-
     }
 }

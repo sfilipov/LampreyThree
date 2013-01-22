@@ -5,7 +5,7 @@ import org.junit.Test;
 
 /**
  *
- * @author drm
+ * @author David
  */
 public class PercentageTest {
 

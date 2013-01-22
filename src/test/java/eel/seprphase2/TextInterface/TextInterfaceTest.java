@@ -19,7 +19,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class TextInterfaceTest {
 

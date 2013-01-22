@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.*;
 
 /**
  *
- * @author drm
+ * @author David
  */
 @JsonTypeName(value = "Percentage")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")

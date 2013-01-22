@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author david
+ * @author David
  */
 public class MassTest {
 

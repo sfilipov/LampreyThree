@@ -28,7 +28,7 @@ import org.junit.Ignore;
 
 /**
  *
- * @author drm511
+ * @author David
  */
 public class PersistenceTest {
 

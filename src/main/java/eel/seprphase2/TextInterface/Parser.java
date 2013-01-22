@@ -16,7 +16,7 @@ import java.util.Date;
 
 /**
  *
- * @author david
+ * @author David
  */
 public class Parser {
 

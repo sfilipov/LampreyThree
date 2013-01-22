@@ -6,7 +6,7 @@ package eel.seprphase2.Simulator;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class PhysicalConstants {
 

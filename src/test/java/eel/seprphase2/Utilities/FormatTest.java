@@ -9,7 +9,7 @@ import org.junit.Test;
 
 /**
  *
- * @author david
+ * @author David
  */
 public class FormatTest {
 

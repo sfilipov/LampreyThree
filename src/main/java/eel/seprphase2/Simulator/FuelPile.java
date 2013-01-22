@@ -11,7 +11,7 @@ import eel.seprphase2.Utilities.Percentage;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 @JsonTypeName(value = "FuelPile")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")

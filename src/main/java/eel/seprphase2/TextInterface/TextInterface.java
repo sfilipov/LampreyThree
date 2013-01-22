@@ -15,7 +15,7 @@ import java.util.Date;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class TextInterface {
 

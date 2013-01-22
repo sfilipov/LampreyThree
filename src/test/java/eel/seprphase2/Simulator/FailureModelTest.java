@@ -16,7 +16,7 @@ import org.junit.Ignore;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class FailureModelTest {
 

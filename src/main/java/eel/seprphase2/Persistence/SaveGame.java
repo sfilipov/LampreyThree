@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Persistence;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,12 +6,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Calendar;
 
 /**
- *
- * @author david
+ * Saveable/Loadable game state
+ * 
+ * @author David
  */
 public class SaveGame {
 

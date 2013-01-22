@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author david
+ * @author David
  */
 public class Simulator implements PlantController, PlantStatus, GameManager {
 

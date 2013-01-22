@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class ConnectionTest {
 

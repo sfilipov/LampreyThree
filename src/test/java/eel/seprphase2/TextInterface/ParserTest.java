@@ -21,7 +21,7 @@ import org.junit.Ignore;
 
 /**
  *
- * @author david
+ * @author David
  */
 public class ParserTest {
 

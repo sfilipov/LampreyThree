@@ -21,7 +21,7 @@ import java.util.Map;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class PhysicalModel implements PlantController, PlantStatus {
 

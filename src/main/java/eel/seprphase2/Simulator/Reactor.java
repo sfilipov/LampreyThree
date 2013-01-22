@@ -17,7 +17,7 @@ import eel.seprphase2.Utilities.Volume;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class Reactor extends FailableComponent {
 

@@ -1,25 +1,28 @@
 package eel.seprphase2.Simulator;
 
-import eel.seprphase2.Simulator.CannotControlException;
-import eel.seprphase2.Simulator.CannotRepairException;
-import eel.seprphase2.Simulator.FailableComponent;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.Simulator.KeyNotFoundException;
-import eel.seprphase2.Simulator.PhysicalModel;
-import eel.seprphase2.Simulator.PlantController;
-import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
+import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
 import java.util.Random;
-import static eel.seprphase2.Utilities.Units.*;
 
 /**
- * The FailureModel is the class responsible for injecting both software and hardware failures into the reactor
- * components when a command is executed. It will only induce at most 1 software and 1 hardware failure per step.
+ * Manages software and hardware failures.
+ *
+ * The FailureModel is responsible for inducing software and hardware failures in the plant.
+ *
+ * Software failures are currently unimplemented; however, as all calls to the PhysicalModel are delegated through the
+ * FailureModel, it is easy to alter this delegation in arbitrary ways to simulate control and/or reporting failures.
+ *
+ * Hardware failures are determined by inspecting the PhysicalModel to determine the status, wear, and operating
+ * conditions of the various components, and then instructing the PhysicalModel to mark certain components as having
+ * failed.
+ *
+ * Failures are constrained to one per timestep, which is enabled by the delegation of the step() method through the
+ * FailureModel.
  *
  * @author Marius Dumitrescu
  */
@@ -36,18 +39,15 @@ public class FailureModel implements PlantController, PlantStatus {
     private FailureModel() {
     }
 
-    /**
-     * Constructor for the FailureModel. Uses the physicalModel (model of the nuclear power plant) at a parameter
-     *
-     * @param physicalModel The current physical model for the game. This is what the FailureModel will affect.
-     */
     public FailureModel(PhysicalModel physicalModel) {
         this.physicalModel = physicalModel;
     }
 
     /**
-     * Step through the failure model. First step the PhysicalModel, then run our check to see if we can fail any
-     * components
+     * Step the PhysicalModel and determine any failures.
+     *
+     * Also implements reactor safety rules.
+     *
      */
     public void step() {
         physicalModel.step(1);
@@ -58,9 +58,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     /**
-     * Check to see if we can fail any components. We use an accumulator which adds the component's current wear points.
-     * If the total wear level is over a random integer, we decide to fail the current component then break. Only need
-     * to fail one Hardware component. TODO: future teams to add software fail routine.
+     * Determine failures
+     * 
      */
     public void failStateCheck() {
         ArrayList<FailableComponent> components = physicalModel.components();

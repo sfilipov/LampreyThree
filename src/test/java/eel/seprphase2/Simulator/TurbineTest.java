@@ -17,7 +17,7 @@ import static org.hamcrest.Matchers.*;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class TurbineTest {
 

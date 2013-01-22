@@ -11,7 +11,7 @@ import java.text.DecimalFormat;
 
 /**
  *
- * @author david
+ * @author David
  */
 @JsonTypeName(value = "Temperature")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")

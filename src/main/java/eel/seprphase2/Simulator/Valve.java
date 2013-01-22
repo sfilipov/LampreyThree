@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author james
  */
-public class Valve extends Component implements IValve {
+public class Valve {
 
     @JsonProperty
     private boolean open = true;
@@ -19,7 +19,6 @@ public class Valve extends Component implements IValve {
      *
      * @return
      */
-    @Override
     public boolean getOpen() {
         return open;
     }
@@ -28,7 +27,6 @@ public class Valve extends Component implements IValve {
      *
      * @param Open
      */
-    @Override
     public void setOpen(boolean Open) {
         open = Open;
     }

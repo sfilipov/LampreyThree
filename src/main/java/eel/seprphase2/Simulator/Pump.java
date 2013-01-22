@@ -11,7 +11,7 @@ import static eel.seprphase2.Utilities.Units.*;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public class Pump extends FailableComponent {
 

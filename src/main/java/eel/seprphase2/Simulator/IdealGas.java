@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Simulator;
 
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
@@ -9,8 +5,12 @@ import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
 /**
- *
- * @author drm
+ * Ideal Gas Equation
+ * 
+ * Rearrangements of the Ideal Gas Equation to find any one variable
+ * given the others.
+ * 
+ * @author David
  */
 public class IdealGas {
 

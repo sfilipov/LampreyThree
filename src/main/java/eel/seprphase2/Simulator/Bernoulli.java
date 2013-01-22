@@ -1,18 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Simulator;
 
 import eel.seprphase2.Utilities.Density;
-import java.lang.Math;
 import eel.seprphase2.Utilities.Pressure;
-import eel.seprphase2.Utilities.Velocity;
 import static eel.seprphase2.Utilities.Units.*;
+import eel.seprphase2.Utilities.Velocity;
 
 /**
- *
- * @author drm
+ * Bernoulli's Law
+ * 
+ * Rearrangements of Bernoulli's Law for fluid flow
+ * to find the value of any variable from any of the others.
+ * 
+ * @author David
  */
 public class Bernoulli {
 

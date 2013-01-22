@@ -1,17 +1,24 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eel.seprphase2.Simulator.Component;
 import eel.seprphase2.Utilities.Percentage;
 
 /**
- * A FailableComponent is one that takes on wear/damage attributes. This class allows a component to adopt a failure
- * state and will accrue damage over time. The calculateWear delta must be overridden by any child class that derives
- * this
- *
+ * Base Class for all components which can fail.
+ * 
+ * FailableComponents maintain their state of repair and their wear.
+ * 
+ * Wear is accumulated by the template method stepWear; particular
+ * FailableComponents should implement an appropriate calculateWearDelta
+ * function to provide the wear characteristic of that component.
+ * 
+ * Components which can fail but which do not suffer from wear
+ * (such as the reactor) can provide a calculateWearDelta function which
+ * always returns a Percentage of zero.
+ * 
  * @author Marius Dumetrescu
  */
-public abstract class FailableComponent extends Component {
+public abstract class FailableComponent {
 
     @JsonProperty
     private boolean hasFailed;      //The state of the component

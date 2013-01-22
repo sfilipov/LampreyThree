@@ -11,7 +11,7 @@ import static eel.seprphase2.Utilities.Units.*;
 
 /**
  *
- * @author david
+ * @author David
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class Port {

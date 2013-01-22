@@ -8,7 +8,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 /**
  *
- * @author david
+ * @author David
  */
 public interface GameManager {
 

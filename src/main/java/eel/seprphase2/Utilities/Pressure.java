@@ -9,7 +9,7 @@ import java.text.DecimalFormat;
 
 /**
  *
- * @author david
+ * @author David
  */
 public class Pressure {
 

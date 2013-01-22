@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
  *
- * @author drm
+ * @author David
  */
 @JsonTypeName(value = "Energy")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")

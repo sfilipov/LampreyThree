@@ -8,7 +8,7 @@ import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
 
 /**
- * Utils contains a set of functions that are not part of any model
+ * Filesystem utility functions
  *
  * @author James
  */

@@ -12,7 +12,7 @@ import static eel.seprphase2.Utilities.Units.*;
 
 /**
  *
- * @author drm
+ * @author David
  */
 @JsonTypeName(value = "Mass")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -9,8 +5,8 @@ import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
 /**
- *
- * @author Yazidi
+ * 
+ * @author Marius
  */
 public class Condenser extends FailableComponent {
 

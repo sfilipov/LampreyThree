@@ -6,7 +6,7 @@ package eel.seprphase2.TextInterface;
 
 /**
  *
- * @author david
+ * @author David
  */
 public interface LineReader {
 

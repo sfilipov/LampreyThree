@@ -8,7 +8,7 @@ import java.text.DecimalFormat;
 
 /**
  *
- * @author drm
+ * @author David
  */
 public class Format {
 

@@ -6,7 +6,7 @@ package eel.seprphase2.TextInterface;
 
 /**
  *
- * @author Yazidi
+ * @author Marius
  */
 public interface TextRenderer {
 

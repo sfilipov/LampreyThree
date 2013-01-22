@@ -36,7 +36,7 @@ public class FuelPile {
      * @return
      */
     public int output(int seconds) {
-        return (int)(maximumOutput * controlRodPosition.ratio() * seconds);
+        return (int)(maximumOutput * controlRodPosition.ratio() * seconds + 3000000);
     }
     
     /**

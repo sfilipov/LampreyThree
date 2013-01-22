@@ -4,17 +4,9 @@
  */
 package eel.seprphase2.Simulator.PhysicalModel;
 
-import eel.seprphase2.Simulator.PhysicalModel.Port;
-import eel.seprphase2.Simulator.PhysicalModel.Pump;
-import eel.seprphase2.Utilities.Mass;
-import eel.seprphase2.Utilities.Percentage;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *

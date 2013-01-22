@@ -48,6 +48,7 @@ public class FailureModel implements PlantController, PlantStatus {
         failStateCheck();
         checkReactorWaterLevel();
         checkCondenserPressure();
+        checkTurbineFailure();
     }
     
     

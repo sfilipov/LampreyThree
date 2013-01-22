@@ -4,11 +4,9 @@
  */
 package eel.seprphase2.Simulator.PhysicalModel;
 
-import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Simulator.FailureModel.FailableComponent;
-import eel.seprphase2.Simulator.FailureModel.FailureState;
-import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
@@ -42,23 +40,9 @@ public class Condenser extends FailableComponent {
     private Mass buildUp = kilograms(0);
 
     public Condenser() {
-        InitVariables();
+        initializeVariables();
     }
-
-    public void InitVariables() {
-        pressure = pascals(101325);
-        waterMass = kilograms(0);
-        steamMass = kilograms(0);
-        /*
-         steamInputPort.mass = kilograms(0);
-         reactorInputPort.mass = kilograms(0);
-         outputPort.mass = kilograms(0);
-         steamInputPort.temperature = kelvin(0);
-         reactorInputPort.temperature = kelvin(0);
-         */
-        temperature = kelvin(298.15);  //Start at room temp
-    }
-
+    
     public void step() {
 
         waterMass = outputPort.mass.plus(buildUp);
@@ -202,6 +186,21 @@ public class Condenser extends FailableComponent {
     @Override
     public void repair() throws CannotRepairException {
         super.repair();
-        InitVariables();
+        initializeVariables();
     }
+
+private void initializeVariables() {
+        pressure = pascals(101325);
+        waterMass = kilograms(0);
+        steamMass = kilograms(0);
+        /*
+        steamInputPort.mass = kilograms(0);
+        reactorInputPort.mass = kilograms(0);
+        outputPort.mass = kilograms(0);
+        steamInputPort.temperature = kelvin(0);
+        reactorInputPort.temperature = kelvin(0);
+        */
+        temperature = kelvin(298.15);  //Start at room temp
+    }
+
 }

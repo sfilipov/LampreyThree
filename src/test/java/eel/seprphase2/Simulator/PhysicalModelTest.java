@@ -113,21 +113,21 @@ public class PhysicalModelTest {
     @Test
     public void shouldInitializePump1ToNotPumping() {
         PhysicalModel model = new PhysicalModel();
-        assertFalse(model.getPumpStatus(1));
+        assertFalse(model.getPumpStatus(2));
     }
 
     @Test
     public void shouldInitializePump2ToPumping() {
         PhysicalModel model = new PhysicalModel();
-        assertTrue(model.getPumpStatus(2));
+        assertTrue(model.getPumpStatus(1));
 
     }
 
     @Test
     public void shouldSetPumpStateToOff() throws CannotControlException, KeyNotFoundException {
         PhysicalModel model = new PhysicalModel();
-        assertTrue(model.getPumpStatus(2));
-        model.changePumpState(2, false);
-        assertFalse(model.getPumpStatus(2));
+        assertTrue(model.getPumpStatus(1));
+        model.changePumpState(1, false);
+        assertFalse(model.getPumpStatus(1));
     }
 }

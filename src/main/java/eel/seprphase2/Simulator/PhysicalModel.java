@@ -76,8 +76,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
         allConnections.put(1, reactorToTurbine);
         allConnections.put(2, turbineToCondenser);
 
-        allPumps.put(1, reactorToCondenser);
-        allPumps.put(2, condenserToReactor);
+        allPumps.put(2, reactorToCondenser);
+        allPumps.put(1, condenserToReactor);
         allPumps.put(3, heatsinkToCondenser);
 
     }

@@ -21,6 +21,8 @@ public class Connection extends Valve{
     private Port second;
     @JsonProperty
     private double area;
+    @JsonProperty
+    private Mass buildUp = kilograms(0);
 
     // default constructor for JSON deserialization
     private Connection() {
@@ -42,16 +44,25 @@ public class Connection extends Valve{
     public void step() {
         if(this.getOpen())
         {
-            second.mass = first.mass;   
+            second.mass = buildUp.plus(first.mass);   
             second.temperature = first.temperature;
             second.pressure = pascals(second.pressure.inPascals() - second.pressure.inPascals()*4/3);
+            second.flow = first.flow;
+            first.mass = kilograms(0);
+            buildUp = kilograms(0);
         }
         else
         {
             second.mass = kilograms(0);
             second.temperature = first.temperature;
             second.pressure = pascals(101325);
+            second.flow = kilograms(0);
+            buildUp = buildUp.plus(first.mass);
         }
-    
+        
+        //debug
+        //System.out.println("Connection input mass - flow: " + first.mass + " - " + first.flow);
+        //System.out.println("Connection output mass - flow: " + second.mass + " - " + second.flow);
+        
     }
 }

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Ignore;
+
 /**
  *
  * @author david
@@ -46,327 +47,241 @@ public class ParserTest {
                 oneOf(plantController).moveControlRods(percent(50));
             }
         });
-        
-            parser.parseCommand("movecontrolrods 50");
-        
+
+        parser.executeCommand("movecontrolrods 50");
     }
 
-    @Test (expected = DoNotStep.class)
+    @Test(expected = DoNotStep.class)
     public void wrongCommandShouldNotMoveControlRods() throws DoNotStep {
         context.checking(new Expectations() {
             {
                 allowing(textRenderer);
             }
         });
-        
-            parser.parseCommand("don'tmovecontrolrods 50");
-       
+
+        parser.executeCommand("don'tmovecontrolrods 50");
     }
 
- 
-    
-    @Test (expected = DoNotStep.class)
+    @Test(expected = DoNotStep.class)
     public void wrongCommandShouldDisplayErrorMessage() throws DoNotStep {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("Error: Unknown command 'flibble'");
             }
         });
-        
-            parser.parseCommand("flibble 50");
-        
+
+        parser.executeCommand("flibble 50");
     }
 
-    @Test (expected = DoNotStep.class)
-    public void shouldNotAcceptControlRodsAbove100()  throws DoNotStep {
+    @Test(expected = DoNotStep.class)
+    public void shouldNotAcceptControlRodsAbove100() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: '101' is not a valid percentage.");
+                oneOf(textRenderer).outputLine("ERROR: '101' is not a valid percentage");
             }
         });
-       
-            parser.parseCommand("movecontrolrods 101");
-        
+
+        parser.executeCommand("movecontrolrods 101");
     }
 
-    @Test (expected = DoNotStep.class)
+    @Test(expected = DoNotStep.class)
     public void shouldNotAcceptControlRodsBelow0() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid percentage.");
+                oneOf(textRenderer).outputLine("ERROR: '-1' is not a valid percentage");
             }
         });
-       
-            parser.parseCommand("movecontrolrods -1");
-        
+
+        parser.executeCommand("movecontrolrods -1");
     }
 
-    @Test (expected = DoNotStep.class)
+    @Test(expected = DoNotStep.class)
     public void wrongNumberOfArgumentsInMoveControlRodsShouldCauseAnError() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'movecontrolrods'");
+                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'movecontrolrods' but got only 0");
             }
         });
-       
-            parser.parseCommand("movecontrolrods");
-        
+
+        parser.executeCommand("movecontrolrods");
     }
-    
+
     @Test
     public void shouldOpenValve() throws DoNotStep, KeyNotFoundException {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).changeValveState(1,true);
+                oneOf(plantController).changeValveState(1, true);
             }
         });
-        
-        parser.parseCommand("openvalve 1");
-        
+
+        parser.executeCommand("openvalve 1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithOneArg() throws DoNotStep {
+
+    @Test(expected = DoNotStep.class)
+    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithNoArgs() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'openvalve'");
+                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'openvalve' but got only 0");
             }
         });
-       
-            parser.parseCommand("openvalve");
-        
+
+        parser.executeCommand("openvalve");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithThreeArgs() throws DoNotStep {
+
+    @Test(expected = DoNotStep.class)
+    public void shouldNotAcceptValvesBelow0() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'openvalve'");
+                oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
             }
         });
-       
-            parser.parseCommand("openvalve 0 0");
-        
+
+        parser.executeCommand("openvalve -1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shouldNotAcceptValvesBelow0()  throws DoNotStep{
-        context.checking(new Expectations() {
-            {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid valve number.");
-            }
-        });
-       
-            parser.parseCommand("openvalve -1");
-        
-    }
-    
-    @Test (expected = DoNotStep.class)
+
+    @Test(expected = DoNotStep.class)
     public void shouldNotAcceptValvesWithStringNames() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid valve number.");
+                oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
             }
         });
-       
-            parser.parseCommand("openvalve foo");
-        
-    }
-    
 
-    
+        parser.executeCommand("openvalve foo");
+    }
+
     @Test
-    public void shouldCloseValve()  throws DoNotStep, KeyNotFoundException {
+    public void shouldCloseValve() throws DoNotStep, KeyNotFoundException {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).changeValveState(1,false);
+                oneOf(plantController).changeValveState(1, false);
             }
         });
-        
-        parser.parseCommand("closevalve 1");
-        
+
+        parser.executeCommand("closevalve 1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithOneArg() throws DoNotStep {
+
+    @Test(expected = DoNotStep.class)
+    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithNoArgs() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'closevalve'");
-                
+                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'closevalve' but got only 0");
             }
         });
-       
-            parser.parseCommand("closevalve");
-        
+
+        parser.executeCommand("closevalve");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithThreeArgs() throws DoNotStep {
+
+    @Test(expected = DoNotStep.class)
+    public void shouldNotAcceptValvesBelow0InCloseValve() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'closevalve'");
-                
+                oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
             }
         });
-       
-            parser.parseCommand("closevalve 0 0");
-        
+
+        parser.executeCommand("closevalve -1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shouldNotAcceptValvesBelow0InCloseValve()  throws DoNotStep{
-        context.checking(new Expectations() {
-            {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid valve number.");
-                
-            }
-        });
-       
-            parser.parseCommand("closevalve -1");
-        
-    }
-    
-    @Test (expected = DoNotStep.class)
+
+    @Test(expected = DoNotStep.class)
     public void shouldNotAcceptValvesWithStringNamesInCloseValve() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid valve number.");
-                
+                oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
             }
         });
-       
-            parser.parseCommand("closevalve foo");
-        
+
+        parser.executeCommand("closevalve foo");
     }
-    
-    
 
-
-    
     @Test
-    public void shouldTurnPumpOn()  throws DoNotStep, KeyNotFoundException, CannotControlException {
+    public void shouldTurnPumpOn() throws DoNotStep, KeyNotFoundException, CannotControlException {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).changePumpState(1,true);
+                oneOf(plantController).changePumpState(1, true);
             }
         });
-       
-        parser.parseCommand("pumpon 1");
-       
+
+        parser.executeCommand("pumpon 1");
     }
-    @Test (expected = DoNotStep.class)
+
+    @Test(expected = DoNotStep.class)
     public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError0Args() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpon'");
-             
+                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'pumpon' but got only 0");
             }
         });
-       
-        parser.parseCommand("pumpon");
-        
+
+        parser.executeCommand("pumpon");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError2Args() throws DoNotStep {
-        context.checking(new Expectations() {
-            {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpon'");
-            }
-        });
-       
-        parser.parseCommand("pumpon 0 0");
-        
-    }
-    
-    
-    @Test (expected = DoNotStep.class)
+
+    @Test(expected = DoNotStep.class)
     public void shouldNotAcceptPumpsBelow0() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid pump number.");
+                oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
             }
         });
-       
-        parser.parseCommand("pumpon -1");
-        
+
+        parser.executeCommand("pumpon -1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shouldNotAcceptStringPumpNames()  throws DoNotStep{
+
+    @Test(expected = DoNotStep.class)
+    public void shouldNotAcceptStringPumpNames() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid pump number.");
+                oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
             }
         });
-       
-        parser.parseCommand("pumpon foo");
-        
+
+        parser.executeCommand("pumpon foo");
     }
-    
-    
-    
-    public void shouldTurnPumpOff()  throws DoNotStep, KeyNotFoundException, CannotControlException {
+
+    public void shouldTurnPumpOff() throws DoNotStep, KeyNotFoundException, CannotControlException {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).changePumpState(1,false);
+                oneOf(plantController).changePumpState(1, false);
             }
         });
-       
-            parser.parseCommand("pumpoff 1");
-       
+
+        parser.executeCommand("pumpoff 1");
     }
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError0Args()  throws DoNotStep{
+
+    @Test(expected = DoNotStep.class)
+    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError0Args() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpoff'");
+                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'pumpoff' but got only 0");
             }
         });
-       
-        parser.parseCommand("pumpoff");
-        
+
+        parser.executeCommand("pumpoff");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError2Args()  throws DoNotStep{
+
+    @Test(expected = DoNotStep.class)
+    public void shoudNotAcceptStringPumpNamesForPumpOff() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'pumpoff'");
+                oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
             }
         });
-       
-        parser.parseCommand("pumpoff 0 0");
-        
+
+        parser.executeCommand("pumpoff foo");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shoudNotAcceptStringPumpNamesForPumpOff()  throws DoNotStep{
+
+    @Test(expected = DoNotStep.class)
+    public void shouldNotAcceptPumpsBelow0ForPumpOff() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid pump number.");
+                oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
             }
         });
-       
-        parser.parseCommand("pumpoff foo");
-        
+
+        parser.executeCommand("pumpoff -1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shouldNotAcceptPumpsBelow0ForPumpOff()  throws DoNotStep{
-        context.checking(new Expectations() {
-            {
-                oneOf(textRenderer).outputLine("Error: '-1' is not a valid pump number.");
-            }
-        });
-       
-        parser.parseCommand("pumpon -1");
-        
-    }
-    
-    
-    
-    @Test (expected = DoNotStep.class)
+
+    @Test(expected = DoNotStep.class)
     public void shouldSaveGame() throws DoNotStep {
         context.checking(new Expectations() {
             {
@@ -378,125 +293,89 @@ public class ParserTest {
                 oneOf(textRenderer).outputLine("Game Saved!");
             }
         });
-        
-            parser.parseCommand("save");
-        
+
+        parser.executeCommand("save");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberofArgsToSaveShouldCauseError() throws DoNotStep {
-        context.checking(new Expectations() {
-            {
-               oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'save'"); 
-            }
-        });
-        
-        parser.parseCommand("save 1");
-        
-    }
-    
-    @Ignore @Test
+
+    @Ignore
+    @Test
     public void wrongNumberOfArgumentsOnLoad0Args() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'load'");
-                
+                oneOf(textRenderer).outputLine("ERROR: Expected 1 argument(s) but got only 0");
+
             }
         });
-        
-        parser.parseCommand("load");
-        
+
+        parser.executeCommand("load");
     }
-     
-    @Test (expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsOnLoad3Args() throws DoNotStep {
-        context.checking(new Expectations() {
-            {
-                oneOf(textRenderer).outputLine("Error: wrong number of arguments to command 'load'");
-                
-            }
-        });
-        
-        parser.parseCommand("load 0 0");
-        
-    }
-    
-    @Test (expected = DoNotStep.class)
+
+    @Test(expected = DoNotStep.class)
     public void shouldLoadGameWithNumber() throws DoNotStep, IOException {
         context.checking(new Expectations() {
             {
-                
+
                 allowing(gameManager).loadGame(1);
-                
+
             }
         });
-        
-        parser.parseCommand("load 1");
-        
+
+        parser.executeCommand("load 1");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shouldNotLoadStringGameNames()  throws DoNotStep{
+
+    @Test(expected = DoNotStep.class)
+    public void shouldNotLoadStringGameNames() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                
-                oneOf(textRenderer).outputLine("Error: 'foo' is not a valid number.");
+
+                oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
             }
         });
-        
-        parser.parseCommand("load foo");
-        
+
+        parser.executeCommand("load foo");
     }
-    
-    @Test (expected = DoNotStep.class)
-    public void shoulNotLoadGameZero()  throws DoNotStep{
+
+    @Test(expected = DoNotStep.class)
+    public void shoulNotLoadNegativeGames() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("Error: Game '0' does not exist.");
-                
+                oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
             }
         });
-        
-        parser.parseCommand("load 0");
-        
+
+        parser.executeCommand("load -1");
     }
-    
-    @Test 
-    public void shouldRepairPump1()  throws DoNotStep, KeyNotFoundException, CannotRepairException{
+
+    @Test
+    public void shouldRepairPump1() throws DoNotStep, KeyNotFoundException, CannotRepairException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairPump(1);
-                
             }
         });
-        
-        parser.parseCommand("repair pump 1");
+
+        parser.executeCommand("repair pump 1");
     }
-    
- 
-    @Test 
-    public void shouldRepairTurbine()  throws DoNotStep,CannotRepairException{
+
+    @Test
+    public void shouldRepairTurbine() throws DoNotStep, CannotRepairException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairTurbine();
-                
             }
         });
-        
-        parser.parseCommand("repair turbine");
+
+        parser.executeCommand("repair turbine");
     }
-    
-    @Test 
-    public void shouldRepairCondenser() throws DoNotStep,CannotRepairException {
+
+    @Test
+    public void shouldRepairCondenser() throws DoNotStep, CannotRepairException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairCondenser();
-                
             }
         });
-        
-        parser.parseCommand("repair condenser");
+
+        parser.executeCommand("repair condenser");
     }
-    
-    
 }

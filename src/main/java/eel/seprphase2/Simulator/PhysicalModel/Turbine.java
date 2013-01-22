@@ -10,6 +10,7 @@ import eel.seprphase2.Simulator.FailureModel.FailableComponent;
 import eel.seprphase2.Simulator.FailureModel.FailureState;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.TextInterface.Parser;
+import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
@@ -29,7 +30,9 @@ public class Turbine extends FailableComponent {
     @JsonProperty
     private Port outputPort = new Port();
     @JsonIgnore
-    private static PlantController controller;   
+    private static PlantController controller;  
+    @JsonProperty
+    private Mass buildUp = kilograms(0);
     
     /**
      *
@@ -48,13 +51,16 @@ public class Turbine extends FailableComponent {
         if (hasFailed()) {
             outputPower = 0;
             setWear(new Percentage(100));
+            buildUp = buildUp.plus(inputPort.mass);
             return;
         }
         
         outputPower = 10 * inputPort.mass.inKilograms();
-        outputPort.mass = inputPort.mass;
+        outputPort.mass = inputPort.mass.plus(buildUp);
         outputPort.pressure = inputPort.pressure;
         outputPort.temperature = inputPort.temperature;
+        outputPort.flow = inputPort.flow;
+        buildUp = kilograms(0);
         setWear(calculateWearDelta());
 
         //System.out.println("Turbine Output Water Mass 2 " + outputPort.mass);

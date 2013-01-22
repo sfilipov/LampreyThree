@@ -158,6 +158,7 @@ public class Reactor extends FailableComponent {
             temperature = kelvin(temperature.inKelvin() +
                                  fuelPile.output(1) / waterMass.inKilograms() /
                                  specificHeatOfWater);
+            outputPort.mass = kilograms(0);
         } else {
 
             /*
@@ -169,6 +170,7 @@ public class Reactor extends FailableComponent {
             Mass deltaMass = kilograms((fuelPile.output(1) - neededEnergy) / latentHeatOfWater);
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
+            outputPort.mass = deltaMass;
         }
 
         /*
@@ -186,14 +188,14 @@ public class Reactor extends FailableComponent {
         /*
          * Sends information to output port
          */
-
-        outputPort.mass = steamMass;
+        
+        outputPort.flow = steamMass;
         outputPort.density = steamDensity;
         outputPort.pressure = pressure;
         outputPort.temperature = temperature;
 
         //System.out.println("Reactor Water Mass " + waterMass);
-        //System.out.println("Reactor Steam Mass " + steamMass);
+        //System.out.println("Reactor Steam Mass " + outputPort.flow);
 
 
 

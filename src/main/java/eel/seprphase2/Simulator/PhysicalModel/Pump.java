@@ -46,8 +46,10 @@ public class Pump extends FailableComponent {
         if (status) {
             if (inputPort.mass.inKilograms() > capacity.inKilograms()) {
                 outputPort.mass = capacity;
+                inputPort.mass = inputPort.mass.minus(capacity);
             } else {
                 outputPort.mass = inputPort.mass;
+                inputPort.mass = kilograms(0);
             }
 
             outputPort.temperature = inputPort.temperature;

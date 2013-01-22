@@ -81,7 +81,12 @@ public class Percentage {
      * @return
      */
     public Percentage plus(Percentage other) {
-        return new Percentage(percentagePoints + other.percentagePoints);
+        double result = percentagePoints + other.percentagePoints;
+        // cope with FP error causing out-of-range sums
+        if (!isValidPercentage(result)) {
+            result = Math.round(result);
+        }
+        return new Percentage(result);
     }
 
     /**
@@ -91,7 +96,12 @@ public class Percentage {
      * @return
      */
     public Percentage minus(Percentage other) {
-        return new Percentage(percentagePoints - other.percentagePoints);
+        double result = percentagePoints - other.percentagePoints;
+        // cope with FP error causing out-of-range sums
+        if (!isValidPercentage(result)) {
+            result = Math.round(result);
+        }
+        return new Percentage(result);
     }
 
     @Override

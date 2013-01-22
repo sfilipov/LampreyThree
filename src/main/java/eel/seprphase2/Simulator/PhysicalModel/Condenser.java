@@ -96,7 +96,7 @@ public class Condenser extends FailableComponent {
 
             outputPort.mass = kilograms(0);
             outputPort.pressure = pascals(101325);
-            buildUp = waterMass.plus(steamInputPort.mass);
+            buildUp = waterMass;
 
         }
         else

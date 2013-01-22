@@ -73,6 +73,7 @@ public class Reactor extends FailableComponent {
         steamMass = kilograms(0);
         this.temperature = temperature;
         this.pressure = pressure;
+        correctWaterMass();
     }
 
     /**
@@ -123,14 +124,14 @@ public class Reactor extends FailableComponent {
         if (steamMass.inKilograms() > inputPort.mass.inKilograms()) {
             steamMass = steamMass.minus(inputPort.mass);
             waterMass = waterMass.plus(inputPort.mass);
+            correctWaterMass();
             calculateNewTemperature(inputPort);
         } else {
             waterMass = waterMass.plus(steamMass);
+            correctWaterMass();
             steamMass = kilograms(0);
             calculateNewTemperature(inputPort);
-
         }
-
 
         if (hasFailed()) {
             throw new GameOverException();
@@ -168,6 +169,7 @@ public class Reactor extends FailableComponent {
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
             outputPort.mass = deltaMass;
+            correctWaterMass();
         }
 
         /*
@@ -241,7 +243,19 @@ public class Reactor extends FailableComponent {
         return new Percentage(0);
     }
 
-    Percentage minimumWaterLevel() {
+    public Percentage minimumWaterLevel() {
         return new Percentage((this.minimumWaterMass.inKilograms() / this.maximumWaterMass.inKilograms()) * 100);
     }
+
+    // avoid issues with floating-point error
+    private void correctWaterMass() {
+        if (waterMass.inKilograms() > maximumWaterMass.inKilograms()) {
+            waterMass = maximumWaterMass;
+        }
+        if (waterMass.inKilograms() < 0) {
+            waterMass = kilograms(0);
+        }
+    }
 }
+
+    

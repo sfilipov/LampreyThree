@@ -37,11 +37,6 @@ public class PressureTest {
     }
 
     @Test
-    public void shouldNotBeEqualToUnequalTemperature() {
-        assertFalse(pressure.equals(new Pressure(484489)));
-    }
-
-    @Test
     public void shouldNotBeEqualToNull() {
         assertFalse(pressure.equals(null));
     }
@@ -55,10 +50,30 @@ public class PressureTest {
     public void shouldBeEqualToEqualPressureAsObject() {
         assertTrue(pressure.equals((Object)(new Pressure(434900))));
     }
-    
+
     @Test
     public void canCreateLowPressure() {
         Pressure p = new Pressure(1);
     }
     
+    @Test
+    public void subtraction() {
+        Pressure p1 = new Pressure(3);
+        Pressure p2 = new Pressure(2);
+        assertEquals(new Pressure(1), p1.minus(p2));
+    }
+    
+    @Test
+    public void addition() {
+        Pressure p1 = new Pressure(3);
+        Pressure p2 = new Pressure(2);
+        assertEquals(new Pressure(5), p1.plus(p2));
+    }
+    
+    @Test
+    public void greaterThan() {
+        Pressure p1 = new Pressure(3);
+        Pressure p2 = new Pressure(2);
+        assertTrue(p1.greaterThan(p2));
+    }
 }

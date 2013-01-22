@@ -12,7 +12,7 @@ public class PercentageTest {
     @Test
     public void commonCaseShouldWork() {
         Percentage p = new Percentage(57);
-        assertEquals(p.points(),57.0,0.1);
+        assertEquals(p.points(), 57.0, 0.1);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -39,10 +39,8 @@ public class PercentageTest {
     @Test
     public void ratioConstructionShouldWork() {
         Percentage p = new Percentage(0.57);
-        assertEquals(0.57, p.points(),0.1);
+        assertEquals(0.57, p.points(), 0.1);
     }
-
-   
 
     @Test
     public void validPercentageNumbersShouldBeValid() {
@@ -106,7 +104,7 @@ public class PercentageTest {
         Percentage p = new Percentage(57.1);
         assertEquals("57.1%", p.toString());
     }
-    
+
     @Test
     public void equalPercentagesShouldBeEqual() {
         Percentage p1 = new Percentage(57);
@@ -151,5 +149,33 @@ public class PercentageTest {
     public void shouldBeEqualToPercentageAsObject() {
         Percentage p1 = new Percentage(57);
         assertTrue(p1.equals((Object)(new Percentage(57))));
+    }
+
+    @Test
+    public void addition() {
+        Percentage p1 = new Percentage(57);
+        Percentage p2 = new Percentage(3);
+        assertEquals(new Percentage(60), p1.plus(p2));
+    }
+
+    @Test
+    public void subtraction() {
+        Percentage p1 = new Percentage(57);
+        Percentage p2 = new Percentage(2);
+        assertEquals(new Percentage(55), p1.minus(p2));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void outOfRangeAddition() {
+        Percentage p1 = new Percentage(55);
+        Percentage p2 = new Percentage(55);
+        p1.plus(p2);
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void outOfRangeSubtraction() {
+        Percentage p1 = new Percentage(55);
+        Percentage p2 = new Percentage(60);
+        p1.minus(p2);
     }
 }

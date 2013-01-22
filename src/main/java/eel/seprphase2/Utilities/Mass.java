@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import static eel.seprphase2.Utilities.Units.*;
 /**
  *
  * @author drm
@@ -92,6 +93,9 @@ public class Mass {
      * @return
      */
     public Volume volumeAt(Density density) {
+        if (density.equals(kilogramsPerCubicMetre(0))) {
+            throw new IllegalArgumentException("Attempted to find the volume of a mass with density 0");
+        }
         return new Volume(kilograms / density.inKilogramsPerCubicMetre());
     }
     

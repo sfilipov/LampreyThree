@@ -47,24 +47,6 @@ public class PhysicalModelTest {
         
     }
     
-    @Ignore @Test
-    public void shouldSerializeToFile() {
-        Calendar cal = Calendar.getInstance();
-        String time = String.valueOf(cal.getTimeInMillis());
-        PhysicalModel model = new PhysicalModel();
-        //model.setUsername(time);
-        
-        try
-        {
-            //model.saveGame();
-        }
-        catch(Exception e)
-        {
-            
-            fail("Error occure while saving file");
-        }
-    }
-    
     @Test
     public void shouldSetCondenserBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();

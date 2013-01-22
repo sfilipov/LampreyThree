@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Utilities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -68,7 +64,16 @@ public class Energy {
 
     @Override
     public String toString() {
-        return Format.toThreeDecimalPlaces(joules) + " J";
+        
+        if (joules >= 10000000000.0) {
+            return Format.toThreeDecimalPlaces(joules / 1000000000.0) + " GJ";
+        } else if (joules >= 1000000.0) {
+            return Format.toThreeDecimalPlaces(joules / 1000000.0) + " MJ";
+        } else if (joules >= 1000) {
+            return Format.toThreeDecimalPlaces(joules / 1000) + " kJ";
+        } else {
+            return Format.toThreeDecimalPlaces(joules) + " J";
+        }
     }
 
     @Override

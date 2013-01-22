@@ -19,5 +19,4 @@ public interface GameManager {
     void saveGame() throws JsonProcessingException;
 
     void setUsername(String userName);
-    
 }

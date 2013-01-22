@@ -12,9 +12,10 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
  *
  * @author drm
  */
-@JsonTypeName(value="Energy")
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
+@JsonTypeName(value = "Energy")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Energy {
+
     @JsonProperty
     private double joules;
 
@@ -24,7 +25,7 @@ public class Energy {
     public Energy() {
         joules = 0;
     }
-    
+
     /**
      *
      * @param joules
@@ -40,14 +41,15 @@ public class Energy {
     public double inJoules() {
         return joules;
     }
-    
+
     public double inKJoules() {
-        return joules/1000;
+        return joules / 1000;
     }
 
     /**
      *
      * @param other
+     *
      * @return
      */
     public Energy plus(Energy other) {
@@ -57,6 +59,7 @@ public class Energy {
     /**
      *
      * @param other
+     *
      * @return
      */
     public Energy minus(Energy other) {
@@ -87,6 +90,4 @@ public class Energy {
         }
         return true;
     }
-    
-    
 }

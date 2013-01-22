@@ -38,29 +38,32 @@ public interface PlantStatus {
      * @return
      */
     public Percentage reactorWaterLevel();
-    
+
     /**
      *
      * @return
      */
     public Energy energyGenerated();
-    
+
     /**
      *
      * @param open
      */
     public void setReactorToTurbine(boolean open);
-    
+
     /**
      *
      * @return
      */
     public boolean getReactorToTurbine();
-    
+
     public Temperature condenserTemperature();
-    
+
     public Pressure condenserPressure();
+
     public Percentage condenserWaterLevel();
+
     public Percentage reactorMinimumWaterLevel();
+
     public String[] listFailedComponents();
 }

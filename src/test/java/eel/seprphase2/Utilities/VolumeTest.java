@@ -27,7 +27,7 @@ public class VolumeTest {
         double expResult = 0.0;
         double result = instance.inCubicMetres();
         assertEquals(expResult, result, 0.0);
-        
+
     }
 
     /**
@@ -35,7 +35,7 @@ public class VolumeTest {
      */
     @Test
     public void testPlus() {
-        
+
         Volume other = new Volume(10);
         Volume instance = new Volume(10);
         Volume expResult = new Volume(20);
@@ -48,7 +48,7 @@ public class VolumeTest {
      */
     @Test
     public void testMinus() {
-        
+
         Volume other = new Volume(10);
         Volume instance = new Volume(10);
         Volume expResult = new Volume(0);
@@ -61,13 +61,13 @@ public class VolumeTest {
      */
     @Test
     public void testMassAt() {
-        
+
         Density density = new Density(1);
         Volume instance = new Volume(1);
         Mass expResult = new Mass(1);
         Mass result = instance.massAt(density);
         assertEquals(expResult, result);
-  
+
     }
 
     /**
@@ -79,7 +79,7 @@ public class VolumeTest {
         String expResult = "0m^3";
         String result = instance.toString();
         assertEquals(expResult, result);
-       
+
     }
 
     /**
@@ -87,12 +87,12 @@ public class VolumeTest {
      */
     @Test
     public void testHashCode() {
-        
+
         Volume instance = new Volume();
         int expResult = 0;
         int result = instance.hashCode();
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -107,8 +107,8 @@ public class VolumeTest {
         assertEquals(expResult, result);
 
     }
-    
-        /**
+
+    /**
      * Test of equals method, of class Volume.
      */
     @Test
@@ -120,7 +120,7 @@ public class VolumeTest {
         assertEquals(expResult, result);
 
     }
-    
+
     /**
      * Test of equals method, of class Volume.
      */
@@ -133,6 +133,7 @@ public class VolumeTest {
         assertEquals(expResult, result);
 
     }
+
     /**
      * Test of equals method, of class Volume.
      */

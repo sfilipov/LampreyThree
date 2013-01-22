@@ -5,13 +5,9 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Persistence.FileSystem;
-import eel.seprphase2.Simulator.FailureModel.CannotControlException;
-import eel.seprphase2.Simulator.FailureModel.FailureModel;
 import eel.seprphase2.Persistence.SaveGame;
-import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -35,7 +31,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         failureModel = new FailureModel(physicalModel);
         userName = "";
     }
-    
+
     @Override
     public void setUsername(String userName) {
         this.userName = userName;
@@ -70,7 +66,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public String[] listGames() {
         return FileSystem.listSaveGames(userName);
     }
-    
+
     public String[] listFailedComponents() {
         return failureModel.listFailedComponents();
     }
@@ -95,7 +91,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         failureModel.changePumpState(pumpNumber, isPumping);
     }
 
-    public void repairPump(int pumpNumber) throws KeyNotFoundException,CannotRepairException  {
+    public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
         failureModel.repairPump(pumpNumber);
     }
 
@@ -103,7 +99,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         failureModel.repairCondenser();
     }
 
-    public void repairTurbine() throws CannotRepairException  {
+    public void repairTurbine() throws CannotRepairException {
         failureModel.repairTurbine();
     }
 
@@ -150,5 +146,4 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
-
 }

@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.*;
  *
  * @author drm
  */
-@JsonTypeName(value="Percentage")
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
+@JsonTypeName(value = "Percentage")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Percentage {
 
     private static final Pattern pattern = Pattern.compile("^([0-9]+(\\.[0-9])?)%?$");
@@ -29,7 +29,7 @@ public class Percentage {
     public Percentage() {
         percentagePoints = 0;
     }
-    
+
     /**
      *
      * @param percentagePoints
@@ -47,11 +47,9 @@ public class Percentage {
     /**
      *
      * @param ratio
-     
-    public Percentage(double ratio) {
-        this((int)round(ratio * 100));
-    }
-*/
+     *
+     * public Percentage(double ratio) { this((int)round(ratio * 100)); }
+     */
     /**
      *
      * @param representation
@@ -75,10 +73,11 @@ public class Percentage {
     public double ratio() {
         return this.percentagePoints / 100.0;
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Percentage plus(Percentage other) {
@@ -88,6 +87,7 @@ public class Percentage {
     /**
      *
      * @param other
+     *
      * @return
      */
     public Percentage minus(Percentage other) {
@@ -122,6 +122,7 @@ public class Percentage {
     /**
      *
      * @param points
+     *
      * @return
      */
     public static boolean isValidPercentage(double points) {
@@ -131,6 +132,7 @@ public class Percentage {
     /**
      *
      * @param representation
+     *
      * @return
      */
     public static boolean isValidPercentage(String representation) {

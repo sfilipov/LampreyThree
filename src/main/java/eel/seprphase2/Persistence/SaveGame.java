@@ -7,7 +7,7 @@ package eel.seprphase2.Persistence;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.Simulator.FailureModel.FailureModel;
+import eel.seprphase2.Simulator.FailureModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,7 +24,8 @@ public class SaveGame {
     @JsonProperty
     private String userName;
 
-    private SaveGame() {}
+    private SaveGame() {
+    }
 
     public static SaveGame load(String filename) throws JsonParseException, IOException {
         eel.seprphase2.Persistence.Persistence p = new eel.seprphase2.Persistence.Persistence();

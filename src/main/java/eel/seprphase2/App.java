@@ -1,8 +1,8 @@
 package eel.seprphase2;
 
-import eel.seprphase2.Simulator.FailureModel.FailureModel;
-import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
-import eel.seprphase2.Simulator.PhysicalModel.Reactor;
+import eel.seprphase2.Simulator.FailureModel;
+import eel.seprphase2.Simulator.PhysicalModel;
+import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.Simulator.Simulator;
 import eel.seprphase2.TextInterface.DoNotStep;
 import eel.seprphase2.TextInterface.TerminalReader;
@@ -18,7 +18,9 @@ public class App {
 
     /**
      * The main entry point for the application
+     *
      * @param args
+     *
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {

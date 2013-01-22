@@ -12,22 +12,22 @@ import org.junit.Test;
  * @author david
  */
 public class FormatTest {
-    
+
     @Test
     public void floatingPointTo3DP() {
         assertEquals("1.346", Format.toThreeDecimalPlaces(1.3456));
     }
-    
+
     @Test
     public void floatingPointTo1DP() {
         assertEquals("1.4", Format.toOneDecimalPlace(1.35));
     }
-    
+
     @Test
     public void integerTo3DP() {
         assertEquals("17", Format.toThreeDecimalPlaces(17));
     }
-    
+
     @Test
     public void integerTo1DP() {
         assertEquals("17", Format.toOneDecimalPlace(17));

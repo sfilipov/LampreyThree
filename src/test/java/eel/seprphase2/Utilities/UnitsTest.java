@@ -16,22 +16,22 @@ import static org.junit.Assert.*;
  * @author James
  */
 public class UnitsTest {
-    
+
     public UnitsTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -45,7 +45,7 @@ public class UnitsTest {
         Percentage expResult = new Percentage(0);
         Percentage result = Units.percent(percentagePoints);
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -53,13 +53,13 @@ public class UnitsTest {
      */
     @Test
     public void testPascals() {
-        
+
         double pascals = 0.0;
         Pressure expResult = new Pressure(0);
         Pressure result = Units.pascals(pascals);
         assertEquals(expResult, result);
-        
-       
+
+
     }
 
     /**
@@ -67,7 +67,7 @@ public class UnitsTest {
      */
     @Test
     public void testKelvin() {
-        
+
         double degrees = 0.0;
         Temperature expResult = new Temperature(0);
         Temperature result = Units.kelvin(degrees);
@@ -79,7 +79,7 @@ public class UnitsTest {
      */
     @Test
     public void testKilograms() {
-        
+
         double kilograms = 0.0;
         Mass expResult = new Mass(0);
         Mass result = Units.kilograms(kilograms);
@@ -91,7 +91,7 @@ public class UnitsTest {
      */
     @Test
     public void testMolesOfWater() {
-        
+
         double moles = 0.0;
         Mass expResult = new Mass(0);
         Mass result = Units.molesOfWater(moles);
@@ -114,7 +114,7 @@ public class UnitsTest {
      */
     @Test
     public void testJoules() {
-        
+
         double joules = 0.0;
         Energy expResult = new Energy(0);
         Energy result = Units.joules(joules);
@@ -126,7 +126,7 @@ public class UnitsTest {
      */
     @Test
     public void testKilogramsPerCubicMetre() {
-        
+
         double kilogramsPerCubicMetre = 0.0;
         Density expResult = new Density(0);
         Density result = Units.kilogramsPerCubicMetre(kilogramsPerCubicMetre);
@@ -138,7 +138,7 @@ public class UnitsTest {
      */
     @Test
     public void testMetresPerSecond() {
-        
+
         double metresPerSecond = 0.0;
         Velocity expResult = new Velocity(0);
         Velocity result = Units.metresPerSecond(metresPerSecond);

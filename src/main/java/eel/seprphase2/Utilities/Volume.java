@@ -9,16 +9,16 @@ package eel.seprphase2.Utilities;
  * @author drm
  */
 public class Volume {
-    
+
     private final double cubicMetres;
-    
+
     /**
      *
      */
     public Volume() {
         cubicMetres = 0;
     }
-    
+
     /**
      *
      * @param cubicMetres
@@ -26,7 +26,7 @@ public class Volume {
     public Volume(double cubicMetres) {
         this.cubicMetres = cubicMetres;
     }
-    
+
     /**
      *
      * @return
@@ -38,35 +38,38 @@ public class Volume {
     /**
      *
      * @param other
+     *
      * @return
      */
     public Volume plus(Volume other) {
         return new Volume(cubicMetres + other.cubicMetres);
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Volume minus(Volume other) {
         return new Volume(cubicMetres - other.cubicMetres);
     }
-    
+
     /**
      *
      * @param density
+     *
      * @return
      */
     public Mass massAt(Density density) {
         return new Mass(cubicMetres * density.inKilogramsPerCubicMetre());
     }
-    
+
     @Override
     public String toString() {
         return Format.toThreeDecimalPlaces(cubicMetres) + "m^3";
     }
-    
+
     @Override
     public int hashCode() {
         return (int)cubicMetres;
@@ -86,5 +89,4 @@ public class Volume {
         }
         return true;
     }
-    
 }

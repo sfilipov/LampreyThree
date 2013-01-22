@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author James
  */
 public class VelocityTest {
-    
+
     /**
      * Test of inMetresPerSecond method, of class Velocity.
      */
@@ -39,7 +39,7 @@ public class VelocityTest {
         Velocity expResult = new Velocity(20);
         Velocity result = instance.plus(other);
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -47,7 +47,7 @@ public class VelocityTest {
      */
     @Test
     public void testMinus() {
-        
+
         Velocity other = new Velocity(10);
         Velocity instance = new Velocity(10);
         Velocity expResult = new Velocity();
@@ -71,12 +71,12 @@ public class VelocityTest {
      */
     @Test
     public void testHashCode() {
-        
+
         Velocity instance = new Velocity();
         int expResult = 0;
         int result = instance.hashCode();
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -84,26 +84,26 @@ public class VelocityTest {
      */
     @Test
     public void testEquals() {
-        
+
         Object obj = null;
         Velocity instance = new Velocity();
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-    
+
     }
-    
+
     @Test
     public void testEquals2() {
-        
+
         Object obj = new Velocity(10);
         Velocity instance = new Velocity();
         boolean expResult = false;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-    
+
     }
-    
+
     @Test
     public void testEquals3() {
         Object obj = new Velocity(10);
@@ -111,6 +111,6 @@ public class VelocityTest {
         boolean expResult = true;
         boolean result = instance.equals(obj);
         assertEquals(expResult, result);
-    
+
     }
 }

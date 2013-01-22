@@ -13,8 +13,8 @@ import java.text.DecimalFormat;
  *
  * @author david
  */
-@JsonTypeName(value="Temperature")
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
+@JsonTypeName(value = "Temperature")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Temperature {
 
     static private final double kelvinOffset = 273.15;
@@ -27,7 +27,7 @@ public class Temperature {
     public Temperature() {
         degreesKelvin = 0;
     }
-    
+
     /**
      *
      * @param degreesKelvin
@@ -35,7 +35,7 @@ public class Temperature {
     public Temperature(double degreesKelvin) {
         this.degreesKelvin = degreesKelvin;
     }
-    
+
     /**
      *
      * @return
@@ -51,7 +51,7 @@ public class Temperature {
     public double inKelvin() {
         return this.degreesKelvin;
     }
-    
+
     @Override
     public String toString() {
         return Format.toThreeDecimalPlaces(inCelsius()) + " degrees C";
@@ -71,19 +71,21 @@ public class Temperature {
         }
         return true;
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Temperature plus(Temperature other) {
         return new Temperature(this.degreesKelvin + other.degreesKelvin);
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Temperature minus(Temperature other) {

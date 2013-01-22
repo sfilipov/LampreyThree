@@ -23,7 +23,7 @@ public class Pressure {
     public Pressure() {
         pascals = 0;
     }
-    
+
     /**
      *
      * @param pascals
@@ -47,10 +47,11 @@ public class Pressure {
     public double inAtmospheres() {
         return this.pascals / pascalsPerAtmosphere;
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Pressure plus(Pressure other) {
@@ -60,6 +61,7 @@ public class Pressure {
     /**
      *
      * @param other
+     *
      * @return
      */
     public Pressure minus(Pressure other) {
@@ -69,12 +71,13 @@ public class Pressure {
     /**
      *
      * @param other
+     *
      * @return
      */
     public boolean greaterThan(Pressure other) {
         return pascals > other.pascals;
     }
-    
+
     @Override
     public String toString() {
         return Format.toThreeDecimalPlaces(inAtmospheres()) + " atm";

@@ -29,7 +29,7 @@ public class TemperatureTest {
         Temperature t1 = new Temperature(273.15);
         assertEquals(0, t1.inCelsius(), 0.1);
     }
-    
+
     @Test
     public void shouldConvertToStringWithUnits() {
         assertEquals("512.85 degrees C", temperature.toString());
@@ -64,7 +64,7 @@ public class TemperatureTest {
     public void hashCodeShouldBeEqualToDegreesKelvin() {
         assertEquals(786, temperature.hashCode());
     }
-    
+
     /**
      * Test of plus method, of class Temperature.
      */
@@ -75,7 +75,7 @@ public class TemperatureTest {
         Temperature expResult = new Temperature(20);
         Temperature result = instance.plus(other);
         assertEquals(expResult, result);
-        
+
     }
 
     /**
@@ -83,7 +83,7 @@ public class TemperatureTest {
      */
     @Test
     public void testMinus() {
-        
+
         Temperature other = new Temperature(10);
         Temperature instance = new Temperature(10);
         Temperature expResult = new Temperature();

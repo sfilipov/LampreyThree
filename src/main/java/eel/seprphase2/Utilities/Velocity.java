@@ -18,7 +18,7 @@ public class Velocity {
     public Velocity() {
         metresPerSecond = 0;
     }
-    
+
     /**
      *
      * @param metresPerSecond
@@ -26,7 +26,7 @@ public class Velocity {
     public Velocity(double metresPerSecond) {
         this.metresPerSecond = metresPerSecond;
     }
-    
+
     /**
      *
      * @return
@@ -34,19 +34,21 @@ public class Velocity {
     public double inMetresPerSecond() {
         return metresPerSecond;
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Velocity plus(Velocity other) {
         return new Velocity(metresPerSecond + other.metresPerSecond);
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Velocity minus(Velocity other) {
@@ -77,5 +79,4 @@ public class Velocity {
         }
         return true;
     }
-    
 }

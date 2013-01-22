@@ -45,7 +45,8 @@ public class TextInterfaceTest {
                                           textRenderer, lineReader);
     }
 
-    @Ignore @Test 
+    @Ignore
+    @Test
     public void shouldShowStatus() {
         context.checking(new Expectations() {
             {
@@ -75,11 +76,10 @@ public class TextInterfaceTest {
         textInterface.showStatus();
     }
 
-    
-    @Test 
-    public void shouldSetUsername(){
-        
-        context.checking(new Expectations(){
+    @Test
+    public void shouldSetUsername() {
+
+        context.checking(new Expectations() {
             {
                 allowing(textRenderer).outputLine("Please Enter Username:");
                 oneOf(lineReader).readLine();
@@ -89,13 +89,12 @@ public class TextInterfaceTest {
         });
         textInterface.askForUsername();
     }
-    
-       
+
     @Test
-    public void shouldProcessACommand()  throws DoNotStep {
+    public void shouldProcessACommand() throws DoNotStep {
         context.checking(new Expectations() {
-            {   
-                 
+            {
+
                 oneOf(lineReader).readLine();
                 will(returnValue("movecontrolrods 50"));
                 oneOf(plantController).moveControlRods(new Percentage(50));

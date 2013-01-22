@@ -5,7 +5,7 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.Simulator.FailureModel.ControlException;
+import eel.seprphase2.Simulator.ControlException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
@@ -62,7 +62,7 @@ public class Parser {
         if (command.isEmpty()) {
             return;
         }
-        
+
         if (command.equals("movecontrolrods")) {
             Percentage position = arguments.at(0).asPercentage();
             controller.moveControlRods(position);
@@ -162,19 +162,19 @@ public class Parser {
 
     private void showHelp() {
         print("Possible Commands:\n" +
-                            "movecontrolrods <Percentage>\n" +
-                            "openvalve <ValveNumber>\n" +
-                            "closevalve <ValveNumber>\n" +
-                            "pumpon <PumpNumber>\n" +
-                            "pumpoff <PumpNumber>\n" +
-                            "repair pump <PumpNumber>\n" +
-                            "repair turbine\n" +
-                            "repair condenser\n" +
-                            "save" +
-                            "load <GameNumber>\n" +
-                            "\n");
+              "movecontrolrods <Percentage>\n" +
+              "openvalve <ValveNumber>\n" +
+              "closevalve <ValveNumber>\n" +
+              "pumpon <PumpNumber>\n" +
+              "pumpoff <PumpNumber>\n" +
+              "repair pump <PumpNumber>\n" +
+              "repair turbine\n" +
+              "repair condenser\n" +
+              "save" +
+              "load <GameNumber>\n" +
+              "\n");
     }
-    
+
     private void print(String output) {
         renderer.outputLine(output);
     }

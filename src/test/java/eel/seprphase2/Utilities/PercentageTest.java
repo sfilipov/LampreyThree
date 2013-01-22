@@ -171,7 +171,7 @@ public class PercentageTest {
         Percentage p2 = new Percentage(55);
         p1.plus(p2);
     }
-    
+
     @Test(expected = IllegalArgumentException.class)
     public void outOfRangeSubtraction() {
         Percentage p1 = new Percentage(55);

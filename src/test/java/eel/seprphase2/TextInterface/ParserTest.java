@@ -1,8 +1,8 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.Simulator.FailureModel.CannotControlException;
-import eel.seprphase2.Simulator.FailureModel.CannotRepairException;
+import eel.seprphase2.Simulator.CannotControlException;
+import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
@@ -100,7 +100,8 @@ public class ParserTest {
     public void wrongNumberOfArgumentsInMoveControlRodsShouldCauseAnError() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'movecontrolrods' but got only 0");
+                oneOf(textRenderer).outputLine(
+                        "ERROR: Expected at least 1 argument(s) to command 'movecontrolrods' but got only 0");
             }
         });
 
@@ -123,7 +124,8 @@ public class ParserTest {
     public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithNoArgs() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'openvalve' but got only 0");
+                oneOf(textRenderer).outputLine(
+                        "ERROR: Expected at least 1 argument(s) to command 'openvalve' but got only 0");
             }
         });
 
@@ -168,7 +170,8 @@ public class ParserTest {
     public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithNoArgs() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'closevalve' but got only 0");
+                oneOf(textRenderer).outputLine(
+                        "ERROR: Expected at least 1 argument(s) to command 'closevalve' but got only 0");
             }
         });
 
@@ -213,7 +216,8 @@ public class ParserTest {
     public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError0Args() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'pumpon' but got only 0");
+                oneOf(textRenderer).outputLine(
+                        "ERROR: Expected at least 1 argument(s) to command 'pumpon' but got only 0");
             }
         });
 
@@ -256,7 +260,8 @@ public class ParserTest {
     public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError0Args() throws DoNotStep {
         context.checking(new Expectations() {
             {
-                oneOf(textRenderer).outputLine("ERROR: Expected at least 1 argument(s) to command 'pumpoff' but got only 0");
+                oneOf(textRenderer).outputLine(
+                        "ERROR: Expected at least 1 argument(s) to command 'pumpoff' but got only 0");
             }
         });
 

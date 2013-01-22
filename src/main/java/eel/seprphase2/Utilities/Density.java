@@ -56,6 +56,7 @@ public class Density {
     /**
      *
      * @param other
+     *
      * @return
      */
     public Density minus(Density other) {
@@ -65,6 +66,7 @@ public class Density {
     /**
      *
      * @param other
+     *
      * @return
      */
     public Density plus(Density other) {
@@ -85,7 +87,8 @@ public class Density {
             return false;
         }
         final Density other = (Density)obj;
-        if (Double.doubleToLongBits(this.kilogramsPerCubicMetre) != Double.doubleToLongBits(other.kilogramsPerCubicMetre)) {
+        if (Double.doubleToLongBits(this.kilogramsPerCubicMetre) != Double
+                .doubleToLongBits(other.kilogramsPerCubicMetre)) {
             return false;
         }
         return true;

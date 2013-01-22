@@ -9,33 +9,35 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import static eel.seprphase2.Utilities.Units.*;
+
 /**
  *
  * @author drm
  */
-@JsonTypeName(value="Mass")
-@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="@class")
+@JsonTypeName(value = "Mass")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Mass {
-    
+
     @JsonProperty
     private final double kilograms;
-    
+
     /**
      *
      * @param moles
+     *
      * @return
      */
     public static Mass fromMolesOfWater(double moles) {
         return new Mass(moles * 18 / 1000);
     }
-    
+
     /**
      *
      */
     public Mass() {
         kilograms = 0;
     }
-    
+
     /**
      *
      * @param kilograms
@@ -43,7 +45,7 @@ public class Mass {
     public Mass(double kilograms) {
         this.kilograms = kilograms;
     }
-    
+
     /**
      *
      * @return
@@ -51,7 +53,7 @@ public class Mass {
     public double inKilograms() {
         return kilograms;
     }
-    
+
     /**
      *
      * @return
@@ -59,37 +61,41 @@ public class Mass {
     public double inMolesOfWater() {
         return kilograms * 1000 / 18;
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Mass plus(Mass other) {
         return new Mass(kilograms + other.kilograms);
     }
-    
+
     /**
      *
      * @param other
+     *
      * @return
      */
     public Mass minus(Mass other) {
         return new Mass(kilograms - other.kilograms);
     }
-    
+
     /**
      *
      * @param volume
+     *
      * @return
      */
     public Density densityAt(Volume volume) {
         return new Density(kilograms / volume.inCubicMetres());
     }
-    
+
     /**
      *
      * @param density
+     *
      * @return
      */
     public Volume volumeAt(Density density) {
@@ -98,12 +104,12 @@ public class Mass {
         }
         return new Volume(kilograms / density.inKilogramsPerCubicMetre());
     }
-    
+
     @Override
     public String toString() {
         return Format.toThreeDecimalPlaces(kilograms) + " kg";
     }
-    
+
     @Override
     public int hashCode() {
         return (int)kilograms;
@@ -123,5 +129,4 @@ public class Mass {
         }
         return true;
     }
-    
 }

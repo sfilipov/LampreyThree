@@ -15,48 +15,42 @@ import eel.seprphase2.TextInterface.TextInterface;
  * @author James
  */
 public class Game {
+
     private TerminalRenderer renderer;
     private TerminalReader reader;
     private Simulator simulator;
     private TextInterface ti;
-    
+
     public Game() {
         renderer = new TerminalRenderer();
         reader = new TerminalReader();
-        
+
         simulator = new Simulator();
-        
-        
+
+
         ti = new TextInterface(simulator, simulator, simulator, renderer, reader);
-        
+
         ti.showWelcomeMessage();
         ti.askForUsername();
-        
-        if(ti.askForAction() == 1)
-        {
+
+        if (ti.askForAction() == 1) {
             ti.showIntroText();
-        }
-        else
-        {
-            
+        } else {
+
             ti.showSavedGames();
-            
+
         }
-        
+
         ti.showStatus();
         while (true) {
-            
-            try
-            {
+
+            try {
                 ti.processCommand();
-                
-                simulator.step();            
-                
+
+                simulator.step();
+
                 ti.showStatus();
-            }
-            catch(DoNotStep n)
-            {
-                
+            } catch (DoNotStep n) {
             }
         }
     }

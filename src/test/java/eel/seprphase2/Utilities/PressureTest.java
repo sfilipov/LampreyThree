@@ -55,21 +55,21 @@ public class PressureTest {
     public void canCreateLowPressure() {
         Pressure p = new Pressure(1);
     }
-    
+
     @Test
     public void subtraction() {
         Pressure p1 = new Pressure(3);
         Pressure p2 = new Pressure(2);
         assertEquals(new Pressure(1), p1.minus(p2));
     }
-    
+
     @Test
     public void addition() {
         Pressure p1 = new Pressure(3);
         Pressure p2 = new Pressure(2);
         assertEquals(new Pressure(5), p1.plus(p2));
     }
-    
+
     @Test
     public void greaterThan() {
         Pressure p1 = new Pressure(3);

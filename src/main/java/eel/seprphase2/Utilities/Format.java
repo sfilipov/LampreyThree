@@ -21,4 +21,9 @@ public class Format {
         DecimalFormat form = new DecimalFormat("#.###");
         return form.format(number);
     }
+    
+    public static String toOneDecimalPlace(double number) {
+        DecimalFormat form = new DecimalFormat("#.#");
+        return form.format(number);
+    }
 }

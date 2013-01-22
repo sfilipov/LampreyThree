@@ -96,7 +96,7 @@ public class Percentage {
 
     @Override
     public String toString() {
-        return percentagePoints + "%";
+        return Format.toOneDecimalPlace(percentagePoints) + "%";
     }
 
     @Override

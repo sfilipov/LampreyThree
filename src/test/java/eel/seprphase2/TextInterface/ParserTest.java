@@ -45,6 +45,7 @@ public class ParserTest {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).moveControlRods(percent(50));
+                oneOf(textRenderer).outputLine("Moved control rods to 50%");
             }
         });
 
@@ -111,6 +112,7 @@ public class ParserTest {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changeValveState(1, true);
+                oneOf(textRenderer).outputLine("Opened valve 1");
             }
         });
 
@@ -155,6 +157,7 @@ public class ParserTest {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changeValveState(1, false);
+                oneOf(textRenderer).outputLine("Closed valve 1");
             }
         });
 
@@ -199,6 +202,7 @@ public class ParserTest {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changePumpState(1, true);
+                oneOf(textRenderer).outputLine("Turned on pump 1");
             }
         });
 

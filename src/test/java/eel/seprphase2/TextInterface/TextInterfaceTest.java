@@ -1,7 +1,6 @@
 package eel.seprphase2.TextInterface;
 
 import eel.seprphase2.Simulator.GameManager;
-import eel.seprphase2.Simulator.PhysicalModel.PhysicalModel;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Energy;
@@ -100,6 +99,7 @@ public class TextInterfaceTest {
                 oneOf(lineReader).readLine();
                 will(returnValue("movecontrolrods 50"));
                 oneOf(plantController).moveControlRods(new Percentage(50));
+                oneOf(textRenderer).outputLine("Moved control rods to 50%");
             }
         });
         textInterface.processCommand();

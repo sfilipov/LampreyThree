@@ -98,9 +98,15 @@ public class PercentageTest {
     @Test
     public void formattingToStringShouldWork() {
         Percentage p = new Percentage(57);
-        assertEquals("57.0%", p.toString());
+        assertEquals("57%", p.toString());
     }
 
+    @Test
+    public void formattingFloatingPointToStringShouldWork() {
+        Percentage p = new Percentage(57.1);
+        assertEquals("57.1%", p.toString());
+    }
+    
     @Test
     public void equalPercentagesShouldBeEqual() {
         Percentage p1 = new Percentage(57);

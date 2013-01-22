@@ -125,11 +125,33 @@ public class PhysicalModelTest {
         
     }
     
-    /*@Test
-    public void shouldSetPumpBackToPumping() {
+    @Test
+    public void shouldInitializePump1ToNotPumping() {
         PhysicalModel model = new PhysicalModel();
-        model.changePumpState(1, false);
-        model.repairPump(1);
-        assertEquals(true, model.);
-    }*/
+        assertFalse(model.getPumpStatus(1));
+       
+    }
+    
+    @Test
+    public void shouldInitializePump2ToPumping() {
+        PhysicalModel model = new PhysicalModel();
+        assertTrue(model.getPumpStatus(2));
+       
+    }
+    
+    @Test
+    public void shouldSetPumpStateToOff() {
+        PhysicalModel model = new PhysicalModel();
+        assertTrue(model.getPumpStatus(2));
+        try
+        {
+            model.changePumpState(2, false);
+        }
+        catch(Exception e)
+        {
+            fail("Excpeiton thrown by changepumpstate");
+        }
+     
+        assertFalse(model.getPumpStatus(2));
+    }
 }

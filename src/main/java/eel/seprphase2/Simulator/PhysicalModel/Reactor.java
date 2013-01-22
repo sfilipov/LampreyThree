@@ -194,8 +194,8 @@ public class Reactor extends FailableComponent {
         outputPort.pressure = pressure;
         outputPort.temperature = temperature;
 
-        System.out.println("Reactor Water Mass " + waterMass);
-        System.out.println("Reactor Steam Mass " + outputPort.flow);
+        //System.out.println("Reactor Water Mass " + waterMass);
+        //System.out.println("Reactor Steam Mass " + outputPort.flow);
 
 
 

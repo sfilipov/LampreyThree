@@ -61,8 +61,8 @@ public class Connection extends Valve{
         }
         
         //debug
-        System.out.println("Connection input mass - flow: " + first.mass + " - " + first.flow);
-        System.out.println("Connection output mass - flow: " + second.mass + " - " + second.flow);
+        //System.out.println("Connection input mass - flow: " + first.mass + " - " + first.flow);
+        //System.out.println("Connection output mass - flow: " + second.mass + " - " + second.flow);
         
     }
 }

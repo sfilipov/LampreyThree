@@ -66,7 +66,7 @@ public class Condenser extends FailableComponent {
         buildUp = kilograms(0);
         //Debug
         
-        System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
+        //System.out.println("Condenser Steam Mass: " + steamInputPort.mass);
         
         
         
@@ -83,7 +83,7 @@ public class Condenser extends FailableComponent {
 
         pressure = IdealGas.pressure(calculateSteamVolume(), steamMass, temperature);
 
-        System.out.println("Condenser Steam Input Mass: " + steamInputPort.mass);
+        //System.out.println("Condenser Steam Input Mass: " + steamInputPort.mass);
 
         try {
 
@@ -97,7 +97,7 @@ public class Condenser extends FailableComponent {
             
             //Debug
             
-            System.out.println("Condenser Water Mass: " + waterMass);
+            //System.out.println("Condenser Water Mass: " + waterMass);
             
             waterLevel = new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms()) * 100);
 

@@ -11,6 +11,7 @@ import eel.seprphase2.Simulator.FuelPile;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Persistence.Persistence;
 import eel.seprphase2.Simulator.FuelPile;
 import eel.seprphase2.Simulator.PhysicalModel;
@@ -119,7 +120,7 @@ public class PersistenceTest {
     }
 
     @Test
-    public void shouldPersistConditions() {
+    public void shouldPersistConditions() throws GameOverException {
         before.moveControlRods(percent(67));
         before.step(100);
         shouldPersistConsistently();

@@ -1,5 +1,6 @@
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -48,7 +49,7 @@ public class ReactorTest {
 
     @Test
     @Ignore
-    public void reactorShouldStayInEquilibriumWithLowControlRods() {
+    public void reactorShouldStayInEquilibriumWithLowControlRods() throws GameOverException {
         Reactor instanceOfReactor = new Reactor(percent(0), percent(100),
                                                 kelvin(350), pascals(101325));
         instanceOfReactor.step();
@@ -59,7 +60,7 @@ public class ReactorTest {
     }
 
     @Test
-    public void shouldHeatUpWhenControlRodsExtracted() {
+    public void shouldHeatUpWhenControlRodsExtracted() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(350), new Pressure(101325));
         reactor.step();
@@ -67,7 +68,7 @@ public class ReactorTest {
     }
 
     @Test
-    public void shouldNotHeatBeyondBoilingPoint() {
+    public void shouldNotHeatBeyondBoilingPoint() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
         reactor.step();
@@ -75,7 +76,7 @@ public class ReactorTest {
     }
 
     @Test
-    public void shouldIncreasePressureAtBoilingPoint() {
+    public void shouldIncreasePressureAtBoilingPoint() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
         reactor.step();
@@ -83,7 +84,7 @@ public class ReactorTest {
     }
 
     @Test
-    public void shouldSetOutputPressure() {
+    public void shouldSetOutputPressure() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
         reactor.step();
@@ -91,7 +92,7 @@ public class ReactorTest {
     }
 
     @Test
-    public void shouldSetOutputFlowRate() {
+    public void shouldSetOutputFlowRate() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
         reactor.step();
@@ -106,15 +107,16 @@ public class ReactorTest {
     }
 
     @Test
-    public void WaterLevelShouldBeGreaterThanMinimumWaterLevelAfterStep() {
+    public void WaterLevelShouldBeGreaterThanMinimumWaterLevelAfterStep() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
+
         reactor.step();
         assertThat(reactor.waterLevel().points(), greaterThan(reactor.minimumWaterLevel().points()));
     }
 
     @Test
-    public void WaterLevelShouldDecreaseAfterStep() {
+    public void WaterLevelShouldDecreaseAfterStep() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
         reactor.step();

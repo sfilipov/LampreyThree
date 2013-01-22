@@ -99,6 +99,9 @@ public class Parser {
         } else if (command.equals("help")) {
             showHelp();
             throw new DoNotStep();
+        } else if (command.equals("diagram")) {
+            showDiagram();
+            throw new DoNotStep();
         } else {
             print("Error: Unknown command '" + command + "'");
             throw new DoNotStep();
@@ -172,9 +175,41 @@ public class Parser {
               "repair condenser\n" +
               "save" +
               "load <GameNumber>\n" +
+              "help\n" +
+              "diagram\n" +
               "\n");
     }
 
+    private void showDiagram() {
+        print("");
+        print("                                             TURBINE  /----+\n" +
+              "                                          /-----------|    |    GENERATOR\n" +
+              "                   Valve 1          +-----|  |  |  |  |    |    +-------+\n" +
+              "     +-----------------------------+|  |  |  |  |  |  |    |    |       |\n" +
+              "     |               (X)               +--+--+--+--+--+--+-+----+       |\n" +
+              "     |   +-------------------------+|  |  |  |  |  |  |    |    |       |\n" +
+              "     |   |                          +-----|  |  |  |  |    |    +-------+\n" +
+              "     |   |                                \\---------- |    |\n" +
+              "+----+   +-----+                                     \\-+  ++\n" +
+              "|              |                                       |  |\n" +
+              "|              |                                       |  |\n" +
+              "|              |                                       |  |\n" +
+              "|  +--+--+--+  |                               +-------+  ++\n" +
+              "|  |  |  |  |  |      Valve 2   <-----         |           |\n" +
+              "|  |  |  |  |  |   +-----------------------+   +^-^-^-^-^-^+\n" +
+              "|++|++|++|++|++|   |    (X)   ( PUMP 1 )   |   |           +-----------\n" +
+              "||||||||||||||||   |  +-----------------+  |   |           |  Coolant\n" +
+              "|||||||||||||||+---+  |                 |  +---+           +-----------\n" +
+              "||| || || || ||       |                 |                  +-----------\n" +
+              "||| || || || ||+---+  |                 |  +---+           | ( PUMP 3 )\n" +
+              "|++ ++ ++ ++ ++|   |  +-----------------+  |   |           +-----------\n" +
+              "+--------------+   |    (X)   ( PUMP 2 )   |   +-----------+  ----->\n" +
+              "    REACTOR        +-----------------------+     CONDENSER\n" +
+              "                      Valve 3   ----->\n");
+        print("");
+        print("");
+    }
+    
     private void print(String output) {
         renderer.outputLine(output);
     }

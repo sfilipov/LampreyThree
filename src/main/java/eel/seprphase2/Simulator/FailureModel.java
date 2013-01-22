@@ -1,6 +1,7 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -49,7 +50,7 @@ public class FailureModel implements PlantController, PlantStatus {
      * Also implements reactor safety rules.
      *
      */
-    public void step() {
+    public void step() throws GameOverException {
         physicalModel.step(1);
         failStateCheck();
         checkReactorWaterLevel();

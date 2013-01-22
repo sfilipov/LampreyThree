@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.GameOverException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
@@ -16,7 +17,7 @@ import static org.hamcrest.Matchers.*;
 public class PhysicalModelTest {
 
     @Test
-    public void runningStepIncreasesReactorTemperature() {
+    public void runningStepIncreasesReactorTemperature() throws GameOverException {
         PhysicalModel model = new PhysicalModel();
         model.moveControlRods(percent(100));
         model.step(10);
@@ -24,7 +25,7 @@ public class PhysicalModelTest {
     }
 
     @Test
-    public void reactorMovesTurbine() {
+    public void reactorMovesTurbine() throws GameOverException {
         PhysicalModel model = new PhysicalModel();
         model.moveControlRods(percent(100));
         model.step(100);

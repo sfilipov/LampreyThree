@@ -5,6 +5,7 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eel.seprphase2.GameOverException;
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Mass;
@@ -117,7 +118,7 @@ public class Reactor extends FailableComponent {
     /**
      *
      */
-    public void step() {
+    public void step() throws GameOverException {
 
         if (steamMass.inKilograms() > inputPort.mass.inKilograms()) {
             steamMass = steamMass.minus(inputPort.mass);
@@ -132,7 +133,7 @@ public class Reactor extends FailableComponent {
 
 
         if (hasFailed()) {
-            System.exit(0);
+            throw new GameOverException();
         }
 
         /*

@@ -6,6 +6,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Persistence.FileSystem;
 import eel.seprphase2.Persistence.SaveGame;
 import eel.seprphase2.Utilities.Energy;
@@ -71,8 +72,18 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         return failureModel.listFailedComponents();
     }
 
-    public void step() {
-        failureModel.step();
+    public void step() throws GameOverException {
+        try {
+            failureModel.step();
+        } catch (GameOverException e) {
+            throw new GameOverException("Dear " + userName + ",\n\n" +
+                                        "YOU HAVE FAILED\n\n" +
+                                        "The reactor vessel has failed catastrophically,\n"+ 
+                                        "and everyone within a 100km radius is now either\n " +
+                                        "dead or dying of radiation\n" +"poisioning.\n\n" +
+                                        "However, you did successfully generate \n" + failureModel.energyGenerated() +
+                                        "\nof energy before this occurred.");
+        }
     }
 
     public void failStateCheck() {

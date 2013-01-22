@@ -4,6 +4,7 @@
  */
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Simulator.FailableComponent;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.Simulator.Turbine;
@@ -72,7 +73,7 @@ public class FailableComponentTest {
 
     @Test
     @Ignore
-    public void shouldIncreaseWearOfReactorWhenRunning() {
+    public void shouldIncreaseWearOfReactorWhenRunning() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(400), new Pressure(101325));
         reactor.step();
@@ -88,7 +89,7 @@ public class FailableComponentTest {
 
     @Test
     @Ignore
-    public void shouldNotIncreaseWearOver100() {
+    public void shouldNotIncreaseWearOver100() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(400), new Pressure(101325));
         Turbine turbine = new Turbine();

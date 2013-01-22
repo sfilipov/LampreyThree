@@ -21,7 +21,7 @@ public class Game {
     private Simulator simulator;
     private TextInterface ti;
 
-    public Game() {
+    public Game() throws GameOverException {
         renderer = new TerminalRenderer();
         reader = new TerminalReader();
 

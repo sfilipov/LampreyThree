@@ -30,7 +30,9 @@ import java.util.Random;
 public class FailureModel implements PlantController, PlantStatus {
 
     @JsonProperty
-    PhysicalModel physicalModel;
+    PlantController controller;
+    @JsonProperty
+    PlantStatus status;
     private Random failChance = new Random();
     @JsonProperty
     private int numberOfTimesWaterLevelIsTooLow;
@@ -40,8 +42,10 @@ public class FailureModel implements PlantController, PlantStatus {
     private FailureModel() {
     }
 
-    public FailureModel(PhysicalModel physicalModel) {
-        this.physicalModel = physicalModel;
+    public FailureModel(PlantController plantController,
+                        PlantStatus plantStatus) {
+        this.controller = plantController;
+        this.status = plantStatus;
     }
 
     /**
@@ -51,7 +55,7 @@ public class FailureModel implements PlantController, PlantStatus {
      *
      */
     public void step() throws GameOverException {
-        physicalModel.step(1);
+        controller.step(1);
         failStateCheck();
         checkReactorWaterLevel();
         checkCondenserPressure();
@@ -60,10 +64,10 @@ public class FailureModel implements PlantController, PlantStatus {
 
     /**
      * Determine failures
-     * 
+     *
      */
     public void failStateCheck() {
-        ArrayList<FailableComponent> components = physicalModel.components();
+        ArrayList<FailableComponent> components = status.components();
         int failValue = failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
         int componentsFailChance = 0;
         for (int i = 0; i < components.size(); i++) {
@@ -78,99 +82,124 @@ public class FailureModel implements PlantController, PlantStatus {
 
     @Override
     public String[] listFailedComponents() {
-        return physicalModel.listFailedComponents();
+        return status.listFailedComponents();
     }
 
     @Override
     public void moveControlRods(Percentage extracted) {
-        physicalModel.moveControlRods(extracted);
+        controller.moveControlRods(extracted);
     }
 
     @Override
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
-        physicalModel.changeValveState(valveNumber, isOpen);
+        controller.changeValveState(valveNumber, isOpen);
     }
 
     @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
-        physicalModel.changePumpState(pumpNumber, isPumping);
+        controller.changePumpState(pumpNumber, isPumping);
     }
 
     @Override
     public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
-        physicalModel.repairPump(pumpNumber);
+        controller.repairPump(pumpNumber);
     }
 
     @Override
     public void repairCondenser() throws CannotRepairException {
-        physicalModel.repairCondenser();
+        controller.repairCondenser();
     }
 
     @Override
     public void repairTurbine() throws CannotRepairException {
-        physicalModel.repairTurbine();
+        controller.repairTurbine();
     }
 
     @Override
     public Percentage controlRodPosition() {
-        return physicalModel.controlRodPosition();
+        return status.controlRodPosition();
     }
 
     @Override
     public Pressure reactorPressure() {
-        return physicalModel.reactorPressure();
+        return status.reactorPressure();
     }
 
     @Override
     public Temperature reactorTemperature() {
-        return physicalModel.reactorTemperature();
+        return status.reactorTemperature();
     }
 
     @Override
     public Percentage reactorWaterLevel() {
-        return physicalModel.reactorWaterLevel();
+        return status.reactorWaterLevel();
     }
 
     @Override
     public Energy energyGenerated() {
-        return physicalModel.energyGenerated();
+        return status.energyGenerated();
     }
 
     @Override
     public void setReactorToTurbine(boolean open) {
-        physicalModel.setReactorToTurbine(open);
+        controller.setReactorToTurbine(open);
     }
 
     @Override
     public boolean getReactorToTurbine() {
-        return physicalModel.getReactorToTurbine();
+        return status.getReactorToTurbine();
     }
 
     @Override
     public Temperature condenserTemperature() {
-        return physicalModel.condenserTemperature();
+        return status.condenserTemperature();
     }
 
     @Override
     public Pressure condenserPressure() {
-        return physicalModel.condenserPressure();
+        return status.condenserPressure();
     }
 
     @Override
     public Percentage condenserWaterLevel() {
-        return physicalModel.condenserWaterLevel();
+        return status.condenserWaterLevel();
     }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {
-        return physicalModel.reactorMinimumWaterLevel();
+        return status.reactorMinimumWaterLevel();
+    }
+
+    @Override
+    public void failCondenser() {
+        controller.failCondenser();
+    }
+
+    @Override
+    public void failReactor() {
+        controller.failReactor();
+    }
+
+    @Override
+    public void step(int i) throws GameOverException {
+        controller.step(i);
+    }
+
+    @Override
+    public boolean turbineHasFailed() {
+        return status.turbineHasFailed();
+    }
+
+    @Override
+    public ArrayList<FailableComponent> components() {
+        return status.components();
     }
 
     private void checkReactorWaterLevel() {
-        if (physicalModel.reactorWaterLevel().points() < physicalModel.reactorMinimumWaterLevel().points()) {
+        if (status.reactorWaterLevel().points() < status.reactorMinimumWaterLevel().points()) {
             numberOfTimesWaterLevelIsTooLow += 1;
             if (numberOfTimesWaterLevelIsTooLow > reactorOverheatThreshold) {
-                physicalModel.failReactor();
+                controller.failReactor();
             }
         } else {
             numberOfTimesWaterLevelIsTooLow = 0;
@@ -178,14 +207,14 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     private void checkCondenserPressure() {
-        if (physicalModel.condenserPressure().greaterThan(condenserMaxPressure)) {
-            physicalModel.failCondenser();
+        if (status.condenserPressure().greaterThan(condenserMaxPressure)) {
+            controller.failCondenser();
         }
     }
 
     private void checkTurbineFailure() {
-        if (physicalModel.turbineHasFailed()) {
-            physicalModel.moveControlRods(percent(0));
+        if (status.turbineHasFailed()) {
+            controller.moveControlRods(percent(0));
         }
     }
 }

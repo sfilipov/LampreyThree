@@ -5,15 +5,9 @@
 package eel.seprphase2.Simulator;
 
 import eel.seprphase2.GameOverException;
-import eel.seprphase2.Simulator.FailureModel;
-import eel.seprphase2.Simulator.PhysicalModel;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
+import org.junit.Test;
 
 /**
  *
@@ -28,7 +22,7 @@ public class FailureModelTest {
     @Ignore
     public void failureModelShouldChangeStateOfReactorAndTurbineAfter1000Steps() throws GameOverException {
         PhysicalModel phys = new PhysicalModel();
-        FailureModel failureModel = new FailureModel(phys);
+        FailureModel failureModel = new FailureModel(phys, phys);
         for (int i = 0; i < 1000; i++) {
             failureModel.step();
         }

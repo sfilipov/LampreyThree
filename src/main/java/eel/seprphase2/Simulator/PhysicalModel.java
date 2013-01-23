@@ -1,17 +1,16 @@
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Energy;
+import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import java.util.ArrayList;
-import eel.seprphase2.Simulator.KeyNotFoundException;
-import eel.seprphase2.Simulator.PlantController;
-import eel.seprphase2.Simulator.PlantStatus;
-import eel.seprphase2.Utilities.Mass;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -20,6 +19,7 @@ import java.util.Map;
  *
  * @author Marius
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class PhysicalModel implements PlantController, PlantStatus {
 
     @JsonProperty
@@ -78,6 +78,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     }
 
+    @Override
     public String[] listFailedComponents() {
         ArrayList<String> out = new ArrayList<String>();
 
@@ -122,6 +123,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
      *
      * @param steps
      */
+    @Override
     public void step(int steps) throws GameOverException {
         for (int i = 0; i < steps; i++) {
             reactor.step();
@@ -170,10 +172,12 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return reactor.minimumWaterLevel();
     }
 
+    @Override
     public void failReactor() {
         reactor.fail();
     }
 
+    @Override
     public void failCondenser() {
         condenser.fail();
     }
@@ -232,6 +236,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return reactorToTurbine.getOpen();
     }
 
+    @Override
     public ArrayList<FailableComponent> components() {
         ArrayList<FailableComponent> c = new ArrayList<FailableComponent>();
         c.add(0, turbine);
@@ -303,6 +308,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         return condenser.getWaterLevel();
     }
 
+    @Override
     public boolean turbineHasFailed() {
         return turbine.hasFailed();
     }

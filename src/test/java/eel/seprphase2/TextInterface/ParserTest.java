@@ -1,12 +1,12 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.QuitGameException;
 import eel.seprphase2.Simulator.CannotControlException;
 import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
-import eel.seprphase2.Utilities.Percentage;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -41,7 +41,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldMoveControlRods() throws DoNotStep {
+    public void shouldMoveControlRods() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).moveControlRods(percent(50));
@@ -53,7 +53,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongCommandShouldNotMoveControlRods() throws DoNotStep {
+    public void wrongCommandShouldNotMoveControlRods() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 allowing(textRenderer);
@@ -64,7 +64,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongCommandShouldDisplayErrorMessage() throws DoNotStep {
+    public void wrongCommandShouldDisplayErrorMessage() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("Error: Unknown command 'flibble'");
@@ -75,7 +75,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptControlRodsAbove100() throws DoNotStep {
+    public void shouldNotAcceptControlRodsAbove100() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '101' is not a valid percentage");
@@ -86,7 +86,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptControlRodsBelow0() throws DoNotStep {
+    public void shouldNotAcceptControlRodsBelow0() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '-1' is not a valid percentage");
@@ -97,7 +97,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInMoveControlRodsShouldCauseAnError() throws DoNotStep {
+    public void wrongNumberOfArgumentsInMoveControlRodsShouldCauseAnError() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine(
@@ -109,7 +109,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldOpenValve() throws DoNotStep, KeyNotFoundException {
+    public void shouldOpenValve() throws DoNotStep, KeyNotFoundException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changeValveState(1, true);
@@ -121,7 +121,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithNoArgs() throws DoNotStep {
+    public void wrongNumberOfArgumentsInOpenValveShouldCauseAnErrorWithNoArgs() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine(
@@ -133,7 +133,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptValvesBelow0() throws DoNotStep {
+    public void shouldNotAcceptValvesBelow0() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
@@ -144,7 +144,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptValvesWithStringNames() throws DoNotStep {
+    public void shouldNotAcceptValvesWithStringNames() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
@@ -155,7 +155,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldCloseValve() throws DoNotStep, KeyNotFoundException {
+    public void shouldCloseValve() throws DoNotStep, KeyNotFoundException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changeValveState(1, false);
@@ -167,7 +167,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithNoArgs() throws DoNotStep {
+    public void wrongNumberOfArgumentsInCloseValveShouldCauseAnErrorWithNoArgs() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine(
@@ -179,7 +179,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptValvesBelow0InCloseValve() throws DoNotStep {
+    public void shouldNotAcceptValvesBelow0InCloseValve() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
@@ -190,7 +190,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptValvesWithStringNamesInCloseValve() throws DoNotStep {
+    public void shouldNotAcceptValvesWithStringNamesInCloseValve() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
@@ -201,7 +201,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldTurnPumpOn() throws DoNotStep, KeyNotFoundException, CannotControlException {
+    public void shouldTurnPumpOn() throws DoNotStep, KeyNotFoundException, CannotControlException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changePumpState(1, true);
@@ -213,7 +213,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError0Args() throws DoNotStep {
+    public void wrongNumberOfArgumentsInPumpOnShouldCauseAnError0Args() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine(
@@ -225,7 +225,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptPumpsBelow0() throws DoNotStep {
+    public void shouldNotAcceptPumpsBelow0() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
@@ -236,7 +236,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptStringPumpNames() throws DoNotStep {
+    public void shouldNotAcceptStringPumpNames() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
@@ -246,7 +246,7 @@ public class ParserTest {
         parser.executeCommand("pumpon foo");
     }
 
-    public void shouldTurnPumpOff() throws DoNotStep, KeyNotFoundException, CannotControlException {
+    public void shouldTurnPumpOff() throws DoNotStep, KeyNotFoundException, CannotControlException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).changePumpState(1, false);
@@ -257,7 +257,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError0Args() throws DoNotStep {
+    public void wrongNumberOfArgumentsInPumpOffShouldCauseAnError0Args() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine(
@@ -269,7 +269,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shoudNotAcceptStringPumpNamesForPumpOff() throws DoNotStep {
+    public void shoudNotAcceptStringPumpNamesForPumpOff() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: 'foo' is not a valid integer");
@@ -280,7 +280,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotAcceptPumpsBelow0ForPumpOff() throws DoNotStep {
+    public void shouldNotAcceptPumpsBelow0ForPumpOff() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
@@ -291,14 +291,10 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldSaveGame() throws DoNotStep {
+    public void shouldSaveGame() throws DoNotStep, JsonProcessingException, QuitGameException {
         context.checking(new Expectations() {
             {
-                try {
-                    oneOf(gameManager).saveGame();
-                } catch (JsonProcessingException ex) {
-                    Logger.getLogger(ParserTest.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                oneOf(gameManager).saveGame();
                 oneOf(textRenderer).outputLine("Game Saved!");
             }
         });
@@ -306,21 +302,8 @@ public class ParserTest {
         parser.executeCommand("save");
     }
 
-    @Ignore
-    @Test
-    public void wrongNumberOfArgumentsOnLoad0Args() throws DoNotStep {
-        context.checking(new Expectations() {
-            {
-                oneOf(textRenderer).outputLine("ERROR: Expected 1 argument(s) but got only 0");
-
-            }
-        });
-
-        parser.executeCommand("load");
-    }
-
     @Test(expected = DoNotStep.class)
-    public void shouldLoadGameWithNumber() throws DoNotStep, IOException {
+    public void shouldLoadGameWithNumber() throws DoNotStep, IOException, QuitGameException {
         context.checking(new Expectations() {
             {
 
@@ -333,7 +316,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shouldNotLoadStringGameNames() throws DoNotStep {
+    public void shouldNotLoadStringGameNames() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
 
@@ -345,7 +328,7 @@ public class ParserTest {
     }
 
     @Test(expected = DoNotStep.class)
-    public void shoulNotLoadNegativeGames() throws DoNotStep {
+    public void shoulNotLoadNegativeGames() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(textRenderer).outputLine("ERROR: '-1' is not a positive integer");
@@ -356,7 +339,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldRepairPump1() throws DoNotStep, KeyNotFoundException, CannotRepairException {
+    public void shouldRepairPump1() throws DoNotStep, KeyNotFoundException, CannotRepairException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairPump(1);
@@ -367,7 +350,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldRepairTurbine() throws DoNotStep, CannotRepairException {
+    public void shouldRepairTurbine() throws DoNotStep, CannotRepairException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairTurbine();
@@ -378,7 +361,7 @@ public class ParserTest {
     }
 
     @Test
-    public void shouldRepairCondenser() throws DoNotStep, CannotRepairException {
+    public void shouldRepairCondenser() throws DoNotStep, CannotRepairException, QuitGameException {
         context.checking(new Expectations() {
             {
                 oneOf(plantController).repairCondenser();

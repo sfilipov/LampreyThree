@@ -1,6 +1,7 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
 import java.io.IOException;
 
@@ -28,4 +29,12 @@ public interface PlantController {
     public void repairCondenser() throws CannotRepairException;
 
     public void repairTurbine() throws CannotRepairException;
+
+    public void failCondenser();
+
+    public void failReactor();
+
+    public void setReactorToTurbine(boolean open);
+
+    public void step(int steps) throws GameOverException;
 }

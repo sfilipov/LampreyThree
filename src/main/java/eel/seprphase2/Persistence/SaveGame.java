@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import eel.seprphase2.Simulator.FailureModel;
+import eel.seprphase2.Simulator.PhysicalModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
@@ -15,6 +16,8 @@ import java.util.Calendar;
  */
 public class SaveGame {
 
+    @JsonProperty
+    private PhysicalModel physicalModel;
     @JsonProperty
     private FailureModel failureModel;
     @JsonProperty
@@ -28,8 +31,8 @@ public class SaveGame {
         return p.deserializeSaveGame(FileSystem.readString(filename));
     }
 
-    public SaveGame(FailureModel failureModel,
-                    String userName) {
+    public SaveGame(PhysicalModel physicalModel, FailureModel failureModel, String userName) {
+        this.physicalModel = physicalModel;
         this.failureModel = failureModel;
         this.userName = userName;
     }
@@ -45,6 +48,10 @@ public class SaveGame {
         return this.userName;
     }
 
+    public PhysicalModel getPhysicalModel() {
+        return this.physicalModel;
+    }
+    
     public FailureModel getFailureModel() {
         return this.failureModel;
     }

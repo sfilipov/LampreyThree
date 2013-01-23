@@ -1,5 +1,6 @@
 package eel.seprphase2.TextInterface;
 
+import eel.seprphase2.QuitGameException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -91,7 +92,7 @@ public class TextInterfaceTest {
     }
 
     @Test
-    public void shouldProcessACommand() throws DoNotStep {
+    public void shouldProcessACommand() throws DoNotStep, QuitGameException {
         context.checking(new Expectations() {
             {
 

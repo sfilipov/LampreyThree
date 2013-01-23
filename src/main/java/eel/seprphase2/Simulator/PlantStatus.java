@@ -4,6 +4,7 @@ import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
+import java.util.ArrayList;
 
 /**
  *
@@ -43,12 +44,6 @@ public interface PlantStatus {
 
     /**
      *
-     * @param open
-     */
-    public void setReactorToTurbine(boolean open);
-
-    /**
-     *
      * @return
      */
     public boolean getReactorToTurbine();
@@ -62,4 +57,8 @@ public interface PlantStatus {
     public Percentage reactorMinimumWaterLevel();
 
     public String[] listFailedComponents();
+
+    public boolean turbineHasFailed();
+
+    public ArrayList<FailableComponent> components();
 }

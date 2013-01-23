@@ -11,8 +11,7 @@ import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,12 +19,13 @@ import java.util.logging.Logger;
  */
 public class Simulator implements PlantController, PlantStatus, GameManager {
 
+    private PhysicalModel physicalModel;
     private FailureModel failureModel;
     private String userName;
 
     public Simulator() {
-        PhysicalModel physicalModel = new PhysicalModel();
-        failureModel = new FailureModel(physicalModel);
+        physicalModel = new PhysicalModel();
+        failureModel = new FailureModel(physicalModel, physicalModel);
         userName = "";
     }
 
@@ -36,13 +36,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
 
     @Override
     public void saveGame() throws JsonProcessingException {
-        SaveGame saveGame = new SaveGame(failureModel, userName);
+        SaveGame saveGame = new SaveGame(physicalModel, failureModel, userName);
         try {
             saveGame.save();
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -50,12 +48,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public void loadGame(int gameNumber) {
         try {
             SaveGame saveGame = SaveGame.load(listGames()[gameNumber]);
+            this.physicalModel = saveGame.getPhysicalModel();
             this.failureModel = saveGame.getFailureModel();
             this.userName = saveGame.getUserName();
         } catch (JsonParseException ex) {
-            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Simulator.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -64,6 +61,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         return FileSystem.listSaveGames(userName);
     }
 
+    @Override
     public String[] listFailedComponents() {
         return failureModel.listFailedComponents();
     }
@@ -86,71 +84,113 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         failureModel.failStateCheck();
     }
 
+    @Override
     public void moveControlRods(Percentage extracted) {
         failureModel.moveControlRods(extracted);
     }
 
+    @Override
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
         failureModel.changeValveState(valveNumber, isOpen);
     }
 
+    @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
         failureModel.changePumpState(pumpNumber, isPumping);
     }
 
+    @Override
     public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
         failureModel.repairPump(pumpNumber);
     }
 
+    @Override
     public void repairCondenser() throws CannotRepairException {
         failureModel.repairCondenser();
     }
 
+    @Override
     public void repairTurbine() throws CannotRepairException {
         failureModel.repairTurbine();
     }
 
+    @Override
     public Percentage controlRodPosition() {
         return failureModel.controlRodPosition();
     }
 
+    @Override
     public Pressure reactorPressure() {
         return failureModel.reactorPressure();
     }
 
+    @Override
     public Temperature reactorTemperature() {
         return failureModel.reactorTemperature();
     }
 
+    @Override
     public Percentage reactorWaterLevel() {
         return failureModel.reactorWaterLevel();
     }
 
+    @Override
     public Energy energyGenerated() {
         return failureModel.energyGenerated();
     }
 
+    @Override
     public void setReactorToTurbine(boolean open) {
         failureModel.setReactorToTurbine(open);
     }
 
+    @Override
     public boolean getReactorToTurbine() {
         return failureModel.getReactorToTurbine();
     }
 
+    @Override
     public Temperature condenserTemperature() {
         return failureModel.condenserTemperature();
     }
 
+    @Override
     public Pressure condenserPressure() {
         return failureModel.condenserPressure();
     }
 
+    @Override
     public Percentage condenserWaterLevel() {
         return failureModel.condenserWaterLevel();
     }
 
+    @Override
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
+    }
+
+    @Override
+    public void failCondenser() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void failReactor() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void step(int steps) throws GameOverException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean turbineHasFailed() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public ArrayList<FailableComponent> components() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

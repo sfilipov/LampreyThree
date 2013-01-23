@@ -242,6 +242,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
         c.add(0, turbine);
         c.add(1, reactor);
         c.add(2, condenser);
+        c.add(3, reactorToCondenser);
+        c.add(4, condenserToReactor);
+        c.add(5, heatsinkToCondenser);
         return c;
     }
 

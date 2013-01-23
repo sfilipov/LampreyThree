@@ -1,31 +1,18 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package eel.seprphase2.Simulator;
 
 import eel.seprphase2.Simulator.Condenser;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import eel.seprphase2.Utilities.Temperature;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 /**
  *
  * @author Marius
  */
 public class CondenserTest {
-
-    public CondenserTest() {
-    }
 
     @Test
     public void shouldInitializeWithZeroWaterLevel() {
@@ -42,12 +29,10 @@ public class CondenserTest {
      */
     @Test
     public void shouldInitializeAtRoomTemperature() {
-
         Condenser instance = new Condenser();
         Temperature expResult = new Temperature(298.15);
         Temperature result = instance.getTemperature();
         assertEquals(expResult, result);
-
     }
 
     @Test
@@ -75,7 +60,6 @@ public class CondenserTest {
             assertTrue(instance.getTemperature().inKelvin() > previous);
             previous = instance.getTemperature().inKelvin();
         }
-
     }
 
     @Test
@@ -102,7 +86,6 @@ public class CondenserTest {
         Pressure expResult = new Pressure(101325);
         Pressure result = instance.getPressure();
         assertEquals(expResult, result);
-
     }
 
     /**
@@ -130,14 +113,14 @@ public class CondenserTest {
     }
 
     @Test
-    public void shouldPutWaterToOutputPortWithSteam() {
+    public void shouldNotOperateWhenFailed() {
         Condenser instance = new Condenser();
+        instance.fail();
         instance.inputPort().pressure = new Pressure(201325);
         instance.inputPort().mass = kilograms(5);
         instance.step();
 
-        assertTrue(instance.outputPort().mass.inKilograms() > 0);
-
+        assertFalse(instance.outputPort().mass.inKilograms() > 0);
     }
 
     @Test
@@ -171,6 +154,7 @@ public class CondenserTest {
         assertTrue(instance.getWaterLevel().ratio() > 0);
 
     }
+
     /*
      @Test
      public void shouldReduceTemperatureInsideCondenser() {

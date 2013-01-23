@@ -37,7 +37,7 @@ public class PhysicalModelTest {
     }
     
     @Test
-    public void shouldSetConnectionToOpen() {
+    public void shouldSetConnectionToOpena() {
         PhysicalModel model = new PhysicalModel();
         model.setReactorToTurbine(true);
         assertEquals(true, model.getReactorToTurbine());

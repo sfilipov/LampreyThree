@@ -113,13 +113,13 @@ public class PhysicalModelTest {
     }
 
     @Test
-    public void shouldInitializePump1ToNotPumping() {
+    public void shouldInitializePump2ToPumping() {
         PhysicalModel model = new PhysicalModel();
-        assertFalse(model.getPumpStatus(2));
+        assertTrue(model.getPumpStatus(2));
     }
 
     @Test
-    public void shouldInitializePump2ToPumping() {
+    public void shouldInitializePump1ToPumping() {
         PhysicalModel model = new PhysicalModel();
         assertTrue(model.getPumpStatus(1));
 

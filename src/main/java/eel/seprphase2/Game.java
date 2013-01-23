@@ -46,12 +46,12 @@ public class Game {
 
             try {
                 ti.processCommand();
-
                 simulator.step();
-
-                ti.showStatus();
             } catch (DoNotStep n) {
             }
+            // show a blank line
+            ti.showStatus();
+            System.out.println("");
         }
     }
 }

@@ -160,53 +160,56 @@ public class Parser {
     }
 
     private void showHelp() {
-        print("Possible Commands:\n" +
-              "movecontrolrods <Percentage>\n" +
-              "openvalve <ValveNumber>\n" +
-              "closevalve <ValveNumber>\n" +
-              "pumpon <PumpNumber>\n" +
-              "pumpoff <PumpNumber>\n" +
-              "repair pump <PumpNumber>\n" +
-              "repair turbine\n" +
-              "repair condenser\n" +
-              "save" +
-              "load <GameNumber>\n" +
-              "help\n" +
-              "diagram\n" +
-              "\n");
+        showCommandHelp("movecontrolrods <Percentage>",
+                        "Move the control rods in the reactor vessel to the position\n" +
+                        "specified by <Percentage>, which is between 0 and 100%.\n" +
+                        "\n" +
+                        "A value of 100% means that the control rods are fully extracted\n" +
+                        "(the reactor is producing maximum power);\n" +
+                        "a value of 0% means that the control rods are fully inserted\n" +
+                        "(the reactor is producing minimum power)");
+        showCommandHelp("openvalve <ValveNumber>",
+                        "Opens the valve specified with <ValveNumber>\n" +
+                        "Refer to the diagram to see which valves are available.");
+        showCommandHelp("closevalve <ValveNumber>",
+                        "Closes the valve specified with <ValveNumber>\n" +
+                        "Refer to the diagram to see which valves are available.");
+        showCommandHelp("pumpon <PumpNumber>",
+                        "Turns on the pump specified with <PumpNumber>\n" +
+                        "Refer to the diagram to see which pumps are available.");
+        showCommandHelp("pumpoff <PumpNumber>",
+                        "Turns off the pump specified with <PumpNumber>\n" +
+                        "Refer to the diagram to see which pumps are available.");
+        showCommandHelp("repair pump <PumpNumber>",
+                        "Repairs the pump specified with <PumpNumber>\n" +
+                        "Refer to the diagram to see which pumps are available.");
+        showCommandHelp("repair turbine",
+                        "Repairs the turbine.");
+        showCommandHelp("repair condenser",
+                        "Repairs the condenser.");
+        showCommandHelp("save", "Saves the game.");
+        showCommandHelp("load", "Lists the games available to load.");
+        showCommandHelp("load <GameNumber>",
+                        "Load the game specified with <GameNumber>.\n" +
+                        "Use 'load' with no arguments to get a list of games to load.");
+        showCommandHelp("diagram", "Display a diagram of the reactor.");
+        showCommandHelp("help", "Display this help.");
     }
 
     private void showDiagram() {
-        print("");
-        print("                                             TURBINE  /----+\n" +
-              "                                          /-----------|    |    GENERATOR\n" +
-              "                   Valve 1          +-----|  |  |  |  |    |    +-------+\n" +
-              "     +-----------------------------+|  |  |  |  |  |  |    |    |       |\n" +
-              "     |               (X)               +--+--+--+--+--+--+-+----+       |\n" +
-              "     |   +-------------------------+|  |  |  |  |  |  |    |    |       |\n" +
-              "     |   |                          +-----|  |  |  |  |    |    +-------+\n" +
-              "     |   |                                \\---------- |    |\n" +
-              "+----+   +-----+                                     \\-+  ++\n" +
-              "|              |                                       |  |\n" +
-              "|              |                                       |  |\n" +
-              "|              |                                       |  |\n" +
-              "|  +--+--+--+  |                               +-------+  ++\n" +
-              "|  |  |  |  |  |      Valve 2   <-----         |           |\n" +
-              "|  |  |  |  |  |   +-----------------------+   +^-^-^-^-^-^+\n" +
-              "|++|++|++|++|++|   |    (X)   ( PUMP 1 )   |   |           +-----------\n" +
-              "||||||||||||||||   |  +-----------------+  |   |           |  Coolant\n" +
-              "|||||||||||||||+---+  |                 |  +---+           +-----------\n" +
-              "||| || || || ||       |                 |                  +-----------\n" +
-              "||| || || || ||+---+  |                 |  +---+           | ( PUMP 3 )\n" +
-              "|++ ++ ++ ++ ++|   |  +-----------------+  |   |           +-----------\n" +
-              "+--------------+   |    (X)   ( PUMP 2 )   |   +-----------+  ----->\n" +
-              "    REACTOR        +-----------------------+     CONDENSER\n" +
-              "                      Valve 3   ----->\n");
-        print("");
-        print("");
+        AsciiArt.mushroomCloud(renderer);
     }
-    
+
     private void print(String output) {
         renderer.outputLine(output);
+    }
+
+    private void showCommandHelp(String command, String documentation) {
+        print(command);
+        String[] lines = documentation.split("\n");
+        for (String l : lines) {
+            print("\t" + l);
+        }
+        print("");
     }
 }

@@ -145,9 +145,23 @@ public class TextInterface {
     }
 
     public void showIntroText() {
-        textRenderer.outputLine("\f");
-        textRenderer.outputLine("You are in command of the Chernobyl power plant. ");
-        textRenderer.outputLine("<<show map of plant>>");
+        textRenderer.outputLine("You are in control of the Chernobyl nuclear power plant.");
+        textRenderer.outputLine("");
+        textRenderer.outputLine("This is a diagram of the power plant:\n");
+        AsciiArt.diagram(textRenderer);
+        textRenderer.outputLine("Your job is to maximize power output and extract the maximum amount of energy\n" +
+                                "while preventing meltdown.\n\n" +
+                                "You can increase the power output by extracting the control rods\n" +
+                                "from the reactor, but be careful - you need to make sure that\n" +
+                                "none of the components overheats or explodes from excessive pressure.\n\n" +
+                                "Control the flow through the primary and secondary coolant loops\n" +
+                                "using the valves and pumps to keep the reactor operating.");
+        textRenderer.outputLine("");
+        textRenderer.outputLine("You can view the diagram above by typing 'diagram' and pressing Enter.");
+        textRenderer.outputLine("For a full list of commands and more help, type 'help' and press Enter.");
+        textRenderer.outputLine("");
+        textRenderer.outputLine("Good Luck!");
+        textRenderer.outputLine("");
     }
 
     public void showSavedGames() {

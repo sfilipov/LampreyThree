@@ -28,8 +28,16 @@ public class PhysicalModelTest {
         assertThat(model.energyGenerated().inJoules(), greaterThan(0.0));
     }
 
+    
     @Test
-    public void shouldSetConnectionToOpen() {
+    public void shouldSetControlRodPosition() throws GameOverException {
+        PhysicalModel model = new PhysicalModel();
+        model.moveControlRods(percent(100));
+        assertTrue(model.controlRodPosition().equals(percent(100)));
+    }
+    
+    @Test
+    public void shouldSetConnectionToOpena() {
         PhysicalModel model = new PhysicalModel();
         model.setReactorToTurbine(true);
         assertEquals(true, model.getReactorToTurbine());
@@ -42,6 +50,14 @@ public class PhysicalModelTest {
         assertEquals(false, model.getReactorToTurbine());
     }
 
+    @Test
+    public void shouldSetConnectionToOpen() {
+        PhysicalModel model = new PhysicalModel();
+        model.setReactorToTurbine(true);
+        assertEquals(true, model.getReactorToTurbine());
+
+    }
+     
     @Test
     public void shouldSetCondenserBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();
@@ -113,13 +129,13 @@ public class PhysicalModelTest {
     }
 
     @Test
-    public void shouldInitializePump1ToNotPumping() {
+    public void shouldInitializePump2ToPumping() {
         PhysicalModel model = new PhysicalModel();
-        assertFalse(model.getPumpStatus(2));
+        assertTrue(model.getPumpStatus(2));
     }
 
     @Test
-    public void shouldInitializePump2ToPumping() {
+    public void shouldInitializePump1ToPumping() {
         PhysicalModel model = new PhysicalModel();
         assertTrue(model.getPumpStatus(1));
 
@@ -133,6 +149,16 @@ public class PhysicalModelTest {
         assertFalse(model.getPumpStatus(1));
     }
 
+    @Test
+    public void shouldSetPumpStateToOn() throws CannotControlException, KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        assertTrue(model.getPumpStatus(1));
+        model.changePumpState(1, false);
+        assertFalse(model.getPumpStatus(1));
+        model.changePumpState(1, true);
+        assertTrue(model.getPumpStatus(1));
+    }
+    
     @Test(expected = KeyNotFoundException.class)
     public void shouldRefuseToRepairInvalidPump() throws KeyNotFoundException, CannotRepairException {
         PhysicalModel model = new PhysicalModel();

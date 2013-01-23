@@ -36,8 +36,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private Connection turbineToCondenser;
     @JsonProperty
     private Pump condenserToReactor;
-    @JsonProperty
-    private Pump reactorToCondenser;
+    //@JsonProperty
+    //private Pump reactorToCondenser;
     @JsonProperty
     private Pump heatsinkToCondenser;
     @JsonProperty
@@ -64,17 +64,17 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
 
         condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
-        reactorToCondenser = new Pump(reactor.outputPort(), condenser.inputPort());
+        //reactorToCondenser = new Pump(reactor.outputPort(), condenser.inputPort());
         heatsinkToCondenser = new Pump(heatSink.outputPort(), condenser.coolantInputPort());
 
-        reactorToCondenser.setStatus(false);
+        //reactorToCondenser.setStatus(false);
 
         allConnections.put(1, reactorToTurbine);
         allConnections.put(2, turbineToCondenser);
 
-        allPumps.put(2, reactorToCondenser);
+        //allPumps.put(2, reactorToCondenser);
         allPumps.put(1, condenserToReactor);
-        allPumps.put(3, heatsinkToCondenser);
+        allPumps.put(2, heatsinkToCondenser);
 
     }
 
@@ -133,7 +133,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
             reactorToTurbine.step();
             turbineToCondenser.step();
             condenserToReactor.step();
-            reactorToCondenser.step();
+            //reactorToCondenser.step();
             heatsinkToCondenser.step();
 
             //System.out.println("Turbine Fail State: " + turbine.getFailureState());
@@ -242,9 +242,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
         c.add(0, turbine);
         c.add(1, reactor);
         c.add(2, condenser);
-        c.add(3, reactorToCondenser);
-        c.add(4, condenserToReactor);
-        c.add(5, heatsinkToCondenser);
+        //c.add(3, reactorToCondenser);
+        c.add(3, condenserToReactor);
+        c.add(4, heatsinkToCondenser);
         return c;
     }
 

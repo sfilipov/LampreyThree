@@ -19,8 +19,6 @@ public class SaveGame {
     @JsonProperty
     private PhysicalModel physicalModel;
     @JsonProperty
-    private FailureModel failureModel;
-    @JsonProperty
     private String userName;
 
     private SaveGame() {
@@ -33,7 +31,6 @@ public class SaveGame {
 
     public SaveGame(PhysicalModel physicalModel, FailureModel failureModel, String userName) {
         this.physicalModel = physicalModel;
-        this.failureModel = failureModel;
         this.userName = userName;
     }
 
@@ -52,10 +49,6 @@ public class SaveGame {
         return this.physicalModel;
     }
     
-    public FailureModel getFailureModel() {
-        return this.failureModel;
-    }
-
     /**
      * generateFileName generates a new unique file name using getTimeInMillis
      *

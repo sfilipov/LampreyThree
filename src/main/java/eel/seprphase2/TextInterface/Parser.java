@@ -212,10 +212,12 @@ public class Parser {
         showCommandHelp("diagram", "Display a diagram of the reactor.");
         showCommandHelp("quit", "End this game and return to the top-level menu");
         showCommandHelp("help", "Display this help.");
+        print("");
+        print("Pressing 'Enter' on its own will step the simulation once.");
     }
 
     private void showDiagram() {
-        AsciiArt.mushroomCloud(renderer);
+        AsciiArt.diagram(renderer);
     }
 
     private void print(String output) {

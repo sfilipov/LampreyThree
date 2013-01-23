@@ -21,7 +21,7 @@ public class Game {
     private Simulator simulator;
     private TextInterface ti;
 
-    public Game() throws GameOverException {
+    public Game() throws GameOverException, QuitGameException {
         renderer = new TerminalRenderer();
         reader = new TerminalReader();
 
@@ -33,17 +33,23 @@ public class Game {
         ti.showWelcomeMessage();
         ti.askForUsername();
 
-        if (ti.askForAction() == 1) {
+        int menuChoice = ti.askForAction();
+        if (menuChoice == 1) {
             ti.showIntroText();
-        } else {
-
+        } else if (menuChoice == 2) {
             ti.showSavedGames();
-
+        } else if (menuChoice == 3) {
+            renderer.outputLine("");
+            renderer.outputLine("Thanks For Playing!");
+            renderer.outputLine("");
+            System.exit(0);
+        } else {
+            renderer.outputLine("Invalid menu item!");
+            throw new QuitGameException();
         }
 
         ti.showStatus();
         while (true) {
-
             try {
                 ti.processCommand();
                 simulator.step();

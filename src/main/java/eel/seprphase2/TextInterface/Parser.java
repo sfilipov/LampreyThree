@@ -1,6 +1,7 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.QuitGameException;
 import eel.seprphase2.Simulator.ControlException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.KeyNotFoundException;
@@ -33,7 +34,7 @@ public class Parser {
      *
      * @throws DoNotStep when the interface should not step the reactor after a command
      */
-    public void executeCommand(String commandLine) throws DoNotStep {
+    public void executeCommand(String commandLine) throws DoNotStep, QuitGameException {
         String[] words = commandLine.trim().split(" ");
 
         String command = words[0];
@@ -60,7 +61,8 @@ public class Parser {
             throws DoNotStep,
                    ArgumentException,
                    KeyNotFoundException,
-                   ControlException {
+                   ControlException,
+                   QuitGameException {
 
         if (command.isEmpty()) {
             return;
@@ -105,6 +107,8 @@ public class Parser {
         } else if (command.equals("diagram")) {
             showDiagram();
             throw new DoNotStep();
+        } else if (command.equals("quit")) {
+            throw new QuitGameException();
         } else {
             print("Error: Unknown command '" + command + "'");
             throw new DoNotStep();
@@ -205,6 +209,7 @@ public class Parser {
                         "Load the game specified with <GameNumber>.\n" +
                         "Use 'load' with no arguments to get a list of games to load.");
         showCommandHelp("diagram", "Display a diagram of the reactor.");
+        showCommandHelp("quit", "End this game and return to the top-level menu");
         showCommandHelp("help", "Display this help.");
     }
 

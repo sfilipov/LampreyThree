@@ -1,6 +1,7 @@
 package eel.seprphase2.TextInterface;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import eel.seprphase2.QuitGameException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -84,7 +85,7 @@ public class TextInterface {
     /**
      * Process a command from the terminal
      */
-    public void processCommand() throws DoNotStep {
+    public void processCommand() throws DoNotStep, QuitGameException {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
 
         parser.executeCommand(lineReader.readLine());
@@ -117,10 +118,11 @@ public class TextInterface {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
         textRenderer.outputLine("\n\nPlease choose an option and press enter: ");
         textRenderer.outputLine("\t[1] New Game ");
-        textRenderer.outputLine("\t[2] Load Game \n\n\n");
+        textRenderer.outputLine("\t[2] Load Game");
+        textRenderer.outputLine("\t[3] Quit\n\n\n");
 
         int result = parser.chooseAction(lineReader.readLine());
-        while (result <= 0 || result >= 3) {
+        while (result <= 0 || result >= 4) {
             textRenderer.outputLine("Please choose a valid option!");
             result = parser.chooseAction(lineReader.readLine());
         }

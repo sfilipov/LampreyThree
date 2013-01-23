@@ -27,6 +27,8 @@ public class App {
                 AsciiArt.mushroomCloud(new TerminalRenderer());
                 System.out.println(e.getMessage());
                 (new BufferedReader(new InputStreamReader(System.in))).readLine();
+            } catch (QuitGameException e) {
+                System.out.println("");
             }
         }
     }

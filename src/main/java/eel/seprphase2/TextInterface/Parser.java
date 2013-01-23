@@ -176,6 +176,7 @@ public class Parser {
     }
 
     private void showHelp() {
+        print("");
         showCommandHelp("movecontrolrods <Percentage>",
                         "Move the control rods in the reactor vessel to the position\n" +
                         "specified by <Percentage>, which is between 0 and 100%.\n" +

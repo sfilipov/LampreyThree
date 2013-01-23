@@ -44,7 +44,7 @@ public class Turbine extends FailableComponent {
             return;
         }
 
-        outputPower = 10 * inputPort.mass.inKilograms();
+        outputPower = inputPort.mass.inKilograms() * 1000; //Requires conversion to grams
         outputPort.mass = inputPort.mass.plus(buildUp);
         outputPort.pressure = inputPort.pressure;
         outputPort.temperature = inputPort.temperature;

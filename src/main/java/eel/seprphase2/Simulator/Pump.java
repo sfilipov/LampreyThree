@@ -36,6 +36,7 @@ public class Pump extends FailableComponent {
     public void step() {
         if (hasFailed()) {
             outputPort.mass = kilograms(0);
+            return;
         }
         if (status) {
             if (inputPort.mass.inKilograms() > capacity.inKilograms()) {

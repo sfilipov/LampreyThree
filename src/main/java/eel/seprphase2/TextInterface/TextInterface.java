@@ -112,6 +112,7 @@ public class TextInterface {
 
     /**
      * Choose outermost menu option.
+     *
      * @return
      */
     public int askForAction() {
@@ -148,6 +149,13 @@ public class TextInterface {
         textRenderer.outputLine("");
         textRenderer.outputLine("You can view the diagram above by typing 'diagram' and pressing Enter.");
         textRenderer.outputLine("For a full list of commands and more help, type 'help' and press Enter.");
+        textRenderer.outputLine("");
+        textRenderer.outputLine("The game is turn-based, so if you want to keep running the simulation\n" +
+                                "press enter to step.");
+        textRenderer.outputLine("");
+        textRenderer.outputLine("If you're unsure how to get started, try moving the control rods\n" +
+                                "out of the reactor partway (e.g. 'movecontrolrods 50')\n" +
+                                "and then stepping a few times by pressing 'Enter'");
         textRenderer.outputLine("");
         textRenderer.outputLine("Good Luck!");
         textRenderer.outputLine("");

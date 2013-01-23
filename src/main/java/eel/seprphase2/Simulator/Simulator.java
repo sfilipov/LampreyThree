@@ -49,7 +49,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         try {
             SaveGame saveGame = SaveGame.load(listGames()[gameNumber]);
             this.physicalModel = saveGame.getPhysicalModel();
-            this.failureModel = saveGame.getFailureModel();
+            this.failureModel = new FailureModel(physicalModel, physicalModel);
             this.userName = saveGame.getUserName();
         } catch (JsonParseException ex) {
         } catch (IOException ex) {

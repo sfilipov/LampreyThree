@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
+ * Encapsulate a value representing a physical Density
  *
  * @author David
  */
@@ -12,14 +13,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
 public class Density {
 
-    /**
-     *
-     */
     @JsonProperty
     protected double kilogramsPerCubicMetre;
 
     /**
-     *
+     * Default constructor - assumes water
      */
     public Density() {
         kilogramsPerCubicMetre = 1000;
@@ -42,33 +40,42 @@ public class Density {
     }
 
     /**
+     * Helper method for the density of liquid water
      *
      * @return
      */
-    public static final Density ofLiquidWater() {
+    public static Density ofLiquidWater() {
         return new Density(1000);
     }
 
     /**
+     * Subtract one density from another
      *
-     * @param other
      *
-     * @return
+     * @param other the second operand of the subtraction
+     *
+     * @return the result of the subtraction
      */
     public Density minus(Density other) {
         return new Density(kilogramsPerCubicMetre - other.kilogramsPerCubicMetre);
     }
 
     /**
+     * Add one Density to another
      *
-     * @param other
+     * @param other the second operand of the addition
      *
-     * @return
+     * @return the result of the addition
      */
     public Density plus(Density other) {
         return new Density(kilogramsPerCubicMetre + other.kilogramsPerCubicMetre);
     }
 
+    /**
+     * Printable representation of a density, rounded to three decimal places, with units.
+     *
+     * @return the density as a String
+     */
     @Override
     public String toString() {
         return Format.toThreeDecimalPlaces(kilogramsPerCubicMetre) + "kg/m^3";

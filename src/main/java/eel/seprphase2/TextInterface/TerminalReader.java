@@ -3,18 +3,16 @@ package eel.seprphase2.TextInterface;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
+ * Concrete implementation of LineReader for use with Standard Input
  * @author David
  */
 public class TerminalReader implements LineReader {
 
     /**
-     *
-     * @return
+     * Read a line from the terminal
+     * @return the line read from the terminal
      */
     @Override
     public String readLine() {

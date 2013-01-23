@@ -39,7 +39,7 @@ public class TextInterface {
     }
 
     /**
-     *
+     * Choose username on startup
      */
     public void askForUsername() {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
@@ -48,7 +48,7 @@ public class TextInterface {
     }
 
     /**
-     *
+     * Display the status of the reactor.
      */
     public void showStatus() {
         textRenderer.outputLine(String.format("%-21s : %16s    %-20s : %6s",
@@ -65,47 +65,24 @@ public class TextInterface {
         textRenderer.outputLine(String.format("%-21s : %s",
                                               "Energy Generated", plantStatus.energyGenerated()));
 
-
-
-        /*
-         * 
-         */
         if (plantStatus.reactorWaterLevel().points() < plantStatus.reactorMinimumWaterLevel().points()) {
             textRenderer.outputLine("WARNING: REACTOR WATER LEVEL TOO LOW");
         }
 
-
-        /*
-         * 
-         */
         if (plantStatus.condenserPressure().greaterThan(condenserWarningPressure)) {
             textRenderer.outputLine("WARNING: CONDENSER PRESSURE TOO HIGH");
         }
 
-        /*
-         * 
-         */
         if (plantStatus.listFailedComponents().length > 0) {
             for (String failedComponent : plantStatus.listFailedComponents()) {
                 textRenderer.outputLine("WARNING: " + failedComponent + " HAS FAILED");
             }
 
         }
-
-
-        /*
-         textRenderer.outputLine("Control Rod Position: " +
-         plantStatus.controlRodPosition());
-         textRenderer.outputLine("Reactor Temperature: " + plantStatus
-         .reactorTemperature());
-         textRenderer.outputLine("Reactor Pressure: " + plantStatus.reactorPressure());
-         textRenderer.outputLine("Water Level: " + plantStatus.reactorWaterLevel());
-         textRenderer.outputLine("Energy Generated: " + plantStatus.energyGenerated());
-         */
     }
 
     /**
-     *
+     * Process a command from the terminal
      */
     public void processCommand() throws DoNotStep {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
@@ -113,6 +90,9 @@ public class TextInterface {
         parser.executeCommand(lineReader.readLine());
     }
 
+    /**
+     * Display the title
+     */
     public void showWelcomeMessage() {
         textRenderer.outputLine(
                 "_________ .__                              ___.          .__   \n" +
@@ -129,6 +109,10 @@ public class TextInterface {
                 "                                 \\/               \\/        \\/ \n");
     }
 
+    /**
+     * Choose outermost menu option.
+     * @return
+     */
     public int askForAction() {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
         textRenderer.outputLine("\n\nPlease choose an option and press enter: ");
@@ -136,7 +120,7 @@ public class TextInterface {
         textRenderer.outputLine("\t[2] Load Game \n\n\n");
 
         int result = parser.chooseAction(lineReader.readLine());
-        while (result < 0 || result > 3) {
+        while (result <= 0 || result >= 3) {
             textRenderer.outputLine("Please choose a valid option!");
             result = parser.chooseAction(lineReader.readLine());
         }
@@ -144,6 +128,9 @@ public class TextInterface {
         return result;
     }
 
+    /**
+     * Display introductory help text
+     */
     public void showIntroText() {
         textRenderer.outputLine("You are in control of the Chernobyl nuclear power plant.");
         textRenderer.outputLine("");
@@ -164,6 +151,9 @@ public class TextInterface {
         textRenderer.outputLine("");
     }
 
+    /**
+     * List save games to load on startup
+     */
     public void showSavedGames() {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
 

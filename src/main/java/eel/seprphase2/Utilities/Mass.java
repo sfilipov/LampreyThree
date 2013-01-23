@@ -3,10 +3,10 @@ package eel.seprphase2.Utilities;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import static eel.seprphase2.Utilities.Units.*;
 
 /**
+ * Encapsulate a quantity representing a physical Mass
  *
  * @author David
  */

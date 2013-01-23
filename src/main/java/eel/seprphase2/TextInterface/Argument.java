@@ -3,6 +3,7 @@ package eel.seprphase2.TextInterface;
 import eel.seprphase2.Utilities.Percentage;
 
 /**
+ * Class encapsulating a string argument to a user command
  *
  * @author David
  */
@@ -14,6 +15,14 @@ public class Argument {
         this.value = value;
     }
 
+    /**
+     * Attempt to convert the argument to an integer, and throw an exception with a useful error message if this is
+     * impossible
+     *
+     * @return the argument as an integer
+     *
+     * @throws ArgumentConversionException
+     */
     public int asInteger() throws ArgumentConversionException {
         try {
             return Integer.parseInt(value);
@@ -22,6 +31,14 @@ public class Argument {
         }
     }
 
+    /**
+     * Attempt to convert the argument to a Percentage, and throw an exception with a useful error message if this is
+     * impossible
+     *
+     * @return the argument as a Percentage
+     *
+     * @throws ArgumentConversionException
+     */
     public Percentage asPercentage() throws ArgumentConversionException {
         try {
             return new Percentage(value);
@@ -30,6 +47,14 @@ public class Argument {
         }
     }
 
+    /**
+     * Attempts to convert the argument to an integer, ensuring that it is positive, and throws an exception with a
+     * useful error message if this is impossible
+     *
+     * @return the argument as an integer
+     *
+     * @throws ArgumentConversionException
+     */
     public int asPositiveInteger() throws ArgumentConversionException {
         int x = asInteger();
         if (x < 0) {

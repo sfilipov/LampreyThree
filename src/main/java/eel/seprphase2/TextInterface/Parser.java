@@ -26,6 +26,13 @@ public class Parser {
         this.renderer = renderer;
     }
 
+    /**
+     * Execute a user command
+     *
+     * @param commandLine the textual command line to execute
+     *
+     * @throws DoNotStep when the interface should not step the reactor after a command
+     */
     public void executeCommand(String commandLine) throws DoNotStep {
         String[] words = commandLine.trim().split(" ");
 
@@ -105,13 +112,18 @@ public class Parser {
     }
 
     /**
-     *
+     * Set the username
      * @param username
      */
     public void setUsername(String username) {
         manager.setUsername(username);
     }
 
+    /**
+     * Convenience function for user menus
+     * @param action the input string
+     * @return the integer representing the user's choice
+     */
     public int chooseAction(String action) {
 
         try {

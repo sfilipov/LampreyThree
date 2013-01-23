@@ -1,11 +1,15 @@
 package eel.seprphase2.TextInterface;
 
 /**
- *
+ * ASCII Art Pictures
  * @author David
  */
 public class AsciiArt {
 
+    /**
+     * Write a diagram of the plant to the output
+     * @param renderer the output module to use
+     */
     public static void diagram(TextRenderer renderer) {
         renderer.outputLine("");
         renderer.outputLine("");
@@ -37,6 +41,10 @@ public class AsciiArt {
         renderer.outputLine("");
     }
 
+    /**
+     * Write a picture of a mushroom cloud to the output
+     * @param renderer the output module to use
+     */
     public static void mushroomCloud(TextRenderer renderer) {
         renderer.outputLine("");
         renderer.outputLine("");

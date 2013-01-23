@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 /**
+ * Encapsulates a physical quantity representing an Energy
  *
  * @author David
  */
@@ -15,25 +16,14 @@ public class Energy {
     @JsonProperty
     private double joules;
 
-    /**
-     *
-     */
     public Energy() {
         joules = 0;
     }
 
-    /**
-     *
-     * @param joules
-     */
     public Energy(double joules) {
         this.joules = joules;
     }
 
-    /**
-     *
-     * @return
-     */
     public double inJoules() {
         return joules;
     }
@@ -43,28 +33,37 @@ public class Energy {
     }
 
     /**
+     * Add one Energy to another
      *
-     * @param other
+     * @param other the second operand of the addition
      *
-     * @return
+     * @return the result of the addition
      */
     public Energy plus(Energy other) {
         return new Energy(joules + other.joules);
     }
 
     /**
+     * Subtract one Energy from another
      *
-     * @param other
+     * @param other the second operand of the subtraction
      *
-     * @return
+     * @return the result of the subtraction
      */
     public Energy minus(Energy other) {
         return new Energy(joules - other.joules);
     }
 
+    /**
+     * The Energy as a string, formatted to 3 decimal places with units.
+     *
+     * As energy values can be very large, this function makes use of the kilo-, mega-, and giga- prefixes
+     *
+     * @return string representation of the energy
+     */
     @Override
     public String toString() {
-        
+
         if (joules >= 10000000000.0) {
             return Format.toThreeDecimalPlaces(joules / 1000000000.0) + " GJ";
         } else if (joules >= 1000000.0) {

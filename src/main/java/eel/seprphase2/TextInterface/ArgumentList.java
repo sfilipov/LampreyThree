@@ -3,7 +3,10 @@ package eel.seprphase2.TextInterface;
 import java.util.ArrayList;
 
 /**
- *
+ * Provide an error-handling, bounds-checked argument list for user commands
+ * 
+ * Throws exceptions with user-helpful error messages
+ * 
  * @author David
  */
 public class ArgumentList {
@@ -16,10 +19,20 @@ public class ArgumentList {
         arguments = new ArrayList<Argument>();
     }
 
+    /**
+     * Add an argument to the list
+     * @param argument the string representing the argument
+     */
     public void add(String argument) {
         arguments.add(new Argument(argument));
     }
 
+    /**
+     * Return the argument at a position, doint error checking
+     * @param index the zero-based index of the argument to retrieve
+     * @return the argument at index
+     * @throws ArgumentCountException when there are insufficient arguments
+     */
     public Argument at(int index) throws ArgumentCountException {
         try {
             return arguments.get(index);
@@ -33,22 +46,10 @@ public class ArgumentList {
         }
     }
 
-    public void requireExactly(int count) throws ArgumentCountException {
-        if (count != arguments.size()) {
-            throw new ArgumentCountException("Expected exactly " + count +
-                                             " argument(s) but got " + arguments.size());
-        }
-    }
-
-    public void requireAtLeast(int count) throws ArgumentCountException {
-        if (count > arguments.size()) {
-            throw new ArgumentCountException("Expected at least " + count +
-                                             " argument(s) to command" +
-                                             command +
-                                             " but got only " + arguments.size());
-        }
-    }
-
+    /**
+     * Count arguments in list
+     * @return the number of arguments in the list
+     */
     public int count() {
         return arguments.size();
     }

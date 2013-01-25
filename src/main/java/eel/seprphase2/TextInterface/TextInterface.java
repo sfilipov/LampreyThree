@@ -168,8 +168,9 @@ public class TextInterface {
         Parser parser = new Parser(plantController, gameManager, textRenderer);
 
         textRenderer.outputLine("\fPlease enter a game number and press enter:");
+        int i = 0;
         try {
-            int i = 0;
+            
             for (String game : gameManager.listGames()) {
                 String[] bits = game.split("\\.");
                 Timestamp t = new Timestamp(Long.parseLong(bits[3]));
@@ -183,14 +184,22 @@ public class TextInterface {
         }
 
         int result = parser.chooseAction(lineReader.readLine());
-        while (result < 0 || result > gameManager.listGames().length) {
+        while (result < 0 && result >i) {
             textRenderer.outputLine("Please choose a valid option!");
             result = parser.chooseAction(lineReader.readLine());
 
         }
         textRenderer.outputLine("\f");
 
-        gameManager.loadGame(result);
+        try
+        {
+            gameManager.loadGame(result);
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            textRenderer.outputLine("Invalid Choice");
+            askForAction();
+        }
 
     }
 }

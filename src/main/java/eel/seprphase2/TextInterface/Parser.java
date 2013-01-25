@@ -97,7 +97,7 @@ public class Parser {
             if (arguments.count() == 1) {
                 manager.loadGame(arguments.at(0).asPositiveInteger());
                 throw new DoNotStep();
-            } else if (arguments.count() == 1) {
+            } else {
                 chooseGame();
                 throw new DoNotStep();
             }

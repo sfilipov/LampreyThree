@@ -5,6 +5,7 @@
 package lamprey.seprphase3.GUI;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 /**
  *
@@ -12,8 +13,12 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
  */
 public class GameStarter {
     public static void main(String[] args) {
-        new LwjglApplication(new BackyardReactor(),
-                             "Backyard Reactor",
-                             640, 480, false);
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+        cfg.title   = "Backyard Reactor";
+        cfg.useGL20 = true;
+        cfg.width   = 640;
+        cfg.height  = 480;
+        
+        new LwjglApplication(new BackyardReactor(), cfg);
     }
 }

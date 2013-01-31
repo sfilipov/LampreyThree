@@ -10,6 +10,13 @@
     <name>SeprPhase2</name>
     <url>http://maven.apache.org</url>
 
+    <repositories>
+        <repository>
+            <id>gdx-nightlies</id>
+            <url>http://libgdx.badlogicgames.com/nightlies/maven</url>
+        </repository>
+    </repositories>
+  
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -53,6 +60,18 @@
             <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-utils</artifactId>
             <version>2.0.5</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogic.gdx</groupId>
+            <artifactId>gdx</artifactId>
+            <version>0.9.9-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogic.gdx</groupId>
+            <artifactId>gdx-backend-lwjgl</artifactId>
+            <version>0.9.9-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>
@@ -115,8 +134,26 @@
                     </descriptorRefs>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.googlecode.mavennatives</groupId>
+                <artifactId>maven-nativedependencies-plugin</artifactId>
+                <version>0.0.7</version>
+                <executions>
+                    <execution>
+                        <id>unpacknatives</id>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <nativesTargetDir>target/natives</nativesTargetDir>
+                    <separateDirs>false</separateDirs>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+    
     <reporting>
         <excludeDefaults>true</excludeDefaults>
         <outputDirectory>${project.build.directory}/site</outputDirectory>

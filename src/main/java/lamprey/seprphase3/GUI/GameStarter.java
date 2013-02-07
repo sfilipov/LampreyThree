@@ -14,10 +14,11 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 public class GameStarter {
     public static void main(String[] args) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title   = "Backyard Reactor";
-        cfg.useGL20 = true;
-        cfg.width   = 960;
-        cfg.height  = 540;
+        cfg.title  = "Backyard Reactor";
+        cfg.width  = 960;
+        cfg.height = 540;
+        cfg.resizable = false;
+        cfg.useGL20   = true;
         
         new LwjglApplication(new BackyardReactor(), cfg);
     }

@@ -16,8 +16,8 @@ public class GameStarter {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title   = "Backyard Reactor";
         cfg.useGL20 = true;
-        cfg.width   = 640;
-        cfg.height  = 480;
+        cfg.width   = 960;
+        cfg.height  = 540;
         
         new LwjglApplication(new BackyardReactor(), cfg);
     }

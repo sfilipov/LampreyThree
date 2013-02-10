@@ -58,7 +58,12 @@ public abstract class FailableComponent {
         }
 
         hasFailed = false;
-        wear = new Percentage(0);
+        Percentage repair = new Percentage(10);
+        if ((wear.points() - repair.points()) > 0) {
+            wear = wear.minus(repair);
+        } else {
+            wear = new Percentage(0);     //Cap at 0%
+        }        
     }
 
     /**

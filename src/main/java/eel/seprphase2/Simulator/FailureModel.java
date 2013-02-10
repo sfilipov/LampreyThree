@@ -68,10 +68,10 @@ public class FailureModel implements PlantController, PlantStatus {
      *
      */
     public void failStateCheck() {
-        ArrayList<FailableComponent> components = status.components();        
-        for (int i = 0; i < components.size(); i++) {            
-            if (components.get(i).wear().toString().equals("100%")) {
-                components.get(i).fail();               
+             
+        for (FailableComponent component: status.components()) {  
+            if (component.wear().toString().equals("100%")) {
+                component.fail();               
             }
         }
     }
@@ -80,26 +80,30 @@ public class FailureModel implements PlantController, PlantStatus {
      *
      */
     public void randomWearCheck(){
-        ArrayList<FailableComponent> components = status.components();
+        ArrayList<FailableComponent> failingComponents = new ArrayList<FailableComponent>();
         int failValue = 1000;
-        int componentFailChance = 0;
-        failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
+        int componentFailChance = 0;   
+        int faults = 0;
         
-        for (int i = 0; i < components.size(); i++) {
-            if(components.get(i).wear().toString().equals("100%")) {
-            }
-            if(components.get(i).wear().toString().equals("0%")) {
-            }            
+        for (FailableComponent component: status.components()) {
+            if(component.wear().toString().equals("100%") || component instanceof Reactor ) {
+            }                       
             else{
                 componentFailChance = failChance.nextInt(1050);
                 if(componentFailChance>failValue) {
-                    components.get(i).addWear();                    
-                    break; //We only want to induce one hardware failure! Break here.
+                    failingComponents.add(component);
+		    faults++;
                 }                
             }
         }
-    }
-    
+        
+        if(faults > 0) {
+			int selection = failChance.nextInt(faults);
+			FailableComponent failedComponent = failingComponents.get(selection);
+			failedComponent.addWear();
+	}
+    }  
+        
    
     @Override
     public String[] listFailedComponents() {

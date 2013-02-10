@@ -42,6 +42,15 @@ public abstract class FailableComponent {
         hasFailed = true;
         stepWear();
     }
+    
+    public void addWear() {        
+        Percentage damage = new Percentage(20);
+        if ((wear.points() + damage.points()) < 100) {
+            wear = wear.plus(damage);
+        } else {
+            wear = new Percentage(100);     //Cap at 100%
+        }
+    }
 
     public void repair() throws CannotRepairException {
         if (!hasFailed) {

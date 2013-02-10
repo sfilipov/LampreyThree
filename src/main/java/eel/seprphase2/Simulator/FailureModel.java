@@ -57,29 +57,50 @@ public class FailureModel implements PlantController, PlantStatus {
     public void step() throws GameOverException {
         controller.step(1);
         failStateCheck();
+        randomWearCheck();
         checkReactorWaterLevel();
         checkCondenserPressure();
         checkTurbineFailure();
     }
 
     /**
-     * Determine failures
+     * Determine if a FailableComponent has failed, which occurs when its wear is 100, if it has, its state is set to failed
      *
      */
     public void failStateCheck() {
-        ArrayList<FailableComponent> components = status.components();
-        int failValue = failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
-        int componentsFailChance = 0;
-        for (int i = 0; i < components.size(); i++) {
-            componentsFailChance += components.get(i).wear().points() / components.size();
-            if (componentsFailChance > failValue) {
-                components.get(i).fail();
-                break; //We only want to induce one hardware failure! Break here.
+        ArrayList<FailableComponent> components = status.components();        
+        for (int i = 0; i < components.size(); i++) {            
+            if (components.get(i).wear().toString().equals("100%")) {
+                components.get(i).fail();               
             }
-
         }
     }
-
+     /**
+     * Determines if random damage has occurred to any of the functioning(non-failed) components.
+     *
+     */
+    public void randomWearCheck(){
+        ArrayList<FailableComponent> components = status.components();
+        int failValue = 1000;
+        int componentFailChance = 0;
+        failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
+        
+        for (int i = 0; i < components.size(); i++) {
+            if(components.get(i).wear().toString().equals("100%")) {
+            }
+            if(components.get(i).wear().toString().equals("0%")) {
+            }            
+            else{
+                componentFailChance = failChance.nextInt(1050);
+                if(componentFailChance>failValue) {
+                    components.get(i).addWear();                    
+                    break; //We only want to induce one hardware failure! Break here.
+                }                
+            }
+        }
+    }
+    
+   
     @Override
     public String[] listFailedComponents() {
         return status.listFailedComponents();

@@ -24,6 +24,7 @@ public class BackyardReactor implements ApplicationListener {
     Texture optionsImage;
     Texture highscoresImage;
     Texture lampreylogoImage;
+    
     OrthographicCamera camera;
     SpriteBatch batch;
     Rectangle menu;
@@ -42,11 +43,7 @@ public class BackyardReactor implements ApplicationListener {
         camera.setToOrtho(false, 960, 540);
         batch  = new SpriteBatch();
         
-        menu = new Rectangle();
-        menu.x = 0;
-        menu.y = 0;
-        menu.width  = 960;
-        menu.height = 540;
+        
     }
 
     @Override

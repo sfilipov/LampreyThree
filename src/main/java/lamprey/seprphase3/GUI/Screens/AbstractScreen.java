@@ -1,8 +1,9 @@
-package lamprey.seprphase3.GUI;
+package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
  *

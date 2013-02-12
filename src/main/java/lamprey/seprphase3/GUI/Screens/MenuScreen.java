@@ -2,14 +2,14 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package lamprey.seprphase3.GUI;
+package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
  *
@@ -28,7 +28,7 @@ public class MenuScreen extends AbstractScreen {
     SpriteBatch batch;
     Rectangle menu;
     
-    MenuScreen (BackyardReactor game) {
+    public MenuScreen (BackyardReactor game) {
         super(game);
     }
     
@@ -56,9 +56,6 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        
-        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
         
         camera.update();
         

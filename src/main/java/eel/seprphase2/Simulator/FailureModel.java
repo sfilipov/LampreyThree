@@ -100,7 +100,8 @@ public class FailureModel implements PlantController, PlantStatus {
         if(faults > 0) {
 			int selection = failChance.nextInt(faults);
 			FailableComponent failedComponent = failingComponents.get(selection);
-			failedComponent.addWear();
+                        Percentage damage = new Percentage(20);
+			failedComponent.addWear(damage);
 	}
     }  
         

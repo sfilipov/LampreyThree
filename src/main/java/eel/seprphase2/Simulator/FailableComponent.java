@@ -43,8 +43,8 @@ public abstract class FailableComponent {
         stepWear();
     }
     
-    public void addWear() {        
-        Percentage damage = new Percentage(20);
+    public void addWear(Percentage damage) {        
+        
         if ((wear.points() + damage.points()) < 100) {
             wear = wear.plus(damage);
         } else {
@@ -95,9 +95,7 @@ public abstract class FailableComponent {
         } else {
             wear = new Percentage(100);     //Cap at 100%
         }
-        if (wearDelta.points() == 0) {
-            wear = new Percentage(0);        //Cap at 0%
-        }
+       
 
     }
 }

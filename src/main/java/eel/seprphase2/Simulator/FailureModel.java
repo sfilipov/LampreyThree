@@ -193,6 +193,11 @@ public class FailureModel implements PlantController, PlantStatus {
     public Percentage condenserWaterLevel() {
         return status.condenserWaterLevel();
     }
+    
+    @Override    
+    public Percentage CondenserWear() { 
+        return status.CondenserWear();
+    }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {

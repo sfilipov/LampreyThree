@@ -307,6 +307,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage condenserWaterLevel() {
         return condenser.getWaterLevel();
     }
+    
+    @Override
+    public Percentage CondenserWear() {
+        return condenser.wear();
+    }
 
     @Override
     public boolean turbineHasFailed() {

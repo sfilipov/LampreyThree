@@ -168,6 +168,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage condenserWaterLevel() {
         return failureModel.condenserWaterLevel();
     }
+    
+    @Override
+    public Percentage CondenserWear() {
+        return failureModel.CondenserWear();
+    }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {

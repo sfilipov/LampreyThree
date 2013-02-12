@@ -174,6 +174,11 @@ public class FailureModel implements PlantController, PlantStatus {
         return status.getReactorToTurbine();
     }
     
+    @Override
+    public Percentage turbineWear() {
+        return status.turbineWear();
+    }
+    
     @Override 
     public Percentage reactorWear() {
         return status.reactorWear();
@@ -195,8 +200,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override    
-    public Percentage CondenserWear() { 
-        return status.CondenserWear();
+    public Percentage condenserWear() { 
+        return status.condenserWear();
     }
 
     @Override

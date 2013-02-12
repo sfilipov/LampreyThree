@@ -153,6 +153,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public boolean getReactorToTurbine() {
         return failureModel.getReactorToTurbine();
     }
+    
+    @Override
+    public Percentage turbineWear() {
+        return failureModel.turbineWear();
+    }
 
     @Override
     public Temperature condenserTemperature() {
@@ -170,8 +175,8 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
-    public Percentage CondenserWear() {
-        return failureModel.CondenserWear();
+    public Percentage condenserWear() {
+        return failureModel.condenserWear();
     }
 
     @Override

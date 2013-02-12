@@ -55,6 +55,8 @@ public interface PlantStatus {
      * @return
      */
     public boolean getReactorToTurbine();
+    
+    public Percentage turbineWear();
 
     public Temperature condenserTemperature();
 
@@ -62,7 +64,7 @@ public interface PlantStatus {
 
     public Percentage condenserWaterLevel();
     
-    public Percentage CondenserWear();
+    public Percentage condenserWear();
 
     public Percentage reactorMinimumWaterLevel();
 

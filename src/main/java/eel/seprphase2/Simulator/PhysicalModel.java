@@ -292,6 +292,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public void repairTurbine() throws CannotRepairException {
         turbine.repair();
     }
+    
+    @Override
+    public Percentage turbineWear(){
+        turbine.wear();
+    }
 
     @Override
     public Temperature condenserTemperature() {
@@ -309,7 +314,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public Percentage CondenserWear() {
+    public Percentage condenserWear() {
         return condenser.wear();
     }
 

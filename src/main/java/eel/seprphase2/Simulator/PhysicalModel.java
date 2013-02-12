@@ -165,8 +165,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void failReactor() {
-        reactor.fail();
+    public void wearReactor() {
+        Percentage damage = new Percentage(10);
+        reactor.addWear(damage);
     }
 
     @Override

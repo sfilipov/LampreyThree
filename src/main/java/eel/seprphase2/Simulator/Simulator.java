@@ -175,7 +175,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
 
     @Override
-    public void failReactor() {
+    public void wearReactor() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

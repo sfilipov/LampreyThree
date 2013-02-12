@@ -34,9 +34,6 @@ public class FailureModel implements PlantController, PlantStatus {
     @JsonProperty
     PlantStatus status;
     private Random failChance = new Random();
-    @JsonProperty
-    private int numberOfTimesWaterLevelIsTooLow;
-    private final int reactorOverheatThreshold = 8;
     private final Pressure condenserMaxPressure = new Pressure(30662500);
 
     private FailureModel() {
@@ -202,8 +199,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void failReactor() {
-        controller.failReactor();
+    public void wearReactor() {        
+        controller.wearReactor();
     }
 
     @Override
@@ -223,12 +220,7 @@ public class FailureModel implements PlantController, PlantStatus {
 
     private void checkReactorWaterLevel() {
         if (status.reactorWaterLevel().points() < status.reactorMinimumWaterLevel().points()) {
-            numberOfTimesWaterLevelIsTooLow += 1;
-            if (numberOfTimesWaterLevelIsTooLow > reactorOverheatThreshold) {
-                controller.failReactor();
-            }
-        } else {
-            numberOfTimesWaterLevelIsTooLow = 0;
+                controller.wearReactor();  
         }
     }
 

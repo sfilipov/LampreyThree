@@ -295,7 +295,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     @Override
     public Percentage turbineWear(){
-        turbine.wear();
+        return turbine.wear();
     }
 
     @Override
@@ -316,6 +316,16 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage condenserWear() {
         return condenser.wear();
+    }
+    
+    @Override
+    public Percentage condenserToReactor() { 
+        return condenserToReactor.wear();
+    }
+    
+    @Override
+    public Percentage heatsinkToCondenser() {
+        return heatsinkToCondenser.wear();
     }
 
     @Override

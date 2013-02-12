@@ -183,6 +183,16 @@ public class FailureModel implements PlantController, PlantStatus {
     public Percentage reactorWear() {
         return status.reactorWear();
     }
+    
+    @Override
+    public Percentage condenserToReactor() { 
+        return status.condenserToReactor();
+    }
+    
+    @Override
+    public Percentage heatsinkToCondenser() { 
+        return status.heatsinkToCondenser();
+    }
 
     @Override
     public Temperature condenserTemperature() {

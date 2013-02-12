@@ -143,6 +143,16 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Energy energyGenerated() {
         return failureModel.energyGenerated();
     }
+    
+    @Override
+    public Percentage condenserToReactor() {
+        return failureModel.condenserToReactor();
+    }
+    
+    @Override
+    public Percentage heatsinkToCondenser() {
+        return failureModel.heatsinkToCondenser();
+    }
 
     @Override
     public void setReactorToTurbine(boolean open) {

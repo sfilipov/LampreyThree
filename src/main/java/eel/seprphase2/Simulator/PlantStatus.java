@@ -54,6 +54,11 @@ public interface PlantStatus {
      *
      * @return
      */
+    
+    public Percentage condenserToReactor();
+    
+    public Percentage heatsinkToCondenser();
+    
     public boolean getReactorToTurbine();
     
     public Percentage turbineWear();

@@ -40,6 +40,14 @@ public interface PlantStatus {
      *
      * @return
      */
+    
+    public Percentage reactorWear();
+    
+    /**
+     *
+     * @return
+     */
+    
     public Energy energyGenerated();
 
     /**

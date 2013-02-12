@@ -133,6 +133,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorWaterLevel() {
         return failureModel.reactorWaterLevel();
     }
+    
+    @Override
+    public Percentage reactorWear() { 
+        return failureModel.reactorWear();
+    }
 
     @Override
     public Energy energyGenerated() {

@@ -173,6 +173,11 @@ public class FailureModel implements PlantController, PlantStatus {
     public boolean getReactorToTurbine() {
         return status.getReactorToTurbine();
     }
+    
+    @Override 
+    public Percentage reactorWear() {
+        return status.reactorWear();
+    }
 
     @Override
     public Temperature condenserTemperature() {

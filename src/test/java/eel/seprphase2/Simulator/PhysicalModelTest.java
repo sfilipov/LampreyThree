@@ -27,6 +27,15 @@ public class PhysicalModelTest {
         model.step(100);
         assertThat(model.energyGenerated().inJoules(), greaterThan(0.0));
     }
+    
+     
+    @Test
+    public void shouldIncreaseReactorWear() {
+        PhysicalModel model = new PhysicalModel();
+        model.wearReactor();
+        assertEquals("10%", model.reactorWear().toString());
+    }
+
 
     
     @Test

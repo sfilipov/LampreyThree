@@ -39,6 +39,14 @@ public class FailureModelTest {
     @Ignore @Test
     public void testFailStateCheck() {
     }
+    /*
+    @Test
+    public void failNothing() {
+        String[] expected = {};
+        model.failStateCheck();
+        assertArrayEquals(expected, model.listFailedComponents());
+    }
+    */
 
     @Test
     public void listNoFailedComponents() {

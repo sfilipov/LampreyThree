@@ -55,6 +55,7 @@ public class FailureModel implements PlantController, PlantStatus {
         controller.step(1);
         failStateCheck();
         randomWearCheck();
+        failStateCheck(); // Requires a second check, because randomWearCheck may have cause a component to reach 100% wear
         checkReactorWaterLevel();
         checkCondenserPressure();
         checkTurbineFailure();

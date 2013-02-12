@@ -145,13 +145,13 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
-    public Percentage condenserToReactor() {
-        return failureModel.condenserToReactor();
+    public Percentage condenserToReactorWear() {
+        return failureModel.condenserToReactorWear();
     }
     
     @Override
-    public Percentage heatsinkToCondenser() {
-        return failureModel.heatsinkToCondenser();
+    public Percentage heatsinkToCondenserWear() {
+        return failureModel.heatsinkToCondenserWear();
     }
 
     @Override

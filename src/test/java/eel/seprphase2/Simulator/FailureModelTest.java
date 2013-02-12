@@ -255,17 +255,17 @@ public class FailureModelTest {
         });
         model.failCondenser();
     }
-/**
+
     @Test
-    public void failReactor() {
+    public void wearReactor() {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).failReactor();
+                oneOf(plantController).wearReactor();
             }
         });
-        model.failReactor();
+        model.wearReactor();
     }
-**/
+
     @Ignore @Test
     public void testStep_int() throws Exception {
     }

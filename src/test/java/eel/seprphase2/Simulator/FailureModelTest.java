@@ -1,5 +1,6 @@
 package eel.seprphase2.Simulator;
 
+import eel.seprphase2.Utilities.Percentage;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -8,6 +9,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import static eel.seprphase2.Utilities.Units.*;
+import java.util.ArrayList;
 import org.junit.Ignore;
 
 /**
@@ -39,14 +41,45 @@ public class FailureModelTest {
     @Ignore @Test
     public void testFailStateCheck() {
     }
-    /*
+    
     @Test
     public void failNothing() {
-        String[] expected = {};
+        final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
+        Turbine turbine = new Turbine();
+        Condenser condenser = new Condenser();
+        components.add(turbine);
+        components.add(condenser);
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).components();
+                will(returnValue(components));
+            }
+        });
         model.failStateCheck();
-        assertArrayEquals(expected, model.listFailedComponents());
+        assertEquals(false, turbine.hasFailed());
+        assertEquals(false, condenser.hasFailed());
     }
-    */
+    
+    @Test
+    public void findCondenserHasFailed() {
+        final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
+        Turbine turbine = new Turbine();
+        Condenser condenser = new Condenser();
+        Percentage damage = new Percentage(100);
+        condenser.addWear(damage);
+        components.add(turbine);
+        components.add(condenser);
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).components();
+                will(returnValue(components));
+            }
+        });
+        model.failStateCheck();
+        assertEquals(false, turbine.hasFailed());
+        assertEquals(true, condenser.hasFailed());
+    }
+    
 
     @Test
     public void listNoFailedComponents() {

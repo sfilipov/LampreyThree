@@ -255,7 +255,7 @@ public class FailureModelTest {
         });
         model.failCondenser();
     }
-
+/**
     @Test
     public void failReactor() {
         context.checking(new Expectations() {
@@ -265,7 +265,7 @@ public class FailureModelTest {
         });
         model.failReactor();
     }
-
+**/
     @Ignore @Test
     public void testStep_int() throws Exception {
     }

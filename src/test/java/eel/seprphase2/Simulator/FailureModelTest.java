@@ -1,6 +1,8 @@
 package eel.seprphase2.Simulator;
 
 import eel.seprphase2.Utilities.Percentage;
+import eel.seprphase2.Utilities.Pressure;
+import eel.seprphase2.Utilities.Temperature;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -80,6 +82,43 @@ public class FailureModelTest {
         assertEquals(true, condenser.hasFailed());
     }
     
+    @Test
+    public void doesNotCauseHardwareFailureOnReactor() {
+        final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
+        Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
+                                      new Temperature(400), new Pressure(101325));
+        components.add(reactor);
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).components();
+                will(returnValue(components));
+            }
+        });
+        for(int i = 0; i<1000; i++) { // Does many times to make up for the random nature of the method
+            model.randomWearCheck();
+        }
+        
+        assertEquals("0%", reactor.wear().toString());        
+    }
+    
+    @Test
+    public void doesCauseHardwareFailures() {
+        final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
+        Condenser condenser = new Condenser();
+        components.add(condenser);
+        assertEquals("0%", condenser.wear().toString());
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).components();
+                will(returnValue(components));
+            }
+        });
+        for(int i = 0; i<1000; i++) { // Does many times to make up for the random nature of the method
+            model.randomWearCheck();
+        }
+        
+        assertTrue(condenser.wear().points()>0);        
+    }
 
     @Test
     public void listNoFailedComponents() {

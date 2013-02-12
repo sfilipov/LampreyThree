@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
@@ -72,20 +68,6 @@ public class MenuScreen extends AbstractScreen {
     }
 
     @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
     public void dispose() {
     }
-
-    @Override
-    public void hide() {
-        //throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
 }

@@ -14,13 +14,9 @@ abstract class AbstractScreen implements Screen {
     protected final BackyardReactor game;
     protected final Stage stage;
     
-    public AbstractScreen(BackyardReactor game) {
+    public AbstractScreen(BackyardReactor game, Stage stage) {
         this.game  = game;
-        
-        int width  = 960;
-        int height = 540;
-        boolean keepAspectRatio = true;
-        this.stage = new Stage(width, height, keepAspectRatio);
+        this.stage = stage;
     }
     
     @Override
@@ -35,8 +31,11 @@ abstract class AbstractScreen implements Screen {
     
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor( 0f, 0f, 0f, 1f );
-        Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        
+        stage.act(delta);
+        stage.draw();
     }
     
     @Override

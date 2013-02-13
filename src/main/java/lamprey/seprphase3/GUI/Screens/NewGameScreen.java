@@ -1,5 +1,6 @@
 package lamprey.seprphase3.GUI.Screens;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
@@ -8,7 +9,7 @@ import lamprey.seprphase3.GUI.BackyardReactor;
  */
 public class NewGameScreen extends AbstractScreen {
     
-    public NewGameScreen(BackyardReactor game) {
-        super(game);
+    public NewGameScreen(BackyardReactor game, Stage stage) {
+        super(game, stage);
     }
 }

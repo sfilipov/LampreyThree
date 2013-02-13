@@ -13,7 +13,7 @@ public class GameStarter {
         cfg.title  = "Backyard Reactor";
         cfg.width  = 960;
         cfg.height = 540;
-        cfg.resizable = true;
+        cfg.resizable = false;
         cfg.useGL20   = true;
         
         new LwjglApplication(new BackyardReactor(), cfg);

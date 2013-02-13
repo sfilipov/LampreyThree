@@ -35,8 +35,6 @@ public class FailureModel implements PlantController, PlantStatus {
     PlantStatus status;
     private Random failChance = new Random();
     private final Pressure condenserMaxPressure = new Pressure(30662500);
-    private FailableComponent currentDamagedComponent = null;
-    
 
     private FailureModel() {
     }
@@ -45,7 +43,6 @@ public class FailureModel implements PlantController, PlantStatus {
                         PlantStatus plantStatus) {
         this.controller = plantController;
         this.status = plantStatus;
-        
     }
 
     /**
@@ -98,15 +95,11 @@ public class FailureModel implements PlantController, PlantStatus {
         }
         
         if(faults > 0) {
-            int selection = failChance.nextInt(faults);
-            FailableComponent failedComponent = failingComponents.get(selection);
-            Percentage damage = new Percentage(20);
-            failedComponent.addWear(damage);           
-            currentDamagedComponent = failedComponent;                       
+			int selection = failChance.nextInt(faults);
+			FailableComponent failedComponent = failingComponents.get(selection);
+                        Percentage damage = new Percentage(20);
+			failedComponent.addWear(damage);
 	}
-        else {             
-            currentDamagedComponent = null;            
-        }
     }  
         
    
@@ -140,11 +133,6 @@ public class FailureModel implements PlantController, PlantStatus {
         controller.repairCondenser();
     }
 
-    @Override 
-    public FailableComponent currentWornComponent() {
-        return status.currentWornComponent();
-    }
-            
     @Override
     public void repairTurbine() throws CannotRepairException {
         controller.repairTurbine();

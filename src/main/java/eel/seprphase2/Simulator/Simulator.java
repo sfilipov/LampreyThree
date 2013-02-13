@@ -118,6 +118,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage controlRodPosition() {
         return failureModel.controlRodPosition();
     }
+    
+    @Override
+    public FailableComponent currentWornComponent() {
+        return physicalModel.currentWornComponent();
+    }
 
     @Override
     public Pressure reactorPressure() {

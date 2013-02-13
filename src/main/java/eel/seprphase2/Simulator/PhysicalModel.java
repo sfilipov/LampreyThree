@@ -45,8 +45,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @JsonProperty
     private HashMap<Integer, Connection> allConnections;
     @JsonProperty
-    private HeatSink heatSink;
-
+    private HeatSink heatSink;    
+    
     /**
      *
      */
@@ -315,6 +315,12 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage condenserWaterLevel() {
         return condenser.getWaterLevel();
+    }
+    
+    @Override
+    public FailableComponent currentWornComponent()
+    {
+        return currentWornComponent();
     }
     
     @Override

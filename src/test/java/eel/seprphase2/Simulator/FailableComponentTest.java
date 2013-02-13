@@ -101,4 +101,61 @@ public class FailableComponentTest {
         assertEquals(percent(100), reactor.wear());
         assertEquals(percent(100), turbine.wear());
     }
+    
+    @Test
+    public void shouldIncreaseReactorWear() {
+        Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
+                                      new Temperature(400), new Pressure(101325));  
+        
+        Percentage damage = new Percentage(10);
+        reactor.addWear(damage);
+        assertEquals(percent(10), reactor.wear());
+    }
+    @Test
+    public void shouldIncreaseTurbineWear() {     
+        
+        Turbine turbine = new Turbine();        
+        
+        Percentage damage = new Percentage(15);
+        
+        turbine.addWear(damage);
+        assertEquals(percent(15), turbine.wear());
+    }
+    
+    @Test
+    public void shouldIncreasePumpWear() {     
+        
+        Port input = new Port();
+        Port output = new Port();
+        input.mass = kilograms(10);
+        output.mass = kilograms(0);
+        Pump pump = new Pump(input, output);
+        
+        Percentage damage = new Percentage(10);
+        pump.addWear(damage);
+        assertEquals(percent(10), pump.wear());
+    }
+    @Test
+    public void shouldIncreaseCondenserWear() {      
+        
+        Condenser condenser = new Condenser(); 
+        Percentage damage = new Percentage(20);
+        condenser.addWear(damage);
+        assertEquals(percent(20), condenser.wear());
+    }         
+       
+    public void shouldNotAddWearOver100() {
+        
+        Condenser condenser = new Condenser();
+        Turbine turbine = new Turbine();
+        Percentage damage = new Percentage(70);
+        
+        for (int i = 0; i < 10; i++) { // Use for loop because Percentages cannot be set over 100, so need to add several to make the wear of a component potentially over 100
+            condenser.addWear(damage);
+            turbine.addWear(damage);
+        }
+        assertEquals(percent(100), condenser.wear());
+        assertEquals(percent(100), turbine.wear());
+        
+    }
 }

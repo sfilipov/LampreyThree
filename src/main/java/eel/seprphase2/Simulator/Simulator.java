@@ -133,10 +133,25 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorWaterLevel() {
         return failureModel.reactorWaterLevel();
     }
+    
+    @Override
+    public Percentage reactorWear() { 
+        return failureModel.reactorWear();
+    }
 
     @Override
     public Energy energyGenerated() {
         return failureModel.energyGenerated();
+    }
+    
+    @Override
+    public Percentage condenserToReactorWear() {
+        return failureModel.condenserToReactorWear();
+    }
+    
+    @Override
+    public Percentage heatsinkToCondenserWear() {
+        return failureModel.heatsinkToCondenserWear();
     }
 
     @Override
@@ -147,6 +162,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     @Override
     public boolean getReactorToTurbine() {
         return failureModel.getReactorToTurbine();
+    }
+    
+    @Override
+    public Percentage turbineWear() {
+        return failureModel.turbineWear();
     }
 
     @Override
@@ -163,6 +183,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage condenserWaterLevel() {
         return failureModel.condenserWaterLevel();
     }
+    
+    @Override
+    public Percentage condenserWear() {
+        return failureModel.condenserWear();
+    }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {
@@ -175,7 +200,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
 
     @Override
-    public void failReactor() {
+    public void wearReactor() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

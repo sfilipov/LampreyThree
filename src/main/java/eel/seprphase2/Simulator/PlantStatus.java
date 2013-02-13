@@ -40,19 +40,36 @@ public interface PlantStatus {
      *
      * @return
      */
+    
+    public Percentage reactorWear();
+    
+    /**
+     *
+     * @return
+     */
+    
     public Energy energyGenerated();
 
     /**
      *
      * @return
      */
+    
+    public Percentage condenserToReactorWear();
+    
+    public Percentage heatsinkToCondenserWear();
+    
     public boolean getReactorToTurbine();
+    
+    public Percentage turbineWear();
 
     public Temperature condenserTemperature();
 
     public Pressure condenserPressure();
 
     public Percentage condenserWaterLevel();
+    
+    public Percentage condenserWear();
 
     public Percentage reactorMinimumWaterLevel();
 

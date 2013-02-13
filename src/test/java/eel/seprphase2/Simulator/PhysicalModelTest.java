@@ -1,9 +1,13 @@
 package eel.seprphase2.Simulator;
 
 import eel.seprphase2.GameOverException;
+import eel.seprphase2.Utilities.Percentage;
+import eel.seprphase2.Utilities.Pressure;
+import eel.seprphase2.Utilities.Temperature;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
+import java.util.ArrayList;
 import static org.hamcrest.Matchers.*;
 
 /**
@@ -27,6 +31,15 @@ public class PhysicalModelTest {
         model.step(100);
         assertThat(model.energyGenerated().inJoules(), greaterThan(0.0));
     }
+    
+     
+    @Test
+    public void shouldIncreaseReactorWear() {
+        PhysicalModel model = new PhysicalModel();
+        model.wearReactor();
+        assertEquals("10%", model.reactorWear().toString());
+    }
+
 
     
     @Test
@@ -117,8 +130,7 @@ public class PhysicalModelTest {
     public void listSeveralFailures() {
         PhysicalModel pm = new PhysicalModel();
         pm.failCondenser();
-        pm.failReactor();
-        String[] expected = {"Reactor", "Condenser"};
+        String[] expected = {"Condenser"};
         assertArrayEquals(expected, pm.listFailedComponents());
     }
 
@@ -175,5 +187,59 @@ public class PhysicalModelTest {
     public void shouldRefuseToControlInvalidValve() throws KeyNotFoundException {
         PhysicalModel model = new PhysicalModel();
         model.changeValveState(100, true);
+    }
+    
+    @Test
+    public void doesReturnCondenserToReactorWear() {
+        PhysicalModel model = new PhysicalModel();   
+        ArrayList<FailableComponent> c = model.components();
+        Percentage wear = new Percentage(40);
+        c.get(3).addWear(wear); // 3 is reference of condenserToReactor
+        assertEquals(percent(40), model.condenserToReactorWear());
+    }
+    
+    @Test
+    public void doesReturnHeatsinkToCondenserWear() {
+        PhysicalModel model = new PhysicalModel();   
+        ArrayList<FailableComponent> c = model.components();
+        Percentage wear = new Percentage(67);
+        c.get(4).addWear(wear); // 4 is reference of heatsinkToCondenser
+        assertEquals(percent(67), model.heatsinkToCondenserWear());
+    }
+    
+    @Test
+    public void doesReturnTurbineWear() {
+        PhysicalModel model = new PhysicalModel();
+        ArrayList<FailableComponent> c = model.components();       
+        Percentage wear = new Percentage(15);
+        c.get(0).addWear(wear); // 0 is reference of turbine
+        assertEquals(percent(15), model.turbineWear());
+    }
+    
+    @Test
+    public void doesReturnCondenserWear() {
+        PhysicalModel model = new PhysicalModel();    
+        ArrayList<FailableComponent> c = model.components();
+        Percentage wear = new Percentage(50);
+        c.get(2).addWear(wear); // 2 is reference of condenser
+        assertEquals(percent(50), model.condenserWear());
+    }
+    
+    @Test
+    public void doesReturnReactorWear() {
+        PhysicalModel model = new PhysicalModel();   
+        ArrayList<FailableComponent> c = model.components();
+        Percentage wear = new Percentage(30);
+        c.get(1).addWear(wear); // 1 is reference of reactor
+        assertEquals(percent(30), model.reactorWear());        
+    }
+    
+    @Test 
+    public void doesNotReturnReactorWear() {
+        PhysicalModel model = new PhysicalModel();   
+        ArrayList<FailableComponent> c = model.components();
+        Percentage wear = new Percentage(30);
+        c.get(0).addWear(wear); // 0 is reference of turbine, hence this should not work
+        assertTrue( model.reactorWear() != percent(30)); 
     }
 }

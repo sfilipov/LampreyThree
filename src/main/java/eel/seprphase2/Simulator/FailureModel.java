@@ -34,9 +34,6 @@ public class FailureModel implements PlantController, PlantStatus {
     @JsonProperty
     PlantStatus status;
     private Random failChance = new Random();
-    @JsonProperty
-    private int numberOfTimesWaterLevelIsTooLow;
-    private final int reactorOverheatThreshold = 8;
     private final Pressure condenserMaxPressure = new Pressure(30662500);
 
     private FailureModel() {
@@ -57,29 +54,55 @@ public class FailureModel implements PlantController, PlantStatus {
     public void step() throws GameOverException {
         controller.step(1);
         failStateCheck();
+        randomWearCheck();
+        failStateCheck(); // Requires a second check, because randomWearCheck may have cause a component to reach 100% wear
         checkReactorWaterLevel();
         checkCondenserPressure();
         checkTurbineFailure();
     }
 
     /**
-     * Determine failures
+     * Determine if a FailableComponent has failed, which occurs when its wear is 100, if it has, its state is set to failed
      *
      */
     public void failStateCheck() {
-        ArrayList<FailableComponent> components = status.components();
-        int failValue = failChance.nextInt(5000);  //A component that is 100% wear will have a 1 in 50 chance of failing
-        int componentsFailChance = 0;
-        for (int i = 0; i < components.size(); i++) {
-            componentsFailChance += components.get(i).wear().points() / components.size();
-            if (componentsFailChance > failValue) {
-                components.get(i).fail();
-                break; //We only want to induce one hardware failure! Break here.
+             
+        for (FailableComponent component: status.components()) {  
+            if (component.wear().toString().equals("100%")) {
+                component.fail();               
             }
-
         }
     }
-
+     /**
+     * Determines if random damage has occurred to any of the functioning(non-failed) components.
+     *
+     */
+    public void randomWearCheck(){
+        ArrayList<FailableComponent> failingComponents = new ArrayList<FailableComponent>();        
+        int componentFailChance = 0;   
+        int faults = 0;
+        
+        for (FailableComponent component: status.components()) {
+            if(component.wear().toString().equals("100%") || component instanceof Reactor ) {
+            }                       
+            else{
+                componentFailChance = failChance.nextInt(1000);
+                if(componentFailChance<=50) {  // As doing nextInt(1000). Less than 50 is 5% chance, using 1000 to give more options of failure chance.
+                    failingComponents.add(component);
+		    faults++;
+                }                
+            }
+        }
+        
+        if(faults > 0) {
+			int selection = failChance.nextInt(faults);
+			FailableComponent failedComponent = failingComponents.get(selection);
+                        Percentage damage = new Percentage(20);
+			failedComponent.addWear(damage);
+	}
+    }  
+        
+   
     @Override
     public String[] listFailedComponents() {
         return status.listFailedComponents();
@@ -149,6 +172,26 @@ public class FailureModel implements PlantController, PlantStatus {
     public boolean getReactorToTurbine() {
         return status.getReactorToTurbine();
     }
+    
+    @Override
+    public Percentage turbineWear() {
+        return status.turbineWear();
+    }
+    
+    @Override 
+    public Percentage reactorWear() {
+        return status.reactorWear();
+    }
+    
+    @Override
+    public Percentage condenserToReactorWear() { 
+        return status.condenserToReactorWear();
+    }
+    
+    @Override
+    public Percentage heatsinkToCondenserWear() { 
+        return status.heatsinkToCondenserWear();
+    }
 
     @Override
     public Temperature condenserTemperature() {
@@ -164,6 +207,11 @@ public class FailureModel implements PlantController, PlantStatus {
     public Percentage condenserWaterLevel() {
         return status.condenserWaterLevel();
     }
+    
+    @Override    
+    public Percentage condenserWear() { 
+        return status.condenserWear();
+    }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {
@@ -176,8 +224,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void failReactor() {
-        controller.failReactor();
+    public void wearReactor() {        
+        controller.wearReactor();
     }
 
     @Override
@@ -197,12 +245,7 @@ public class FailureModel implements PlantController, PlantStatus {
 
     private void checkReactorWaterLevel() {
         if (status.reactorWaterLevel().points() < status.reactorMinimumWaterLevel().points()) {
-            numberOfTimesWaterLevelIsTooLow += 1;
-            if (numberOfTimesWaterLevelIsTooLow > reactorOverheatThreshold) {
-                controller.failReactor();
-            }
-        } else {
-            numberOfTimesWaterLevelIsTooLow = 0;
+                controller.wearReactor();  
         }
     }
 

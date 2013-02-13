@@ -98,7 +98,7 @@ public class Percentage {
             result = Math.round(result);
         }
         return new Percentage(result);
-    }
+    }   
 
     @Override
     public String toString() {
@@ -130,7 +130,7 @@ public class Percentage {
      * @param points
      *
      * @return
-     */
+     */   
     public static boolean isValidPercentage(double points) {
         return points <= 100 && points >= 0;
     }

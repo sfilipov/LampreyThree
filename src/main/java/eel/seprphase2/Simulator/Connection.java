@@ -14,9 +14,9 @@ import static eel.seprphase2.Utilities.Units.*;
 public class Connection extends Valve {
 
     @JsonProperty
-    private Port first;
+    private Port input;
     @JsonProperty
-    private Port second;
+    private Port output;
     @JsonProperty
     private double area;
     @JsonProperty
@@ -25,14 +25,14 @@ public class Connection extends Valve {
     // default constructor for JSON deserialization
     private Connection() {
         super();
-        first = null;
-        second = null;
+        input = null;
+        output = null;
         area = 0;
     }
 
     public Connection(Port input, Port output, double area) {
-        first = input;
-        second = output;
+        this.input = input;
+        this.output = output;
         this.area = area;
     }
 
@@ -41,18 +41,18 @@ public class Connection extends Valve {
      */
     public void step() {
         if (this.getOpen()) {
-            second.mass = buildUp.plus(first.mass);
-            second.temperature = first.temperature;
-            second.pressure = pascals(second.pressure.inPascals() - second.pressure.inPascals() * 4 / 3);
-            second.flow = first.flow;
-            first.mass = kilograms(0);
+            output.mass = buildUp.plus(input.mass);
+            output.temperature = input.temperature;
+            output.pressure = pascals(output.pressure.inPascals() - output.pressure.inPascals() * 4 / 3);
+            output.flow = input.flow;
+            input.mass = kilograms(0);
             buildUp = kilograms(0);
         } else {
-            second.mass = kilograms(0);
-            second.temperature = first.temperature;
-            second.pressure = pascals(101325);
-            second.flow = kilograms(0);
-            buildUp = buildUp.plus(first.mass);
+            output.mass = kilograms(0);
+            output.temperature = input.temperature;
+            output.pressure = pascals(101325);
+            output.flow = kilograms(0);
+            buildUp = buildUp.plus(input.mass);
         }
     }
 }

@@ -32,7 +32,7 @@ public interface PlantController {
 
     public void failCondenser();
 
-    public void failReactor();
+    public void wearReactor();
 
     public void setReactorToTurbine(boolean open);
 

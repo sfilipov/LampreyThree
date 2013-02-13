@@ -165,8 +165,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void failReactor() {
-        reactor.fail();
+    public void wearReactor() {
+        Percentage damage = new Percentage(10);
+        reactor.addWear(damage);
     }
 
     @Override
@@ -208,6 +209,15 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage reactorWaterLevel() {
         return reactor.waterLevel();
+    }
+    
+     /**
+     *
+     * @return
+     */
+    @Override
+    public Percentage reactorWear() {
+        return reactor.wear();
     }
 
     /**
@@ -286,6 +296,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public void repairTurbine() throws CannotRepairException {
         turbine.repair();
     }
+    
+    @Override
+    public Percentage turbineWear(){
+        return turbine.wear();
+    }
 
     @Override
     public Temperature condenserTemperature() {
@@ -300,6 +315,21 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage condenserWaterLevel() {
         return condenser.getWaterLevel();
+    }
+    
+    @Override
+    public Percentage condenserWear() {
+        return condenser.wear();
+    }
+    
+    @Override
+    public Percentage condenserToReactorWear() { 
+        return condenserToReactor.wear();
+    }
+    
+    @Override
+    public Percentage heatsinkToCondenserWear() {
+        return heatsinkToCondenser.wear();
     }
 
     @Override

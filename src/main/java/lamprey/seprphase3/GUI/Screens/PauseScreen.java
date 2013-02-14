@@ -16,37 +16,41 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  */
 public class PauseScreen extends GameplayScreen {
     GameplayScreen screen;
-    Texture pauseTexture;
-    Image   pauseImage;
+    Texture pausePopupTexture;
+    Image   pausePopupImage;
     
     public PauseScreen(GameplayScreen screen) {
         super(screen.game, screen.stage);
+        pausePopupTexture = new Texture(Gdx.files.internal("assets\\pause\\pausepopup.png"));
     }
     
     @Override
     public void show() {
         super.show();
         
-        pauseTexture = new Texture(Gdx.files.internal("assets\\pausepopup.png"));
+        pausePopupImage = new Image(pausePopupTexture);
+        pausePopupImage.setPosition(240, 135);
+        
+        pausePopupImage.addListener(new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(game.getGameplayScreen());
+            }
+        });
+        
+        stage.addActor(pausePopupImage);
     }
     
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        
-        pauseImage = new Image(pauseTexture);
-        pauseImage.setPosition(240, 135);
-        pauseImage.addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-        }
-        
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(game.getGameplayScreen());
-        }
-        });
-        
-        
-        stage.addActor(pauseImage);
+    }
+    
+    @Override
+    public void hide() {
+        stage.clear();
     }
 }

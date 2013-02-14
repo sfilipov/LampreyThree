@@ -1,11 +1,11 @@
 package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -32,22 +32,25 @@ public class MenuScreen extends AbstractScreen {
     Image highscoresImage;
     Image lampreylogoImage;
     
+    OperatorNameInput nameListener;
+    
     public MenuScreen (BackyardReactor game, Stage stage) {
         super(game, stage);
+        menubgTexture      = new Texture(Gdx.files.internal("assets\\menu\\menubg.png"));
+        gamelogoTexture    = new Texture(Gdx.files.internal("assets\\menu\\gamelogo.png"));
+        newgameTexture     = new Texture(Gdx.files.internal("assets\\menu\\newgame.png"));
+        loadgameTexture    = new Texture(Gdx.files.internal("assets\\menu\\loadgame.png"));
+        optionsTexture     = new Texture(Gdx.files.internal("assets\\menu\\options.png"));
+        highscoresTexture  = new Texture(Gdx.files.internal("assets\\menu\\highscores.png"));
+        lampreylogoTexture = new Texture(Gdx.files.internal("assets\\menu\\lampreylogo.png"));
+        
+        nameListener = new OperatorNameInput();
     }
-    
+     
     @Override
     public void show() {
         super.show();
         
-        menubgTexture      = new Texture(Gdx.files.internal("assets\\menubg.png"));
-        gamelogoTexture    = new Texture(Gdx.files.internal("assets\\gamelogo.png"));
-        newgameTexture     = new Texture(Gdx.files.internal("assets\\newgame.png"));
-        loadgameTexture    = new Texture(Gdx.files.internal("assets\\loadgame.png"));
-        optionsTexture     = new Texture(Gdx.files.internal("assets\\options.png"));
-        highscoresTexture  = new Texture(Gdx.files.internal("assets\\highscores.png"));
-        lampreylogoTexture = new Texture(Gdx.files.internal("assets\\lampreylogo.png"));
-              
         stage.clear();
         
         menubgImage      = new Image(menubgTexture);
@@ -85,18 +88,23 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        drawHovers();
+//        drawHovers();
     }
 
     @Override
     public void dispose() {
     }
     
+    @Override
+    public void hide() {
+        stage.clear();
+    }
+    
     private ClickListener getNewgameListener() {
         return new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(game.getGameplayScreen());
+                Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
             }
         };
     }
@@ -117,6 +125,18 @@ public class MenuScreen extends AbstractScreen {
                     }
                 }
             }
+        }
+    }
+    
+    private class OperatorNameInput implements TextInputListener {
+        @Override
+        public void input (String text) {
+            game.setScreen(game.getGameplayScreen());
+        }
+
+        @Override
+        public void canceled () {
+            game.setScreen(game.getMenuScreen());
         }
     }
 }

@@ -2,10 +2,14 @@ package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
@@ -43,7 +47,7 @@ public class MenuScreen extends AbstractScreen {
         optionsTexture     = new Texture(Gdx.files.internal("assets\\options.png"));
         highscoresTexture  = new Texture(Gdx.files.internal("assets\\highscores.png"));
         lampreylogoTexture = new Texture(Gdx.files.internal("assets\\lampreylogo.png"));
-        
+              
         stage.clear();
         
         menubgImage      = new Image(menubgTexture);
@@ -81,21 +85,38 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        drawHovers();
     }
 
     @Override
     public void dispose() {
     }
     
-    private InputListener getNewgameListener() {
-        return new InputListener() {
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    return true;
-            }
-
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    game.setScreen(game.getGameplayScreen());
+    private ClickListener getNewgameListener() {
+        return new ClickListener() {
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(game.getGameplayScreen());
             }
         };
+    }
+    
+    private void drawHovers() {
+        Array<Actor> actors = stage.getActors();
+        for (Actor actor : actors) {
+            Array<EventListener> listeners = actor.getListeners();
+            if (listeners.size > 0) {
+                EventListener listener = listeners.first();
+                if (listener instanceof ClickListener) {
+                    ClickListener clickListener = (ClickListener) listener;
+                    if (clickListener.isOver()) {
+                        //Draw the hover image
+                    }
+                    else {
+                        //Draw the normal image
+                    }
+                }
+            }
+        }
     }
 }

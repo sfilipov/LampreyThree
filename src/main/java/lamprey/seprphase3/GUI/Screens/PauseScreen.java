@@ -8,27 +8,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
  *
  * @author Simeon
  */
-public class PauseScreen extends AbstractScreen {
+public class PauseScreen extends GameplayScreen {
+    GameplayScreen screen;
     Texture pauseTexture;
     Image   pauseImage;
     
-    public PauseScreen(BackyardReactor game, Stage stage) {
-        super(game, stage);
+    public PauseScreen(GameplayScreen screen) {
+        super(screen.game, screen.stage);
     }
     
     @Override
     public void show() {
         super.show();
         
-        pauseTexture = new Texture(Gdx.files.internal("assets\\pause.png"));
+        pauseTexture = new Texture(Gdx.files.internal("assets\\pausepopup.png"));
     }
     
     @Override
@@ -36,6 +35,7 @@ public class PauseScreen extends AbstractScreen {
         super.resize(width, height);
         
         pauseImage = new Image(pauseTexture);
+        pauseImage.setPosition(240, 135);
         pauseImage.addListener(new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
@@ -45,6 +45,7 @@ public class PauseScreen extends AbstractScreen {
                 game.setScreen(game.getGameplayScreen());
         }
         });
+        
         
         stage.addActor(pauseImage);
     }

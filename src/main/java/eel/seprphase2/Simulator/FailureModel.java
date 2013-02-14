@@ -95,11 +95,15 @@ public class FailureModel implements PlantController, PlantStatus {
         }
         
         if(faults > 0) {
-			int selection = failChance.nextInt(faults);
-			FailableComponent failedComponent = failingComponents.get(selection);
-                        Percentage damage = new Percentage(20);
-			failedComponent.addWear(damage);
+            int selection = failChance.nextInt(faults);
+            FailableComponent failedComponent = failingComponents.get(selection);
+            Percentage damage = new Percentage(20);
+            failedComponent.addWear(damage);
+            setWornComponent(failedComponent);
 	}
+        else {
+            setWornComponent(null);
+        }
     }  
         
    
@@ -217,10 +221,20 @@ public class FailureModel implements PlantController, PlantStatus {
     public Percentage reactorMinimumWaterLevel() {
         return status.reactorMinimumWaterLevel();
     }
+    
+    @Override
+    public FailableComponent wornComponent() { 
+        return status.wornComponent();
+    }
 
     @Override
     public void failCondenser() {
         controller.failCondenser();
+    }
+    
+    @Override
+    public void setWornComponent(FailableComponent currentWornComponent) {
+        controller.setWornComponent(currentWornComponent);
     }
 
     @Override

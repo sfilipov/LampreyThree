@@ -46,7 +46,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private HashMap<Integer, Connection> allConnections;
     @JsonProperty
     private HeatSink heatSink;
-
+    private FailableComponent currentWornComponent = null;
     /**
      *
      */
@@ -224,6 +224,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
      *
      * @param open
      */
+    
+    @Override
+    public void setWornComponent(FailableComponent wornComponent) {
+        currentWornComponent = wornComponent;
+    }
     @Override
     public void setReactorToTurbine(boolean open) {
         reactorToTurbine.setOpen(open);
@@ -320,6 +325,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public Percentage condenserWear() {
         return condenser.wear();
+    }
+    
+    @Override
+    public FailableComponent wornComponent() {
+        return currentWornComponent;
     }
     
     @Override

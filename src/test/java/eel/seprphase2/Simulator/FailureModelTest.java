@@ -89,7 +89,8 @@ public class FailureModelTest {
                                       new Temperature(400), new Pressure(101325));
         components.add(reactor);
         context.checking(new Expectations() {
-            {
+            {                
+                allowing(plantController).setWornComponent(null);
                 allowing(plantStatus).components();
                 will(returnValue(components));
             }
@@ -100,15 +101,16 @@ public class FailureModelTest {
         
         assertEquals("0%", reactor.wear().toString());        
     }
-    
+    /**
     @Test
     public void doesCauseHardwareFailures() {
         final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
-        Condenser condenser = new Condenser();
+        final Condenser condenser = new Condenser();
         components.add(condenser);
         assertEquals("0%", condenser.wear().toString());
         context.checking(new Expectations() {
-            {
+            {               
+                allowing(plantController).setWornComponent(condenser);
                 allowing(plantStatus).components();
                 will(returnValue(components));
             }
@@ -119,7 +121,7 @@ public class FailureModelTest {
         
         assertTrue(condenser.wear().points()>0);        
     }
-
+    **/
     @Test
     public void listNoFailedComponents() {
         final String[] componentList = {};
@@ -334,6 +336,17 @@ public class FailureModelTest {
             }
         });
         model.failCondenser();
+    }
+    
+    @Test
+    public void getsCurrentWornComponent() {
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).wornComponent();
+                will(returnValue("Condenser"));
+            }
+        });
+        assertEquals("Condenser", model.wornComponent());
     }
 
     @Test

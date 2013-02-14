@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
  *
@@ -19,15 +20,14 @@ public class PauseScreen extends GameplayScreen {
     Texture pausePopupTexture;
     Image   pausePopupImage;
     
-    public PauseScreen(GameplayScreen screen) {
-        super(screen.game, screen.stage);
+    public PauseScreen(BackyardReactor game) {
+        super(game);
         pausePopupTexture = new Texture(Gdx.files.internal("assets\\pause\\pausepopup.png"));
     }
     
     @Override
     public void show() {
         super.show();
-        
         pausePopupImage = new Image(pausePopupTexture);
         pausePopupImage.setPosition(240, 135);
         

@@ -34,8 +34,8 @@ public class MenuScreen extends AbstractScreen {
     
     OperatorNameInput nameListener;
     
-    public MenuScreen (BackyardReactor game, Stage stage) {
-        super(game, stage);
+    public MenuScreen (BackyardReactor game) {
+        super(game);
         menubgTexture      = new Texture(Gdx.files.internal("assets\\menu\\menubg.png"));
         gamelogoTexture    = new Texture(Gdx.files.internal("assets\\menu\\gamelogo.png"));
         newgameTexture     = new Texture(Gdx.files.internal("assets\\menu\\newgame.png"));

@@ -11,9 +11,7 @@ import lamprey.seprphase3.GUI.Screens.PauseScreen;
  *
  * @author Simeon
  */
-public class BackyardReactor extends Game {
-    Stage stage;
-    
+public class BackyardReactor extends Game {    
     MenuScreen menuScreen;
     GameplayScreen gameplayScreen;
     PauseScreen pauseScreen;
@@ -36,16 +34,10 @@ public class BackyardReactor extends Game {
     //Game Methods
     
     @Override
-    public void create() {
-        int width  = 960;
-        int height = 540;
-        boolean keepAspectRatio = true;
-        this.stage = new Stage(width, height, keepAspectRatio);
-        Gdx.input.setInputProcessor(stage);
-        
-        menuScreen     = new MenuScreen(this, this.stage);
-        gameplayScreen = new GameplayScreen(this, this.stage);
-        pauseScreen    = new PauseScreen(gameplayScreen);
+    public void create() {        
+        menuScreen     = new MenuScreen(this);
+        gameplayScreen = new GameplayScreen(this);
+        pauseScreen    = new PauseScreen(this);
         
         setScreen(getMenuScreen());
     }

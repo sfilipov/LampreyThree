@@ -34,8 +34,8 @@ public class GameplayScreen extends AbstractScreen {
     Image turbineImage;
 //    Image pauseImage;
     
-    public GameplayScreen(BackyardReactor game, Stage stage) {
-        super(game, stage);
+    public GameplayScreen(BackyardReactor game) {
+        super(game);
         
         gamebgTexture    = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
         condenserTexture = new Texture(Gdx.files.internal("assets\\game\\condenser.png"));

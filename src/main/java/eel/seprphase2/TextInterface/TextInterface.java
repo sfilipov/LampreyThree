@@ -64,8 +64,8 @@ public class TextInterface {
         textRenderer.outputLine(String.format("%-21s : %16s",
                                               "Condenser Water Level", plantStatus.condenserWaterLevel()));
         textRenderer.outputLine(String.format("%-21s : %s",
-                                              "Energy Generated", plantStatus.energyGenerated()));
-
+                                              "Energy Generated", plantStatus.energyGenerated()));         
+         
         if (plantStatus.reactorWaterLevel().points() < plantStatus.reactorMinimumWaterLevel().points()) {
             textRenderer.outputLine("WARNING: REACTOR WATER LEVEL TOO LOW");
         }

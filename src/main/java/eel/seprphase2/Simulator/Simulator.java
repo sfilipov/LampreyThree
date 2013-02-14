@@ -108,6 +108,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public void repairCondenser() throws CannotRepairException {
         failureModel.repairCondenser();
     }
+    
+    @Override
+    public String wornComponent() {
+         return failureModel.wornComponent();
+    }
 
     @Override
     public void repairTurbine() throws CannotRepairException {
@@ -122,6 +127,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     @Override
     public Pressure reactorPressure() {
         return failureModel.reactorPressure();
+    }
+    
+    @Override
+    public void setWornComponent(FailableComponent currentWornComponent) {
+        failureModel.setWornComponent(currentWornComponent);
     }
 
     @Override
@@ -193,6 +203,12 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
+   /** 
+    @Override
+    public void setWornComponent(FailableComponent currentWornComponent) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+   **/
 
     @Override
     public void failCondenser() {

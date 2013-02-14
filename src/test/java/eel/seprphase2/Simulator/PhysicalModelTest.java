@@ -242,4 +242,29 @@ public class PhysicalModelTest {
         c.get(0).addWear(wear); // 0 is reference of turbine, hence this should not work
         assertTrue( model.reactorWear() != percent(30)); 
     }
+    
+    @Test
+    public void setsCurrentWornComponentBlank() { 
+        PhysicalModel model = new PhysicalModel();
+        Reactor reactor = new Reactor(percent(0), percent(100),
+                                                kelvin(350), pascals(101325));
+        model.setWornComponent(reactor);        //Reactor cannot be randomly worn, this checks it just sets it is blank if this is passed to it
+        assertEquals("", model.wornComponent());
+    }
+    
+    @Test
+     public void setsCurrentWornComponentTurbine() { 
+        PhysicalModel model = new PhysicalModel();
+        Turbine turbine = new Turbine();
+        model.setWornComponent(turbine);        //Checks to see if this method correctly updates the variable currentWornComponent in model to Turbine.
+        assertEquals("Turbine", model.wornComponent());
+    }
+    
+    @Test
+    public void returnsCurrentWornComponent() {
+        PhysicalModel model = new PhysicalModel();
+        Condenser condenser = new Condenser();
+        model.setWornComponent(condenser);
+        assertEquals("Condenser", model.wornComponent());
+    }
 }

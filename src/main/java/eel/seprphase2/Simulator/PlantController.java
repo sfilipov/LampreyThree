@@ -16,6 +16,8 @@ public interface PlantController {
      * @param extracted
      */
     public void moveControlRods(Percentage extracted);
+    
+    public void setWornComponent(FailableComponent currentWornComponent);
 
     /**
      *

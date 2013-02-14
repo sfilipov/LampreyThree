@@ -62,6 +62,8 @@ public interface PlantStatus {
     public boolean getReactorToTurbine();
     
     public Percentage turbineWear();
+    
+    public String wornComponent();
 
     public Temperature condenserTemperature();
 

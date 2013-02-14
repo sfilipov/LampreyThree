@@ -15,32 +15,29 @@ import lamprey.seprphase3.GUI.BackyardReactor;
  *
  * @author Simeon
  */
-public class PauseScreen extends GameplayScreen {
-    GameplayScreen screen;
+public class PauseScreen extends AbstractScreen {
+    Texture pausebgTexture;
     Texture pausePopupTexture;
+    Image   pausebgImage;
     Image   pausePopupImage;
+
     
     public PauseScreen(BackyardReactor game) {
         super(game);
         pausePopupTexture = new Texture(Gdx.files.internal("assets\\pause\\pausepopup.png"));
+        pausebgTexture = new Texture(Gdx.files.internal("assets\\pause\\backyardreactor2.png"));
     }
     
     @Override
     public void show() {
         super.show();
+        pausebgImage    = new Image(pausebgTexture);
         pausePopupImage = new Image(pausePopupTexture);
+
         pausePopupImage.setPosition(240, 135);
+        pausePopupImage.addListener(getPopupListener());
         
-        pausePopupImage.addListener(new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-            
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(game.getGameplayScreen());
-            }
-        });
-        
+        stage.addActor(pausebgImage);
         stage.addActor(pausePopupImage);
     }
     
@@ -52,5 +49,17 @@ public class PauseScreen extends GameplayScreen {
     @Override
     public void hide() {
         stage.clear();
+    }
+    
+    public InputListener getPopupListener() {
+        return new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(game.getGameplayScreen());
+            }
+        };
     }
 }

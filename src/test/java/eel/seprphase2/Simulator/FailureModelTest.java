@@ -101,7 +101,7 @@ public class FailureModelTest {
         
         assertEquals("0%", reactor.wear().toString());        
     }
-    /**
+    
     @Test
     public void doesCauseHardwareFailures() {
         final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
@@ -110,7 +110,7 @@ public class FailureModelTest {
         assertEquals("0%", condenser.wear().toString());
         context.checking(new Expectations() {
             {               
-                allowing(plantController).setWornComponent(condenser);
+                ignoring(plantController);
                 allowing(plantStatus).components();
                 will(returnValue(components));
             }
@@ -121,7 +121,7 @@ public class FailureModelTest {
         
         assertTrue(condenser.wear().points()>0);        
     }
-    **/
+    
     @Test
     public void listNoFailedComponents() {
         final String[] componentList = {};

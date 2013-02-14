@@ -110,7 +110,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
-    public FailableComponent wornComponent() {
+    public String wornComponent() {
          return failureModel.wornComponent();
     }
 

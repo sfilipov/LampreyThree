@@ -223,7 +223,7 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public FailableComponent wornComponent() { 
+    public String wornComponent() { 
         return status.wornComponent();
     }
 

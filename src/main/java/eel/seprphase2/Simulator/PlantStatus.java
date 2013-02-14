@@ -63,7 +63,7 @@ public interface PlantStatus {
     
     public Percentage turbineWear();
     
-    public FailableComponent wornComponent();
+    public String wornComponent();
 
     public Temperature condenserTemperature();
 

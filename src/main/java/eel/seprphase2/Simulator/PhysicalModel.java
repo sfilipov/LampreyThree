@@ -46,7 +46,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     private HashMap<Integer, Connection> allConnections;
     @JsonProperty
     private HeatSink heatSink;
-    private FailableComponent currentWornComponent = null;
+    private String currentWornComponent = "";
     /**
      *
      */
@@ -227,8 +227,39 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     @Override
     public void setWornComponent(FailableComponent wornComponent) {
-        currentWornComponent = wornComponent;
+        if(wornComponent == null) {            
+            currentWornComponent = "";           
+        }
+        else {
+            /*
+             * Check if a Valve was worn, if so get its Key.
+             */
+            Iterator pumpIterator = allPumps.entrySet().iterator();
+            while (pumpIterator.hasNext()) {
+                Map.Entry pump = (Map.Entry)pumpIterator.next();
+
+                if (((Pump)pump.getValue()).equals(wornComponent)) {
+                    currentWornComponent = ("Pump " + pump.getKey());                   
+                }
+            }
+
+            /*
+             * Check if the condenser was worn
+             */
+            if (wornComponent instanceof Condenser) {
+                currentWornComponent = ("Condenser");               
+            }
+            /*
+             * Check if the turbine was worn
+             */
+            else if (wornComponent instanceof Turbine) {
+                currentWornComponent = ("Turbine");               
+            }
+        }
+        
+        
     }
+    
     @Override
     public void setReactorToTurbine(boolean open) {
         reactorToTurbine.setOpen(open);
@@ -328,7 +359,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public FailableComponent wornComponent() {
+    public String wornComponent() {
         return currentWornComponent;
     }
     

@@ -17,6 +17,7 @@ import lamprey.seprphase3.GUI.BackyardReactor;
  */
 public class GameplayScreen extends AbstractScreen {
     Texture gamebgTexture;
+    Texture borderTexture;
     Texture condenserTexture;
     Texture coolerTexture;
     Texture pipesTexture;
@@ -25,6 +26,7 @@ public class GameplayScreen extends AbstractScreen {
     Texture turbineTexture;
     Texture pauseTexture;
     Image gamebgImage;
+    Image borderImage;
     Image condenserImage;
     Image coolerImage;
     Image pipesImage;
@@ -37,6 +39,7 @@ public class GameplayScreen extends AbstractScreen {
         super(game);
         
         gamebgTexture    = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
+        borderTexture    = new Texture(Gdx.files.internal("assets\\game\\border.png"));
         condenserTexture = new Texture(Gdx.files.internal("assets\\game\\condenser.png"));
         coolerTexture    = new Texture(Gdx.files.internal("assets\\game\\cooler.png"));
         pipesTexture     = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
@@ -50,6 +53,7 @@ public class GameplayScreen extends AbstractScreen {
         super.show();
         
         gamebgImage    = new Image(gamebgTexture);
+        borderImage    = new Image(borderTexture);
         condenserImage = new Image(condenserTexture);
         coolerImage    = new Image(coolerTexture);
         pipesImage     = new Image(pipesTexture);
@@ -59,6 +63,7 @@ public class GameplayScreen extends AbstractScreen {
 //        pauseImage     = new Image();
         
         gamebgImage.setPosition(0, 0);
+        borderImage.setPosition(0, 0);
         condenserImage.setPosition(521, 110);
         coolerImage.setPosition(737, 102);
         pipesImage.setPosition(131, 175);
@@ -72,6 +77,7 @@ public class GameplayScreen extends AbstractScreen {
 //        pauseImage.addListener(getPauseListener());
         
         stage.addActor(gamebgImage);
+        stage.addActor(borderImage);
         stage.addActor(pipesImage);
         stage.addActor(coolerImage);
         stage.addActor(poweroutImage);

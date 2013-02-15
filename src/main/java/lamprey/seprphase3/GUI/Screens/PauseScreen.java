@@ -16,28 +16,28 @@ import lamprey.seprphase3.GUI.BackyardReactor;
  * @author Simeon
  */
 public class PauseScreen extends AbstractScreen {
-    Texture pausebgTexture;
+    Texture pauseblurTexture;
     Texture pausePopupTexture;
-    Image   pausebgImage;
+    Image   pauseblurImage;
     Image   pausePopupImage;
 
     
     public PauseScreen(BackyardReactor game) {
         super(game);
         pausePopupTexture = new Texture(Gdx.files.internal("assets\\pause\\pausepopup.png"));
-        pausebgTexture = new Texture(Gdx.files.internal("assets\\pause\\backyardreactor2.png"));
+        pauseblurTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
     }
     
     @Override
     public void show() {
         super.show();
-        pausebgImage    = new Image(pausebgTexture);
+        pauseblurImage    = new Image(pauseblurTexture);
         pausePopupImage = new Image(pausePopupTexture);
 
         pausePopupImage.setPosition(240, 135);
         pausePopupImage.addListener(getPopupListener());
         
-        stage.addActor(pausebgImage);
+        stage.addActor(pauseblurImage);
         stage.addActor(pausePopupImage);
     }
     

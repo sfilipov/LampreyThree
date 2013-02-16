@@ -31,8 +31,9 @@ public class GameplayScreen extends AbstractScreen {
     Texture reactorTexture;
     Texture turbineTexture;
     Texture mechanicSheet;
-    Texture mechanicNotMoving;
+    Texture mechanicNotMovingTexture;
     Texture pauseTexture;
+    Texture consolebackTexture;
     Image gamebgImage;
     Image borderImage;
     Image condenserImage;
@@ -43,6 +44,7 @@ public class GameplayScreen extends AbstractScreen {
     Image turbineImage;
     Mechanic mechanicImage;
     Image pauseImage;
+    Image consolebackImage;
      
     float deltaSum;
     float mechanicX;
@@ -53,17 +55,18 @@ public class GameplayScreen extends AbstractScreen {
     public GameplayScreen(BackyardReactor game) {
         super(game);
         
-        gamebgTexture     = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
-        borderTexture     = new Texture(Gdx.files.internal("assets\\game\\border.png"));
-        condenserTexture  = new Texture(Gdx.files.internal("assets\\game\\condenser.png"));
-        coolerTexture     = new Texture(Gdx.files.internal("assets\\game\\cooler.png"));
-        pipesTexture      = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
-        poweroutTexture   = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
-        reactorTexture    = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
-        turbineTexture    = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
-        mechanicSheet     = new Texture(Gdx.files.internal("assets\\game\\mechanic_spritesheet.png"));
-        mechanicNotMoving = new Texture(Gdx.files.internal("assets\\game\\mechanic_notmoving.png"));
-        pauseTexture      = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
+        gamebgTexture      = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
+        borderTexture      = new Texture(Gdx.files.internal("assets\\game\\border.png"));
+        condenserTexture   = new Texture(Gdx.files.internal("assets\\game\\condenser.png"));
+        coolerTexture      = new Texture(Gdx.files.internal("assets\\game\\cooler.png"));
+        pipesTexture       = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
+        poweroutTexture    = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
+        reactorTexture     = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
+        turbineTexture     = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
+        pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
+        consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
+        mechanicSheet      = new Texture(Gdx.files.internal("assets\\game\\mechanic_spritesheet.png"));
+        mechanicNotMovingTexture = new Texture(Gdx.files.internal("assets\\game\\mechanic_notmoving.png"));
         
         TextureRegion[][] split = TextureRegion.split(mechanicSheet, 
                                                       mechanicSheet.getWidth()  / MECHANIC_COLS, 
@@ -78,16 +81,17 @@ public class GameplayScreen extends AbstractScreen {
         }
         
         
-        gamebgImage    = new Image(gamebgTexture);
-        borderImage    = new Image(borderTexture);
-        condenserImage = new Image(condenserTexture);
-        coolerImage    = new Image(coolerTexture);
-        pipesImage     = new Image(pipesTexture);
-        poweroutImage  = new Image(poweroutTexture);
-        reactorImage   = new Image(reactorTexture);
-        turbineImage   = new Image(turbineTexture);
-        mechanicImage  = new Mechanic(mechanicFrames, mechanicNotMoving, Direction.Right);
-        pauseImage     = new Image(pauseTexture);
+        gamebgImage      = new Image(gamebgTexture);
+        borderImage      = new Image(borderTexture);
+        condenserImage   = new Image(condenserTexture);
+        coolerImage      = new Image(coolerTexture);
+        pipesImage       = new Image(pipesTexture);
+        poweroutImage    = new Image(poweroutTexture);
+        reactorImage     = new Image(reactorTexture);
+        turbineImage     = new Image(turbineTexture);
+        mechanicImage    = new Mechanic(mechanicFrames, mechanicNotMovingTexture, Direction.Right);
+        pauseImage       = new Image(pauseTexture);
+        consolebackImage = new Image(consolebackTexture);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -100,6 +104,7 @@ public class GameplayScreen extends AbstractScreen {
         mechanicImage.setPosition(650, 75);
         mechanicImage.moveMechanicTo(650f);
         pauseImage.setPosition(20, 458);
+        consolebackImage.setPosition(260, 0);
         
         
         //Makes image semi-transparent
@@ -127,6 +132,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
+        stage.addActor(consolebackImage);
         
         deltaSum = 0f;
     }
@@ -165,7 +171,7 @@ public class GameplayScreen extends AbstractScreen {
         return new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mechanicImage.moveMechanicTo(50f);
+                mechanicImage.moveMechanicTo(60f);
                 return true;
             }
         };

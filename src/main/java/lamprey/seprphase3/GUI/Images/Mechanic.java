@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import lamprey.seprphase3.GUI.Screens.Direction;
 
@@ -19,16 +18,17 @@ import lamprey.seprphase3.GUI.Screens.Direction;
  * @author Simeon
  */
 public class Mechanic extends Image {
-    private Animation mechanicAnimation;
-    private TextureRegion frame;
-    private TextureRegionDrawable notMoving;
-    private Direction mechanicDirection;
+    private final static float MOVEMENT_SPEED = 8f;
     
     private float mechanicX;
     private float mechanicWidth;
     private float moveMechanicTo;
     private float stateTime;
     
+    private Animation mechanicAnimation;
+    private TextureRegion frame;
+    private TextureRegionDrawable notMoving;
+    private Direction mechanicDirection;
     
 //    public Mechanic(Drawable drawable, Direction mechanicDirection) {
 //        super(drawable);
@@ -91,17 +91,17 @@ public class Mechanic extends Image {
             frame = mechanicAnimation.getKeyFrame(stateTime, true);
             this.setDrawable(new TextureRegionDrawable(frame));
             
-            if (Math.abs(mechanicX - moveMechanicTo) <= 4f) {
+            if (Math.abs(mechanicX - moveMechanicTo) < MOVEMENT_SPEED) {
                 this.setX(moveMechanicTo);
             }
-            if (mechanicX < moveMechanicTo) {
+            else if (mechanicX < moveMechanicTo) {
                 this.setDirection(Direction.Right);
-                mechanicX += 4f;
+                mechanicX += MOVEMENT_SPEED;
                 this.setX(mechanicX);
             }
             else if (mechanicX > moveMechanicTo) {
                 this.setDirection(Direction.Left);
-                mechanicX -= 4f;
+                mechanicX -= MOVEMENT_SPEED;
                 this.setX(mechanicX);
             }
         }

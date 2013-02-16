@@ -6,6 +6,7 @@ package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -17,6 +18,10 @@ import lamprey.seprphase3.GUI.Images.Mechanic;
  * @author Simeon
  */
 public class GameplayScreen extends AbstractScreen {
+    private static final int MECHANIC_COLS = 5;
+    private static final int MECHANIC_ROWS = 4;
+    TextureRegion[] mechanicFrames;
+    
     Texture gamebgTexture;
     Texture borderTexture;
     Texture condenserTexture;
@@ -25,7 +30,8 @@ public class GameplayScreen extends AbstractScreen {
     Texture poweroutTexture;
     Texture reactorTexture;
     Texture turbineTexture;
-    Texture mechanicTexture;
+    Texture mechanicSheet;
+    Texture mechanicNotMoving;
     Texture pauseTexture;
     Image gamebgImage;
     Image borderImage;
@@ -37,7 +43,7 @@ public class GameplayScreen extends AbstractScreen {
     Image turbineImage;
     Mechanic mechanicImage;
     Image pauseImage;
-    
+     
     float deltaSum;
     float mechanicX;
     float moveMechanicTo;
@@ -47,16 +53,30 @@ public class GameplayScreen extends AbstractScreen {
     public GameplayScreen(BackyardReactor game) {
         super(game);
         
-        gamebgTexture    = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
-        borderTexture    = new Texture(Gdx.files.internal("assets\\game\\border.png"));
-        condenserTexture = new Texture(Gdx.files.internal("assets\\game\\condenser.png"));
-        coolerTexture    = new Texture(Gdx.files.internal("assets\\game\\cooler.png"));
-        pipesTexture     = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
-        poweroutTexture  = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
-        reactorTexture   = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
-        turbineTexture   = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
-        mechanicTexture  = new Texture(Gdx.files.internal("assets\\game\\mechanic.png"));
-        pauseTexture     = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
+        gamebgTexture     = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
+        borderTexture     = new Texture(Gdx.files.internal("assets\\game\\border.png"));
+        condenserTexture  = new Texture(Gdx.files.internal("assets\\game\\condenser.png"));
+        coolerTexture     = new Texture(Gdx.files.internal("assets\\game\\cooler.png"));
+        pipesTexture      = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
+        poweroutTexture   = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
+        reactorTexture    = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
+        turbineTexture    = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
+        mechanicSheet     = new Texture(Gdx.files.internal("assets\\game\\mechanic_spritesheet.png"));
+        mechanicNotMoving = new Texture(Gdx.files.internal("assets\\game\\mechanic_notmoving.png"));
+        pauseTexture      = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
+        
+        TextureRegion[][] split = TextureRegion.split(mechanicSheet, 
+                                                      mechanicSheet.getWidth()  / MECHANIC_COLS, 
+                                                      mechanicSheet.getHeight() / MECHANIC_ROWS);
+        mechanicFrames = new TextureRegion[MECHANIC_COLS * MECHANIC_ROWS];
+        int index = 0;
+        for (int i=0; i < MECHANIC_ROWS; i++) {
+            for (int j=0; j < MECHANIC_COLS; j++) {
+                mechanicFrames[index] = split[i][j];
+                index++;
+            }
+        }
+        
         
         gamebgImage    = new Image(gamebgTexture);
         borderImage    = new Image(borderTexture);
@@ -66,7 +86,7 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage  = new Image(poweroutTexture);
         reactorImage   = new Image(reactorTexture);
         turbineImage   = new Image(turbineTexture);
-        mechanicImage  = new Mechanic(mechanicTexture, Direction.Right);
+        mechanicImage  = new Mechanic(mechanicFrames, mechanicNotMoving, Direction.Right);
         pauseImage     = new Image(pauseTexture);
         
         gamebgImage.setPosition(0, 0);
@@ -78,7 +98,7 @@ public class GameplayScreen extends AbstractScreen {
         reactorImage.setPosition(32, 113);
         turbineImage.setPosition(448, 410);
         mechanicImage.setPosition(650, 75);
-        moveMechanicTo(650f);
+        mechanicImage.moveMechanicTo(650f);
         pauseImage.setPosition(20, 458);
         
         
@@ -119,11 +139,10 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         deltaSum += delta;
-        if (deltaSum > 0.016) {
-            deltaSum -= 0.016;
-            moveMechanic();
+        if (deltaSum > 0.0167) {
+            deltaSum -= 0.0167;
+            mechanicImage.moveMechanic();
         }
-        
         super.render(delta);
     }
     
@@ -136,7 +155,7 @@ public class GameplayScreen extends AbstractScreen {
         return new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                moveMechanicTo(650f);
+                mechanicImage.moveMechanicTo(650f);
                 return true;
             }
         };
@@ -146,7 +165,7 @@ public class GameplayScreen extends AbstractScreen {
         return new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                moveMechanicTo(50f);
+                mechanicImage.moveMechanicTo(50f);
                 return true;
             }
         };
@@ -170,29 +189,5 @@ public class GameplayScreen extends AbstractScreen {
 //                return false;
 //            }
         };
-    }
-    
-    private void moveMechanicTo(float x) {
-        moveMechanicTo = x;
-    }
-    
-    private void moveMechanic() {
-        mechanicX = mechanicImage.getX();
-        if (Math.abs(mechanicX - moveMechanicTo) <= 4f) {
-            mechanicImage.setX(moveMechanicTo);
-        }
-        if (mechanicX < moveMechanicTo) {
-            mechanicImage.setMechanicDirection(Direction.Right);
-            mechanicX += 4f;
-            mechanicImage.setX(mechanicX);
-        }
-        else if (mechanicX > moveMechanicTo) {
-            mechanicImage.setMechanicDirection(Direction.Left);
-            mechanicX -= 4f;
-            mechanicImage.setX(mechanicX);
-        }
-        else {
-            //Do nothing because mechanicX is equal to moveMechanicTo
-        }
     }
 }

@@ -4,10 +4,14 @@
  */
 package lamprey.seprphase3.GUI.Images;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import lamprey.seprphase3.GUI.Screens.Direction;
 
 /**
@@ -15,22 +19,39 @@ import lamprey.seprphase3.GUI.Screens.Direction;
  * @author Simeon
  */
 public class Mechanic extends Image {
+    private Animation mechanicAnimation;
+    private TextureRegion frame;
+    private TextureRegionDrawable notMoving;
     private Direction mechanicDirection;
+    
     private float mechanicX;
     private float mechanicWidth;
+    private float moveMechanicTo;
+    private float stateTime;
     
-    public Mechanic(Drawable drawable, Direction mechanicDirection) {
-        super(drawable);
-        this.mechanicDirection = mechanicDirection;
-    }
     
-    public Mechanic(Texture texture, Direction mechanicDirection) {
-        super(texture);
+//    public Mechanic(Drawable drawable, Direction mechanicDirection) {
+//        super(drawable);
+//        this.mechanicDirection = mechanicDirection;
+//    }
+//    
+//    public Mechanic(Texture texture, Direction mechanicDirection) {
+//        super(texture);
+//        this.mechanicDirection = mechanicDirection;
+//    }
+    
+    public Mechanic(TextureRegion[] sheet, Texture notMoving, Direction mechanicDirection) {
+        super(notMoving);
+        mechanicAnimation = new Animation(0.0167f, sheet);
+        this.notMoving = new TextureRegionDrawable(new TextureRegion(notMoving));
         this.mechanicDirection = mechanicDirection;
+        stateTime = 0;
     }
     
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
+
+        
         if (mechanicDirection == Direction.Right) {
             super.draw(batch, parentAlpha);
         }
@@ -47,11 +68,49 @@ public class Mechanic extends Image {
         }
     }
     
-    public void setMechanicDirection(Direction mechanicDirection) {
+    /**
+     * Returns the direction the mechanic is looking at (left or right)
+     * @return 
+     */
+    public Direction getDirection() {
+        return this.mechanicDirection;
+    }
+    
+    /**
+     * Sets the direction the mechanic is looking at (left or right)
+     * @param mechanicDirection the direction
+     */
+    public void setDirection(Direction mechanicDirection) {
         this.mechanicDirection = mechanicDirection;
     }
     
-    public Direction getMechanicDirection() {
-        return this.mechanicDirection;
+    public void moveMechanic() {
+        mechanicX = this.getX();
+        if (Math.abs(mechanicX - moveMechanicTo) > 0.1) {
+            stateTime += Gdx.graphics.getDeltaTime();
+            frame = mechanicAnimation.getKeyFrame(stateTime, true);
+            this.setDrawable(new TextureRegionDrawable(frame));
+            
+            if (Math.abs(mechanicX - moveMechanicTo) <= 5f) {
+                this.setX(moveMechanicTo);
+            }
+            if (mechanicX < moveMechanicTo) {
+                this.setDirection(Direction.Right);
+                mechanicX += 5f;
+                this.setX(mechanicX);
+            }
+            else if (mechanicX > moveMechanicTo) {
+                this.setDirection(Direction.Left);
+                mechanicX -= 5f;
+                this.setX(mechanicX);
+            }
+        }
+        else {
+            this.setDrawable(notMoving);
+        }
+    }
+    
+    public void moveMechanicTo(float moveMechanicTo) {
+        this.moveMechanicTo = moveMechanicTo;
     }
 }

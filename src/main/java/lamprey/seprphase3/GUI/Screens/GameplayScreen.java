@@ -5,10 +5,12 @@
 package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import java.awt.Transparency;
 import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
@@ -24,9 +26,8 @@ public class GameplayScreen extends AbstractScreen {
     Texture poweroutTexture;
     Texture reactorTexture;
     Texture turbineTexture;
-    Texture pauseTexture;
     Texture mechanicTexture;
-//    Texture pauseTexture;
+    Texture pauseTexture;
     Image gamebgImage;
     Image borderImage;
     Image condenserImage;
@@ -36,7 +37,7 @@ public class GameplayScreen extends AbstractScreen {
     Image reactorImage;
     Image turbineImage;
     Image mechanicImage;
-//    Image pauseImage;
+    Image pauseImage;
     
     float deltaSum;
     float mechanicX;
@@ -53,12 +54,7 @@ public class GameplayScreen extends AbstractScreen {
         reactorTexture   = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
         turbineTexture   = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
         mechanicTexture  = new Texture(Gdx.files.internal("assets\\game\\mechanic.png"));
-//        pauseTexture     = new Texture(Gdx.files.internal("assets\\game\\???.png"));
-    }
-    
-    @Override
-    public void show() {
-        super.show();
+        pauseTexture     = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
         
         gamebgImage    = new Image(gamebgTexture);
         borderImage    = new Image(borderTexture);
@@ -69,7 +65,7 @@ public class GameplayScreen extends AbstractScreen {
         reactorImage   = new Image(reactorTexture);
         turbineImage   = new Image(turbineTexture);
         mechanicImage  = new Image(mechanicTexture);
-//        pauseImage     = new Image(pauseTexture);
+        pauseImage     = new Image(pauseTexture);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -80,11 +76,21 @@ public class GameplayScreen extends AbstractScreen {
         reactorImage.setPosition(32, 113);
         turbineImage.setPosition(448, 410);
         mechanicImage.setPosition(650, 75);
-//        pauseImage.setPosition(?, ?);
+        pauseImage.setPosition(20, 458);
+        
+        //Makes image semi-transparent
+        pauseImage.setColor(1f, 1f, 1f, 0.75f);
+        //Makes image three times smaller
+        pauseImage.setScale(0.33f);
         
         condenserImage.addListener(getCondenserListener());
         reactorImage.addListener(getReactorListener());
-//        pauseImage.addListener(getPauseListener());
+        pauseImage.addListener(getPauseListener());
+    }
+    
+    @Override
+    public void show() {
+        super.show();
         
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
@@ -95,7 +101,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(turbineImage);
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);
-//        stage.addActor(pauseImage);
+        stage.addActor(pauseImage);
         
         deltaSum = 0f;
     }
@@ -111,7 +117,6 @@ public class GameplayScreen extends AbstractScreen {
         
         deltaSum += delta;
         if (deltaSum > 0.016) {
-//            System.out.println(deltaSum);
             deltaSum -= 0.016;
             mechanicX = mechanicImage.getX();
             if (mechanicX > 50f) {
@@ -153,24 +158,22 @@ public class GameplayScreen extends AbstractScreen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 //Do something to the Condenser on click
                 System.out.println("Click on Reactor");
-                game.setScreen(game.getPauseScreen());
             }
         };
     }
     
     //DOESN'T Detect key presses
-//    private InputListener getPauseListener() {
-//        return new InputListener() {
-////            @Override
-////            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-////                return true;
-////            }
-////            
-////            @Override
-////            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-////                //Do something to the Pause on click
-////                System.out.println("Click on Pause");
-////            }
+    private InputListener getPauseListener() {
+        return new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(game.getPauseScreen());
+            }
 //            @Override
 //            public boolean keyDown(InputEvent event, int keycode) {
 //                if(keycode == Keys.A) {
@@ -179,6 +182,6 @@ public class GameplayScreen extends AbstractScreen {
 //                }
 //                return false;
 //            }
-//        };
-//    }
+        };
+    }
 }

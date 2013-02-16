@@ -91,17 +91,17 @@ public class Mechanic extends Image {
             frame = mechanicAnimation.getKeyFrame(stateTime, true);
             this.setDrawable(new TextureRegionDrawable(frame));
             
-            if (Math.abs(mechanicX - moveMechanicTo) <= 5f) {
+            if (Math.abs(mechanicX - moveMechanicTo) <= 4f) {
                 this.setX(moveMechanicTo);
             }
             if (mechanicX < moveMechanicTo) {
                 this.setDirection(Direction.Right);
-                mechanicX += 5f;
+                mechanicX += 4f;
                 this.setX(mechanicX);
             }
             else if (mechanicX > moveMechanicTo) {
                 this.setDirection(Direction.Left);
-                mechanicX -= 5f;
+                mechanicX -= 4f;
                 this.setX(mechanicX);
             }
         }

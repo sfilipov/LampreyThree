@@ -189,10 +189,12 @@ public class Reactor extends FailableComponent {
         outputPort.pressure = pressure;
         outputPort.temperature = temperature;
 
-        //System.out.println("Reactor Water Mass " + waterMass);
-        //System.out.println("Reactor Steam Mass " + outputPort.flow);
-
-
+        System.out.println("Reactor Output Port:");
+        System.out.println("\t Flow: " + outputPort.flow);
+        System.out.println("\t Mass: " + outputPort.mass);
+        System.out.println("\t Pressure: " + outputPort.pressure);
+        System.out.println("\t Density: " + outputPort.density);
+        
 
         /*
          * Calculates component wear after a time step

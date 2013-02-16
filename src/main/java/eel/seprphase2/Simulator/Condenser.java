@@ -98,8 +98,17 @@ public class Condenser extends FailableComponent {
             outputPort.pressure = pressure;
             stepWear();
         }
-
-
+        
+        // Debug
+        System.out.println("Condenser:");
+        System.out.println("\t Steam Mass: " + steamMass);
+        System.out.println("\t Water Mass: " + waterMass);
+        System.out.println("\t Temperature: " + temperature);
+        System.out.println("\t Pressure: " + pressure);
+        System.out.println("\t Steam Input Port:");
+        System.out.println("\t\t Flow: " + steamInputPort.flow);
+        System.out.println("\t\t Density: " + steamInputPort.density);
+        System.out.println("\t\t Temperature: " + steamInputPort.temperature);
     }
 
     /*

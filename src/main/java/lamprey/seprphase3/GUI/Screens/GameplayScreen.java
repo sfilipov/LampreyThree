@@ -25,6 +25,8 @@ public class GameplayScreen extends AbstractScreen {
     Texture reactorTexture;
     Texture turbineTexture;
     Texture pauseTexture;
+    Texture mechanicTexture;
+//    Texture pauseTexture;
     Image gamebgImage;
     Image borderImage;
     Image condenserImage;
@@ -33,7 +35,11 @@ public class GameplayScreen extends AbstractScreen {
     Image poweroutImage;
     Image reactorImage;
     Image turbineImage;
+    Image mechanicImage;
 //    Image pauseImage;
+    
+    float deltaSum;
+    float mechanicX;
     
     public GameplayScreen(BackyardReactor game) {
         super(game);
@@ -46,6 +52,8 @@ public class GameplayScreen extends AbstractScreen {
         poweroutTexture  = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
         reactorTexture   = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
         turbineTexture   = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
+        mechanicTexture  = new Texture(Gdx.files.internal("assets\\game\\mechanic.png"));
+//        pauseTexture     = new Texture(Gdx.files.internal("assets\\game\\???.png"));
     }
     
     @Override
@@ -60,7 +68,8 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage  = new Image(poweroutTexture);
         reactorImage   = new Image(reactorTexture);
         turbineImage   = new Image(turbineTexture);
-//        pauseImage     = new Image();
+        mechanicImage  = new Image(mechanicTexture);
+//        pauseImage     = new Image(pauseTexture);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -70,7 +79,8 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage.setPosition(709, 397);
         reactorImage.setPosition(32, 113);
         turbineImage.setPosition(448, 410);
-//        pauseImage.setPosition(0, 0);
+        mechanicImage.setPosition(650, 75);
+//        pauseImage.setPosition(?, ?);
         
         condenserImage.addListener(getCondenserListener());
         reactorImage.addListener(getReactorListener());
@@ -84,12 +94,32 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(reactorImage);
         stage.addActor(turbineImage);
         stage.addActor(condenserImage);
+        stage.addActor(mechanicImage);
 //        stage.addActor(pauseImage);
+        
+        deltaSum = 0f;
     }
     
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+    }
+    
+    @Override
+    public void render(float delta) {
+        super.render(delta);
+        
+        deltaSum += delta;
+        if (deltaSum > 0.016) {
+//            System.out.println(deltaSum);
+            deltaSum -= 0.016;
+            mechanicX = mechanicImage.getX();
+            if (mechanicX > 50f) {
+                mechanicX -= 4f;
+                System.out.println(mechanicX);
+                mechanicImage.setX(mechanicX);
+            }
+        }
     }
     
     @Override

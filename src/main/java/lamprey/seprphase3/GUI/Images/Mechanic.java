@@ -42,7 +42,7 @@ public class Mechanic extends Image {
     
     public Mechanic(TextureRegion[] sheet, Texture notMoving, Direction mechanicDirection) {
         super(notMoving);
-        mechanicAnimation = new Animation(0.0167f, sheet);
+        mechanicAnimation = new Animation(0.05f, sheet);
         this.notMoving = new TextureRegionDrawable(new TextureRegion(notMoving));
         this.mechanicDirection = mechanicDirection;
         stateTime = 0;

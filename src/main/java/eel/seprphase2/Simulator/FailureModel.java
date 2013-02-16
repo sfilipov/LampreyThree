@@ -67,7 +67,7 @@ public class FailureModel implements PlantController, PlantStatus {
      */
     public void failStateCheck() {
              
-        for (FailableComponent component: status.components()) {  
+        for (FailableComponent component: status.failableComponents()) {  
             if (component.wear().toString().equals("100%")) {
                 component.fail();               
             }
@@ -82,7 +82,7 @@ public class FailureModel implements PlantController, PlantStatus {
         int componentFailChance = 0;   
         int faults = 0;
         
-        for (FailableComponent component: status.components()) {
+        for (FailableComponent component: status.failableComponents()) {
             if(component.wear().toString().equals("100%") || component instanceof Reactor ) {
             }                       
             else{
@@ -253,8 +253,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public ArrayList<FailableComponent> components() {
-        return status.components();
+    public ArrayList<FailableComponent> failableComponents() {
+        return status.failableComponents();
     }
 
     private void checkReactorWaterLevel() {

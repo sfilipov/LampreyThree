@@ -80,19 +80,19 @@ public class PhysicalModelTest {
         } catch (CannotRepairException e) {
             fail(e.getMessage());
         }
-        assertFalse(model.components().get(2).hasFailed());
+        assertFalse(model.failableComponents().get(2).hasFailed());
     }
 
     @Test
     public void shouldSetTurbineBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();
-        model.components().get(0).fail();
+        model.failableComponents().get(0).fail();
         try {
             model.repairTurbine();
         } catch (CannotRepairException e) {
             fail(e.getMessage());
         }
-        assertFalse(model.components().get(0).hasFailed());
+        assertFalse(model.failableComponents().get(0).hasFailed());
     }
 
     @Test(expected = CannotRepairException.class)
@@ -192,7 +192,7 @@ public class PhysicalModelTest {
     @Test
     public void doesReturnCondenserToReactorWear() {
         PhysicalModel model = new PhysicalModel();   
-        ArrayList<FailableComponent> c = model.components();
+        ArrayList<FailableComponent> c = model.failableComponents();
         Percentage wear = new Percentage(40);
         c.get(3).addWear(wear); // 3 is reference of condenserToReactor
         assertEquals(percent(40), model.condenserToReactorWear());
@@ -201,7 +201,7 @@ public class PhysicalModelTest {
     @Test
     public void doesReturnHeatsinkToCondenserWear() {
         PhysicalModel model = new PhysicalModel();   
-        ArrayList<FailableComponent> c = model.components();
+        ArrayList<FailableComponent> c = model.failableComponents();
         Percentage wear = new Percentage(67);
         c.get(4).addWear(wear); // 4 is reference of heatsinkToCondenser
         assertEquals(percent(67), model.heatsinkToCondenserWear());
@@ -210,7 +210,7 @@ public class PhysicalModelTest {
     @Test
     public void doesReturnTurbineWear() {
         PhysicalModel model = new PhysicalModel();
-        ArrayList<FailableComponent> c = model.components();       
+        ArrayList<FailableComponent> c = model.failableComponents();       
         Percentage wear = new Percentage(15);
         c.get(0).addWear(wear); // 0 is reference of turbine
         assertEquals(percent(15), model.turbineWear());
@@ -219,7 +219,7 @@ public class PhysicalModelTest {
     @Test
     public void doesReturnCondenserWear() {
         PhysicalModel model = new PhysicalModel();    
-        ArrayList<FailableComponent> c = model.components();
+        ArrayList<FailableComponent> c = model.failableComponents();
         Percentage wear = new Percentage(50);
         c.get(2).addWear(wear); // 2 is reference of condenser
         assertEquals(percent(50), model.condenserWear());
@@ -228,7 +228,7 @@ public class PhysicalModelTest {
     @Test
     public void doesReturnReactorWear() {
         PhysicalModel model = new PhysicalModel();   
-        ArrayList<FailableComponent> c = model.components();
+        ArrayList<FailableComponent> c = model.failableComponents();
         Percentage wear = new Percentage(30);
         c.get(1).addWear(wear); // 1 is reference of reactor
         assertEquals(percent(30), model.reactorWear());        
@@ -237,7 +237,7 @@ public class PhysicalModelTest {
     @Test 
     public void doesNotReturnReactorWear() {
         PhysicalModel model = new PhysicalModel();   
-        ArrayList<FailableComponent> c = model.components();
+        ArrayList<FailableComponent> c = model.failableComponents();
         Percentage wear = new Percentage(30);
         c.get(0).addWear(wear); // 0 is reference of turbine, hence this should not work
         assertTrue( model.reactorWear() != percent(30)); 

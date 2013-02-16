@@ -275,7 +275,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public ArrayList<FailableComponent> components() {
+    public ArrayList<FailableComponent> failableComponents() {
         ArrayList<FailableComponent> c = new ArrayList<FailableComponent>();
         c.add(0, turbine);
         c.add(1, reactor);

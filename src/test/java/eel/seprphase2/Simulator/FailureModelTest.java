@@ -53,7 +53,7 @@ public class FailureModelTest {
         components.add(condenser);
         context.checking(new Expectations() {
             {
-                allowing(plantStatus).components();
+                allowing(plantStatus).failableComponents();
                 will(returnValue(components));
             }
         });
@@ -73,7 +73,7 @@ public class FailureModelTest {
         components.add(condenser);
         context.checking(new Expectations() {
             {
-                allowing(plantStatus).components();
+                allowing(plantStatus).failableComponents();
                 will(returnValue(components));
             }
         });
@@ -91,7 +91,7 @@ public class FailureModelTest {
         context.checking(new Expectations() {
             {                
                 allowing(plantController).setWornComponent(null);
-                allowing(plantStatus).components();
+                allowing(plantStatus).failableComponents();
                 will(returnValue(components));
             }
         });
@@ -111,7 +111,7 @@ public class FailureModelTest {
         context.checking(new Expectations() {
             {               
                 ignoring(plantController);
-                allowing(plantStatus).components();
+                allowing(plantStatus).failableComponents();
                 will(returnValue(components));
             }
         });

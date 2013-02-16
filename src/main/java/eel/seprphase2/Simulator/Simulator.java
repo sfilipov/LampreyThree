@@ -231,7 +231,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
 
     @Override
-    public ArrayList<FailableComponent> components() {
+    public ArrayList<FailableComponent> failableComponents() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 }

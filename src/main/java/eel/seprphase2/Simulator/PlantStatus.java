@@ -79,5 +79,5 @@ public interface PlantStatus {
 
     public boolean turbineHasFailed();
 
-    public ArrayList<FailableComponent> components();
+    public ArrayList<FailableComponent> failableComponents();
 }

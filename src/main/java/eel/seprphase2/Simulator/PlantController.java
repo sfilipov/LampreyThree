@@ -23,8 +23,12 @@ public interface PlantController {
      *
      */
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException;
+    
+    public void flipValveState(int valveNumber) throws KeyNotFoundException;
 
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException;
+    
+    public void flipPumpState(int pumpNumber) throws CannotControlException, KeyNotFoundException;
 
     public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException;
 

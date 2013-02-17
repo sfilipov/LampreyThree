@@ -295,6 +295,16 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
+    public void flipValveState(int valveNumber) throws KeyNotFoundException {
+        if (allConnections.containsKey(valveNumber)) {
+            boolean isOpen = allConnections.get(valveNumber).getOpen();
+            allConnections.get(valveNumber).setOpen(!isOpen);
+        } else {
+            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
+        }
+    }
+    
+    @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
         if (!allPumps.containsKey(pumpNumber)) {
             throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
@@ -307,6 +317,20 @@ public class PhysicalModel implements PlantController, PlantStatus {
         allPumps.get(pumpNumber).setStatus(isPumping);
     }
 
+    @Override
+    public void flipPumpState(int pumpNumber) throws CannotControlException, KeyNotFoundException {
+        if (!allPumps.containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+        }
+
+        if (allPumps.get(pumpNumber).hasFailed()) {
+            throw new CannotControlException("Pump " + pumpNumber + " is failed");
+        }
+        
+        boolean isPumping = allPumps.get(pumpNumber).getStatus();
+        allPumps.get(pumpNumber).setStatus(!isPumping);
+    }
+    
     @Override
     public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
         if (allPumps.containsKey(pumpNumber)) {

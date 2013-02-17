@@ -15,21 +15,35 @@ import lamprey.seprphase3.GUI.MenuButtonListener;
  */
 public class MenuButton extends Image {
     private MenuButtonListener listener;
+    private float mouseOver = 1f;
+    private float notOver = 0.8f;
+    private float current;
     
     public MenuButton(Texture texture) {
         super(texture);
         listener = new MenuButtonListener();
         this.addListener(listener);
+        current = 0.8f;
     }
     
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
-        if(listener.isOver()) {
-            this.setColor(1f, 1f, 1f, 1f);
+        //Increase and decrease current based on mouse hover
+        if       (listener.isOver() && current < mouseOver) {
+            current += 0.025; }
+        else if (!listener.isOver() && current > notOver) {
+            current -= 0.025; }
+        
+        //Put current to min or max if it underflows or overflows
+        if      (current > mouseOver) {
+            current = mouseOver;
         }
-        else {
-            this.setColor(0.8f, 0.8f, 0.8f, 0.8f);
+        else if (current < notOver) {
+            current = notOver;
         }
+        
+        //Set the proper color and draw the button
+        this.setColor(current, current, current, current);
         super.draw(batch, parentAlpha);
     }
 }

@@ -163,6 +163,16 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage reactorMinimumWaterLevel() {
         return reactor.minimumWaterLevel();
     }
+    
+    @Override
+    public Pressure reactorMaximumPressure(){ 
+        return reactor.maximumPressure();
+    }
+    
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        return reactor.maximumTemperature();
+    }
 
     @Override
     public void wearReactor() {

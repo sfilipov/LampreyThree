@@ -203,6 +203,20 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
+    
+    @Override
+    public Pressure reactorMaximumPressure(){ 
+        return failureModel.reactorMaximumPressure();
+    }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        return failureModel.reactorMaximumTemperature();
+    }
    /** 
     @Override
     public void setWornComponent(FailableComponent currentWornComponent) {

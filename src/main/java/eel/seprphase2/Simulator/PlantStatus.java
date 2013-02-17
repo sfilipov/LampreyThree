@@ -74,6 +74,10 @@ public interface PlantStatus {
     public Percentage condenserWear();
 
     public Percentage reactorMinimumWaterLevel();
+    
+    public Pressure reactorMaximumPressure();
+    
+    public Temperature reactorMaximumTemperature();
 
     public String[] listFailedComponents();
 

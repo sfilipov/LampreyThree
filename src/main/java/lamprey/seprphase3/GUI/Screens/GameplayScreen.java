@@ -34,6 +34,13 @@ public class GameplayScreen extends AbstractScreen {
     Texture mechanicNotMovingTexture;
     Texture pauseTexture;
     Texture consolebackTexture;
+    Texture crUpTexture;
+    Texture crDownTexture;
+    Texture pump1Texture;
+    Texture pump2Texture;
+    Texture valve1Texture;
+    Texture valve2Texture;
+    Texture sErrorTexture;
     Image gamebgImage;
     Image borderImage;
     Image condenserImage;
@@ -45,7 +52,14 @@ public class GameplayScreen extends AbstractScreen {
     Mechanic mechanicImage;
     Image pauseImage;
     Image consolebackImage;
-     
+    Image crUpImage;
+    Image crDownImage;
+    Image pump1Image;
+    Image pump2Image;
+    Image valve1Image;
+    Image valve2Image;
+    Image sErrorImage;
+    
     float deltaSum;
     float mechanicX;
     float moveMechanicTo;
@@ -64,9 +78,16 @@ public class GameplayScreen extends AbstractScreen {
         reactorTexture     = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
         turbineTexture     = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
         pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
-        consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
         mechanicSheet      = new Texture(Gdx.files.internal("assets\\game\\mechanic_spritesheet.png"));
         mechanicNotMovingTexture = new Texture(Gdx.files.internal("assets\\game\\mechanic_notmoving.png"));
+        consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
+        crUpTexture        = new Texture(Gdx.files.internal("assets\\game\\controlrodup.png"));
+        crDownTexture      = new Texture(Gdx.files.internal("assets\\game\\controlroddown.png"));
+        pump1Texture       = new Texture(Gdx.files.internal("assets\\game\\pump1.png"));
+        pump2Texture       = new Texture(Gdx.files.internal("assets\\game\\pump2.png"));
+        valve1Texture      = new Texture(Gdx.files.internal("assets\\game\\valve1.png"));
+        valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
+        sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareError.png"));
         
         TextureRegion[][] split = TextureRegion.split(mechanicSheet, 
                                                       mechanicSheet.getWidth()  / MECHANIC_COLS, 
@@ -80,7 +101,6 @@ public class GameplayScreen extends AbstractScreen {
             }
         }
         
-        
         gamebgImage      = new Image(gamebgTexture);
         borderImage      = new Image(borderTexture);
         condenserImage   = new Image(condenserTexture);
@@ -92,6 +112,13 @@ public class GameplayScreen extends AbstractScreen {
         mechanicImage    = new Mechanic(mechanicFrames, mechanicNotMovingTexture, Direction.Right);
         pauseImage       = new Image(pauseTexture);
         consolebackImage = new Image(consolebackTexture);
+        crUpImage        = new Image(crUpTexture);
+        crDownImage      = new Image(crDownTexture);
+        pump1Image       = new Image(pump1Texture);
+        pump2Image       = new Image(pump2Texture);
+        valve1Image      = new Image(valve1Texture);
+        valve2Image      = new Image(valve2Texture);
+        sErrorImage      = new Image(sErrorTexture);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -102,9 +129,16 @@ public class GameplayScreen extends AbstractScreen {
         reactorImage.setPosition(32, 113);
         turbineImage.setPosition(448, 410);
         mechanicImage.setPosition(650, 75);
-        mechanicImage.moveMechanicTo(650f);
+        mechanicImage.moveMechanicTo(650f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(20, 458);
         consolebackImage.setPosition(260, 0);
+        crUpImage.setPosition(545, 75);
+        crDownImage.setPosition(560, 21);
+        pump1Image.setPosition(323, 71);
+        pump2Image.setPosition(373, 76);
+        valve1Image.setPosition(300, 22);
+        valve2Image.setPosition(353, 22);
+        sErrorImage.setPosition(433, 18);
         
         
         //Makes image semi-transparent
@@ -133,6 +167,13 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
         stage.addActor(consolebackImage);
+        stage.addActor(crUpImage);
+        stage.addActor(crDownImage);
+        stage.addActor(pump1Image);
+        stage.addActor(pump2Image);
+        stage.addActor(valve1Image);
+        stage.addActor(valve2Image);
+        stage.addActor(sErrorImage);
         
         deltaSum = 0f;
     }

@@ -1,9 +1,8 @@
 package eel.seprphase2.Simulator;
 
+
 import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
-import eel.seprphase2.Utilities.Pressure;
-import eel.seprphase2.Utilities.Temperature;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
@@ -153,8 +152,7 @@ public class PhysicalModelTest {
         assertTrue(model.getPumpStatus(1));
 
     }
-
-    @Test
+     @Test
     public void shouldSetPumpStateToOff() throws CannotControlException, KeyNotFoundException {
         PhysicalModel model = new PhysicalModel();
         assertTrue(model.getPumpStatus(1));
@@ -241,7 +239,7 @@ public class PhysicalModelTest {
         ArrayList<FailableComponent> c = model.components();
         Percentage wear = new Percentage(30);
         c.get(0).addWear(wear); // 0 is reference of turbine, hence this should not work
-        assertTrue( model.reactorWear() != percent(30)); 
+        assertTrue( model.reactorWear() != percent(30));          
     }
     
     @Test

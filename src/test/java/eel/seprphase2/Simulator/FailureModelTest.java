@@ -101,7 +101,7 @@ public class FailureModelTest {
         
         assertEquals("0%", reactor.wear().toString());        
     }
-    
+      
     @Test
     public void doesCauseHardwareFailures() {
         final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
@@ -326,7 +326,33 @@ public class FailureModelTest {
             }
         });
         assertEquals(percent(50), model.reactorMinimumWaterLevel());
+    }    
+ 
+    @Test
+    public void shouldGetReactorMaximumTemperature() {
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).reactorMaximumTemperature();
+                will(returnValue(kelvin(3000)));
+            }
+        });
+        assertEquals(kelvin(3000), model.reactorMaximumTemperature());
     }
+       
+    @Test
+    public void shouldGetReactorMaximumPressure() {
+        
+        final Pressure pressure = new Pressure(30662500);
+        context.checking(new Expectations() {
+            {
+                allowing(plantStatus).reactorMaximumPressure();
+                will(returnValue(pressure));
+            }
+        });
+        assertEquals(pressure, model.reactorMaximumPressure());
+    }
+    
+    
 
     @Test
     public void failCondenser() {

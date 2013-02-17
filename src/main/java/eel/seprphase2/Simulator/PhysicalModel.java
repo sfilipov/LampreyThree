@@ -179,6 +179,12 @@ public class PhysicalModel implements PlantController, PlantStatus {
         Percentage damage = new Percentage(10);
         reactor.addWear(damage);
     }
+    
+    @Override
+    public void wearCondenser() {
+        Percentage damage = new Percentage(10);
+        condenser.addWear(damage);
+    }
 
     @Override
     public void failCondenser() {

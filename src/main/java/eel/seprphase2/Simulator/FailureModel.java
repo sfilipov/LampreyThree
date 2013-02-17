@@ -253,6 +253,11 @@ public class FailureModel implements PlantController, PlantStatus {
     public void wearReactor() {        
         controller.wearReactor();
     }
+    
+    @Override
+    public void wearCondenser() {
+        controller.wearCondenser();
+    }
 
     @Override
     public void step(int i) throws GameOverException {
@@ -290,7 +295,7 @@ public class FailureModel implements PlantController, PlantStatus {
 
     private void checkCondenserPressure() {
         if (status.condenserPressure().greaterThan(condenserMaxPressure)) {
-            controller.failCondenser();
+            controller.wearCondenser();
         }
     }
 

@@ -233,6 +233,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public void wearReactor() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    @Override
+    public void wearCondenser() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
     @Override
     public void step(int steps) throws GameOverException {

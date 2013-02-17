@@ -1,6 +1,7 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
 
 /**
@@ -43,17 +44,20 @@ public abstract class FailableComponent {
         stepWear();
     }
     
-    public void addWear(Percentage damage) {        
+    public void addWear(Percentage damage) throws GameOverException {        
         
         if ((wear.points() + damage.points()) < 100) {
             wear = wear.plus(damage);
         } else {
             wear = new Percentage(100);     //Cap at 100%
+            if (this instanceof Reactor) {
+                throw new GameOverException(); // Ends the game if reactor reaches max wear
+            }
         }
     }
 
     public void repair() throws CannotRepairException {
-        if (!hasFailed) {
+        if (this instanceof Reactor) {
             throw new CannotRepairException("This component cannot be repaired");
         }
 

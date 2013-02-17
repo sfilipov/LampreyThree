@@ -12,18 +12,28 @@ public abstract class FlowThroughComponent {
     /**
      * Component that flows into this one.
      */
-    FlowThroughComponent input;
+    public FlowThroughComponent input;
     /**
      * Component that this one flows into.
      */
-    FlowThroughComponent output;
+    public FlowThroughComponent output;
     /**
      * Object representing the flow out of this component.
      */
-    Port outputPort;
+    private Port outputPort;
     /**
      * Dictates whether or not this component is pressurised.
      * i.e. Reactor/Condenser
      */
-    boolean pressurised;
+    public boolean pressurised;
+    
+    /**
+     * Getter for outputPort.
+     * Takes a reference to a FlowThroughComponent for context,
+     * however this is only needed in the Junction class as it
+     * keeps a separate Port instance for each connected output.
+     */
+    public Port outputPort(FlowThroughComponent contextComponent) {
+        return outputPort;
+    }
 }

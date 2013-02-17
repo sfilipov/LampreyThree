@@ -22,7 +22,7 @@ public class Mechanic extends Image {
     
     private float mechanicX;
     private float mechanicWidth;
-    private float moveMechanicTo;
+    private float destination;
     private float stateTime;
     
     private Animation mechanicAnimation;
@@ -86,21 +86,21 @@ public class Mechanic extends Image {
     
     public void moveMechanic() {
         mechanicX = this.getX();
-        if (Math.abs(mechanicX - moveMechanicTo) > 0.1) {
+        if (Math.abs(mechanicX - destination) > 0.1) {
             stateTime += Gdx.graphics.getDeltaTime();
             frame = mechanicAnimation.getKeyFrame(stateTime, true);
             this.setDrawable(new TextureRegionDrawable(frame));
             this.setSize(100f, 130f);
             
-            if (Math.abs(mechanicX - moveMechanicTo) < MOVEMENT_SPEED) {
-                this.setX(moveMechanicTo);
+            if (Math.abs(mechanicX - destination) < MOVEMENT_SPEED) {
+                this.setX(destination);
             }
-            else if (mechanicX < moveMechanicTo) {
+            else if (mechanicX < destination) {
                 this.setDirection(Direction.Right);
                 mechanicX += MOVEMENT_SPEED;
                 this.setX(mechanicX);
             }
-            else if (mechanicX > moveMechanicTo) {
+            else if (mechanicX > destination) {
                 this.setDirection(Direction.Left);
                 mechanicX -= MOVEMENT_SPEED;
                 this.setX(mechanicX);
@@ -112,7 +112,7 @@ public class Mechanic extends Image {
         }
     }
     
-    public void moveMechanicTo(float moveMechanicTo) {
-        this.moveMechanicTo = moveMechanicTo;
+    public void moveMechanicTo(float destination) {
+        this.destination = destination;
     }
 }

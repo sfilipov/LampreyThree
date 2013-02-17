@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
@@ -17,6 +18,7 @@ import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.Mechanic;
+import lamprey.seprphase3.GUI.GameplayListeners;
 
 /**
  *
@@ -26,6 +28,8 @@ public class GameplayScreen extends AbstractScreen {
     private static final int MECHANIC_COLS = 5;
     private static final int MECHANIC_ROWS = 4;
     TextureRegion[] mechanicFrames;
+    
+    GameplayListeners listeners;
     
     Texture gamebgTexture;
     Texture borderTexture;
@@ -73,6 +77,7 @@ public class GameplayScreen extends AbstractScreen {
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
+        listeners = new GameplayListeners(this, controller, status, manager);
         
         gamebgTexture      = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
         borderTexture      = new Texture(Gdx.files.internal("assets\\game\\border.png"));
@@ -109,7 +114,7 @@ public class GameplayScreen extends AbstractScreen {
         gamebgImage      = new Image(gamebgTexture);
         borderImage      = new Image(borderTexture);
         condenserImage   = new HoverButton(condenserTexture, false);
-        coolerImage      = new Image(coolerTexture);
+        coolerImage      = new HoverButton(coolerTexture, false);
         pipesImage       = new Image(pipesTexture);
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorTexture, false);
@@ -151,9 +156,16 @@ public class GameplayScreen extends AbstractScreen {
         //Makes image three times smaller
         pauseImage.setScale(0.33f);
         
-        condenserImage.addListener(getCondenserListener());
-        reactorImage.addListener(getReactorListener());
-        pauseImage.addListener(getPauseListener());
+        condenserImage.addListener(listeners.getCondenserListener());
+        coolerImage.addListener(listeners.getCoolerListener());
+//        reactorImage.addListener(getReactorListener());
+        pauseImage.addListener(listeners.getPauseListener());
+        crUpImage.addListener(listeners.getConrolRodsUpListener());
+        crDownImage.addListener(listeners.getConrolRodsDownListener());
+        valve1Image.addListener(listeners.getValve1Listener());
+        valve2Image.addListener(listeners.getValve2Listener());
+        pump1Image.addListener(listeners.getPump1Listener());
+        pump2Image.addListener(listeners.getPump2Listener());
         
     }
     
@@ -203,49 +215,11 @@ public class GameplayScreen extends AbstractScreen {
         stage.clear();
     }
     
-    private InputListener getCondenserListener() {
-        return new InputListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mechanicImage.moveMechanicTo(630f);
-                try {
-                    controller.repairCondenser();
-                }
-                catch(CannotRepairException e) {
-                    //Stop hammering animation
-                }
-                return true;
-            }
-        };
+    public void moveMechanicTo(float destination) {
+        mechanicImage.moveMechanicTo(destination);
     }
     
-    private InputListener getReactorListener() {
-        return new InputListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mechanicImage.moveMechanicTo(60f);
-                return true;
-            }
-        };
-    }
-    
-    //DOESN'T Detect key presses
-    private InputListener getPauseListener() {
-        return new InputListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(game.getPauseScreen());
-                return true;
-            }
-            
-//            @Override
-//            public boolean keyDown(InputEvent event, int keycode) {
-//                if(keycode == Keys.A) {
-//                    game.setScreen(game.getPauseScreen());
-//                    return true;
-//                }
-//                return false;
-//            }
-        };
+    public BackyardReactor getGame() {
+        return this.game;
     }
 }

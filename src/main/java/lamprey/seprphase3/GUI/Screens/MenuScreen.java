@@ -76,6 +76,9 @@ public class MenuScreen extends AbstractScreen {
         lampreylogoImage.setPosition(436, 0);
         
         newgameImage.addListener(getNewgameListener());
+        loadgameImage.addListener(new ClickListener());
+        optionsImage.addListener(new ClickListener());
+        highscoresImage.addListener(new ClickListener());
         
         stage.addActor(menubgImage);
         stage.addActor(gamelogoImage);
@@ -110,9 +113,9 @@ public class MenuScreen extends AbstractScreen {
         return new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
                 if (!isInputShown) {
                     Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
-                    isInputShown = true;
                 }
             }
         };
@@ -128,7 +131,6 @@ public class MenuScreen extends AbstractScreen {
         @Override
         public void canceled () {
             game.setScreen(game.getMenuScreen());
-            isInputShown = false;
         }
     }
 }

@@ -6,8 +6,10 @@ package lamprey.seprphase3.GUI.Images;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import lamprey.seprphase3.GUI.MenuButtonListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 
 /**
  *
@@ -19,41 +21,49 @@ public class HoverButton extends Image {
     private final static float PRESSED  = 0.4f;
     private final static float STEP     = 0.025f;
     
-    private MenuButtonListener listener;
+    private Array<EventListener> listeners;
+    private ClickListener listener;
     private boolean transparency;
     private float current;
 
     
     public HoverButton(Texture texture, boolean transparency) {
         super(texture);
-        listener = new MenuButtonListener();
-        this.addListener(listener);
         this.transparency = transparency;
         current = 0.8f;
     }
     
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
-        //Increase and decrease current based on mouse hover
-        if       (listener.isPressed()) {
-            current = PRESSED;
+        listeners = this.getListeners();
+        
+        if (listeners.size > 0 && (listeners.first() instanceof ClickListener)) {
+            listener = (ClickListener) listeners.first();
+            
+            //Increase and decrease current based on mouse hover
+            if       (listener.isPressed()) {
+                current = PRESSED;
+            }
+            else if (listener.isOver() && current < OVER) {
+                current += STEP; }
+            else if (!listener.isOver() && current > NOT_OVER) {
+                current -= STEP; }
+            
+            //Put current to min or max if it underflows or overflows
+            if      (current > OVER) {
+                current = OVER; }
+            else if (!listener.isPressed() && current < NOT_OVER) {
+                current = NOT_OVER; }
+            
+            //Set the proper color and draw the button
+            if (listener.isPressed() || !transparency) {
+                this.setColor(current, current, current, 1f); }
+            else {
+                this.setColor(current, current, current, current); }
+            super.draw(batch, parentAlpha);
         }
-        else if (listener.isOver() && current < OVER) {
-            current += STEP; }
-        else if (!listener.isOver() && current > NOT_OVER) {
-            current -= STEP; }
-        
-        //Put current to min or max if it underflows or overflows
-        if      (current > OVER) {
-            current = OVER; }
-        else if (!listener.isPressed() && current < NOT_OVER) {
-            current = NOT_OVER; }
-        
-        //Set the proper color and draw the button
-        if (listener.isPressed() || !transparency) {
-            this.setColor(current, current, current, 1f); }
         else {
-            this.setColor(current, current, current, current); }
-        super.draw(batch, parentAlpha);
+            super.draw(batch, parentAlpha);
+        }
     }
 }

@@ -44,15 +44,12 @@ public abstract class FailableComponent {
         stepWear();
     }
     
-    public void addWear(Percentage damage) throws GameOverException {        
+    public void addWear(Percentage damage)  {        
         
         if ((wear.points() + damage.points()) < 100) {
             wear = wear.plus(damage);
         } else {
-            wear = new Percentage(100);     //Cap at 100%
-            if (this instanceof Reactor) {
-                throw new GameOverException(); // Ends the game if reactor reaches max wear
-            }
+            wear = new Percentage(100);     //Cap at 100%            
         }
     }
 

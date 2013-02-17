@@ -53,17 +53,14 @@ public abstract class FailableComponent {
         }
     }
 
-    public void repair() throws CannotRepairException {
-        if (this instanceof Reactor) {
-            throw new CannotRepairException("This component cannot be repaired");
-        }
-
+    public void repair() throws CannotRepairException {        
         hasFailed = false;
         Percentage repair = new Percentage(10);
         if ((wear.points() - repair.points()) > 0) {
             wear = wear.minus(repair);
         } else {
-            wear = new Percentage(0);     //Cap at 0%
+            wear = new Percentage(0);     //Cap at 0%            
+            throw new CannotRepairException("This component cannot be repaired any further");
         }        
     }
 

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import lamprey.seprphase3.GUI.BackyardReactor;
+import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.Mechanic;
 
 /**
@@ -43,21 +44,21 @@ public class GameplayScreen extends AbstractScreen {
     Texture sErrorTexture;
     Image gamebgImage;
     Image borderImage;
-    Image condenserImage;
+    HoverButton condenserImage;
     Image coolerImage;
     Image pipesImage;
     Image poweroutImage;
-    Image reactorImage;
+    HoverButton reactorImage;
     Image turbineImage;
     Mechanic mechanicImage;
-    Image pauseImage;
+    HoverButton pauseImage;
     Image consolebackImage;
-    Image crUpImage;
-    Image crDownImage;
-    Image pump1Image;
-    Image pump2Image;
-    Image valve1Image;
-    Image valve2Image;
+    HoverButton crUpImage;
+    HoverButton crDownImage;
+    HoverButton pump1Image;
+    HoverButton pump2Image;
+    HoverButton valve1Image;
+    HoverButton valve2Image;
     Image sErrorImage;
     
     float deltaSum;
@@ -103,22 +104,21 @@ public class GameplayScreen extends AbstractScreen {
         
         gamebgImage      = new Image(gamebgTexture);
         borderImage      = new Image(borderTexture);
-        condenserImage   = new Image(condenserTexture);
+        condenserImage   = new HoverButton(condenserTexture, false);
         coolerImage      = new Image(coolerTexture);
         pipesImage       = new Image(pipesTexture);
         poweroutImage    = new Image(poweroutTexture);
-        reactorImage     = new Image(reactorTexture);
+        reactorImage     = new HoverButton(reactorTexture, false);
         turbineImage     = new Image(turbineTexture);
         mechanicImage    = new Mechanic(mechanicFrames, mechanicNotMovingTexture, Direction.Right);
-        pauseImage       = new Image(pauseTexture);
+        pauseImage       = new HoverButton(pauseTexture,  true);
         consolebackImage = new Image(consolebackTexture);
-        crUpImage        = new Image(crUpTexture);
-        crDownImage      = new Image(crDownTexture);
-        pump1Image       = new Image(pump1Texture);
-        pump1Image.setColor(1f, 1f, 1f, 1f);
-        pump2Image       = new Image(pump2Texture);
-        valve1Image      = new Image(valve1Texture);
-        valve2Image      = new Image(valve2Texture);
+        crUpImage        = new HoverButton(crUpTexture,   false);
+        crDownImage      = new HoverButton(crDownTexture, false);
+        pump1Image       = new HoverButton(pump1Texture,  false);
+        pump2Image       = new HoverButton(pump2Texture,  false);
+        valve1Image      = new HoverButton(valve1Texture, false);
+        valve2Image      = new HoverButton(valve2Texture, false);
         sErrorImage      = new Image(sErrorTexture);
         
         gamebgImage.setPosition(0, 0);

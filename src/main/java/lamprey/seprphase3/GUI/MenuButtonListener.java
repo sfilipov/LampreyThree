@@ -17,9 +17,9 @@ public class MenuButtonListener extends ClickListener {
         super();
     }
     
-    @Override
-    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-        //Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
-        return true;
-    }
+//    @Override
+//    public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//        //Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
+//        return true;
+//    }
 }

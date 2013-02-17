@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import lamprey.seprphase3.GUI.BackyardReactor;
-import lamprey.seprphase3.GUI.Images.MenuButton;
+import lamprey.seprphase3.GUI.Images.HoverButton;
 
 /**
  *
@@ -27,10 +27,10 @@ public class MenuScreen extends AbstractScreen {
     Texture lampreylogoTexture;
     Image menubgImage;
     Image gamelogoImage;
-    MenuButton newgameImage;
-    MenuButton loadgameImage;
-    MenuButton optionsImage;
-    MenuButton highscoresImage;
+    HoverButton newgameImage;
+    HoverButton loadgameImage;
+    HoverButton optionsImage;
+    HoverButton highscoresImage;
     Image lampreylogoImage;
     
     OperatorNameInput nameListener;
@@ -56,10 +56,10 @@ public class MenuScreen extends AbstractScreen {
         
         menubgImage      = new Image(menubgTexture);
         gamelogoImage    = new Image(gamelogoTexture);
-        newgameImage     = new MenuButton(newgameTexture);
-        loadgameImage    = new MenuButton(loadgameTexture);
-        optionsImage     = new MenuButton(optionsTexture);
-        highscoresImage  = new MenuButton(highscoresTexture);
+        newgameImage     = new HoverButton(newgameTexture, true);
+        loadgameImage    = new HoverButton(loadgameTexture, true);
+        optionsImage     = new HoverButton(optionsTexture, true);
+        highscoresImage  = new HoverButton(highscoresTexture, true);
         lampreylogoImage = new Image(lampreylogoTexture);
         
         menubgImage.setPosition(0, 0);

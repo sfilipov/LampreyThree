@@ -90,7 +90,7 @@ public class Mechanic extends Image {
             stateTime += Gdx.graphics.getDeltaTime();
             frame = mechanicAnimation.getKeyFrame(stateTime, true);
             this.setDrawable(new TextureRegionDrawable(frame));
-            this.setScaleY(0.8f);
+            this.setSize(100f, 130f);
             
             if (Math.abs(mechanicX - moveMechanicTo) < MOVEMENT_SPEED) {
                 this.setX(moveMechanicTo);
@@ -108,7 +108,7 @@ public class Mechanic extends Image {
         }
         else {
             this.setDrawable(notMoving);
-            this.setScaleY(1f);
+            this.setSize(105f, 153f);
         }
     }
     

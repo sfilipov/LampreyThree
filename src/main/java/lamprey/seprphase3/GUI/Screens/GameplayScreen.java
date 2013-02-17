@@ -115,6 +115,7 @@ public class GameplayScreen extends AbstractScreen {
         crUpImage        = new Image(crUpTexture);
         crDownImage      = new Image(crDownTexture);
         pump1Image       = new Image(pump1Texture);
+        pump1Image.setColor(1f, 1f, 1f, 1f);
         pump2Image       = new Image(pump2Texture);
         valve1Image      = new Image(valve1Texture);
         valve2Image      = new Image(valve2Texture);

@@ -57,6 +57,8 @@ public class FailureModel implements PlantController, PlantStatus {
         randomWearCheck();
         failStateCheck(); // Requires a second check, because randomWearCheck may have cause a component to reach 100% wear
         checkReactorWaterLevel();
+        checkReactorPressure();
+        checkReactorTemperature();
         checkCondenserPressure();
         checkTurbineFailure();
     }
@@ -223,6 +225,16 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override
+    public Pressure reactorMaximumPressure() {
+        return status.reactorMaximumPressure();
+    }
+    
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        return status.reactorMaximumTemperature();
+    }
+    
+    @Override
     public String wornComponent() { 
         return status.wornComponent();
     }
@@ -262,6 +274,19 @@ public class FailureModel implements PlantController, PlantStatus {
                 controller.wearReactor();  
         }
     }
+    
+    private void checkReactorTemperature() {
+        if (status.reactorTemperature().greaterThan(status.reactorMaximumTemperature())) {
+                controller.wearReactor();  
+        }
+    }
+
+    private void checkReactorPressure() {
+        if (status.reactorPressure().greaterThan(status.reactorMaximumPressure())) {
+                controller.wearReactor();  
+        }
+    }
+
 
     private void checkCondenserPressure() {
         if (status.condenserPressure().greaterThan(condenserMaxPressure)) {

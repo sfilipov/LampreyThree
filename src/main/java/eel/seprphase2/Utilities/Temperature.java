@@ -47,6 +47,10 @@ public class Temperature {
     public double inKelvin() {
         return this.degreesKelvin;
     }
+    
+    public boolean greaterThan(Temperature other) {
+        return degreesKelvin > other.degreesKelvin;
+    }
 
     @Override
     public String toString() {

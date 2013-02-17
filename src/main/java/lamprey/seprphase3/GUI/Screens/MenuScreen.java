@@ -35,6 +35,8 @@ public class MenuScreen extends AbstractScreen {
     HoverButton highscoresImage;
     Image lampreylogoImage;
     
+    boolean isInputShown;
+    
     OperatorNameInput nameListener;
     
     public MenuScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
@@ -48,6 +50,7 @@ public class MenuScreen extends AbstractScreen {
         lampreylogoTexture = new Texture(Gdx.files.internal("assets\\menu\\lampreylogo.png"));
         
         nameListener = new OperatorNameInput();
+        isInputShown = false;
     }
      
     @Override
@@ -107,7 +110,10 @@ public class MenuScreen extends AbstractScreen {
         return new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
+                if (!isInputShown) {
+                    Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
+                    isInputShown = true;
+                }
             }
         };
     }
@@ -122,6 +128,7 @@ public class MenuScreen extends AbstractScreen {
         @Override
         public void canceled () {
             game.setScreen(game.getMenuScreen());
+            isInputShown = false;
         }
     }
 }

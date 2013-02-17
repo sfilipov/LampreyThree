@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -132,8 +133,8 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage.setPosition(709, 397);
         reactorImage.setPosition(32, 113);
         turbineImage.setPosition(448, 410);
-        mechanicImage.setPosition(650, 75);
-        mechanicImage.moveMechanicTo(650f); //ensures the mechanic is initially not moving
+        mechanicImage.setPosition(630, 75);
+        mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(20, 458);
         consolebackImage.setPosition(260, 0);
         crUpImage.setPosition(545, 75);
@@ -206,7 +207,13 @@ public class GameplayScreen extends AbstractScreen {
         return new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                mechanicImage.moveMechanicTo(650f);
+                mechanicImage.moveMechanicTo(630f);
+                try {
+                    controller.repairCondenser();
+                }
+                catch(CannotRepairException e) {
+                    //Stop hammering animation
+                }
                 return true;
             }
         };

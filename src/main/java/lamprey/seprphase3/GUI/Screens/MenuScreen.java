@@ -112,25 +112,6 @@ public class MenuScreen extends AbstractScreen {
         };
     }
     
-    private void drawHovers() {
-        Array<Actor> actors = stage.getActors();
-        for (Actor actor : actors) {
-            Array<EventListener> listeners = actor.getListeners();
-            if (listeners.size > 0) {
-                EventListener listener = listeners.first();
-                if (listener instanceof ClickListener) {
-                    ClickListener clickListener = (ClickListener) listener;
-                    if (clickListener.isOver()) {
-                        //Draw the hover image
-                    }
-                    else {
-                        //Draw the normal image
-                    }
-                }
-            }
-        }
-    }
-    
     private class OperatorNameInput implements TextInputListener {
         @Override
         public void input (String text) {

@@ -38,6 +38,13 @@ public class PhysicalModelTest {
         model.wearReactor();
         assertEquals("10%", model.reactorWear().toString());
     }
+    
+    @Test
+    public void shouldIncreaseCondenserWear() {
+        PhysicalModel model = new PhysicalModel();
+        model.wearCondenser();
+        assertEquals("10%", model.condenserWear().toString());
+    }
 
 
     

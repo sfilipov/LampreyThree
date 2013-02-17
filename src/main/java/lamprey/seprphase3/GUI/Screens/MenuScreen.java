@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import eel.seprphase2.Simulator.GameManager;
+import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 
@@ -35,8 +37,8 @@ public class MenuScreen extends AbstractScreen {
     
     OperatorNameInput nameListener;
     
-    public MenuScreen (BackyardReactor game) {
-        super(game);
+    public MenuScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
+        super(game, controller, status, manager);
         menubgTexture      = new Texture(Gdx.files.internal("assets\\menu\\menubg.png"));
         gamelogoTexture    = new Texture(Gdx.files.internal("assets\\menu\\gamelogo.png"));
         newgameTexture     = new Texture(Gdx.files.internal("assets\\menu\\newgame.png"));
@@ -132,6 +134,7 @@ public class MenuScreen extends AbstractScreen {
     private class OperatorNameInput implements TextInputListener {
         @Override
         public void input (String text) {
+            manager.setUsername(text);
             game.setScreen(game.getGameplayScreen());
         }
 

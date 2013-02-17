@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import eel.seprphase2.Simulator.GameManager;
+import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
@@ -12,10 +15,16 @@ import lamprey.seprphase3.GUI.BackyardReactor;
  */
 abstract class AbstractScreen implements Screen {
     protected final BackyardReactor game;
+    protected PlantController controller;
+    protected PlantStatus status;
+    protected GameManager manager;
     protected final Stage stage;
     
-    public AbstractScreen(BackyardReactor game) {
+    public AbstractScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         this.game  = game;
+        this.controller = controller;
+        this.status = status;
+        this.manager = manager;
         
         int width  = 960;
         int height = 540;

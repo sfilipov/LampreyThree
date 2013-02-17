@@ -1,6 +1,7 @@
 package lamprey.seprphase3.GUI;
 
 import com.badlogic.gdx.Game;
+import eel.seprphase2.Simulator.Simulator;
 import lamprey.seprphase3.GUI.Screens.GameplayScreen;
 import lamprey.seprphase3.GUI.Screens.MenuScreen;
 import lamprey.seprphase3.GUI.Screens.PauseScreen;
@@ -9,12 +10,14 @@ import lamprey.seprphase3.GUI.Screens.PauseScreen;
  *
  * @author Simeon
  */
-public class BackyardReactor extends Game {    
+public class BackyardReactor extends Game {
+    Simulator simulator;
     MenuScreen menuScreen;
     GameplayScreen gameplayScreen;
     PauseScreen pauseScreen;
     
     public BackyardReactor() {
+        simulator = new Simulator();
     }
     
     public MenuScreen getMenuScreen() {
@@ -32,10 +35,12 @@ public class BackyardReactor extends Game {
     //Game Methods
     
     @Override
-    public void create() {        
-        menuScreen     = new MenuScreen(this);
-        gameplayScreen = new GameplayScreen(this);
-        pauseScreen    = new PauseScreen(this);
+    public void create() {
+        simulator = new Simulator();
+        
+        menuScreen     = new MenuScreen(this, simulator, simulator, simulator);
+        gameplayScreen = new GameplayScreen(this, simulator, simulator, simulator);
+        pauseScreen    = new PauseScreen(this, simulator, simulator, simulator);
         
         setScreen(getMenuScreen());
     }

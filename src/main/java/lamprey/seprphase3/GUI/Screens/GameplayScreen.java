@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import eel.seprphase2.Simulator.GameManager;
+import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.Mechanic;
@@ -67,8 +70,8 @@ public class GameplayScreen extends AbstractScreen {
     
     Direction mechanicDirection;
     
-    public GameplayScreen(BackyardReactor game) {
-        super(game);
+    public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
+        super(game, controller, status, manager);
         
         gamebgTexture      = new Texture(Gdx.files.internal("assets\\game\\bg.png"));
         borderTexture      = new Texture(Gdx.files.internal("assets\\game\\border.png"));

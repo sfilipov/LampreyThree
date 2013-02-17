@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import eel.seprphase2.Simulator.GameManager;
+import eel.seprphase2.Simulator.PlantController;
+import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 
 /**
@@ -22,8 +25,8 @@ public class PauseScreen extends AbstractScreen {
     Image   pausePopupImage;
 
     
-    public PauseScreen(BackyardReactor game) {
-        super(game);
+    public PauseScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
+        super(game, controller, status, manager);
         pausePopupTexture = new Texture(Gdx.files.internal("assets\\pause\\pausepopup.png"));
         pauseblurTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
     }

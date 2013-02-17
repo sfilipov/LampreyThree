@@ -20,6 +20,8 @@ public class Reactor extends FailableComponent {
 
     private final Mass maximumWaterMass = kilograms(1000);
     private final Mass minimumWaterMass = kilograms(800);
+    private final Temperature maximumTemperature = kelvin(3000);
+    private final Pressure maximumPressure = new Pressure(30662500);
     private final Volume reactorVolume = cubicMetres(2);
     @JsonProperty
     private FuelPile fuelPile = new FuelPile();
@@ -241,6 +243,14 @@ public class Reactor extends FailableComponent {
 
     public Percentage minimumWaterLevel() {
         return new Percentage((this.minimumWaterMass.inKilograms() / this.maximumWaterMass.inKilograms()) * 100);
+    }
+    
+    public Pressure maximumPressure() {
+        return maximumPressure;
+    }
+    
+    public Temperature maximumTemperature() {
+        return maximumTemperature;
     }
 
     // avoid issues with floating-point error

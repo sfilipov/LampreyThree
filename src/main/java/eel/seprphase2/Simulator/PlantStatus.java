@@ -76,6 +76,8 @@ public interface PlantStatus {
     public Percentage condenserWaterLevel();
     
     public Percentage condenserWear();
+    
+    public double getOutputPower();
 
     public Percentage reactorMinimumWaterLevel();
     

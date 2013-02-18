@@ -183,6 +183,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage turbineWear() {
         return failureModel.turbineWear();
     }
+    
+    @Override
+    public double getOutputPower() {
+        return failureModel.getOutputPower();
+    }
 
     @Override
     public Temperature condenserTemperature() {

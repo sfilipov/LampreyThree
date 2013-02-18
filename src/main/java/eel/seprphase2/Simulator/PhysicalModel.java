@@ -355,6 +355,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage turbineWear(){
         return turbine.wear();
     }
+    
+    @Override
+    public double getOutputPower() {
+        return turbine.outputPower();
+    }
 
     @Override
     public Temperature condenserTemperature() {

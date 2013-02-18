@@ -190,6 +190,11 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override
+    public double getOutputPower() {
+        return status.getOutputPower();
+    }
+    
+    @Override
     public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException { 
         return status.getPumpWear(pumpNumber);
     }    

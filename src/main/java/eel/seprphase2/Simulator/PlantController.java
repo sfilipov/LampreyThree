@@ -39,6 +39,8 @@ public interface PlantController {
     public void failCondenser();
 
     public void wearReactor();
+    
+    public void wearCondenser();
 
     public void setReactorToTurbine(boolean open);
 

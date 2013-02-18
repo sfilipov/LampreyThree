@@ -155,6 +155,16 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException {
+        return failureModel.getPumpState(pumpNumber);
+    }
+    
+    @Override
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
+        return failureModel.getValveState(valveNumber);
+    }
+    
+    @Override
     public Percentage reactorWear() { 
         return failureModel.reactorWear();
     }
@@ -165,13 +175,8 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
-    public Percentage condenserToReactorWear() {
-        return failureModel.condenserToReactorWear();
-    }
-    
-    @Override
-    public Percentage heatsinkToCondenserWear() {
-        return failureModel.heatsinkToCondenserWear();
+    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
+        return failureModel.getPumpWear(pumpNumber);
     }
 
     @Override
@@ -187,6 +192,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     @Override
     public Percentage turbineWear() {
         return failureModel.turbineWear();
+    }
+    
+    @Override
+    public double getOutputPower() {
+        return failureModel.getOutputPower();
     }
 
     @Override
@@ -213,6 +223,20 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
+    
+    @Override
+    public Pressure reactorMaximumPressure(){ 
+        return failureModel.reactorMaximumPressure();
+    }
+    
+    /**
+     *
+     * @return
+     */
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        return failureModel.reactorMaximumTemperature();
+    }
    /** 
     @Override
     public void setWornComponent(FailableComponent currentWornComponent) {
@@ -227,6 +251,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
 
     @Override
     public void wearReactor() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    @Override
+    public void wearCondenser() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

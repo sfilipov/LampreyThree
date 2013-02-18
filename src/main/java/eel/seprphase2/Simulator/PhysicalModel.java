@@ -1,5 +1,6 @@
 package eel.seprphase2.Simulator;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -20,6 +21,7 @@ import java.util.Map;
  * @author Marius
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@JsonAutoDetect(getterVisibility= JsonAutoDetect.Visibility.NONE, setterVisibility=JsonAutoDetect.Visibility.NONE)
 public class PhysicalModel implements PlantController, PlantStatus {
 
     @JsonProperty
@@ -163,11 +165,27 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage reactorMinimumWaterLevel() {
         return reactor.minimumWaterLevel();
     }
+    
+    @Override
+    public Pressure reactorMaximumPressure(){ 
+        return reactor.maximumPressure();
+    }
+    
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        return reactor.maximumTemperature();
+    }
 
     @Override
     public void wearReactor() {
         Percentage damage = new Percentage(10);
         reactor.addWear(damage);
+    }
+    
+    @Override
+    public void wearCondenser() {
+        Percentage damage = new Percentage(10);
+        condenser.addWear(damage);
     }
 
     @Override
@@ -361,11 +379,34 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage turbineWear(){
         return turbine.wear();
     }
+    
+    @Override
+    public double getOutputPower() {
+        return turbine.outputPower();
+    }
 
     @Override
     public Temperature condenserTemperature() {
         return condenser.getTemperature();
     }
+    
+    @Override
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException  {
+        if (!allPumps.containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+        }
+        return allPumps.get(pumpNumber).getStatus();
+    }
+    
+    @Override
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
+        if (allConnections.containsKey(valveNumber)) {
+            return allConnections.get(valveNumber).getOpen();
+        } else {
+            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
+        }
+    }
+    
 
     @Override
     public Pressure condenserPressure() {
@@ -388,13 +429,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public Percentage condenserToReactorWear() { 
-        return condenserToReactor.wear();
-    }
-    
-    @Override
-    public Percentage heatsinkToCondenserWear() {
-        return heatsinkToCondenser.wear();
+    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
+        if (!allPumps.containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+        }
+        return allPumps.get(pumpNumber).wear();
     }
 
     @Override

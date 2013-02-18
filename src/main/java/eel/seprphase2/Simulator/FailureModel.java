@@ -57,6 +57,8 @@ public class FailureModel implements PlantController, PlantStatus {
         randomWearCheck();
         failStateCheck(); // Requires a second check, because randomWearCheck may have cause a component to reach 100% wear
         checkReactorWaterLevel();
+        checkReactorPressure();
+        checkReactorTemperature();
         checkCondenserPressure();
         checkTurbineFailure();
     }
@@ -198,15 +200,15 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public Percentage condenserToReactorWear() { 
-        return status.condenserToReactorWear();
+    public double getOutputPower() {
+        return status.getOutputPower();
     }
     
     @Override
-    public Percentage heatsinkToCondenserWear() { 
-        return status.heatsinkToCondenserWear();
-    }
-
+    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException { 
+        return status.getPumpWear(pumpNumber);
+    }    
+   
     @Override
     public Temperature condenserTemperature() {
         return status.condenserTemperature();
@@ -226,10 +228,29 @@ public class FailureModel implements PlantController, PlantStatus {
     public Percentage condenserWear() { 
         return status.condenserWear();
     }
+    
+    @Override
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException  { 
+        return status.getPumpState(pumpNumber);
+    }
+    
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException  { 
+        return status.getValveState(valveNumber);
+    }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {
         return status.reactorMinimumWaterLevel();
+    }
+    
+    @Override
+    public Pressure reactorMaximumPressure() {
+        return status.reactorMaximumPressure();
+    }
+    
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        return status.reactorMaximumTemperature();
     }
     
     @Override
@@ -250,6 +271,11 @@ public class FailureModel implements PlantController, PlantStatus {
     @Override
     public void wearReactor() {        
         controller.wearReactor();
+    }
+    
+    @Override
+    public void wearCondenser() {
+        controller.wearCondenser();
     }
 
     @Override
@@ -272,10 +298,23 @@ public class FailureModel implements PlantController, PlantStatus {
                 controller.wearReactor();  
         }
     }
+    
+    private void checkReactorTemperature() {
+        if (status.reactorTemperature().greaterThan(status.reactorMaximumTemperature())) {
+                controller.wearReactor();  
+        }
+    }
+
+    private void checkReactorPressure() {
+        if (status.reactorPressure().greaterThan(status.reactorMaximumPressure())) {
+                controller.wearReactor();  
+        }
+    }
+
 
     private void checkCondenserPressure() {
         if (status.condenserPressure().greaterThan(condenserMaxPressure)) {
-            controller.failCondenser();
+            controller.wearCondenser();
         }
     }
 

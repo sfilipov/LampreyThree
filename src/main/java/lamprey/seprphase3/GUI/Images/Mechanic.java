@@ -31,6 +31,8 @@ public class Mechanic extends Image {
     private final static int STAND_ROWS = 6;
     private final static float MOVEMENT_SPEED = 7f;
     private final static float MOVEMENT_FREQUENCY = 0.015f;
+    private final static float RUN_Y = 80f;
+    private final static float STATIC_Y = 75f;
     
     private float mechanicX;
     private float mechanicWidth;
@@ -98,12 +100,14 @@ public class Mechanic extends Image {
                 }
                 deltaSum -= MOVEMENT_FREQUENCY;
             }
+            this.setY(RUN_Y);
             frame = runAnimation.getKeyFrame(stateTime, true);
             this.setDrawable(new TextureRegionDrawable(frame));
             this.setSize(100f, 130f);
             scaleToUse = 0.9f;
         }
         else {
+            this.setY(STATIC_Y);
             frame = standAnimation.getKeyFrame(stateTime, true);
             this.setDrawable(new TextureRegionDrawable(frame));
             this.setSize(100f, 130f);

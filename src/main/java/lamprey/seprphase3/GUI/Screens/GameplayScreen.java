@@ -25,10 +25,6 @@ import lamprey.seprphase3.GUI.GameplayListeners;
  * @author Simeon
  */
 public class GameplayScreen extends AbstractScreen {
-    private static final int MECHANIC_COLS = 5;
-    private static final int MECHANIC_ROWS = 4;
-    TextureRegion[] mechanicFrames;
-    
     GameplayListeners listeners;
     
     Texture gamebgTexture;
@@ -39,8 +35,6 @@ public class GameplayScreen extends AbstractScreen {
     Texture poweroutTexture;
     Texture reactorTexture;
     Texture turbineTexture;
-    Texture mechanicSheet;
-    Texture mechanicNotMovingTexture;
     Texture pauseTexture;
     Texture consolebackTexture;
     Texture crUpTexture;
@@ -88,8 +82,6 @@ public class GameplayScreen extends AbstractScreen {
         reactorTexture     = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
         turbineTexture     = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
         pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
-        mechanicSheet      = new Texture(Gdx.files.internal("assets\\game\\mechanic_spritesheet.png"));
-        mechanicNotMovingTexture = new Texture(Gdx.files.internal("assets\\game\\mechanic_notmoving.png"));
         consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
         crUpTexture        = new Texture(Gdx.files.internal("assets\\game\\controlrodup.png"));
         crDownTexture      = new Texture(Gdx.files.internal("assets\\game\\controlroddown.png"));
@@ -99,17 +91,7 @@ public class GameplayScreen extends AbstractScreen {
         valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
         sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareError.png"));
         
-        TextureRegion[][] split = TextureRegion.split(mechanicSheet, 
-                                                      mechanicSheet.getWidth()  / MECHANIC_COLS, 
-                                                      mechanicSheet.getHeight() / MECHANIC_ROWS);
-        mechanicFrames = new TextureRegion[MECHANIC_COLS * MECHANIC_ROWS];
-        int index = 0;
-        for (int i=0; i < MECHANIC_ROWS; i++) {
-            for (int j=0; j < MECHANIC_COLS; j++) {
-                mechanicFrames[index] = split[i][j];
-                index++;
-            }
-        }
+
         
         gamebgImage      = new Image(gamebgTexture);
         borderImage      = new Image(borderTexture);
@@ -119,7 +101,7 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorTexture, false);
         turbineImage     = new Image(turbineTexture);
-        mechanicImage    = new Mechanic(mechanicFrames, mechanicNotMovingTexture, Direction.Right);
+        mechanicImage    = new Mechanic();
         pauseImage       = new HoverButton(pauseTexture,  true);
         consolebackImage = new Image(consolebackTexture);
         crUpImage        = new HoverButton(crUpTexture,   false);
@@ -157,8 +139,8 @@ public class GameplayScreen extends AbstractScreen {
         pauseImage.setScale(0.33f);
         
         condenserImage.addListener(listeners.getCondenserListener());
-        coolerImage.addListener(listeners.getCoolerListener());
-//        reactorImage.addListener(getReactorListener());
+//        coolerImage.addListener(listeners.getCoolerListener());
+        reactorImage.addListener(listeners.getReactorListener());
         pauseImage.addListener(listeners.getPauseListener());
         crUpImage.addListener(listeners.getConrolRodsUpListener());
         crDownImage.addListener(listeners.getConrolRodsDownListener());
@@ -183,14 +165,14 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
-        stage.addActor(consolebackImage);
-        stage.addActor(crUpImage);
-        stage.addActor(crDownImage);
-        stage.addActor(pump1Image);
-        stage.addActor(pump2Image);
-        stage.addActor(valve1Image);
-        stage.addActor(valve2Image);
-        stage.addActor(sErrorImage);
+//        stage.addActor(consolebackImage);
+//        stage.addActor(crUpImage);
+//        stage.addActor(crDownImage);
+//        stage.addActor(pump1Image);
+//        stage.addActor(pump2Image);
+//        stage.addActor(valve1Image);
+//        stage.addActor(valve2Image);
+//        stage.addActor(sErrorImage);
         
         deltaSum = 0f;
     }
@@ -205,7 +187,6 @@ public class GameplayScreen extends AbstractScreen {
         deltaSum += delta;
         if (deltaSum > 0.0167) {
             deltaSum -= 0.0167;
-            mechanicImage.moveMechanic();
         }
         super.render(delta);
     }

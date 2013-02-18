@@ -7,6 +7,7 @@ package lamprey.seprphase3.GUI;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -37,20 +38,44 @@ public class GameplayListeners {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(630f);
+                try {
+                    
+                    controller.repairCondenser();
+                }
+                catch(CannotRepairException e) {
+                    //Stop repairing
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        };
+    }    
+    
+    public ClickListener getReactorListener() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                screen.moveMechanicTo(30f);
+                try {
+                    
+                    controller.repairCondenser();
+                }
+                catch(CannotRepairException e) {
+                    //Stop repairing
+                }
                 return super.touchDown(event, x, y, pointer, button);
             }
         };
     }
     
-   public ClickListener getCoolerListener() {
-        return new ClickListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                screen.moveMechanicTo(750f);
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        };
-    }
+//   public ClickListener getCoolerListener() {
+//        return new ClickListener() {
+//            @Override
+//            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                screen.moveMechanicTo(750f);
+//                return super.touchDown(event, x, y, pointer, button);
+//            }
+//        };
+//    }
     
     public ClickListener getConrolRodsUpListener() {
         return new ClickListener() {

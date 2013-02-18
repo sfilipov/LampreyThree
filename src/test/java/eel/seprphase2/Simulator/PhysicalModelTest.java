@@ -196,7 +196,47 @@ public class PhysicalModelTest {
     }
     
     @Test
-    public void doesReturnCondenserToReactorWear() {
+    public void doesReturnValveState() throws KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();           
+        try {       
+            model.changeValveState(1, true); 
+            assertTrue(model.getValveState(1));
+            model.changeValveState(1, false); 
+            assertFalse(model.getValveState(1));
+        }
+        catch (Exception e){
+            
+        }
+    }
+    
+    @Test(expected = KeyNotFoundException.class)
+    public void shouldRefuseToGiveStateOfInvalidValve() throws KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        model.getValveState(100);
+    }    
+   
+    @Test
+    public void doesReturnPumpState() throws KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();           
+        try {       
+            model.changePumpState(1, true); 
+            assertTrue(model.getPumpState(1));
+            model.changePumpState(1, false); 
+            assertFalse(model.getPumpState(1));
+        }
+        catch (Exception e){
+            
+        }
+    }
+    
+    @Test(expected = KeyNotFoundException.class)
+    public void shouldRefuseToGiveStateOfInvalidPump() throws KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        model.getPumpState(100);
+    }
+    
+    @Test
+    public void doesReturnPumpWear() throws KeyNotFoundException {
         PhysicalModel model = new PhysicalModel();   
         ArrayList<FailableComponent> c = model.components();
         Percentage wear = new Percentage(40);
@@ -209,18 +249,10 @@ public class PhysicalModelTest {
         }
     }
     
-    @Test
-    public void doesReturnHeatsinkToCondenserWear() {
-        PhysicalModel model = new PhysicalModel();   
-        ArrayList<FailableComponent> c = model.components();
-        Percentage wear = new Percentage(67);
-        c.get(4).addWear(wear); // 4 is reference of heatsinkToCondenser
-        try{
-            assertEquals(percent(67), model.getPumpWear(2));
-        }
-        catch (Exception e){
-            
-        }
+    @Test(expected = KeyNotFoundException.class)
+    public void shouldRefuseToGiveWearOfInvalidPump() throws KeyNotFoundException {
+        PhysicalModel model = new PhysicalModel();
+        model.getPumpWear(100);
     }
     
     @Test

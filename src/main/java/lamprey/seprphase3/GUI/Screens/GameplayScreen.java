@@ -11,9 +11,9 @@ import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
+import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.MechanicImage;
-import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.TurbineImage;
 
 /**
@@ -69,7 +69,7 @@ public class GameplayScreen extends AbstractScreen {
         pipesTexture       = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
         poweroutTexture    = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
         reactorbackTexture = new Texture(Gdx.files.internal("assets\\game\\reactor_back.png"));
-        pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
+        pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pause.png"));
         consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
         crUpTexture        = new Texture(Gdx.files.internal("assets\\game\\controlrodup.png"));
         crDownTexture      = new Texture(Gdx.files.internal("assets\\game\\controlroddown.png"));
@@ -88,7 +88,7 @@ public class GameplayScreen extends AbstractScreen {
         pipesImage       = new Image(pipesTexture);
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorbackTexture, false);
-        turbineImage          = new TurbineImage(this.getPlantStatus());
+        turbineImage     = new TurbineImage(this.getPlantStatus());
         mechanicImage    = new MechanicImage();
         pauseImage       = new HoverButton(pauseTexture,  true);
         consolebackImage = new Image(consolebackTexture);
@@ -102,15 +102,15 @@ public class GameplayScreen extends AbstractScreen {
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
-        condenserImage.setPosition(522, 110);
-        coolerImage.setPosition(804, 122);
-        pipesImage.setPosition(131, 149);
+        condenserImage.setPosition(523, 110);
+        coolerImage.setPosition(803, 122);
+        pipesImage.setPosition(132, 149);
         poweroutImage.setPosition(703, 405);
-        reactorImage.setPosition(32, 113);
+        reactorImage.setPosition(33, 113);
         turbineImage.setPosition(435, 405);
         mechanicImage.setPosition(630, 75);
         mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
-        pauseImage.setPosition(20, 458);
+        pauseImage.setPosition(17, 15);
         consolebackImage.setPosition(260, 0);
         crUpImage.setPosition(545, 75);
         crDownImage.setPosition(560, 21);
@@ -119,12 +119,6 @@ public class GameplayScreen extends AbstractScreen {
         valve1Image.setPosition(300, 22);
         valve2Image.setPosition(353, 22);
         sErrorImage.setPosition(433, 18);
-        
-        
-        //Makes image semi-transparent
-        pauseImage.setColor(1f, 1f, 1f, 0.75f);
-        //Makes image three times smaller
-        pauseImage.setScale(0.33f);
         
         condenserImage.addListener(listeners.getCondenserListener());
 //        coolerImage.addListener(listeners.getCoolerListener());

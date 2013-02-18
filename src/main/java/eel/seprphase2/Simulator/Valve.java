@@ -16,9 +16,9 @@ public class Valve extends BlockableComponent {
         this.open = true;
         this.blocked = false;
     }
-    
+
     /**
-     * 
+     *
      * @return
      */
     public boolean getOpen() {

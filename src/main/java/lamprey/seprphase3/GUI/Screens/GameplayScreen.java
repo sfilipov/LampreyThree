@@ -107,7 +107,7 @@ public class GameplayScreen extends AbstractScreen {
         pipesImage.setPosition(132, 149);
         poweroutImage.setPosition(703, 405);
         reactorImage.setPosition(33, 113);
-        turbineImage.setPosition(435, 405);
+        turbineImage.setPosition(436, 404);
         mechanicImage.setPosition(630, 75);
         mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(17, 15);

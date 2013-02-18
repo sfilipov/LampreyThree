@@ -6,19 +6,15 @@ package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
-import lamprey.seprphase3.GUI.Images.Mechanic;
+import lamprey.seprphase3.GUI.Images.MechanicImage;
 import lamprey.seprphase3.GUI.GameplayListeners;
+import lamprey.seprphase3.GUI.Images.TurbineImage;
 
 /**
  *
@@ -34,7 +30,6 @@ public class GameplayScreen extends AbstractScreen {
     Texture pipesTexture;
     Texture poweroutTexture;
     Texture reactorbackTexture;
-    Texture turbineTexture;
     Texture pauseTexture;
     Texture consolebackTexture;
     Texture crUpTexture;
@@ -51,8 +46,8 @@ public class GameplayScreen extends AbstractScreen {
     Image pipesImage;
     Image poweroutImage;
     HoverButton reactorImage;
-    Image turbineImage;
-    Mechanic mechanicImage;
+    TurbineImage turbineImage;
+    MechanicImage mechanicImage;
     HoverButton pauseImage;
     Image consolebackImage;
     HoverButton crUpImage;
@@ -62,12 +57,6 @@ public class GameplayScreen extends AbstractScreen {
     HoverButton valve1Image;
     HoverButton valve2Image;
     Image sErrorImage;
-    
-    float deltaSum;
-    float mechanicX;
-    float moveMechanicTo;
-    
-    Direction mechanicDirection;
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
@@ -80,7 +69,6 @@ public class GameplayScreen extends AbstractScreen {
         pipesTexture       = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
         poweroutTexture    = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
         reactorbackTexture = new Texture(Gdx.files.internal("assets\\game\\reactor_back.png"));
-        turbineTexture     = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
         pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
         consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
         crUpTexture        = new Texture(Gdx.files.internal("assets\\game\\controlrodup.png"));
@@ -100,8 +88,8 @@ public class GameplayScreen extends AbstractScreen {
         pipesImage       = new Image(pipesTexture);
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorbackTexture, false);
-        turbineImage     = new Image(turbineTexture);
-        mechanicImage    = new Mechanic();
+        turbineImage          = new TurbineImage(this.getPlantStatus());
+        mechanicImage    = new MechanicImage();
         pauseImage       = new HoverButton(pauseTexture,  true);
         consolebackImage = new Image(consolebackTexture);
         crUpImage        = new HoverButton(crUpTexture,   false);
@@ -117,9 +105,9 @@ public class GameplayScreen extends AbstractScreen {
         condenserImage.setPosition(522, 110);
         coolerImage.setPosition(804, 122);
         pipesImage.setPosition(131, 149);
-        poweroutImage.setPosition(705, 405);
+        poweroutImage.setPosition(703, 405);
         reactorImage.setPosition(32, 113);
-        turbineImage.setPosition(448, 410);
+        turbineImage.setPosition(435, 405);
         mechanicImage.setPosition(630, 75);
         mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(20, 458);
@@ -173,8 +161,6 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve1Image);
         stage.addActor(valve2Image);
         stage.addActor(sErrorImage);
-        
-        deltaSum = 0f;
     }
     
     @Override
@@ -184,10 +170,6 @@ public class GameplayScreen extends AbstractScreen {
     
     @Override
     public void render(float delta) {
-        deltaSum += delta;
-        if (deltaSum > 0.0167) {
-            deltaSum -= 0.0167;
-        }
         super.render(delta);
     }
     

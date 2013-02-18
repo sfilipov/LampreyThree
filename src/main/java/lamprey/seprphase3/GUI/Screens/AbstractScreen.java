@@ -68,4 +68,8 @@ abstract class AbstractScreen implements Screen {
     public void dispose() {
         stage.dispose();
     }
+    
+    public PlantStatus getPlantStatus() {
+        return this.status;
+    }
 }

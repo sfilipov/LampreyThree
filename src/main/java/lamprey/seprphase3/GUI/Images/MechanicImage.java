@@ -17,13 +17,14 @@ import lamprey.seprphase3.GUI.Screens.Direction;
  *
  * @author Simeon
  */
-public class Mechanic extends Image {
+public class MechanicImage extends Image {
     Texture mechanicRun;
     Texture mechanicStand;
     TextureRegion[] runFrames;
     TextureRegion[] standFrames;
     Animation runAnimation;
     Animation standAnimation;
+    TextureRegionDrawable drawable;
     
     private final static int RUN_COLS = 5;
     private final static int RUN_ROWS = 4;
@@ -45,10 +46,10 @@ public class Mechanic extends Image {
     private TextureRegion frame;
     private Direction mechanicDirection;
         
-    public Mechanic() {
+    public MechanicImage() {
         super();
-        mechanicRun   = new Texture(Gdx.files.internal("assets\\game\\mechrunspritesheet.png"));
-        mechanicStand = new Texture(Gdx.files.internal("assets\\game\\mechstandspritesheet.png"));
+        mechanicRun   = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechrunspritesheet.png"));
+        mechanicStand = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechstandspritesheet.png"));
         
         TextureRegion[][] split = TextureRegion.split(mechanicRun, mechanicRun.getWidth() / RUN_COLS, mechanicRun.getHeight() / RUN_ROWS);
         runFrames = new TextureRegion[RUN_COLS * RUN_ROWS];
@@ -75,6 +76,7 @@ public class Mechanic extends Image {
         this.mechanicDirection = Direction.Right;
         stateTime = 0;
         deltaSum = 0;
+        drawable = new TextureRegionDrawable();
     }
     
     @Override
@@ -102,14 +104,16 @@ public class Mechanic extends Image {
             }
             this.setY(RUN_Y);
             frame = runAnimation.getKeyFrame(stateTime, true);
-            this.setDrawable(new TextureRegionDrawable(frame));
+            drawable.setRegion(frame);
+            this.setDrawable(drawable);
             this.setSize(100f, 130f);
             scaleToUse = 0.9f;
         }
         else {
             this.setY(STATIC_Y);
             frame = standAnimation.getKeyFrame(stateTime, true);
-            this.setDrawable(new TextureRegionDrawable(frame));
+            drawable.setRegion(frame);
+            this.setDrawable(drawable);
             this.setSize(100f, 130f);
             scaleToUse = 1f;
             deltaSum = 0f;

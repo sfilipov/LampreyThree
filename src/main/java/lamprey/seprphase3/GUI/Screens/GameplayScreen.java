@@ -165,14 +165,14 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
-//        stage.addActor(consolebackImage);
-//        stage.addActor(crUpImage);
-//        stage.addActor(crDownImage);
-//        stage.addActor(pump1Image);
-//        stage.addActor(pump2Image);
-//        stage.addActor(valve1Image);
-//        stage.addActor(valve2Image);
-//        stage.addActor(sErrorImage);
+        stage.addActor(consolebackImage);
+        stage.addActor(crUpImage);
+        stage.addActor(crDownImage);
+        stage.addActor(pump1Image);
+        stage.addActor(pump2Image);
+        stage.addActor(valve1Image);
+        stage.addActor(valve2Image);
+        stage.addActor(sErrorImage);
         
         deltaSum = 0f;
     }

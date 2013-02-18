@@ -20,7 +20,7 @@ public class Reactor extends FailableComponent {
 
     private final Mass maximumWaterMass = kilograms(1000);
     private final Mass minimumWaterMass = kilograms(800);
-    private final Volume reactorVolume = cubicMetres(2);
+    private final Volume reactorVolume = cubicMetres(5);
     @JsonProperty
     private FuelPile fuelPile = new FuelPile();
     @JsonProperty
@@ -189,17 +189,23 @@ public class Reactor extends FailableComponent {
         outputPort.pressure = pressure;
         outputPort.temperature = temperature;
 
-        System.out.println("Reactor Output Port:");
+        /*System.out.println("Reactor Output Port:");
         System.out.println("\t Flow: " + outputPort.flow);
         System.out.println("\t Mass: " + outputPort.mass);
         System.out.println("\t Pressure: " + outputPort.pressure);
         System.out.println("\t Density: " + outputPort.density);
-        
+        */
 
+        System.out.println("Reactor:");
+        System.out.println("\tSteamMass: " + steamMass);
+        System.out.println("\tSteamDensity: " + steamDensity);
+        System.out.println("\tPressure: " + pressure);
+        System.out.println("\tTemperature: " + temperature);
+        
+        
         /*
          * Calculates component wear after a time step
          */
-
         stepWear();
     }
 

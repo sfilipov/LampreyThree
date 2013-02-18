@@ -15,6 +15,7 @@ import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.MechanicImage;
 import lamprey.seprphase3.GUI.Images.TurbineImage;
+import lamprey.seprphase3.GUI.Images.ValveImage;
 
 /**
  *
@@ -39,11 +40,14 @@ public class GameplayScreen extends AbstractScreen {
     Texture valve1Texture;
     Texture valve2Texture;
     Texture sErrorTexture;
+    
     Image gamebgImage;
     Image borderImage;
     HoverButton condenserImage;
     Image coolerImage;
     Image pipesImage;
+    ValveImage valve1Image;
+    ValveImage valve2Image;
     Image poweroutImage;
     HoverButton reactorImage;
     TurbineImage turbineImage;
@@ -52,10 +56,10 @@ public class GameplayScreen extends AbstractScreen {
     Image consolebackImage;
     HoverButton crUpImage;
     HoverButton crDownImage;
-    HoverButton pump1Image;
-    HoverButton pump2Image;
-    HoverButton valve1Image;
-    HoverButton valve2Image;
+    HoverButton pump1Button;
+    HoverButton pump2Button;
+    HoverButton valve1Button;
+    HoverButton valve2Button;
     Image sErrorImage;
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
@@ -79,13 +83,13 @@ public class GameplayScreen extends AbstractScreen {
         valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
         sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
         
-
-        
         gamebgImage      = new Image(gamebgTexture);
         borderImage      = new Image(borderTexture);
         condenserImage   = new HoverButton(condenserTexture, false);
         coolerImage      = new HoverButton(coolerTexture, false);
         pipesImage       = new Image(pipesTexture);
+        valve1Image      = new ValveImage(this.getPlantStatus(), 1);
+        valve2Image      = new ValveImage(this.getPlantStatus(), 2);
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorbackTexture, false);
         turbineImage     = new TurbineImage(this.getPlantStatus());
@@ -94,11 +98,17 @@ public class GameplayScreen extends AbstractScreen {
         consolebackImage = new Image(consolebackTexture);
         crUpImage        = new HoverButton(crUpTexture,   false);
         crDownImage      = new HoverButton(crDownTexture, false);
-        pump1Image       = new HoverButton(pump1Texture,  false);
-        pump2Image       = new HoverButton(pump2Texture,  false);
-        valve1Image      = new HoverButton(valve1Texture, false);
-        valve2Image      = new HoverButton(valve2Texture, false);
+        pump1Button      = new HoverButton(pump1Texture,  false);
+        pump2Button      = new HoverButton(pump2Texture,  false);
+        valve1Button     = new HoverButton(valve1Texture, false);
+        valve2Button     = new HoverButton(valve2Texture, false);
         sErrorImage      = new Image(sErrorTexture);
+        
+    }
+    
+    @Override
+    public void show() {
+        super.show();
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -108,16 +118,18 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage.setPosition(703, 405);
         reactorImage.setPosition(33, 113);
         turbineImage.setPosition(436, 404);
+        valve1Image.setPosition(381, 469);
+        valve2Image.setPosition(418, 385);
         mechanicImage.setPosition(630, 75);
         mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(17, 15);
         consolebackImage.setPosition(260, 0);
         crUpImage.setPosition(545, 75);
         crDownImage.setPosition(560, 21);
-        pump1Image.setPosition(323, 71);
-        pump2Image.setPosition(373, 76);
-        valve1Image.setPosition(300, 22);
-        valve2Image.setPosition(353, 22);
+        pump1Button.setPosition(323, 71);
+        pump2Button.setPosition(373, 76);
+        valve1Button.setPosition(300, 22);
+        valve2Button.setPosition(353, 22);
         sErrorImage.setPosition(433, 18);
         
         condenserImage.addListener(listeners.getCondenserListener());
@@ -126,16 +138,10 @@ public class GameplayScreen extends AbstractScreen {
         pauseImage.addListener(listeners.getPauseListener());
         crUpImage.addListener(listeners.getConrolRodsUpListener());
         crDownImage.addListener(listeners.getConrolRodsDownListener());
-        valve1Image.addListener(listeners.getValve1Listener());
-        valve2Image.addListener(listeners.getValve2Listener());
-        pump1Image.addListener(listeners.getPump1Listener());
-        pump2Image.addListener(listeners.getPump2Listener());
-        
-    }
-    
-    @Override
-    public void show() {
-        super.show();
+        valve1Button.addListener(listeners.getValve1Listener());
+        valve2Button.addListener(listeners.getValve2Listener());
+        pump1Button.addListener(listeners.getPump1Listener());
+        pump2Button.addListener(listeners.getPump2Listener());
         
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
@@ -144,17 +150,20 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(poweroutImage);
         stage.addActor(reactorImage);
         stage.addActor(turbineImage);
+
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
         stage.addActor(consolebackImage);
         stage.addActor(crUpImage);
         stage.addActor(crDownImage);
-        stage.addActor(pump1Image);
-        stage.addActor(pump2Image);
-        stage.addActor(valve1Image);
-        stage.addActor(valve2Image);
+        stage.addActor(pump1Button);
+        stage.addActor(pump2Button);
+        stage.addActor(valve1Button);
+        stage.addActor(valve2Button);
         stage.addActor(sErrorImage);
+                stage.addActor(valve1Image);
+        stage.addActor(valve2Image);
     }
     
     @Override

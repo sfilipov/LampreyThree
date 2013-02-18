@@ -398,13 +398,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public Percentage condenserToReactorWear() { 
-        return condenserToReactor.wear();
-    }
-    
-    @Override
-    public Percentage heatsinkToCondenserWear() {
-        return heatsinkToCondenser.wear();
+    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
+        if (!allPumps.containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+        }
+        return allPumps.get(pumpNumber).wear();
     }
 
     @Override

@@ -190,15 +190,10 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public Percentage condenserToReactorWear() { 
-        return status.condenserToReactorWear();
-    }
-    
-    @Override
-    public Percentage heatsinkToCondenserWear() { 
-        return status.heatsinkToCondenserWear();
-    }
-
+    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException { 
+        return status.getPumpWear(pumpNumber);
+    }    
+   
     @Override
     public Temperature condenserTemperature() {
         return status.condenserTemperature();

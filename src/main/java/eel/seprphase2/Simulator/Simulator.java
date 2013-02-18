@@ -165,13 +165,8 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
-    public Percentage condenserToReactorWear() {
-        return failureModel.condenserToReactorWear();
-    }
-    
-    @Override
-    public Percentage heatsinkToCondenserWear() {
-        return failureModel.heatsinkToCondenserWear();
+    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
+        return failureModel.getPumpWear(pumpNumber);
     }
 
     @Override

@@ -23,7 +23,7 @@ public abstract class FlowThroughComponent {
      * Dictates whether or not this component is pressurised.
      * i.e. Reactor/Condenser
      */
-    public boolean pressurised;
+    public boolean pressurised = false;
     
     /**
      * Getter for outputPort.

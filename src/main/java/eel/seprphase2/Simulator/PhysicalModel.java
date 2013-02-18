@@ -24,15 +24,9 @@ public class PhysicalModel implements PlantStatus {
 
     @JsonProperty
     private PlantModel plant;
+    
     @JsonProperty
-    private Energy energyGenerated = joules(0);
-    @JsonProperty
-    private String username;
-    @JsonProperty
-    private HashMap<Integer, Pump> allPumps;
-    @JsonProperty
-    private HashMap<Integer, Connection> allConnections;    
-    private String currentWornComponent = "";
+    private String username; 
 
     public PhysicalModel() {
         plant = new PlantModel();
@@ -45,7 +39,7 @@ public class PhysicalModel implements PlantStatus {
         /*
          * Iterate through all pumps to get their IDs
          */
-        Iterator pumpIterator = allPumps.entrySet().iterator();
+        Iterator pumpIterator = plant.pumps().entrySet().iterator();
         while (pumpIterator.hasNext()) {
             Map.Entry pump = (Map.Entry)pumpIterator.next();
 
@@ -78,6 +72,8 @@ public class PhysicalModel implements PlantStatus {
         return out.toArray(new String[out.size()]);
 
     }
+    
+    
 
     @Override
     public Temperature reactorTemperature() {
@@ -99,7 +95,7 @@ public class PhysicalModel implements PlantStatus {
 
     @Override
     public Energy energyGenerated() {
-        return energyGenerated;
+        return plant.energyGenerated();
     }
 
     @Override
@@ -164,7 +160,7 @@ public class PhysicalModel implements PlantStatus {
 
     @Override
     public String wornComponent() {
-        return currentWornComponent;
+        return plant.getCurrentWornComponent();
     }
 
     @Override
@@ -183,6 +179,6 @@ public class PhysicalModel implements PlantStatus {
     }
 
     public boolean getPumpStatus(int pumpNumber) {
-        return allPumps.get(pumpNumber).getStatus();
+        return plant.pumps().get(pumpNumber).getStatus();
     }
 }

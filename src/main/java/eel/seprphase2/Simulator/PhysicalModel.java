@@ -3,7 +3,6 @@ package eel.seprphase2.Simulator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
@@ -20,7 +19,7 @@ import java.util.Map;
  * @author Marius
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-public class PhysicalModel implements PlantController, PlantStatus {
+public class PhysicalModel implements PlantStatus {
 
     @JsonProperty
     private Reactor reactor = new Reactor();
@@ -31,9 +30,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @JsonProperty
     private Energy energyGenerated = joules(0);
     @JsonProperty
-    private Connection reactorToTurbine;
+    private Valve reactorToTurbine;
     @JsonProperty
-    private Connection turbineToCondenser;
+    private Valve bypassValve;
     @JsonProperty
     private Pump condenserToReactor;
     @JsonProperty
@@ -47,6 +46,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @JsonProperty
     private HeatSink heatSink;
     private String currentWornComponent = "";
+
     /**
      *
      */
@@ -57,16 +57,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
         allPumps = new HashMap<Integer, Pump>();
         allConnections = new HashMap<Integer, Connection>();
 
-        reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.05);
-        turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.05);
+        reactorToTurbine = new Valve();
+        bypassValve = new Valve();
 
-
-        condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
-        heatsinkToCondenser = new Pump(heatSink.outputPort(), condenser.coolantInputPort());
-
-
-        allConnections.put(1, reactorToTurbine);
-        allConnections.put(2, turbineToCondenser);
+        condenserToReactor = new Pump();
+        heatsinkToCondenser = new Pump();
 
         allPumps.put(1, condenserToReactor);
         allPumps.put(2, heatsinkToCondenser);
@@ -114,38 +109,6 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     }
 
-    /**
-     *
-     * @param steps
-     */
-    @Override
-    public void step(int steps) throws GameOverException {
-        for (int i = 0; i < steps; i++) {
-            reactor.step();
-            turbine.step();
-            condenser.step();
-            energyGenerated = joules(energyGenerated.inJoules() + turbine.outputPower());
-            reactorToTurbine.step();
-            turbineToCondenser.step();
-            condenserToReactor.step();
-            heatsinkToCondenser.step();
-
-        }
-    }
-
-    /**
-     *
-     * @param percent
-     */
-    @Override
-    public void moveControlRods(Percentage percent) {
-        reactor.moveControlRods(percent);
-    }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public Temperature reactorTemperature() {
         return reactor.temperature();
@@ -165,110 +128,30 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void wearReactor() {
-        Percentage damage = new Percentage(10);
-        reactor.addWear(damage);
-    }
-
-    @Override
-    public void failCondenser() {
-        condenser.fail();
-    }
-
-    /**
-     *
-     * @return
-     */
-    @Override
     public Energy energyGenerated() {
         return energyGenerated;
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Percentage controlRodPosition() {
         return reactor.controlRodPosition();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Pressure reactorPressure() {
         return reactor.pressure();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Percentage reactorWaterLevel() {
         return reactor.waterLevel();
     }
-    
-     /**
-     *
-     * @return
-     */
+
     @Override
     public Percentage reactorWear() {
         return reactor.wear();
     }
 
-    /**
-     *
-     * @param open
-     */
-    
-    @Override
-    public void setWornComponent(FailableComponent wornComponent) {
-        if(wornComponent == null) {            
-            currentWornComponent = "";           
-        }
-        else {
-            /*
-             * Check if a Valve was worn, if so get its Key.
-             */
-            Iterator pumpIterator = allPumps.entrySet().iterator();
-            while (pumpIterator.hasNext()) {
-                Map.Entry pump = (Map.Entry)pumpIterator.next();
-
-                if (((Pump)pump.getValue()).equals(wornComponent)) {
-                    currentWornComponent = ("Pump " + pump.getKey());                   
-                }
-            }
-
-            /*
-             * Check if the condenser was worn
-             */
-            if (wornComponent instanceof Condenser) {
-                currentWornComponent = ("Condenser");               
-            }
-            /*
-             * Check if the turbine was worn
-             */
-            else if (wornComponent instanceof Turbine) {
-                currentWornComponent = ("Turbine");               
-            }
-        }
-        
-        
-    }
-    
-    @Override
-    public void setReactorToTurbine(boolean open) {
-        reactorToTurbine.setOpen(open);
-    }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public boolean getReactorToTurbine() {
         return reactorToTurbine.getOpen();
@@ -286,55 +169,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
-        if (allConnections.containsKey(valveNumber)) {
-            allConnections.get(valveNumber).setOpen(isOpen);
-        } else {
-            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
-        }
-    }
-
-    @Override
-    public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
-        if (!allPumps.containsKey(pumpNumber)) {
-            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
-        }
-
-        if (allPumps.get(pumpNumber).hasFailed()) {
-            throw new CannotControlException("Pump " + pumpNumber + " is failed");
-        }
-
-        allPumps.get(pumpNumber).setStatus(isPumping);
-    }
-
-    @Override
-    public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
-        if (allPumps.containsKey(pumpNumber)) {
-            allPumps.get(pumpNumber).repair();
-
-
-            //These shouldn't need to be changed
-            //allPumps.get(pumpNumber).setStatus(true);
-            //allPumps.get(pumpNumber).setCapacity(kilograms(3));
-            //allPumps.get(pumpNumber).stepWear(new Percentage(0));
-
-        } else {
-            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
-        }
-    }
-
-    @Override
-    public void repairCondenser() throws CannotRepairException {
-        condenser.repair();
-    }
-
-    @Override
-    public void repairTurbine() throws CannotRepairException {
-        turbine.repair();
-    }
-    
-    @Override
-    public Percentage turbineWear(){
+    public Percentage turbineWear() {
         return turbine.wear();
     }
 
@@ -352,22 +187,22 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage condenserWaterLevel() {
         return condenser.getWaterLevel();
     }
-    
+
     @Override
     public Percentage condenserWear() {
         return condenser.wear();
     }
-    
+
     @Override
     public String wornComponent() {
         return currentWornComponent;
     }
-    
+
     @Override
-    public Percentage condenserToReactorWear() { 
+    public Percentage condenserToReactorWear() {
         return condenserToReactor.wear();
     }
-    
+
     @Override
     public Percentage heatsinkToCondenserWear() {
         return heatsinkToCondenser.wear();
@@ -377,7 +212,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public boolean turbineHasFailed() {
         return turbine.hasFailed();
     }
-    
+
     public boolean getPumpStatus(int pumpNumber) {
         return allPumps.get(pumpNumber).getStatus();
     }

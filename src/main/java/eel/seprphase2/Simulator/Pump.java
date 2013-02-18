@@ -3,7 +3,7 @@ package eel.seprphase2.Simulator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Percentage;
 import static eel.seprphase2.Utilities.Units.*;
-import static lamprey.seprphase3.Utilities.Units.*;
+import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
 import static lamprey.seprphase3.DynSimulator.GameConfig.FlowRateInducedByPumps;
 
 /**
@@ -15,7 +15,7 @@ public class Pump extends FailableComponent {
     @JsonProperty
     private boolean status = true;
 
-    private Pump() {
+    public Pump() {
         super();
     }
 

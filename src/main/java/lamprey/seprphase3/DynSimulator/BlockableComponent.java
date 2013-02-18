@@ -11,4 +11,5 @@ public abstract class BlockableComponent extends FlowThroughComponent {
      */
     public boolean blocked;
     
+    
 }

@@ -1,18 +1,24 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lamprey.seprphase3.DynSimulator.BlockableComponent;
 
 /**
  *
  * @author james
  */
-public class Valve {
+public class Valve extends BlockableComponent {
 
     @JsonProperty
-    private boolean open = true;
+    private boolean open;
 
+    public Valve() {
+        this.open = true;
+        this.blocked = false;
+    }
+    
     /**
-     *
+     * 
      * @return
      */
     public boolean getOpen() {
@@ -23,7 +29,8 @@ public class Valve {
      *
      * @param Open
      */
-    public void setOpen(boolean Open) {
-        open = Open;
+    public void setOpen(boolean open) {
+        this.open = open;
+        this.blocked = !open;
     }
 }

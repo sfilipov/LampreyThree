@@ -145,6 +145,16 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException {
+        return failureModel.getPumpState(pumpNumber);
+    }
+    
+    @Override
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
+        return failureModel.getValveState(valveNumber);
+    }
+    
+    @Override
     public Percentage reactorWear() { 
         return failureModel.reactorWear();
     }

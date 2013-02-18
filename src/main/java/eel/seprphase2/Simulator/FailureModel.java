@@ -218,6 +218,15 @@ public class FailureModel implements PlantController, PlantStatus {
     public Percentage condenserWear() { 
         return status.condenserWear();
     }
+    
+    @Override
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException  { 
+        return status.getPumpState(pumpNumber);
+    }
+    
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException  { 
+        return status.getValveState(valveNumber);
+    }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {

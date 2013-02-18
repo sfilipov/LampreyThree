@@ -358,6 +358,24 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Temperature condenserTemperature() {
         return condenser.getTemperature();
     }
+    
+    @Override
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException  {
+        if (!allPumps.containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+        }
+        return allPumps.get(pumpNumber).getStatus();
+    }
+    
+    @Override
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
+        if (allConnections.containsKey(valveNumber)) {
+            return allConnections.get(valveNumber).getOpen();
+        } else {
+            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
+        }
+    }
+    
 
     @Override
     public Pressure condenserPressure() {

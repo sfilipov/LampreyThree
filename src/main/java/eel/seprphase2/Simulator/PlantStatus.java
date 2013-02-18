@@ -57,6 +57,10 @@ public interface PlantStatus {
     
     public Percentage condenserToReactorWear();
     
+    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException;
+    
+    public Boolean getValveState(int valveNumber) throws KeyNotFoundException;
+                                
     public Percentage heatsinkToCondenserWear();
     
     public boolean getReactorToTurbine();

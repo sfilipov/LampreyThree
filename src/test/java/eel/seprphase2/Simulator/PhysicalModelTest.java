@@ -201,7 +201,12 @@ public class PhysicalModelTest {
         ArrayList<FailableComponent> c = model.components();
         Percentage wear = new Percentage(40);
         c.get(3).addWear(wear); // 3 is reference of condenserToReactor
-        assertEquals(percent(40), model.condenserToReactorWear());
+        try {       
+            assertEquals(percent(40), model.getPumpWear(1));
+        }
+        catch (Exception e){
+            
+        }
     }
     
     @Test
@@ -210,7 +215,12 @@ public class PhysicalModelTest {
         ArrayList<FailableComponent> c = model.components();
         Percentage wear = new Percentage(67);
         c.get(4).addWear(wear); // 4 is reference of heatsinkToCondenser
-        assertEquals(percent(67), model.heatsinkToCondenserWear());
+        try{
+            assertEquals(percent(67), model.getPumpWear(2));
+        }
+        catch (Exception e){
+            
+        }
     }
     
     @Test

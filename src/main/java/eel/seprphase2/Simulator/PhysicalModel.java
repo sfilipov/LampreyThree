@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import lamprey.seprphase3.DynSimulator.PlantModel;
 
 /**
  *
@@ -22,50 +23,19 @@ import java.util.Map;
 public class PhysicalModel implements PlantStatus {
 
     @JsonProperty
-    private Reactor reactor = new Reactor();
-    @JsonProperty
-    private Turbine turbine = new Turbine();
-    @JsonProperty
-    private Condenser condenser = new Condenser();
+    private PlantModel plant;
     @JsonProperty
     private Energy energyGenerated = joules(0);
-    @JsonProperty
-    private Valve reactorToTurbine;
-    @JsonProperty
-    private Valve bypassValve;
-    @JsonProperty
-    private Pump condenserToReactor;
-    @JsonProperty
-    private Pump heatsinkToCondenser;
     @JsonProperty
     private String username;
     @JsonProperty
     private HashMap<Integer, Pump> allPumps;
     @JsonProperty
-    private HashMap<Integer, Connection> allConnections;
-    @JsonProperty
-    private HeatSink heatSink;
+    private HashMap<Integer, Connection> allConnections;    
     private String currentWornComponent = "";
 
-    /**
-     *
-     */
     public PhysicalModel() {
-
-        heatSink = new HeatSink();
-
-        allPumps = new HashMap<Integer, Pump>();
-        allConnections = new HashMap<Integer, Connection>();
-
-        reactorToTurbine = new Valve();
-        bypassValve = new Valve();
-
-        condenserToReactor = new Pump();
-        heatsinkToCondenser = new Pump();
-
-        allPumps.put(1, condenserToReactor);
-        allPumps.put(2, heatsinkToCondenser);
-
+        plant = new PlantModel();
     }
 
     @Override
@@ -87,21 +57,21 @@ public class PhysicalModel implements PlantStatus {
         /*
          * Check if reactor failed
          */
-        if (reactor.hasFailed()) {
+        if (plant.reactor().hasFailed()) {
             out.add("Reactor");
         }
 
         /*
          * Check if turbine failed
          */
-        if (turbine.hasFailed()) {
+        if (plant.turbine().hasFailed()) {
             out.add("Turbine");
         }
 
         /*
          * Check if condenser failed
          */
-        if (condenser.hasFailed()) {
+        if (plant.condenser().hasFailed()) {
             out.add("Condenser");
         }
 
@@ -111,20 +81,20 @@ public class PhysicalModel implements PlantStatus {
 
     @Override
     public Temperature reactorTemperature() {
-        return reactor.temperature();
+        return plant.reactor().temperature();
     }
 
     public Mass reactorMinimumWaterMass() {
-        return reactor.minimumWaterMass();
+        return plant.reactor().minimumWaterMass();
     }
 
     public Mass reactorMaximumWaterMass() {
-        return reactor.maximumWaterMass();
+        return plant.reactor().maximumWaterMass();
     }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {
-        return reactor.minimumWaterLevel();
+        return plant.reactor().minimumWaterLevel();
     }
 
     @Override
@@ -134,63 +104,62 @@ public class PhysicalModel implements PlantStatus {
 
     @Override
     public Percentage controlRodPosition() {
-        return reactor.controlRodPosition();
+        return plant.reactor().controlRodPosition();
     }
 
     @Override
     public Pressure reactorPressure() {
-        return reactor.pressure();
+        return plant.reactor().pressure();
     }
 
     @Override
     public Percentage reactorWaterLevel() {
-        return reactor.waterLevel();
+        return plant.reactor().waterLevel();
     }
 
     @Override
     public Percentage reactorWear() {
-        return reactor.wear();
+        return plant.reactor().wear();
     }
 
     @Override
     public boolean getReactorToTurbine() {
-        return reactorToTurbine.getOpen();
+        return plant.valves().get(1).getOpen(); // reactor to turbine pump
     }
 
     @Override
     public ArrayList<FailableComponent> failableComponents() {
         ArrayList<FailableComponent> c = new ArrayList<FailableComponent>();
-        c.add(0, turbine);
-        c.add(1, reactor);
-        c.add(2, condenser);
-        c.add(3, condenserToReactor);
-        c.add(4, heatsinkToCondenser);
+        c.add(0, plant.turbine());
+        c.add(1, plant.reactor());
+        c.add(2, plant.condenser());
+        c.addAll(plant.pumps().values());
         return c;
     }
 
     @Override
     public Percentage turbineWear() {
-        return turbine.wear();
+        return plant.turbine().wear();
     }
 
     @Override
     public Temperature condenserTemperature() {
-        return condenser.getTemperature();
+        return plant.condenser().getTemperature();
     }
 
     @Override
     public Pressure condenserPressure() {
-        return condenser.getPressure();
+        return plant.condenser().getPressure();
     }
 
     @Override
     public Percentage condenserWaterLevel() {
-        return condenser.getWaterLevel();
+        return plant.condenser().getWaterLevel();
     }
 
     @Override
     public Percentage condenserWear() {
-        return condenser.wear();
+        return plant.condenser().wear();
     }
 
     @Override
@@ -200,17 +169,17 @@ public class PhysicalModel implements PlantStatus {
 
     @Override
     public Percentage condenserToReactorWear() {
-        return condenserToReactor.wear();
+        return plant.pumps().get(1).wear(); // condenser to reactor pump
     }
 
     @Override
     public Percentage heatsinkToCondenserWear() {
-        return heatsinkToCondenser.wear();
+        return plant.pumps().get(2).wear(); // heatsink pump
     }
 
     @Override
     public boolean turbineHasFailed() {
-        return turbine.hasFailed();
+        return plant.turbine().hasFailed();
     }
 
     public boolean getPumpStatus(int pumpNumber) {

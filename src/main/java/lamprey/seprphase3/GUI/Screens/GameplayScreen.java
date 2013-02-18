@@ -33,7 +33,7 @@ public class GameplayScreen extends AbstractScreen {
     Texture coolerTexture;
     Texture pipesTexture;
     Texture poweroutTexture;
-    Texture reactorTexture;
+    Texture reactorbackTexture;
     Texture turbineTexture;
     Texture pauseTexture;
     Texture consolebackTexture;
@@ -79,7 +79,7 @@ public class GameplayScreen extends AbstractScreen {
         coolerTexture      = new Texture(Gdx.files.internal("assets\\game\\cooler.png"));
         pipesTexture       = new Texture(Gdx.files.internal("assets\\game\\pipes.png"));
         poweroutTexture    = new Texture(Gdx.files.internal("assets\\game\\powerout.png"));
-        reactorTexture     = new Texture(Gdx.files.internal("assets\\game\\reactor.png"));
+        reactorbackTexture = new Texture(Gdx.files.internal("assets\\game\\reactor_back.png"));
         turbineTexture     = new Texture(Gdx.files.internal("assets\\game\\turbine.png"));
         pauseTexture       = new Texture(Gdx.files.internal("assets\\game\\pausebutton.png"));
         consolebackTexture = new Texture(Gdx.files.internal("assets\\game\\consoleback.png"));
@@ -99,7 +99,7 @@ public class GameplayScreen extends AbstractScreen {
         coolerImage      = new HoverButton(coolerTexture, false);
         pipesImage       = new Image(pipesTexture);
         poweroutImage    = new Image(poweroutTexture);
-        reactorImage     = new HoverButton(reactorTexture, false);
+        reactorImage     = new HoverButton(reactorbackTexture, false);
         turbineImage     = new Image(turbineTexture);
         mechanicImage    = new Mechanic();
         pauseImage       = new HoverButton(pauseTexture,  true);
@@ -114,10 +114,10 @@ public class GameplayScreen extends AbstractScreen {
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
-        condenserImage.setPosition(521, 110);
-        coolerImage.setPosition(737, 102);
-        pipesImage.setPosition(131, 175);
-        poweroutImage.setPosition(709, 397);
+        condenserImage.setPosition(522, 110);
+        coolerImage.setPosition(804, 122);
+        pipesImage.setPosition(131, 149);
+        poweroutImage.setPosition(705, 405);
         reactorImage.setPosition(32, 113);
         turbineImage.setPosition(448, 410);
         mechanicImage.setPosition(630, 75);

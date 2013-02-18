@@ -77,7 +77,7 @@ public class GameplayScreen extends AbstractScreen {
         pump2Texture       = new Texture(Gdx.files.internal("assets\\game\\pump2.png"));
         valve1Texture      = new Texture(Gdx.files.internal("assets\\game\\valve1.png"));
         valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
-        sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareError.png"));
+        sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
         
 
         

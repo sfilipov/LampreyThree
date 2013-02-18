@@ -1,9 +1,10 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
 import static eel.seprphase2.Utilities.Units.*;
+import static lamprey.seprphase3.Utilities.Units.*;
+import static lamprey.seprphase3.DynSimulator.GameConfig.FlowRateInducedByPumps;
 
 /**
  *
@@ -12,43 +13,17 @@ import static eel.seprphase2.Utilities.Units.*;
 public class Pump extends FailableComponent {
 
     @JsonProperty
-    private Port inputPort;
-    @JsonProperty
-    private Port outputPort;
-    @JsonProperty
-    private Mass capacity = kilograms(3);
-    @JsonProperty
     private boolean status = true;
 
     private Pump() {
         super();
-        inputPort = null;
-        outputPort = null;
-    }
-
-    public Pump(Port input, Port output) {
-
-        inputPort = input;
-        outputPort = output;
-
     }
 
     public void step() {
-        if (hasFailed()) {
-            outputPort.mass = kilograms(0);
-            return;
-        }
-        if (status) {
-            if (inputPort.mass.inKilograms() > capacity.inKilograms()) {
-                outputPort.mass = capacity;
-                inputPort.mass = inputPort.mass.minus(capacity);
-            } else {
-                outputPort.mass = inputPort.mass;
-                inputPort.mass = kilograms(0);
-            }
-
-            outputPort.temperature = inputPort.temperature;
-            stepWear();
+        if (status && !hasFailed()) {
+            outputPort(null).flowRate = FlowRateInducedByPumps;
+        } else {
+            outputPort(null).flowRate = kilogramsPerSecond(0);
         }
     }
 
@@ -61,19 +36,7 @@ public class Pump extends FailableComponent {
         status = newStatus;
     }
 
-    public void setCapacity(Mass newCapacity) {
-        capacity = newCapacity;
-    }
-
     public boolean getStatus() {
         return status;
-    }
-
-    public Port inputPort() {
-        return inputPort;
-    }
-
-    public Port outputPort() {
-        return outputPort;
     }
 }

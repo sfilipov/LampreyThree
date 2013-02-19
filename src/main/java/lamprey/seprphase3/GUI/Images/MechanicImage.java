@@ -96,7 +96,7 @@ public class MechanicImage extends Image {
                 index++;
             }
         }
-        repairingAnimation = new Animation(2f, repairingFrames);
+        repairingAnimation = new Animation(0.03f, repairingFrames);
         
         this.mechanicDirection = Direction.Right;
         stateTime = 0;
@@ -165,7 +165,7 @@ public class MechanicImage extends Image {
             this.setSize(100f, 130f);
             scaleToUse = 0.9f;
         }
-        else if (true || currentlyRepairing != CurrentlyRepairing.None) {
+        else if (currentlyRepairing != CurrentlyRepairing.None) {
             this.setY(STATIC_Y);
             frame = repairingAnimation.getKeyFrame(stateTime, true);
             drawable.setRegion(frame);

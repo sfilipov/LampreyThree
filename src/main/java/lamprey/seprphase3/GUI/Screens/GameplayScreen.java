@@ -14,6 +14,7 @@ import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.MechanicImage;
+import lamprey.seprphase3.GUI.Images.PumpImage;
 import lamprey.seprphase3.GUI.Images.TurbineImage;
 import lamprey.seprphase3.GUI.Images.ValveImage;
 
@@ -48,6 +49,8 @@ public class GameplayScreen extends AbstractScreen {
     Image pipesImage;
     ValveImage valve1Image;
     ValveImage valve2Image;
+    PumpImage pump1Image;
+    PumpImage pump2Image;
     Image poweroutImage;
     HoverButton reactorImage;
     TurbineImage turbineImage;
@@ -90,6 +93,8 @@ public class GameplayScreen extends AbstractScreen {
         pipesImage       = new Image(pipesTexture);
         valve1Image      = new ValveImage(this.getPlantStatus(), 1);
         valve2Image      = new ValveImage(this.getPlantStatus(), 2);
+        pump1Image       = new PumpImage(this.getPlantStatus(), 1);
+        pump2Image       = new PumpImage(this.getPlantStatus(), 2);
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorbackTexture, false);
         turbineImage     = new TurbineImage(this.getPlantStatus());
@@ -120,6 +125,8 @@ public class GameplayScreen extends AbstractScreen {
         turbineImage.setPosition(436, 404);
         valve1Image.setPosition(381, 469);
         valve2Image.setPosition(418, 385);
+        pump1Image.setPosition(386, 174);
+        pump2Image.setPosition(762, 243);
         mechanicImage.setPosition(630, 75);
         mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(17, 15);
@@ -146,11 +153,14 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
         stage.addActor(pipesImage);
+        stage.addActor(valve1Image);
+        stage.addActor(valve2Image);
+        stage.addActor(pump1Image);
+        stage.addActor(pump2Image);
         stage.addActor(coolerImage);
         stage.addActor(poweroutImage);
         stage.addActor(reactorImage);
         stage.addActor(turbineImage);
-
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
@@ -162,8 +172,6 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve1Button);
         stage.addActor(valve2Button);
         stage.addActor(sErrorImage);
-                stage.addActor(valve1Image);
-        stage.addActor(valve2Image);
     }
     
     @Override

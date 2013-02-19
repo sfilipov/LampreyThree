@@ -11,31 +11,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantStatus;
 
 /**
  *
  * @author Simeon
  */
-public class TurbineImage extends Image {
+public class PumpImage extends Image {
+    private final static int COLS = 5;
+    private final static int ROWS = 4;
+    
     private PlantStatus status;
+    private int pumpNumber;
     private Texture texture;
     private TextureRegion[] frames;
-    private Animation animationSpeed1;
-    private Animation animationSpeed2;
-    private Animation animationSpeed3;
-    private Animation animationSpeed4;
-    private Animation currentAnimation;
+    private Animation animation;
     
     private TextureRegion frame;
     private TextureRegionDrawable drawable;
     private float stateTime;
-    private final static int COLS = 2;
-    private final static int ROWS = 7;
+    private boolean isPumping;
     
-    public TurbineImage(PlantStatus status) {
+    public PumpImage(PlantStatus status, int pumpNumber) {
         super();
-        texture = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\turbineanim.png"));
+        this.status = status;
+        this.pumpNumber = pumpNumber;
+        texture = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\pumpanim.png"));
         TextureRegion[][] split = TextureRegion.split(texture, texture.getWidth() / COLS, texture.getHeight() / ROWS);
         frames = new TextureRegion[COLS * ROWS];
         int index = 0;
@@ -45,21 +47,28 @@ public class TurbineImage extends Image {
                 index++;
             }
         }
-        animationSpeed1 = new Animation(0.08f, frames);
-        animationSpeed2 = new Animation(0.04f, frames);
-        animationSpeed3 = new Animation(0.02f, frames);
-        animationSpeed4 = new Animation(0.013f, frames);
+        animation = new Animation(0.033f, frames);
         stateTime = 0f;
-        drawable = new TextureRegionDrawable();
-        this.setSize(300, 130);
+        drawable  = new TextureRegionDrawable();
+        this.setSize(45, 45);
     }
     
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
-        stateTime += Gdx.graphics.getDeltaTime();
-        frame = animationSpeed2.getKeyFrame(stateTime, true);
-        drawable.setRegion(frame);
-        this.setDrawable(drawable);
+        try {
+            isPumping = status.getPumpState(pumpNumber);
+        }
+        catch(KeyNotFoundException e) {
+            //If a pump doesn't exist, then assume it is pumping and show animation
+            isPumping = true;
+        }
+        
+        if (isPumping) {
+            stateTime += Gdx.graphics.getDeltaTime();
+            frame = animation.getKeyFrame(stateTime, true);
+            drawable.setRegion(frame);
+            this.setDrawable(drawable);
+        }
         super.draw(batch, parentAlpha);
     }
 }

@@ -6,7 +6,8 @@ import eel.seprphase2.Utilities.Percentage;
 import java.io.IOException;
 
 /**
- *
+ * This class is responsible for declaring the methods that will need to be used to CHANGE something in the simulation,
+ * be is valveState, control rod position etc. It allows these to be called from the UI (higher up)
  * @author David
  */
 public interface PlantController {

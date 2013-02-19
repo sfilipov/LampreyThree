@@ -227,12 +227,6 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Temperature reactorMaximumTemperature() {
         return failureModel.reactorMaximumTemperature();
     }
-   /** 
-    @Override
-    public void setWornComponent(FailableComponent currentWornComponent) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-   **/
 
     @Override
     public void failCondenser() {

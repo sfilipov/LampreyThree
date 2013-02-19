@@ -18,12 +18,10 @@ public class DynamicViscosity {
     
     // Constants for dimensionless temperature, pressure & density
     private static final double T_star = 647.096; // in K
-    private static final double P_star = 22.115E6; // in Pa
     private static final double Rho_star = 322; // in kg/m^3
     private static final double Mu_star = 1E-6; // in Pascalseconds
     
     // Coefficients a_k for mu_0 equation.
-    private static final double[] a_k2 = {0.0181583, 0.0177624, 0.0105287, -0.0036744};
     private static final double[] a_k = {1.67752, 2.20462, 0.6366564, -0.241605};
     // Coefficients b_ji for mu_1 equation.
     private static final double[][] b_ij = {{ 0.520094,     0.222531,   -0.281378,  0.161913,   -0.0325372,  0,           0             },
@@ -34,13 +32,11 @@ public class DynamicViscosity {
                                             { 0,            0.120573,    0,         0,           0,          0,          -0.000593264   }};
    
     private static double T_bar;
-    private static double P_bar;
     private static double Rho_bar;
     
-    public static Viscosity dynamicViscosity(Temperature t, Pressure p, Density d) {
+    public static Viscosity dynamicViscosity(Temperature t, Density d) {
         // Initialise dimensionless variables.
         calcT_bar(t);
-        calcP_bar(p);
         calcRho_bar(d);
         return new Viscosity(Mu_0() * Mu_1() * Mu_star);
     }
@@ -50,15 +46,9 @@ public class DynamicViscosity {
         T_bar = t.inKelvin() / T_star;
     }
     
-    private static void calcP_bar(Pressure p) {
-        P_bar = p.inPascals() / P_star;
-    }
-    
     private static void calcRho_bar(Density d) {
         Rho_bar = d.inKilogramsPerCubicMetre() / Rho_star;
     }
-    
-    
     
     // ------ Calculations ------
     private static double Mu_0 () {
@@ -86,7 +76,5 @@ public class DynamicViscosity {
         }
         return Math.exp(Rho_bar * IJSum);
     }
-    
-    
-    
+   
 }

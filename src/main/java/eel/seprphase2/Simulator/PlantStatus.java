@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 /**
  *
+ * This class is responsible for declaring the methods that will need to be used to VIEW the status of something
+ * in the simulation, be is reactor pressure/temp, control rod position etc. 
+ * It allows these to be called from the UI (higher up)
  * @author David
  */
 public interface PlantStatus {

@@ -12,12 +12,14 @@ import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.GameplayListeners;
+import lamprey.seprphase3.GUI.Images.CondenserWaterLevelImage;
 import lamprey.seprphase3.GUI.Images.ControlRodsImage;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
 import lamprey.seprphase3.GUI.Images.InformationPanels;
 import lamprey.seprphase3.GUI.Images.MechanicImage;
 import lamprey.seprphase3.GUI.Images.PumpImage;
+import lamprey.seprphase3.GUI.Images.ReactorWaterLevelImage;
 import lamprey.seprphase3.GUI.Images.TextImage;
 import lamprey.seprphase3.GUI.Images.TurbineImage;
 import lamprey.seprphase3.GUI.Images.ValveImage;
@@ -50,7 +52,7 @@ public class GameplayScreen extends AbstractScreen {
     Image gamebgImage;
     Image borderImage;
     HoverButton condenserImage;
-    ControlRodsImage controlRods;
+    CondenserWaterLevelImage condenserWaterLevel;
     Image coolerImage;
     Image pipesImage;
     ValveImage valve1Image;
@@ -59,6 +61,8 @@ public class GameplayScreen extends AbstractScreen {
     PumpImage pump2Image;
     Image poweroutImage;
     HoverButton reactorImage;
+    ControlRodsImage controlRods;
+    ReactorWaterLevelImage reactorWaterLevel;
     TurbineImage turbineImage;
     MechanicImage mechanicImage;
     InformationPanels infoPanels;
@@ -95,31 +99,33 @@ public class GameplayScreen extends AbstractScreen {
         piggyTexture       = new Texture(Gdx.files.internal("assets\\game\\piggybank.png"));
         sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
         
-        gamebgImage      = new Image(gamebgTexture);
-        borderImage      = new Image(borderTexture);
-        condenserImage   = new HoverButton(condenserTexture, HoverButtonType.Component);
-        coolerImage      = new HoverButton(coolerTexture, HoverButtonType.Component);
-        pipesImage       = new Image(pipesTexture);
-        valve1Image      = new ValveImage(this.getPlantStatus(), 1);
-        valve2Image      = new ValveImage(this.getPlantStatus(), 2);
-        pump1Image       = new PumpImage(this.getPlantStatus(), 1);
-        pump2Image       = new PumpImage(this.getPlantStatus(), 2);
-        poweroutImage    = new Image(poweroutTexture);
-        reactorImage     = new HoverButton(reactorbackTexture, HoverButtonType.Component);
-        controlRods      = new ControlRodsImage(this.getPlantStatus());
-        turbineImage     = new TurbineImage(this.getPlantStatus());
-        infoPanels       = new InformationPanels(this.getPlantStatus());
-        mechanicImage    = new MechanicImage();
-        pauseImage       = new HoverButton(pauseTexture,  HoverButtonType.Transparent);
-        consolebackImage = new Image(consolebackTexture);
-        crUpImage        = new HoverButton(crUpTexture,   HoverButtonType.NotTransparent);
-        crDownImage      = new HoverButton(crDownTexture, HoverButtonType.NotTransparent);
-        pump1Button      = new HoverButton(pump1Texture,  HoverButtonType.NotTransparent);
-        pump2Button      = new HoverButton(pump2Texture,  HoverButtonType.NotTransparent);
-        valve1Button     = new HoverButton(valve1Texture, HoverButtonType.NotTransparent);
-        valve2Button     = new HoverButton(valve2Texture, HoverButtonType.NotTransparent);
-        piggyImage       = new TextImage(piggyTexture);
-        sErrorImage      = new Image(sErrorTexture);
+        gamebgImage         = new Image(gamebgTexture);
+        borderImage         = new Image(borderTexture);
+        condenserImage      = new HoverButton(condenserTexture, HoverButtonType.Component);
+        condenserWaterLevel = new CondenserWaterLevelImage(this.getPlantStatus());
+        coolerImage         = new HoverButton(coolerTexture, HoverButtonType.Component);
+        pipesImage          = new Image(pipesTexture);
+        valve1Image         = new ValveImage(this.getPlantStatus(), 1);
+        valve2Image         = new ValveImage(this.getPlantStatus(), 2);
+        pump1Image          = new PumpImage(this.getPlantStatus(), 1);
+        pump2Image          = new PumpImage(this.getPlantStatus(), 2);
+        poweroutImage       = new Image(poweroutTexture);
+        reactorImage        = new HoverButton(reactorbackTexture, HoverButtonType.Component);
+        controlRods         = new ControlRodsImage(this.getPlantStatus());
+        reactorWaterLevel   = new ReactorWaterLevelImage(this.getPlantStatus());
+        turbineImage        = new TurbineImage(this.getPlantStatus());
+        infoPanels          = new InformationPanels(this.getPlantStatus());
+        mechanicImage       = new MechanicImage();
+        pauseImage          = new HoverButton(pauseTexture,  HoverButtonType.Transparent);
+        consolebackImage    = new Image(consolebackTexture);
+        crUpImage           = new HoverButton(crUpTexture,   HoverButtonType.NotTransparent);
+        crDownImage         = new HoverButton(crDownTexture, HoverButtonType.NotTransparent);
+        pump1Button         = new HoverButton(pump1Texture,  HoverButtonType.NotTransparent);
+        pump2Button         = new HoverButton(pump2Texture,  HoverButtonType.NotTransparent);
+        valve1Button        = new HoverButton(valve1Texture, HoverButtonType.NotTransparent);
+        valve2Button        = new HoverButton(valve2Texture, HoverButtonType.NotTransparent);
+        piggyImage          = new TextImage(piggyTexture);
+        sErrorImage         = new Image(sErrorTexture);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -168,6 +174,8 @@ public class GameplayScreen extends AbstractScreen {
     public void show() {
         super.show();
 
+        //Order of these matters - Actors (Images) that are added to the stage
+        //later are going to be on top of ones added before that.
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
         stage.addActor(pipesImage);
@@ -180,8 +188,10 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(poweroutImage);
         stage.addActor(reactorImage);
         stage.addActor(controlRods);
+        stage.addActor(reactorWaterLevel);
         stage.addActor(turbineImage);
         stage.addActor(condenserImage);
+        stage.addActor(condenserWaterLevel);
         stage.addActor(mechanicImage);
         stage.addActor(pauseImage);
         stage.addActor(consolebackImage);
@@ -193,7 +203,6 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve2Button);
         stage.addActor(piggyImage);
         stage.addActor(sErrorImage);
-
     }
     
     @Override

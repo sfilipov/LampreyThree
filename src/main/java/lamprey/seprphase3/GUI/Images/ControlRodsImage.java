@@ -25,8 +25,7 @@ public class ControlRodsImage extends Image {
         super(texture);
         this.status = status;
         this.setSize(226f, 154f);
-        this.setX(40);
-        
+        this.setX(40);  
     }
     
     @Override

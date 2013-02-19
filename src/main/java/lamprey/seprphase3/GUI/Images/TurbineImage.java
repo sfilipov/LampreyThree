@@ -34,7 +34,7 @@ public class TurbineImage extends HoverButton {
     private final static int ROWS = 7;
     
     public TurbineImage(PlantStatus status) {
-        super();
+        super(HoverButtonType.Component);
         texture = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\turbineanim.png"));
         TextureRegion[][] split = TextureRegion.split(texture, texture.getWidth() / COLS, texture.getHeight() / ROWS);
         frames = new TextureRegion[COLS * ROWS];

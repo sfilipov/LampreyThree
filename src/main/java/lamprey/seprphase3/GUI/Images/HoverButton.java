@@ -23,20 +23,25 @@ public class HoverButton extends Image {
     
     private Array<EventListener> listeners;
     private ClickListener listener;
-    private boolean transparency;
+    private HoverButtonType type;
     private float current;
 
     
-    public HoverButton(Texture texture, boolean transparency) {
+    public HoverButton(Texture texture, HoverButtonType type) {
         super(texture);
-        this.transparency = transparency;
+        this.type = type;
         current = 0.8f;
     }
     
-    public HoverButton() {
+    public HoverButton(HoverButtonType type) {
         super();
-        this.transparency = false;
-        current = 0.8f;
+        this.type = type;
+        if(type == HoverButtonType.Component) {
+            current = 1f;
+        }
+        else {
+            current = 0.8f;
+        }
     }
     
     @Override
@@ -47,8 +52,14 @@ public class HoverButton extends Image {
             listener = (ClickListener) listeners.first();
             
             //Increase and decrease current based on mouse hover
-            if       (listener.isPressed()) {
+            if      (listener.isPressed()) {
                 current = PRESSED;
+            }
+            else if (type == HoverButtonType.Component && listener.isOver() && current > NOT_OVER ) {
+                current -= STEP;
+            }
+            else if (type == HoverButtonType.Component && !listener.isOver() && current < OVER) {
+                current += STEP;
             }
             else if (listener.isOver() && current < OVER) {
                 current += STEP; }
@@ -62,7 +73,7 @@ public class HoverButton extends Image {
                 current = NOT_OVER; }
             
             //Set the proper color and draw the button
-            if (listener.isPressed() || !transparency) {
+            if (listener.isPressed() || type == HoverButtonType.NotTransparent || type == HoverButtonType.Component) {
                 this.setColor(current, current, current, 1f); }
             else {
                 this.setColor(current, current, current, current); }

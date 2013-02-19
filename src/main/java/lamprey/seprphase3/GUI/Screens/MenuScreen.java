@@ -14,6 +14,7 @@ import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
+import lamprey.seprphase3.GUI.Images.HoverButtonType;
 
 /**
  *
@@ -61,10 +62,10 @@ public class MenuScreen extends AbstractScreen {
         
         menubgImage      = new Image(menubgTexture);
         gamelogoImage    = new Image(gamelogoTexture);
-        newgameImage     = new HoverButton(newgameTexture, true);
-        loadgameImage    = new HoverButton(loadgameTexture, true);
-        optionsImage     = new HoverButton(optionsTexture, true);
-        highscoresImage  = new HoverButton(highscoresTexture, true);
+        newgameImage     = new HoverButton(newgameTexture, HoverButtonType.Transparent);
+        loadgameImage    = new HoverButton(loadgameTexture, HoverButtonType.Transparent);
+        optionsImage     = new HoverButton(optionsTexture, HoverButtonType.Transparent);
+        highscoresImage  = new HoverButton(highscoresTexture, HoverButtonType.Transparent);
         lampreylogoImage = new Image(lampreylogoTexture);
         
         menubgImage.setPosition(0, 0);

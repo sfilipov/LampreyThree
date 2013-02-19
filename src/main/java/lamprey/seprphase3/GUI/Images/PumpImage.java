@@ -34,7 +34,7 @@ public class PumpImage extends HoverButton {
     private boolean isPumping;
     
     public PumpImage(PlantStatus status, int pumpNumber) {
-        super();
+        super(HoverButtonType.Component);
         this.status = status;
         this.pumpNumber = pumpNumber;
         texture = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\pumpanim.png"));

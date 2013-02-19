@@ -168,6 +168,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
         stage.addActor(pipesImage);
+        stage.addActor(infoPanels);
         stage.addActor(valve1Image);
         stage.addActor(valve2Image);
         stage.addActor(pump1Image);
@@ -188,7 +189,6 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve2Button);
         stage.addActor(piggyImage);
         stage.addActor(sErrorImage);
-                stage.addActor(infoPanels);
 
     }
     

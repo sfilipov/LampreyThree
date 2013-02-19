@@ -14,14 +14,6 @@ public class Turbine extends FailableComponent {
 
     @JsonProperty
     private double outputPower;
-    @JsonProperty
-    private Port inputPort = new Port();
-    @JsonProperty
-    private Port outputPort = new Port();
-    @JsonIgnore
-    private static PlantController controller;
-    @JsonProperty
-    private Mass buildUp = kilograms(0);
 
     /**
      *
@@ -33,26 +25,15 @@ public class Turbine extends FailableComponent {
     /**
      *
      */
-    public void step() {
-        //System.out.println("Turbine Input Water Mass " + inputPort.mass);
-        //System.out.println("Turbine Output Water Mass 1 " + outputPort.mass);
-
+    public void step(double seconds) {
         if (hasFailed()) {
             outputPower = 0;
             stepWear();
-            buildUp = buildUp.plus(inputPort.mass);
             return;
         }
-
-        outputPower = inputPort.mass.inKilograms() * 1000; //Requires conversion to grams
-        outputPort.mass = inputPort.mass.plus(buildUp);
-        outputPort.pressure = inputPort.pressure;
-        outputPort.temperature = inputPort.temperature;
-        outputPort.flow = inputPort.flow;
-        buildUp = kilograms(0);
+        outputPower = this.outputPort(null).flowRate.massFlowForTime(seconds).inKilograms() * 1000; //convert to grams. 
         stepWear();
 
-        //System.out.println("Turbine Output Water Mass 2 " + outputPort.mass);
     }
 
     /**
@@ -61,22 +42,6 @@ public class Turbine extends FailableComponent {
      */
     public double outputPower() {
         return outputPower;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Port inputPort() {
-        return inputPort;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Port outputPort() {
-        return outputPort;
     }
 
     /**

@@ -24,12 +24,9 @@ public class PhysicalModel implements PlantStatus {
 
     @JsonProperty
     private PlantModel plant;
-    
-    @JsonProperty
-    private String username; 
 
-    public PhysicalModel() {
-        plant = new PlantModel();
+    public PhysicalModel(PlantModel plant) {
+        this.plant = plant;
     }
 
     @Override
@@ -119,8 +116,24 @@ public class PhysicalModel implements PlantStatus {
     }
 
     @Override
-    public boolean getReactorToTurbine() {
-        return plant.valves().get(1).getOpen(); // reactor to turbine pump
+    public boolean isValveOpen(int valveID) throws KeyNotFoundException {
+        if (plant.valves().containsKey(valveID)) {
+            return plant.valves().get(valveID).getOpen();
+        } else
+        {
+            throw new KeyNotFoundException("No valve with ID (" + valveID + ") exists!");
+        }
+    }
+    
+    @Override
+    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
+        if (plant.pumps().containsKey(pumpID)) {
+            return plant.pumps().get(pumpID).getStatus();
+        } else
+        {
+            throw new KeyNotFoundException("No pump with ID (" + pumpID + ") exists!");
+        }
+        
     }
 
     @Override
@@ -164,13 +177,13 @@ public class PhysicalModel implements PlantStatus {
     }
 
     @Override
-    public Percentage condenserToReactorWear() {
-        return plant.pumps().get(1).wear(); // condenser to reactor pump
-    }
-
-    @Override
-    public Percentage heatsinkToCondenserWear() {
-        return plant.pumps().get(2).wear(); // heatsink pump
+    public Percentage pumpWear(int pumpID) throws KeyNotFoundException {
+        if (plant.pumps().containsKey(pumpID)) {
+            return plant.pumps().get(pumpID).wear();
+        } else
+        {
+            throw new KeyNotFoundException("No pump with ID (" + pumpID + ") exists!");
+        }
     }
 
     @Override
@@ -178,7 +191,5 @@ public class PhysicalModel implements PlantStatus {
         return plant.turbine().hasFailed();
     }
 
-    public boolean getPumpStatus(int pumpNumber) {
-        return plant.pumps().get(pumpNumber).getStatus();
-    }
+   
 }

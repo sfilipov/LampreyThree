@@ -5,6 +5,8 @@
 package lamprey.seprphase3.Utilities;
 
 import eel.seprphase2.Utilities.Format;
+import eel.seprphase2.Utilities.Mass;
+import static eel.seprphase2.Utilities.Units.kilograms;
 
 /**
  *
@@ -33,6 +35,10 @@ public class MassFlowRate {
      */
     public double inKilogramsPerSecond() {
         return kilogramsPerSecond;
+    }
+    
+    public Mass massFlowForTime(double seconds) {
+        return kilograms(kilogramsPerSecond * seconds);
     }
 
     /**

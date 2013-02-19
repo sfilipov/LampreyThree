@@ -1,8 +1,12 @@
 package lamprey.seprphase3.DynSimulator;
 
+import eel.seprphase2.Utilities.*;
+import static eel.seprphase2.Utilities.Units.kelvin;
+import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import lamprey.seprphase3.Utilities.MassFlowRate;
 
 /**
  *
@@ -73,6 +77,14 @@ public class Junction extends FlowThroughComponent {
                                                "component not attached to this junction.");
         }
     }
+    
+    public HashMap<FlowThroughComponent, BlockablePort> outputPortMap() {
+        return outputPorts;
+    }
+    
+    public boolean isBlocked(FlowThroughComponent componentToCheck) {
+        return this.outputPorts.get(componentToCheck).blocked;
+    }
 
     public void block(FlowThroughComponent componentToBlock) {
         if (this.outputPorts.containsKey(componentToBlock)) {
@@ -105,6 +117,33 @@ public class Junction extends FlowThroughComponent {
     public void resetState() {
         for (Entry<FlowThroughComponent, BlockablePort> entry : this.outputPorts.entrySet()) {
             entry.getValue().blocked = false;
+        }
+    }
+    
+    /**
+     * Update the output ports to reflect inputs.
+     *
+     */
+    public void updateOutputPorts() {
+        MassFlowRate avgFlow = kilogramsPerSecond(0);
+        Temperature avgTemp = kelvin(0);
+        int numOutputs = numOutputs();
+        int numInputs = 0;
+        for (FlowThroughComponent inputComponent : inputs) {
+            if (inputComponent != null) {
+                avgFlow = avgFlow.plus(inputComponent.outputPort(this).flowRate);
+                avgTemp = avgTemp.plus(inputComponent.outputPort(this).temperature);
+                numInputs++;
+            }
+        }
+        // average the flow across all active outputs.
+        avgFlow = kilogramsPerSecond((numOutputs != 0) ? avgFlow.inKilogramsPerSecond() / numOutputs : 0); 
+        avgTemp = kelvin((numInputs != 0) ? avgTemp.inKelvin() / numInputs : 0);
+        for (BlockablePort bp : outputPorts.values()) {
+            if (!bp.blocked) {
+                bp.flowRate = avgFlow;
+                bp.temperature = avgTemp;
+            }
         }
     }
 

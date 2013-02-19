@@ -1,5 +1,6 @@
 package lamprey.seprphase3.DynSimulator;
 
+import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Temperature;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 
@@ -20,6 +21,10 @@ public class OutputPort {
     public OutputPort(MassFlowRate massFlowRate, Temperature temperature) { 
         this.flowRate = massFlowRate;
         this.temperature = temperature;
+    }
+    
+    public Mass flownThroughInTime(double seconds) {
+        return flowRate.massFlowForTime(seconds);
     }
     
 }

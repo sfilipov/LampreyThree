@@ -52,7 +52,7 @@ public class Game {
         while (true) {
             try {
                 ti.processCommand();
-                simulator.step();
+                simulator.step(1);
             } catch (DoNotStep n) {
             }
             // show a blank line

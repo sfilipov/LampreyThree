@@ -11,7 +11,11 @@ import eel.seprphase2.Simulator.Pump;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.Simulator.Turbine;
 import eel.seprphase2.Simulator.Valve;
+import eel.seprphase2.Utilities.Energy;
+import static eel.seprphase2.Utilities.Units.joules;
+import java.util.ArrayList;
 import java.util.HashMap;
+
 
 /**
  *
@@ -34,15 +38,22 @@ public class PlantModel {
     @JsonProperty
     private Pump heatsinkToCondenser;
     @JsonProperty
-    private HeatSink heatSink;
-    @JsonProperty
     private Junction splitAfterReactor;
     @JsonProperty
     private Junction joinBeforeCondenser;
     @JsonProperty
     private HashMap<Integer, Pump> allPumps;
     @JsonProperty
-    private HashMap<Integer, Valve> allValves;  
+    private HashMap<Integer, Valve> allValves;
+    @JsonProperty
+    private ArrayList<Junction> allJunctions;
+    @JsonProperty
+    private ArrayList<FlowThroughComponent> allComponents;
+    @JsonProperty
+    private ArrayList<BlockableComponent> allBlockable;
+    @JsonProperty
+    private Energy energyGenerated = joules(0);
+    private String currentWornComponent = "";
 
     public PlantModel() {
         instantiateComponents();
@@ -58,7 +69,6 @@ public class PlantModel {
         bypassValve = new Valve();
         condenserToReactor = new Pump();
         heatsinkToCondenser = new Pump();
-        heatSink = new HeatSink();
         splitAfterReactor = new Junction();
         joinBeforeCondenser = new Junction();
     }
@@ -72,6 +82,20 @@ public class PlantModel {
         allValves = new HashMap<Integer, Valve>();
         allValves.put(1, reactorToTurbine);
         allValves.put(2, bypassValve);
+        
+        allJunctions = new ArrayList<Junction>();
+        allJunctions.add(splitAfterReactor);
+        allJunctions.add(joinBeforeCondenser);
+        
+        // All components involved in the flow around the system (i.e. not the heatsink pump)
+        allComponents = new ArrayList<FlowThroughComponent>();
+        allComponents.add(reactor);
+        allComponents.add(condenser);
+        allComponents.add(turbine);
+        allComponents.addAll(allPumps.values());
+        allComponents.addAll(allValves.values());
+        allComponents.addAll(allJunctions);
+        
     }
 
     private void setupComponentReferences() {
@@ -119,10 +143,6 @@ public class PlantModel {
     public Condenser condenser() {
         return condenser;
     }
-
-    public HeatSink heatSink() {
-        return heatSink;
-    }
     
     public HashMap<Integer, Pump> pumps() {
         return allPumps;
@@ -131,5 +151,45 @@ public class PlantModel {
     public HashMap<Integer, Valve> valves() {
         return allValves;
     }
-
+    
+    public ArrayList<Junction> junctions() {
+        return allJunctions;
+    }
+    
+    public ArrayList<FlowThroughComponent> components() {
+        return allComponents;
+    }
+    
+    /**
+     * Returns all blockable components in the plant.
+     * If the list is null then we build it first, then return it.
+     * @return a list of all blockable components in the plant.
+     */
+    public ArrayList<BlockableComponent> blockables() {
+        if (allBlockable == null) {
+            allBlockable = new ArrayList<BlockableComponent>();
+            for (FlowThroughComponent c : allComponents) {
+                if (c instanceof BlockableComponent) {
+                    allBlockable.add((BlockableComponent)c);
+                }
+            }
+        }
+        return allBlockable;
+    }
+    
+    public Energy energyGenerated() {
+        return energyGenerated;
+    }
+    
+    public void setCurrentWornComponent(String wornComponent) {
+        currentWornComponent = wornComponent;
+    }
+    
+    public String getCurrentWornComponent() {
+        return currentWornComponent;
+    }
+    
+    public void increaseEnergyGenerated(Energy delta) {
+        energyGenerated.plus(delta);
+    }
 }

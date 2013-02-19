@@ -51,8 +51,9 @@ public class FailureModel implements PlantController, PlantStatus {
      * Also implements reactor safety rules.
      *
      */
-    public void step() throws GameOverException {
-        controller.step(1);
+    @Override
+    public void step(double seconds) throws GameOverException {
+        controller.step(seconds);
         failStateCheck();
         randomWearCheck();
         failStateCheck(); // Requires a second check, because randomWearCheck may have cause a component to reach 100% wear
@@ -168,13 +169,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void setReactorToTurbine(boolean open) {
-        controller.setReactorToTurbine(open);
-    }
-
-    @Override
-    public boolean getReactorToTurbine() {
-        return status.getReactorToTurbine();
+    public boolean isValveOpen(int valveID) throws KeyNotFoundException {
+        return status.isValveOpen(valveID);
     }
     
     @Override
@@ -188,13 +184,8 @@ public class FailureModel implements PlantController, PlantStatus {
     }
     
     @Override
-    public Percentage condenserToReactorWear() { 
-        return status.condenserToReactorWear();
-    }
-    
-    @Override
-    public Percentage heatsinkToCondenserWear() { 
-        return status.heatsinkToCondenserWear();
+    public Percentage pumpWear(int pumpID) throws KeyNotFoundException { 
+        return status.pumpWear(pumpID);
     }
 
     @Override
@@ -243,11 +234,6 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public void step(int i) throws GameOverException {
-        controller.step(i);
-    }
-
-    @Override
     public boolean turbineHasFailed() {
         return status.turbineHasFailed();
     }
@@ -255,6 +241,11 @@ public class FailureModel implements PlantController, PlantStatus {
     @Override
     public ArrayList<FailableComponent> failableComponents() {
         return status.failableComponents();
+    }
+
+    @Override
+    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
+        return status.getPumpStatus(pumpID);
     }
 
     private void checkReactorWaterLevel() {

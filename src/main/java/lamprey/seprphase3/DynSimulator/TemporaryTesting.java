@@ -5,7 +5,6 @@ import eel.seprphase2.Simulator.*;
 import eel.seprphase2.Utilities.*;
 import lamprey.seprphase3.Extra.DynamicViscosity;
 import lamprey.seprphase3.Extra.Viscosity;
-import lamprey.seprphase3.Extra.FlowEquations;
 import lamprey.seprphase3.Extra.Area;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 import lamprey.seprphase3.Utilities.VolumetricFlowRate;

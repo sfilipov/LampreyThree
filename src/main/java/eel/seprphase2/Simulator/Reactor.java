@@ -11,6 +11,8 @@ import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import eel.seprphase2.Utilities.Velocity;
 import eel.seprphase2.Utilities.Volume;
+import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
+import lamprey.seprphase3.DynSimulator.OutputPort;
 
 /**
  *
@@ -34,13 +36,10 @@ public class Reactor extends FailableComponent {
     @JsonProperty
     private Density steamDensity;
     @JsonProperty
-    private Port outputPort = new Port();
-    @JsonProperty
-    private Port inputPort = new Port();
-    @JsonProperty
     private double boilingPtAtPressure;
     @JsonProperty
     private double neededEnergy;
+    private double deltaSeconds;
 
     /**
      *
@@ -52,6 +51,7 @@ public class Reactor extends FailableComponent {
         steamMass = kilograms(0);
         temperature = kelvin(350);
         pressure = pascals(101325);
+        this.pressurised = true;
     }
 
     /**
@@ -111,22 +111,32 @@ public class Reactor extends FailableComponent {
     public Pressure pressure() {
         return this.pressure;
     }
+    
+    private Mass getMassComingInOverTime(double seconds){
+        return this.input.outputPort((FlowThroughComponent)this).flowRate.massFlowForTime(seconds);
+    }
+    
+    private Mass massOfSteamLeavingOverTime(double seconds) {
+        return this.outputPort(null).flownThroughInTime(seconds);
+    }
 
     /**
      *
      */
-    public void step() throws GameOverException {
-
-        if (steamMass.inKilograms() > inputPort.mass.inKilograms()) {
-            steamMass = steamMass.minus(inputPort.mass);
-            waterMass = waterMass.plus(inputPort.mass);
+    public void step(double seconds) throws GameOverException {
+        System.out.println("RSM: " + steamMass);
+        System.out.println("RWM: " + waterMass);
+        deltaSeconds = seconds;
+        if (steamMass.inKilograms() > massOfSteamLeavingOverTime(seconds).inKilograms()) {
+            steamMass = steamMass.minus(massOfSteamLeavingOverTime(seconds));
+            waterMass = waterMass.plus(getMassComingInOverTime(seconds));
             correctWaterMass();
-            calculateNewTemperature(inputPort);
+            calculateNewTemperature(input.outputPort(this));
         } else {
             waterMass = waterMass.plus(steamMass);
             correctWaterMass();
             steamMass = kilograms(0);
-            calculateNewTemperature(inputPort);
+            calculateNewTemperature(input.outputPort((FlowThroughComponent)this));
         }
 
         if (hasFailed()) {
@@ -143,16 +153,15 @@ public class Reactor extends FailableComponent {
         neededEnergy = (boilingPtAtPressure - temperature.inKelvin()) * waterMass.inKilograms() * specificHeatOfWater;
 
 
-        if (neededEnergy >= fuelPile.output(1)) {
+        if (neededEnergy >= fuelPile.output(seconds)) {
 
             /*
              * Calculates how much the water heats if it's not at boiling point
              */
 
             temperature = kelvin(temperature.inKelvin() +
-                                 fuelPile.output(1) / waterMass.inKilograms() /
+                                 fuelPile.output(seconds) / waterMass.inKilograms() /
                                  specificHeatOfWater);
-            outputPort.mass = kilograms(0);
         } else {
 
             /*
@@ -161,10 +170,9 @@ public class Reactor extends FailableComponent {
              * Calculates how much water turns to steam in one timestep at boiling point using remaining energy
              */
             temperature = kelvin(boilingPtAtPressure);
-            Mass deltaMass = kilograms((fuelPile.output(1) - neededEnergy) / latentHeatOfWater);
+            Mass deltaMass = kilograms((fuelPile.output(seconds) - neededEnergy) / latentHeatOfWater);
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
-            outputPort.mass = deltaMass;
             correctWaterMass();
         }
 
@@ -179,29 +187,6 @@ public class Reactor extends FailableComponent {
             pressure = pascals(atmosphericPressure);
         }
         steamDensity = steamMass.densityAt(steamVolume);
-
-        /*
-         * Sends information to output port
-         */
-
-        outputPort.flow = steamMass;
-        outputPort.density = steamDensity;
-        outputPort.pressure = pressure;
-        outputPort.temperature = temperature;
-
-        /*System.out.println("Reactor Output Port:");
-        System.out.println("\t Flow: " + outputPort.flow);
-        System.out.println("\t Mass: " + outputPort.mass);
-        System.out.println("\t Pressure: " + outputPort.pressure);
-        System.out.println("\t Density: " + outputPort.density);
-        */
-
-        System.out.println("Reactor:");
-        System.out.println("\tSteamMass: " + steamMass);
-        System.out.println("\tSteamDensity: " + steamDensity);
-        System.out.println("\tPressure: " + pressure);
-        System.out.println("\tTemperature: " + temperature);
-        
         
         /*
          * Calculates component wear after a time step
@@ -217,18 +202,6 @@ public class Reactor extends FailableComponent {
         return metresPerSecond(pressure().inPascals() / 100);
     }
 
-    /**
-     *
-     * @return
-     */
-    public Port outputPort() {
-        return outputPort;
-    }
-
-    public Port inputPort() {
-        return inputPort;
-    }
-
     public Mass maximumWaterMass() {
         return maximumWaterMass;
     }
@@ -237,9 +210,9 @@ public class Reactor extends FailableComponent {
         return minimumWaterMass;
     }
 
-    public void calculateNewTemperature(Port in) {
-        temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * in.mass
-                              .inKilograms()) / (waterMass.inKilograms() + in.mass.inKilograms()));
+    public void calculateNewTemperature(OutputPort in) {
+        temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * getMassComingInOverTime(deltaSeconds)
+                              .inKilograms()) / (waterMass.inKilograms() + getMassComingInOverTime(deltaSeconds).inKilograms()));
     }
 
     @Override

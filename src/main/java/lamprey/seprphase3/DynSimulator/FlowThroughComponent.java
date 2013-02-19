@@ -18,7 +18,7 @@ public abstract class FlowThroughComponent {
     /**
      * Object representing the flow out of this component.
      */
-    private OutputPort outputPort;
+    private OutputPort outputPort = new OutputPort();
     /**
      * Dictates whether or not this component is pressurised.
      * i.e. Reactor/Condenser

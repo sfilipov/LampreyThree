@@ -45,7 +45,7 @@ public class FailureModelTest {
     }
     
     @Test
-    public void failNothing() {
+    public void failNothingHasFailed() {
         final ArrayList<FailableComponent> components = new ArrayList<FailableComponent>();        
         Turbine turbine = new Turbine();
         Condenser condenser = new Condenser();
@@ -156,6 +156,7 @@ public class FailureModelTest {
             }
         });
         model.moveControlRods(percent(57));
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -166,6 +167,8 @@ public class FailureModelTest {
             }
         });
         model.changeValveState(1, true);
+        context.assertIsSatisfied();
+        
     }
 
     @Test
@@ -176,6 +179,7 @@ public class FailureModelTest {
             }
         });
         model.changePumpState(1, true);
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -186,6 +190,7 @@ public class FailureModelTest {
             }
         });
         model.repairPump(1);
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -196,6 +201,7 @@ public class FailureModelTest {
             }
         });
         model.repairCondenser();
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -206,6 +212,7 @@ public class FailureModelTest {
             }
         });
         model.repairTurbine();
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -271,6 +278,7 @@ public class FailureModelTest {
             }
         });
         model.setReactorToTurbine(true);
+        context.assertIsSatisfied();
     }
 
     @Test
@@ -362,6 +370,7 @@ public class FailureModelTest {
             }
         });
         model.failCondenser();
+        context.assertIsSatisfied();
     }
     
     @Test
@@ -383,6 +392,7 @@ public class FailureModelTest {
             }
         });
         model.wearReactor();
+        context.assertIsSatisfied();
     }
 
     @Ignore @Test

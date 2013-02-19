@@ -114,12 +114,6 @@ public class GameplayScreen extends AbstractScreen {
         piggyImage       = new Image(piggyTexture);
         sErrorImage      = new Image(sErrorTexture);
         
-    }
-    
-    @Override
-    public void show() {
-        super.show();
-        
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
         condenserImage.setPosition(523, 110);
@@ -157,8 +151,13 @@ public class GameplayScreen extends AbstractScreen {
         valve1Button.addListener(listeners.getValve1Listener());
         valve2Button.addListener(listeners.getValve2Listener());
         pump1Button.addListener(listeners.getPump1ButtonListener());
-        pump2Button.addListener(listeners.getPump2ButtonListener());
-        
+        pump2Button.addListener(listeners.getPump2ButtonListener());        
+    }
+    
+    @Override
+    public void show() {
+        super.show();
+
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
         stage.addActor(pipesImage);

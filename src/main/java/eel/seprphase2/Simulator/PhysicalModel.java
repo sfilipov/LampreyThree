@@ -314,9 +314,15 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
+        /*
+         * If pump number given is higher than the amount of available pumps it throws an exception
+         */
         if (!allPumps.containsKey(pumpNumber)) {
             throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
         }
+        /*
+         * If the pump requested has failed, it cananot have its state changed so throws an exception
+         */
 
         if (allPumps.get(pumpNumber).hasFailed()) {
             throw new CannotControlException("Pump " + pumpNumber + " is failed");
@@ -368,6 +374,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     @Override
     public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException  {
+         /*
+         * If the pump requested does not exist, it will throw an exception
+         */
         if (!allPumps.containsKey(pumpNumber)) {
             throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
         }
@@ -376,6 +385,9 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     @Override
     public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
+         /*
+         * If the valve requested does not exist, it will throw an exception
+         */
         if (allConnections.containsKey(valveNumber)) {
             return allConnections.get(valveNumber).getOpen();
         } else {
@@ -406,6 +418,10 @@ public class PhysicalModel implements PlantController, PlantStatus {
     
     @Override
     public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
+        /*
+         * If the pump requested does not exist, it will throw an exception
+         */
+        
         if (!allPumps.containsKey(pumpNumber)) {
             throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
         }

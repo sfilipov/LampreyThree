@@ -5,7 +5,7 @@ import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 
 /**
- * 
+ * This class holds the variables that define the Condenser component in the program
  * @author Marius
  */
 public class Condenser extends FailableComponent {
@@ -36,6 +36,9 @@ public class Condenser extends FailableComponent {
     public Condenser() {
         initializeVariables();
     }
+    /*
+     * 
+     */
 
     public void step() {
 
@@ -96,7 +99,7 @@ public class Condenser extends FailableComponent {
             outputPort.mass = waterMass;
             outputPort.temperature = temperature;
             outputPort.pressure = pressure;
-            stepWear();
+            stepWear(); 
         }
 
 

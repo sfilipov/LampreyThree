@@ -231,6 +231,7 @@ public class FailureModel implements PlantController, PlantStatus {
         return status.getPumpState(pumpNumber);
     }
     
+    @Override
     public Boolean getValveState(int valveNumber) throws KeyNotFoundException  { 
         return status.getValveState(valveNumber);
     }

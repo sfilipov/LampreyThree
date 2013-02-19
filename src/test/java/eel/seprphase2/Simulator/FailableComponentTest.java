@@ -144,13 +144,17 @@ public class FailableComponentTest {
         assertEquals(percent(20), condenser.wear());
     }         
        
+    @Test
     public void shouldNotAddWearOver100() {
         
         Condenser condenser = new Condenser();
         Turbine turbine = new Turbine();
         Percentage damage = new Percentage(70);
-        
-        for (int i = 0; i < 10; i++) { // Use for loop because Percentages cannot be set over 100, so need to add several to make the wear of a component potentially over 100
+        /*
+         * // Use for loop because Percentages cannot be set over 100,
+         * so need to add several to make the wear of a component potentially over 100
+         */
+        for (int i = 0; i < 10; i++) {
             condenser.addWear(damage);
             turbine.addWear(damage);
         }

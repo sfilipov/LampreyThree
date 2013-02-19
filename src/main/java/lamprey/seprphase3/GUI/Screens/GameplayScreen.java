@@ -40,6 +40,7 @@ public class GameplayScreen extends AbstractScreen {
     Texture pump2Texture;
     Texture valve1Texture;
     Texture valve2Texture;
+    Texture piggyTexture;
     Texture sErrorTexture;
     
     Image gamebgImage;
@@ -63,6 +64,7 @@ public class GameplayScreen extends AbstractScreen {
     HoverButton pump2Button;
     HoverButton valve1Button;
     HoverButton valve2Button;
+    Image piggyImage;
     Image sErrorImage;
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
@@ -84,6 +86,7 @@ public class GameplayScreen extends AbstractScreen {
         pump2Texture       = new Texture(Gdx.files.internal("assets\\game\\pump2.png"));
         valve1Texture      = new Texture(Gdx.files.internal("assets\\game\\valve1.png"));
         valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
+        piggyTexture       = new Texture(Gdx.files.internal("assets\\game\\piggybank.png"));
         sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
         
         gamebgImage      = new Image(gamebgTexture);
@@ -107,6 +110,7 @@ public class GameplayScreen extends AbstractScreen {
         pump2Button      = new HoverButton(pump2Texture,  false);
         valve1Button     = new HoverButton(valve1Texture, false);
         valve2Button     = new HoverButton(valve2Texture, false);
+        piggyImage       = new Image(piggyTexture);
         sErrorImage      = new Image(sErrorTexture);
         
     }
@@ -137,6 +141,7 @@ public class GameplayScreen extends AbstractScreen {
         pump2Button.setPosition(373, 76);
         valve1Button.setPosition(300, 22);
         valve2Button.setPosition(353, 22);
+        piggyImage.setPosition(821, 10);
         sErrorImage.setPosition(433, 18);
         
         condenserImage.addListener(listeners.getCondenserListener());
@@ -174,6 +179,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(pump2Button);
         stage.addActor(valve1Button);
         stage.addActor(valve2Button);
+        stage.addActor(piggyImage);
         stage.addActor(sErrorImage);
     }
     

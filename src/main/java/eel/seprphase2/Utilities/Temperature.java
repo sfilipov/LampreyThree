@@ -54,7 +54,7 @@ public class Temperature {
 
     @Override
     public String toString() {
-        return Format.toThreeDecimalPlaces(inCelsius()) + " degrees C";
+        return Format.toThreeDecimalPlaces(inCelsius());
     }
 
     @Override

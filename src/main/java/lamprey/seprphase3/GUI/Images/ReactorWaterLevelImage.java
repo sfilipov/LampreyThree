@@ -47,7 +47,7 @@ public class ReactorWaterLevelImage extends Image {
     public void draw(SpriteBatch batch, float parentAlpha) {
         reactorWaterLevel = (float) status.reactorWaterLevel().points(); //Don't worry about the cast - Percentage 
                                                                          //can be only between 0 and 100.
-        waterSize = 80f;//reactorWaterLevel * 1.6f;
+        waterSize = reactorWaterLevel * 1.6f;
         
         middleImage.setSize(206, waterSize);
 //        topImage.setPosition(??, BASE_Y + waterSize); 

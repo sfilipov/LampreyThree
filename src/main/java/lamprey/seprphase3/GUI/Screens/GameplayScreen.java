@@ -12,6 +12,7 @@ import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.GameplayListeners;
+import lamprey.seprphase3.GUI.Images.ControlRodsImage;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
 import lamprey.seprphase3.GUI.Images.InformationPanels;
@@ -49,6 +50,7 @@ public class GameplayScreen extends AbstractScreen {
     Image gamebgImage;
     Image borderImage;
     HoverButton condenserImage;
+    ControlRodsImage controlRods;
     Image coolerImage;
     Image pipesImage;
     ValveImage valve1Image;
@@ -104,6 +106,7 @@ public class GameplayScreen extends AbstractScreen {
         pump2Image       = new PumpImage(this.getPlantStatus(), 2);
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorbackTexture, HoverButtonType.Component);
+        controlRods      = new ControlRodsImage(this.getPlantStatus());
         turbineImage     = new TurbineImage(this.getPlantStatus());
         infoPanels       = new InformationPanels(this.getPlantStatus());
         mechanicImage    = new MechanicImage();
@@ -176,6 +179,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(coolerImage);
         stage.addActor(poweroutImage);
         stage.addActor(reactorImage);
+        stage.addActor(controlRods);
         stage.addActor(turbineImage);
         stage.addActor(condenserImage);
         stage.addActor(mechanicImage);

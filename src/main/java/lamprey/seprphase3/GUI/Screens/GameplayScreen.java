@@ -61,7 +61,7 @@ public class GameplayScreen extends AbstractScreen {
     PumpImage pump1Image;
     PumpImage pump2Image;
     Image poweroutImage;
-    HoverButton reactorImage;
+    Image reactorImage;
     ControlRodsImage controlRods;
     ReactorWaterLevelImage reactorWaterLevel;
     TurbineImage turbineImage;
@@ -111,7 +111,7 @@ public class GameplayScreen extends AbstractScreen {
         pump1Image          = new PumpImage(this.getPlantStatus(), 1);
         pump2Image          = new PumpImage(this.getPlantStatus(), 2);
         poweroutImage       = new Image(poweroutTexture);
-        reactorImage        = new HoverButton(reactorbackTexture, HoverButtonType.Component);
+        reactorImage        = new Image(reactorbackTexture);
         controlRods         = new ControlRodsImage(this.getPlantStatus());
         reactorWaterLevel   = new ReactorWaterLevelImage(this.getPlantStatus());
         turbineImage        = new TurbineImage(this.getPlantStatus());
@@ -155,8 +155,6 @@ public class GameplayScreen extends AbstractScreen {
         sErrorImage.setPosition(433, 18);
         
         condenserImage.addListener(listeners.getCondenserListener());
-//        coolerImage.addListener(listeners.getCoolerListener());
-        reactorImage.addListener(listeners.getReactorListener());
         turbineImage.addListener(listeners.getTurbineListener());
         pump1Image.addListener(listeners.getPump1Listener());
         pump2Image.addListener(listeners.getPump2Listener());

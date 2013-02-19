@@ -12,6 +12,7 @@ import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Percentage;
+import lamprey.seprphase3.GUI.Images.CurrentlyRepairing;
 import lamprey.seprphase3.GUI.Screens.GameplayScreen;
 
 /**
@@ -38,13 +39,7 @@ public class GameplayListeners {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(630f);
-                try {
-                    
-                    controller.repairCondenser();
-                }
-                catch(CannotRepairException e) {
-                    //Stop repairing
-                }
+                screen.setMechanicRepairing(CurrentlyRepairing.Condenser);
                 return super.touchDown(event, x, y, pointer, button);
             }
         };
@@ -55,13 +50,7 @@ public class GameplayListeners {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(445f);
-                try {
-//                    screen.setMechanicRepairing(true);
-                    controller.repairTurbine();
-                }
-                catch(CannotRepairException e) {
-                    screen.setMechanicRepairing(false);
-                }
+                screen.setMechanicRepairing(CurrentlyRepairing.Turbine);
                 return super.touchDown(event, x, y, pointer, button);
             }
         };
@@ -71,15 +60,7 @@ public class GameplayListeners {
         return new ClickListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                screen.moveMechanicTo(30f);
-                try {
-                    screen.setMechanicRepairing(true);
-                    controller.repairCondenser();
-                }
-                catch(CannotRepairException e) {
-                    //Stop repairing
-//                    screen.setMechanicRepairing(false);
-                }
+                screen.moveMechanicTo(60f);
                 return super.touchDown(event, x, y, pointer, button);
             }
         };
@@ -90,15 +71,7 @@ public class GameplayListeners {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(380f);
-                try {
-                    controller.repairPump(1);
-                }
-                catch(CannotRepairException e) {
-                    //Do something
-                }
-                catch(KeyNotFoundException e) {
-                    //Do something
-                }
+                screen.setMechanicRepairing(CurrentlyRepairing.Pump1);
                 return super.touchDown(event, x, y, pointer, button);
             }
         };
@@ -109,15 +82,7 @@ public class GameplayListeners {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(750f);
-                try {
-                    controller.repairPump(2);
-                }
-                catch(CannotRepairException e) {
-                    //Do something
-                }
-                catch(KeyNotFoundException e) {
-                    //Do something
-                }
+                screen.setMechanicRepairing(CurrentlyRepairing.Pump2);
                 return super.touchDown(event, x, y, pointer, button);
             }
         };

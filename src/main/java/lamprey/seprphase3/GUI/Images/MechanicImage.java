@@ -11,6 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import eel.seprphase2.Simulator.CannotRepairException;
+import eel.seprphase2.Simulator.KeyNotFoundException;
+import eel.seprphase2.Simulator.PlantController;
 import lamprey.seprphase3.GUI.Screens.Direction;
 
 /**
@@ -18,6 +21,17 @@ import lamprey.seprphase3.GUI.Screens.Direction;
  * @author Simeon
  */
 public class MechanicImage extends Image {
+    private static final int RUN_COLS = 5;
+    private static final int RUN_ROWS = 4;
+    private static final int STAND_COLS = 5;
+    private static final int STAND_ROWS = 6;
+    private static final int REPAIR_COLS = 5;
+    private static final int REPAIR_ROWS = 4;
+    private static final float MOVEMENT_SPEED = 7f;
+    private static final float MOVEMENT_FREQUENCY = 0.015f;
+    private static final float RUN_Y = 80f;
+    private static final float STATIC_Y = 75f;
+    
     private Texture mechanicRun;
     private Texture mechanicStand;
     private Texture mechanicRepairing;
@@ -28,32 +42,25 @@ public class MechanicImage extends Image {
     private Animation standAnimation;
     private Animation repairingAnimation;
     private TextureRegionDrawable drawable;
-    
-    private final static int RUN_COLS = 5;
-    private final static int RUN_ROWS = 4;
-    private final static int STAND_COLS = 5;
-    private final static int STAND_ROWS = 6;
-    private final static int REPAIR_COLS = 5;
-    private final static int REPAIR_ROWS = 4;
-    private final static float MOVEMENT_SPEED = 7f;
-    private final static float MOVEMENT_FREQUENCY = 0.015f;
-    private final static float RUN_Y = 80f;
-    private final static float STATIC_Y = 75f;
-    
+   
+    private PlantController controller;
+    private CurrentlyRepairing currentlyRepairing;
     private float mechanicX;
     private float mechanicWidth;
     private float scaleToUse;
     private float destination;
     private float stateTime;
-    private float deltaSum;
+    private float deltaMovement;
+    private float deltaRepairing;
     private float delta;
-    private boolean repairing;
+    private boolean moving;
 
     private TextureRegion frame;
     private Direction mechanicDirection;
         
-    public MechanicImage() {
+    public MechanicImage(PlantController controller) {
         super();
+        this.controller = controller;
         mechanicRun       = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechrunspritesheet.png"));
         mechanicStand     = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechstandspritesheet.png"));
         mechanicRepairing = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechhammerspritesheet.png"));
@@ -93,9 +100,11 @@ public class MechanicImage extends Image {
         
         this.mechanicDirection = Direction.Right;
         stateTime = 0;
-        deltaSum = 0;
+        deltaMovement = 0;
+        deltaRepairing = 0;
         drawable = new TextureRegionDrawable();
-        repairing = false;
+        currentlyRepairing = CurrentlyRepairing.None;
+        moving = false;
     }
     
     @Override
@@ -103,9 +112,36 @@ public class MechanicImage extends Image {
         mechanicX = this.getX();
         delta = Gdx.graphics.getDeltaTime();
         stateTime += delta;
-        deltaSum  += delta;
+        deltaMovement  += delta;
+        deltaRepairing += delta;
+        
+        if (currentlyRepairing != CurrentlyRepairing.None && !moving && deltaRepairing > 0.33) {
+            try {
+                if (currentlyRepairing == CurrentlyRepairing.Condenser) {
+                    controller.repairCondenser();
+                }
+                else if (currentlyRepairing == CurrentlyRepairing.Turbine) {
+                    controller.repairTurbine();
+                }
+                else if (currentlyRepairing == CurrentlyRepairing.Pump1) {
+                    controller.repairPump(1);
+                }
+                else if (currentlyRepairing == CurrentlyRepairing.Pump2) {
+                    controller.repairPump(2);
+                }
+            }
+            catch(CannotRepairException e) {
+                currentlyRepairing = CurrentlyRepairing.None;
+            }
+            catch(KeyNotFoundException e) {
+            }
+
+            deltaRepairing -= 0.33;
+        }
+
+        
         if (Math.abs(mechanicX - destination) > 0.1) {
-            while (deltaSum > MOVEMENT_FREQUENCY) {
+            while (deltaMovement > MOVEMENT_FREQUENCY) {
                 if (Math.abs(mechanicX - destination) < MOVEMENT_SPEED) {
                     this.setX(destination);
                 }
@@ -119,7 +155,8 @@ public class MechanicImage extends Image {
                     mechanicX -= MOVEMENT_SPEED;
                     this.setX(mechanicX);
                 }
-                deltaSum -= MOVEMENT_FREQUENCY;
+                moving = true;
+                deltaMovement -= MOVEMENT_FREQUENCY;
             }
             this.setY(RUN_Y);
             frame = runAnimation.getKeyFrame(stateTime, true);
@@ -128,14 +165,15 @@ public class MechanicImage extends Image {
             this.setSize(100f, 130f);
             scaleToUse = 0.9f;
         }
-        else if (repairing) {
+        else if (currentlyRepairing != CurrentlyRepairing.None) {
             this.setY(STATIC_Y);
             frame = repairingAnimation.getKeyFrame(stateTime, true);
             drawable.setRegion(frame);
             this.setDrawable(drawable);
             this.setSize(100f, 130f);
             scaleToUse = 1f;
-            deltaSum = 0f;
+            deltaMovement = 0f;
+            moving = false;
         }
         else {
             this.setY(STATIC_Y);
@@ -144,7 +182,8 @@ public class MechanicImage extends Image {
             this.setDrawable(drawable);
             this.setSize(100f, 130f);
             scaleToUse = 1f;
-            deltaSum = 0f;
+            deltaMovement = 0f;
+            moving = false;
         }
         
         if (mechanicDirection == Direction.Right) {
@@ -185,7 +224,7 @@ public class MechanicImage extends Image {
         this.destination = destination;
     }
     
-    public void setRepairing(boolean repairing) {
-        this.repairing = repairing;
+    public void setRepairing(CurrentlyRepairing currentlyRepairing) {
+        this.currentlyRepairing = currentlyRepairing;
     }
 }

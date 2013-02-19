@@ -72,4 +72,12 @@ abstract class AbstractScreen implements Screen {
     public PlantStatus getPlantStatus() {
         return this.status;
     }
+    
+    public PlantController getPlantController() {
+        return this.controller;
+    }
+    
+    public GameManager getGameManager() {
+        return this.manager;
+    }
 }

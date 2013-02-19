@@ -14,6 +14,7 @@ import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.CondenserWaterLevelImage;
 import lamprey.seprphase3.GUI.Images.ControlRodsImage;
+import lamprey.seprphase3.GUI.Images.CurrentlyRepairing;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
 import lamprey.seprphase3.GUI.Images.InformationPanels;
@@ -115,7 +116,7 @@ public class GameplayScreen extends AbstractScreen {
         reactorWaterLevel   = new ReactorWaterLevelImage(this.getPlantStatus());
         turbineImage        = new TurbineImage(this.getPlantStatus());
         infoPanels          = new InformationPanels(this.getPlantStatus());
-        mechanicImage       = new MechanicImage();
+        mechanicImage       = new MechanicImage(this.getPlantController());
         pauseImage          = new HoverButton(pauseTexture,  HoverButtonType.Transparent);
         consolebackImage    = new Image(consolebackTexture);
         crUpImage           = new HoverButton(crUpTexture,   HoverButtonType.NotTransparent);
@@ -224,7 +225,7 @@ public class GameplayScreen extends AbstractScreen {
         mechanicImage.moveMechanicTo(destination);
     }
     
-    public void setMechanicRepairing(boolean repairing) {
+    public void setMechanicRepairing(CurrentlyRepairing repairing) {
         mechanicImage.setRepairing(repairing);
     }
     

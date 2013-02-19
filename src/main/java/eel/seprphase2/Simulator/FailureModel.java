@@ -80,7 +80,7 @@ public class FailureModel implements PlantController, PlantStatus {
      *
      */
     public void randomWearCheck(){
-        ArrayList<FailableComponent> failingComponents = new ArrayList<FailableComponent>();        
+        ArrayList<FailableComponent> wornComponents = new ArrayList<FailableComponent>();        
         int componentFailChance = 0;   
         int faults = 0;
         
@@ -90,7 +90,7 @@ public class FailureModel implements PlantController, PlantStatus {
             else{
                 componentFailChance = failChance.nextInt(1000);
                 if(componentFailChance<=50) {  // As doing nextInt(1000). Less than 50 is 5% chance, using 1000 to give more options of failure chance.
-                    failingComponents.add(component);
+                    wornComponents.add(component);
 		    faults++;
                 }                
             }
@@ -98,7 +98,7 @@ public class FailureModel implements PlantController, PlantStatus {
         
         if(faults > 0) {
             int selection = failChance.nextInt(faults);
-            FailableComponent failedComponent = failingComponents.get(selection);
+            FailableComponent failedComponent = wornComponents.get(selection);
             Percentage damage = new Percentage(20);
             failedComponent.addWear(damage);
             setWornComponent(failedComponent);

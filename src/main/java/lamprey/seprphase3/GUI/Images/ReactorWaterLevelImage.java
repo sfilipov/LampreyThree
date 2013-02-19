@@ -30,7 +30,7 @@ public class ReactorWaterLevelImage extends Image {
         middleImage = new Image(middle);
         
         bottomImage.setPosition(41, 127);
-        middleImage.setPosition(50, 146);
+        middleImage.setPosition(50, 147);
         
         bottomImage.setSize(224, 29);
         middleImage.setSize(206, 160);

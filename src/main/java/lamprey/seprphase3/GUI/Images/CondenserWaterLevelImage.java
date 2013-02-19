@@ -28,8 +28,8 @@ public class CondenserWaterLevelImage extends Image {
         bottomImage = new Image(bottom);
         middleImage = new Image(middle);
         
-        bottomImage.setPosition(650, 127);
-        middleImage.setPosition(650, 146);
+        bottomImage.setPosition(562, 131);
+        middleImage.setPosition(565, 150);
         
         bottomImage.setSize(190, 27);
         middleImage.setSize(182, 160);
@@ -40,7 +40,7 @@ public class CondenserWaterLevelImage extends Image {
     
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
-//        bottomImage.draw(batch, parentAlpha);
-//        middleImage.draw(batch, parentAlpha);
+        bottomImage.draw(batch, parentAlpha);
+        middleImage.draw(batch, parentAlpha);
     }
 }

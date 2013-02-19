@@ -17,10 +17,14 @@ import eel.seprphase2.Simulator.PlantStatus;
 public class ReactorWaterLevelImage extends Image {
     private final static Texture bottom = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwaterbottom.png"));
     private final static Texture middle = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwatermiddle.png"));
+    private final static float BASE_Y = 147;
     
     private PlantStatus status;
     private Image bottomImage;
     private Image middleImage;
+    
+    private float reactorWaterLevel;
+    private float waterSize;
     
     
     public ReactorWaterLevelImage(PlantStatus status) {
@@ -30,7 +34,7 @@ public class ReactorWaterLevelImage extends Image {
         middleImage = new Image(middle);
         
         bottomImage.setPosition(41, 127);
-        middleImage.setPosition(50, 147);
+        middleImage.setPosition(50, BASE_Y);
         
         bottomImage.setSize(224, 29);
         middleImage.setSize(206, 160);
@@ -41,6 +45,12 @@ public class ReactorWaterLevelImage extends Image {
     
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
+        reactorWaterLevel = (float) status.reactorWaterLevel().points(); //Don't worry about the cast - Percentage 
+                                                                         //can be only between 0 and 100.
+        waterSize = 80f;//reactorWaterLevel * 1.6f;
+        
+        middleImage.setSize(206, waterSize);
+//        topImage.setPosition(??, BASE_Y + waterSize); 
         bottomImage.draw(batch, parentAlpha);
         middleImage.draw(batch, parentAlpha);
     }

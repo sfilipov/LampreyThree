@@ -22,6 +22,9 @@ public class CondenserWaterLevelImage extends Image {
     private Image bottomImage;
     private Image middleImage;
     
+    private float condenserWaterLevel;
+    private float waterSize;
+    
     public CondenserWaterLevelImage(PlantStatus status) {
         super();
         this.status = status;
@@ -40,6 +43,13 @@ public class CondenserWaterLevelImage extends Image {
     
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
+        condenserWaterLevel = (float) status.condenserWaterLevel().points(); //Don't worry about the cast - Percentage 
+                                                                         //can be only between 0 and 100.
+        waterSize = condenserWaterLevel * 1.6f;
+        
+        middleImage.setSize(206, waterSize);
+//        topImage.setPosition(??, BASE_Y + waterSize);
+        
         bottomImage.draw(batch, parentAlpha);
         middleImage.draw(batch, parentAlpha);
     }

@@ -89,7 +89,7 @@ public class MechanicImage extends Image {
                 index++;
             }
         }
-        repairingAnimation = new Animation(3f, repairingFrames);
+        repairingAnimation = new Animation(0.033f, repairingFrames);
         
         this.mechanicDirection = Direction.Right;
         stateTime = 0;

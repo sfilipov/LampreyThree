@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 /**
- * TextImage provides functionality to write text on top of an Image using a BitmapFont  
+ * TextImage provides functionality to write text on top of an Image using BitmapFonts  
  * 
  * @author Simeon
  */

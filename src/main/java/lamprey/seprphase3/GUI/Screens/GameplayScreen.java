@@ -14,6 +14,7 @@ import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
+import lamprey.seprphase3.GUI.Images.InformationPanels;
 import lamprey.seprphase3.GUI.Images.MechanicImage;
 import lamprey.seprphase3.GUI.Images.PumpImage;
 import lamprey.seprphase3.GUI.Images.TextImage;
@@ -58,6 +59,7 @@ public class GameplayScreen extends AbstractScreen {
     HoverButton reactorImage;
     TurbineImage turbineImage;
     MechanicImage mechanicImage;
+    InformationPanels infoPanels;
     HoverButton pauseImage;
     Image consolebackImage;
     HoverButton crUpImage;
@@ -103,6 +105,7 @@ public class GameplayScreen extends AbstractScreen {
         poweroutImage    = new Image(poweroutTexture);
         reactorImage     = new HoverButton(reactorbackTexture, HoverButtonType.Component);
         turbineImage     = new TurbineImage(this.getPlantStatus());
+        infoPanels       = new InformationPanels(this.getPlantStatus());
         mechanicImage    = new MechanicImage();
         pauseImage       = new HoverButton(pauseTexture,  HoverButtonType.Transparent);
         consolebackImage = new Image(consolebackTexture);
@@ -127,6 +130,7 @@ public class GameplayScreen extends AbstractScreen {
         valve2Image.setPosition(418, 385);
         pump1Image.setPosition(386, 174);
         pump2Image.setPosition(762, 243);
+        infoPanels.setPosition(252, 193);
         mechanicImage.setPosition(630, 75);
         mechanicImage.moveMechanicTo(630f); //ensures the mechanic is initially not moving
         pauseImage.setPosition(17, 15);
@@ -184,6 +188,8 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve2Button);
         stage.addActor(piggyImage);
         stage.addActor(sErrorImage);
+                stage.addActor(infoPanels);
+
     }
     
     @Override

@@ -177,6 +177,7 @@ public class GameplayScreen extends AbstractScreen {
         //later are going to be on top of ones added before that.
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);
+        stage.addActor(poweroutImage);
         stage.addActor(pipesImage);
         stage.addActor(infoPanels);
         stage.addActor(valve1Image);
@@ -184,7 +185,6 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(pump1Image);
         stage.addActor(pump2Image);
         stage.addActor(coolerImage);
-        stage.addActor(poweroutImage);
         stage.addActor(reactorImage);
         stage.addActor(controlRods);
         stage.addActor(reactorWaterLevel);

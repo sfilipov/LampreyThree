@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantStatus;
+import eel.seprphase2.Utilities.Energy;
 
 /**
  *
@@ -39,11 +40,18 @@ public class InformationPanels extends Image {
         font.draw(batch, status.reactorWaterLevel().toString(), 287, 245);
         
         font.draw(batch, status.condenserPressure().toString(), 500, 337);
-        font.draw(batch, status.condenserWear().toString(), 505, 285);
+        font.draw(batch, status.condenserTemperature().toString(), 505, 307);
+        font.draw(batch, status.condenserWear().toString(), 505, 284);
+        font.draw(batch, status.condenserWaterLevel().toString(), 505, 264);
+        
+        Energy powerOutput = new Energy(status.getOutputPower());
+        font.draw(batch, powerOutput.toString(), 780, 485);
+        font.draw(batch, status.turbineWear().toString(), 850, 467);
+        
         
         try {
-            font.draw(batch, status.getPumpWear(2).toString(), 775, 300);
             font.draw(batch, status.getPumpWear(1).toString(), 400, 230);
+            font.draw(batch, status.getPumpWear(2).toString(), 775, 300);
         }
         catch(KeyNotFoundException e) {
         }

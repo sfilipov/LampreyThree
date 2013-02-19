@@ -30,7 +30,12 @@ public class HoverButton extends Image {
     public HoverButton(Texture texture, HoverButtonType type) {
         super(texture);
         this.type = type;
-        current = 0.8f;
+        if(type == HoverButtonType.Component) {
+            current = 1f;
+        }
+        else {
+            current = 0.8f;
+        }
     }
     
     public HoverButton(HoverButtonType type) {
@@ -55,15 +60,15 @@ public class HoverButton extends Image {
             if      (listener.isPressed()) {
                 current = PRESSED;
             }
-            else if (type == HoverButtonType.Component && listener.isOver() && current > NOT_OVER ) {
+            else if (listener.isOver() && current > NOT_OVER && type == HoverButtonType.Component) {
                 current -= STEP;
             }
-            else if (type == HoverButtonType.Component && !listener.isOver() && current < OVER) {
+            else if (!listener.isOver() && current < OVER && type == HoverButtonType.Component) {
                 current += STEP;
             }
-            else if (listener.isOver() && current < OVER) {
+            else if (listener.isOver() && current < OVER && type != HoverButtonType.Component) {
                 current += STEP; }
-            else if (!listener.isOver() && current > NOT_OVER) {
+            else if (!listener.isOver() && current > NOT_OVER && type != HoverButtonType.Component) {
                 current -= STEP; }
             
             //Put current to min or max if it underflows or overflows

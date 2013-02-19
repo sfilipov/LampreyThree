@@ -43,7 +43,10 @@ public abstract class FailableComponent {
         hasFailed = true;
         stepWear();
     }
-    
+    /**
+     * This method is used to addWear to a component, if the additional damage would the components wear to over
+     * 100%, it is set to 100
+     */
     public void addWear(Percentage damage)  {        
         
         if ((wear.points() + damage.points()) < 100) {
@@ -52,7 +55,11 @@ public abstract class FailableComponent {
             wear = new Percentage(100);     //Cap at 100%            
         }
     }
-
+    /**
+     * This method is used to repair a component(reduce its wear), if the a repair would bring components wear to under
+     * 0%, it is set to 0% and an exception is thrown. This exception is then used to tell the top level to stop calling repair on this component
+     * 
+     */
     public void repair() throws CannotRepairException {        
         hasFailed = false;
         Percentage repair = new Percentage(10);

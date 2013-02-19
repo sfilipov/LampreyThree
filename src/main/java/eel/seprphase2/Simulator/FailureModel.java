@@ -11,18 +11,20 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Manages software and hardware failures.
+ * Hardware failures.
  *
- * The FailureModel is responsible for inducing software and hardware failures in the plant.
- *
- * Software failures are currently unimplemented; however, as all calls to the PhysicalModel are delegated through the
- * FailureModel, it is easy to alter this delegation in arbitrary ways to simulate control and/or reporting failures.
+ * The FailureModel is responsible for all the hardware failures in the game.* 
  *
  * Hardware failures are determined by inspecting the PhysicalModel to determine the status, wear, and operating
  * conditions of the various components, and then instructing the PhysicalModel to mark certain components as having
  * failed.
+ * The main checks the class makes is checking if any components have failed(due to their wear reaching), if so setting them to failed and adding
+ * them to an Array of failed components. It then deals with random wear of components, finally it checks if the reactor and condenser
+ * are within their limits(Pressure, Temperature and Water Level for the Reactor, and pressure for the Condenser).
+ * Finally it initiates any safety procedures if the turbine has failed.
+ * 
  *
- * Failures are constrained to one per timestep, which is enabled by the delegation of the step() method through the
+ * Random wear of a component constrained to one per timestep, which is enabled by the delegation of the step() method through the
  * FailureModel.
  *
  * @author Marius Dumitrescu
@@ -60,12 +62,13 @@ public class FailureModel implements PlantController, PlantStatus {
         checkReactorPressure();
         checkReactorTemperature();
         checkCondenserPressure();
+        failStateCheck(); // Requires a third check, because randomWearCheck may have cause a component to reach 100% wear
         checkTurbineFailure();
     }
 
     /**
      * Determine if a FailableComponent has failed, which occurs when its wear is 100, if it has, its state is set to failed
-     *
+     * 
      */
     public void failStateCheck() {
              
@@ -77,13 +80,15 @@ public class FailureModel implements PlantController, PlantStatus {
     }
      /**
      * Determines if random damage has occurred to any of the functioning(non-failed) components.
-     *
+     * If damage has occurred to multiple components, only one of these is selected(randomly) to receive the wear
+     * the wear is then added to the component
      */
     public void randomWearCheck(){
         ArrayList<FailableComponent> wornComponents = new ArrayList<FailableComponent>();        
         int componentFailChance = 0;   
         int faults = 0;
         
+        //This section checks if any components have been worn randomly, if so they are added to the wornComponents ArrayList
         for (FailableComponent component: status.components()) {
             if(component.wear().toString().equals("100%") || component instanceof Reactor ) {
             }                       
@@ -95,15 +100,17 @@ public class FailureModel implements PlantController, PlantStatus {
                 }                
             }
         }
-        
+        //If more than one component has been selected to be worn, only of these is selected randomly from the array
         if(faults > 0) {
             int selection = failChance.nextInt(faults);
             FailableComponent failedComponent = wornComponents.get(selection);
             Percentage damage = new Percentage(20);
             failedComponent.addWear(damage);
+            // The current wornComponent is set to the one that has just received wear
             setWornComponent(failedComponent);
 	}
         else {
+            //If no components received wear this step, the current wornComponent is set to null
             setWornComponent(null);
         }
     }  
@@ -283,17 +290,28 @@ public class FailureModel implements PlantController, PlantStatus {
         return status.components();
     }
 
+    /**
+     * This method checks the reactor is not above its minimumWaterLevel, if it is
+     * it receives wear     *
+     */
     private void checkReactorWaterLevel() {
         if (status.reactorWaterLevel().points() < status.reactorMinimumWaterLevel().points()) {
                 controller.wearReactor();  
         }
     }
-    
+    /**
+     * This method checks the reactor is not above its MaximumTemperature, if it is
+     * it receives wear     *
+     */
     private void checkReactorTemperature() {
         if (status.reactorTemperature().greaterThan(status.reactorMaximumTemperature())) {
                 controller.wearReactor();  
         }
     }
+    /**
+     * This method checks the reactor is not below its MaximumPressure, if it is
+     * it receives wear     *
+     */
 
     private void checkReactorPressure() {
         if (status.reactorPressure().greaterThan(status.reactorMaximumPressure())) {
@@ -301,13 +319,19 @@ public class FailureModel implements PlantController, PlantStatus {
         }
     }
 
-
+     /**
+     * This method checks the condenser is not above its maximumPressure, if it is
+     * it receives wear     *
+     */
     private void checkCondenserPressure() {
         if (status.condenserPressure().greaterThan(condenserMaxPressure)) {
             controller.wearCondenser();
         }
     }
-
+    /**
+     * This method checks if the turbine has failed, if it has the controlRods are moved to position 0
+     * as set by the safety requirements
+     */
     private void checkTurbineFailure() {
         if (status.turbineHasFailed()) {
             controller.moveControlRods(percent(0));

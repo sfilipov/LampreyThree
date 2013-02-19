@@ -90,7 +90,9 @@ public class TemperatureTest {
         Temperature result = instance.minus(other);
         assertEquals(expResult, result);
     }
-    
+     /**
+     * Test of greaterThan method, of class Temperature.
+     */
     @Test
     public void greaterThan() {
         Temperature t1 = new Temperature(3);

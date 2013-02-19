@@ -48,6 +48,10 @@ public class Temperature {
         return this.degreesKelvin;
     }
     
+     /**
+     *
+     * @param other
+     */
     public boolean greaterThan(Temperature other) {
         return degreesKelvin > other.degreesKelvin;
     }

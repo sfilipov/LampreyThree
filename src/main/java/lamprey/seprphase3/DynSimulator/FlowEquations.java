@@ -9,6 +9,7 @@ import lamprey.seprphase3.Extra.Area;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 import lamprey.seprphase3.Utilities.VolumetricFlowRate;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
+import static eel.seprphase2.Utilities.Units.*;
 
 /**
  * Equations for calculating flow rates.
@@ -17,9 +18,14 @@ import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
  */
 public class FlowEquations {
    
-    public static MassFlowRate flowRateFromPressure(Pressure deltaP) {
-        MassFlowRate flowPer50Atm = kilogramsPerSecond(10);
-        MassFlowRate resultingFlow = kilogramsPerSecond(flowPer50Atm.inKilogramsPerSecond() * (Math.log(deltaP.inAtmospheres()/Math.log(50))));
+    public static Velocity velocityFromPressureDiff(Pressure deltaP) {
+        Velocity resultingFlow = metresPerSecond(deltaP.inPascals() / 10000);
         return resultingFlow;
+    }
+    
+    public static MassFlowRate flowRateFromDensityVelocityArea(Density density, Velocity velocity, Area area) {
+        return kilogramsPerSecond(density.inKilogramsPerCubicMetre() 
+                                  * velocity.inMetresPerSecond() 
+                                  * area.inMetresSquared());
     }
 }

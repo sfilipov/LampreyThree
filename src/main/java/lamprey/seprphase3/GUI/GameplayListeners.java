@@ -56,10 +56,11 @@ public class GameplayListeners {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(445f);
                 try {
+//                    screen.setMechanicRepairing(true);
                     controller.repairTurbine();
                 }
                 catch(CannotRepairException e) {
-                    //Do something
+                    screen.setMechanicRepairing(false);
                 }
                 return super.touchDown(event, x, y, pointer, button);
             }
@@ -72,11 +73,12 @@ public class GameplayListeners {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 screen.moveMechanicTo(30f);
                 try {
-                    
+                    screen.setMechanicRepairing(true);
                     controller.repairCondenser();
                 }
                 catch(CannotRepairException e) {
                     //Stop repairing
+//                    screen.setMechanicRepairing(false);
                 }
                 return super.touchDown(event, x, y, pointer, button);
             }

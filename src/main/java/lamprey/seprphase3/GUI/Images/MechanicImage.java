@@ -18,18 +18,23 @@ import lamprey.seprphase3.GUI.Screens.Direction;
  * @author Simeon
  */
 public class MechanicImage extends Image {
-    Texture mechanicRun;
-    Texture mechanicStand;
-    TextureRegion[] runFrames;
-    TextureRegion[] standFrames;
-    Animation runAnimation;
-    Animation standAnimation;
-    TextureRegionDrawable drawable;
+    private Texture mechanicRun;
+    private Texture mechanicStand;
+    private Texture mechanicRepairing;
+    private TextureRegion[] runFrames;
+    private TextureRegion[] standFrames;
+    private TextureRegion[] repairingFrames;
+    private Animation runAnimation;
+    private Animation standAnimation;
+    private Animation repairingAnimation;
+    private TextureRegionDrawable drawable;
     
     private final static int RUN_COLS = 5;
     private final static int RUN_ROWS = 4;
     private final static int STAND_COLS = 5;
     private final static int STAND_ROWS = 6;
+    private final static int REPAIR_COLS = 5;
+    private final static int REPAIR_ROWS = 4;
     private final static float MOVEMENT_SPEED = 7f;
     private final static float MOVEMENT_FREQUENCY = 0.015f;
     private final static float RUN_Y = 80f;
@@ -42,14 +47,16 @@ public class MechanicImage extends Image {
     private float stateTime;
     private float deltaSum;
     private float delta;
-    
+    private boolean repairing;
+
     private TextureRegion frame;
     private Direction mechanicDirection;
         
     public MechanicImage() {
         super();
-        mechanicRun   = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechrunspritesheet.png"));
-        mechanicStand = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechstandspritesheet.png"));
+        mechanicRun       = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechrunspritesheet.png"));
+        mechanicStand     = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechstandspritesheet.png"));
+        mechanicRepairing = new Texture(Gdx.files.internal("assets\\game\\spritesheets\\mechhammerspritesheet.png"));
         
         TextureRegion[][] split = TextureRegion.split(mechanicRun, mechanicRun.getWidth() / RUN_COLS, mechanicRun.getHeight() / RUN_ROWS);
         runFrames = new TextureRegion[RUN_COLS * RUN_ROWS];
@@ -73,10 +80,22 @@ public class MechanicImage extends Image {
         }
         standAnimation = new Animation(0.06f, standFrames);
         
+        split = TextureRegion.split(mechanicRepairing, mechanicRepairing.getWidth() / REPAIR_COLS, mechanicRepairing.getHeight() / REPAIR_ROWS);
+        repairingFrames = new TextureRegion[REPAIR_COLS * REPAIR_ROWS];
+        index = 0;
+        for (int i=0; i < REPAIR_ROWS; i++) {
+            for (int j=0; j < REPAIR_COLS; j++) {
+                repairingFrames[index] = split[i][j];
+                index++;
+            }
+        }
+        repairingAnimation = new Animation(0.033f, repairingFrames);
+        
         this.mechanicDirection = Direction.Right;
         stateTime = 0;
         deltaSum = 0;
         drawable = new TextureRegionDrawable();
+        repairing = false;
     }
     
     @Override
@@ -108,6 +127,15 @@ public class MechanicImage extends Image {
             this.setDrawable(drawable);
             this.setSize(100f, 130f);
             scaleToUse = 0.9f;
+        }
+        else if (repairing) {
+            this.setY(STATIC_Y);
+            frame = repairingAnimation.getKeyFrame(stateTime, true);
+            drawable.setRegion(frame);
+            this.setDrawable(drawable);
+            this.setSize(100f, 130f);
+            scaleToUse = 1f;
+            deltaSum = 0f;
         }
         else {
             this.setY(STATIC_Y);
@@ -155,5 +183,9 @@ public class MechanicImage extends Image {
     
     public void moveMechanicTo(float destination) {
         this.destination = destination;
+    }
+    
+    public void setRepairing(boolean repairing) {
+        this.repairing = repairing;
     }
 }

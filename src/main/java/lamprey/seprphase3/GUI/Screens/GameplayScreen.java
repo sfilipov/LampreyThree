@@ -203,6 +203,10 @@ public class GameplayScreen extends AbstractScreen {
         mechanicImage.moveMechanicTo(destination);
     }
     
+    public void setMechanicRepairing(boolean repairing) {
+        mechanicImage.setRepairing(repairing);
+    }
+    
     public BackyardReactor getGame() {
         return this.game;
     }

@@ -8,26 +8,27 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import eel.seprphase2.Simulator.PlantStatus;
 
 /**
- * TextImage provides functionality to write text on top of an Image using BitmapFonts  
+ * PiggyBank provides functionality to write text on top of an Image using BitmapFonts  
  * 
  * @author Simeon
  */
-public class TextImage extends Image {
+public class PiggyBank extends Image {
+    private PlantStatus status;
     private BitmapFont font;
     private float fontX;
     private float fontY;
     private float textDrawX;
     private float textDrawY;
-    private String text;
     
-    public TextImage(Texture texture) {
+    public PiggyBank(Texture texture, PlantStatus status) {
         super(texture);
+        this.status = status;
         font = new BitmapFont();
         fontX = 45f;
         fontY = 50f;
-        text = "";
     }
     
     @Override
@@ -35,15 +36,11 @@ public class TextImage extends Image {
         super.draw(batch, parentAlpha);
         textDrawX = this.getX() + fontX;
         textDrawY = this.getY() + fontY;
-        font.draw(batch, text, textDrawX, textDrawY);
+        font.draw(batch, status.energyGenerated().toString(), textDrawX, textDrawY);
     }
     
     public void setFontPosition(float fontX, float fontY) {
         this.fontX = fontX;
         this.fontY = fontY;
-    }
-    
-    public void setStringToDisplay(String text) {
-        this.text = text;
     }
 }

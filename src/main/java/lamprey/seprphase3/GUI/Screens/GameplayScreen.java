@@ -19,9 +19,9 @@ import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
 import lamprey.seprphase3.GUI.Images.InformationPanels;
 import lamprey.seprphase3.GUI.Images.MechanicImage;
+import lamprey.seprphase3.GUI.Images.PiggyBank;
 import lamprey.seprphase3.GUI.Images.PumpImage;
 import lamprey.seprphase3.GUI.Images.ReactorWaterLevelImage;
-import lamprey.seprphase3.GUI.Images.TextImage;
 import lamprey.seprphase3.GUI.Images.TurbineImage;
 import lamprey.seprphase3.GUI.Images.ValveImage;
 
@@ -75,7 +75,7 @@ public class GameplayScreen extends AbstractScreen {
     HoverButton pump2Button;
     HoverButton valve1Button;
     HoverButton valve2Button;
-    TextImage piggyImage;
+    PiggyBank piggyImage;
     Image sErrorImage;
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
@@ -125,7 +125,7 @@ public class GameplayScreen extends AbstractScreen {
         pump2Button         = new HoverButton(pump2Texture,  HoverButtonType.NotTransparent);
         valve1Button        = new HoverButton(valve1Texture, HoverButtonType.NotTransparent);
         valve2Button        = new HoverButton(valve2Texture, HoverButtonType.NotTransparent);
-        piggyImage          = new TextImage(piggyTexture);
+        piggyImage          = new PiggyBank(piggyTexture, this.getPlantStatus());
         sErrorImage         = new Image(sErrorTexture);
         
         gamebgImage.setPosition(0, 0);
@@ -165,8 +165,6 @@ public class GameplayScreen extends AbstractScreen {
         valve2Button.addListener(listeners.getValve2Listener());
         pump1Button.addListener(listeners.getPump1ButtonListener());
         pump2Button.addListener(listeners.getPump2ButtonListener());
-        
-        piggyImage.setStringToDisplay("Hello!");
     }
     
     @Override

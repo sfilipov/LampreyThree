@@ -17,7 +17,7 @@ import eel.seprphase2.Simulator.PlantStatus;
  *
  * @author Simeon
  */
-public class TurbineImage extends Image {
+public class TurbineImage extends HoverButton {
     private PlantStatus status;
     private Texture texture;
     private TextureRegion[] frames;

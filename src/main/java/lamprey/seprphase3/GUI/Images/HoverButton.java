@@ -33,6 +33,12 @@ public class HoverButton extends Image {
         current = 0.8f;
     }
     
+    public HoverButton() {
+        super();
+        this.transparency = false;
+        current = 0.8f;
+    }
+    
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
         listeners = this.getListeners();

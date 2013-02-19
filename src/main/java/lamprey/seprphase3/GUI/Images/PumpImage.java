@@ -18,7 +18,7 @@ import eel.seprphase2.Simulator.PlantStatus;
  *
  * @author Simeon
  */
-public class PumpImage extends Image {
+public class PumpImage extends HoverButton {
     private final static int COLS = 5;
     private final static int ROWS = 4;
     

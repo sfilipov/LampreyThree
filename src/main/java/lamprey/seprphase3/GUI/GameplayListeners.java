@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.GameManager;
+import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import eel.seprphase2.Utilities.Percentage;
@@ -48,6 +49,22 @@ public class GameplayListeners {
                 return super.touchDown(event, x, y, pointer, button);
             }
         };
+    }      
+    
+    public ClickListener getTurbineListener() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                screen.moveMechanicTo(445f);
+                try {
+                    controller.repairTurbine();
+                }
+                catch(CannotRepairException e) {
+                    //Do something
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        };
     }    
     
     public ClickListener getReactorListener() {
@@ -61,6 +78,44 @@ public class GameplayListeners {
                 }
                 catch(CannotRepairException e) {
                     //Stop repairing
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        };
+    }
+    
+    public ClickListener getPump1Listener() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                screen.moveMechanicTo(380f);
+                try {
+                    controller.repairPump(1);
+                }
+                catch(CannotRepairException e) {
+                    //Do something
+                }
+                catch(KeyNotFoundException e) {
+                    //Do something
+                }
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        };
+    }
+    
+    public ClickListener getPump2Listener() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                screen.moveMechanicTo(750f);
+                try {
+                    controller.repairPump(2);
+                }
+                catch(CannotRepairException e) {
+                    //Do something
+                }
+                catch(KeyNotFoundException e) {
+                    //Do something
                 }
                 return super.touchDown(event, x, y, pointer, button);
             }
@@ -139,7 +194,7 @@ public class GameplayListeners {
         };
     }
     
-    public ClickListener getPump1Listener() {
+    public ClickListener getPump1ButtonListener() {
         return new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -153,7 +208,7 @@ public class GameplayListeners {
         };
     }
     
-    public ClickListener getPump2Listener() {
+    public ClickListener getPump2ButtonListener() {
         return new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

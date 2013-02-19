@@ -142,13 +142,16 @@ public class GameplayScreen extends AbstractScreen {
         condenserImage.addListener(listeners.getCondenserListener());
 //        coolerImage.addListener(listeners.getCoolerListener());
         reactorImage.addListener(listeners.getReactorListener());
+        turbineImage.addListener(listeners.getTurbineListener());
+        pump1Image.addListener(listeners.getPump1Listener());
+        pump2Image.addListener(listeners.getPump2Listener());
         pauseImage.addListener(listeners.getPauseListener());
         crUpImage.addListener(listeners.getConrolRodsUpListener());
         crDownImage.addListener(listeners.getConrolRodsDownListener());
         valve1Button.addListener(listeners.getValve1Listener());
         valve2Button.addListener(listeners.getValve2Listener());
-        pump1Button.addListener(listeners.getPump1Listener());
-        pump2Button.addListener(listeners.getPump2Listener());
+        pump1Button.addListener(listeners.getPump1ButtonListener());
+        pump2Button.addListener(listeners.getPump2ButtonListener());
         
         stage.addActor(gamebgImage);
         stage.addActor(borderImage);

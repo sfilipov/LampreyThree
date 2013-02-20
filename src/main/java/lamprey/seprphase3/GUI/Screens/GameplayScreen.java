@@ -16,6 +16,7 @@ import lamprey.seprphase3.GUI.GameplayListeners;
 import lamprey.seprphase3.GUI.Images.CondenserWaterLevelImage;
 import lamprey.seprphase3.GUI.Images.ControlRodsImage;
 import lamprey.seprphase3.GUI.Images.CurrentlyRepairing;
+import lamprey.seprphase3.GUI.Images.ErrorMessagesImage;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
 import lamprey.seprphase3.GUI.Images.InformationPanels;
@@ -49,7 +50,6 @@ public class GameplayScreen extends AbstractScreen {
     private Texture valve1Texture;
     private Texture valve2Texture;
     private Texture piggyTexture;
-//  private Texture sErrorTexture;
     
     private Image gamebgImage;
     private Image borderImage;
@@ -77,7 +77,7 @@ public class GameplayScreen extends AbstractScreen {
     private HoverButton valve1Button;
     private HoverButton valve2Button;
     private PiggyBank piggyImage;
-//   private Image sErrorImage;
+    private ErrorMessagesImage errorMessages;
     
     private float deltaSum;
     
@@ -101,7 +101,6 @@ public class GameplayScreen extends AbstractScreen {
         valve1Texture      = new Texture(Gdx.files.internal("assets\\game\\valve1.png"));
         valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
         piggyTexture       = new Texture(Gdx.files.internal("assets\\game\\piggybank.png"));
-//        sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
         
         gamebgImage         = new Image(gamebgTexture);
         borderImage         = new Image(borderTexture);
@@ -129,7 +128,7 @@ public class GameplayScreen extends AbstractScreen {
         valve1Button        = new HoverButton(valve1Texture, HoverButtonType.NotTransparent);
         valve2Button        = new HoverButton(valve2Texture, HoverButtonType.NotTransparent);
         piggyImage          = new PiggyBank(piggyTexture, this.getPlantStatus());
-//        sErrorImage         = new Image(sErrorTexture);
+        errorMessages       = new ErrorMessagesImage(this.getPlantStatus(), this);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -155,19 +154,15 @@ public class GameplayScreen extends AbstractScreen {
         valve1Button.setPosition(300, 22);
         valve2Button.setPosition(353, 22);
         piggyImage.setPosition(821, 10);
-//        sErrorImage.setPosition(433, 18);
+//        errorMessages.setPosition(433, 18);
         
         condenserImage.addListener(listeners.getCondenserListener());
         turbineImage.addListener(listeners.getTurbineListener());
         pump1Image.addListener(listeners.getPump1Listener());
         pump2Image.addListener(listeners.getPump2Listener());
         pauseImage.addListener(listeners.getPauseListener());
-        crUpImage.addListener(listeners.getConrolRodsUpListener());
-        crDownImage.addListener(listeners.getConrolRodsDownListener());
-        valve1Button.addListener(listeners.getValve1Listener());
-        valve2Button.addListener(listeners.getValve2Listener());
-        pump1Button.addListener(listeners.getPump1ButtonListener());
-        pump2Button.addListener(listeners.getPump2ButtonListener());
+
+        addButtonsListeners();
     }
     
     @Override
@@ -202,7 +197,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve1Button);
         stage.addActor(valve2Button);
         stage.addActor(piggyImage);
-//        stage.addActor(sErrorImage);
+        stage.addActor(errorMessages);
         
         deltaSum = 0f;
     }
@@ -215,12 +210,12 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        try {
-            controller.step(delta);
-        }
-        catch(GameOverException e) {
-            game.setScreen(game.getGameOverScreen());
-        }
+//        try {
+//            controller.step(delta);
+//        }
+//        catch(GameOverException e) {
+//            game.setScreen(game.getGameOverScreen());
+//        }
     }
     
     @Override
@@ -238,5 +233,23 @@ public class GameplayScreen extends AbstractScreen {
     
     public BackyardReactor getGame() {
         return this.game;
+    }
+    
+    public void addButtonsListeners() {
+        crUpImage.addListener(listeners.getConrolRodsUpListener());
+        crDownImage.addListener(listeners.getConrolRodsDownListener());
+        valve1Button.addListener(listeners.getValve1Listener());
+        valve2Button.addListener(listeners.getValve2Listener());
+        pump1Button.addListener(listeners.getPump1ButtonListener());
+        pump2Button.addListener(listeners.getPump2ButtonListener());
+    }
+    
+    public void removeButtonsListeners() {
+        crUpImage.removeListener(crUpImage.getListeners().first());
+        crDownImage.removeListener(crDownImage.getListeners().first());
+        valve1Button.removeListener(valve1Button.getListeners().first());
+        valve2Button.removeListener(valve2Button.getListeners().first());
+        pump1Button.removeListener(pump1Button.getListeners().first());
+        pump2Button.removeListener(pump2Button.getListeners().first());
     }
 }

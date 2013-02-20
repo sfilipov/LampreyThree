@@ -22,7 +22,7 @@ public class LogoScreen extends AbstractScreen {
     public LogoScreen(BackyardReactor game) {
         super(game);
         logo = new Image(logoTexture);
-        logo.setPosition(343, 155);
+        logo.setPosition(0, 0);
     }
     
     @Override

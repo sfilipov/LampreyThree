@@ -7,6 +7,7 @@ package lamprey.seprphase3.GUI.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import eel.seprphase2.GameOverException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -30,53 +31,55 @@ import lamprey.seprphase3.GUI.Images.ValveImage;
  * @author Simeon
  */
 public class GameplayScreen extends AbstractScreen {
-    GameplayListeners listeners;
+    private GameplayListeners listeners;
     
-    Texture gamebgTexture;
-    Texture borderTexture;
-    Texture condenserTexture;
-    Texture coolerTexture;
-    Texture pipesTexture;
-    Texture poweroutTexture;
-    Texture reactorbackTexture;
-    Texture pauseTexture;
-    Texture consolebackTexture;
-    Texture crUpTexture;
-    Texture crDownTexture;
-    Texture pump1Texture;
-    Texture pump2Texture;
-    Texture valve1Texture;
-    Texture valve2Texture;
-    Texture piggyTexture;
-//    Texture sErrorTexture;
+    private Texture gamebgTexture;
+    private Texture borderTexture;
+    private Texture condenserTexture;
+    private Texture coolerTexture;
+    private Texture pipesTexture;
+    private Texture poweroutTexture;
+    private Texture reactorbackTexture;
+    private Texture pauseTexture;
+    private Texture consolebackTexture;
+    private Texture crUpTexture;
+    private Texture crDownTexture;
+    private Texture pump1Texture;
+    private Texture pump2Texture;
+    private Texture valve1Texture;
+    private Texture valve2Texture;
+    private Texture piggyTexture;
+//  private Texture sErrorTexture;
     
-    Image gamebgImage;
-    Image borderImage;
-    HoverButton condenserImage;
-    CondenserWaterLevelImage condenserWaterLevel;
-    Image coolerImage;
-    Image pipesImage;
-    ValveImage valve1Image;
-    ValveImage valve2Image;
-    PumpImage pump1Image;
-    PumpImage pump2Image;
-    Image poweroutImage;
-    Image reactorImage;
-    ControlRodsImage controlRods;
-    ReactorWaterLevelImage reactorWaterLevel;
-    TurbineImage turbineImage;
-    MechanicImage mechanicImage;
-    InformationPanels infoPanels;
-    HoverButton pauseImage;
-    Image consolebackImage;
-    HoverButton crUpImage;
-    HoverButton crDownImage;
-    HoverButton pump1Button;
-    HoverButton pump2Button;
-    HoverButton valve1Button;
-    HoverButton valve2Button;
-    PiggyBank piggyImage;
-//    Image sErrorImage;
+    private Image gamebgImage;
+    private Image borderImage;
+    private HoverButton condenserImage;
+    private CondenserWaterLevelImage condenserWaterLevel;
+    private Image coolerImage;
+    private Image pipesImage;
+    private ValveImage valve1Image;
+    private ValveImage valve2Image;
+    private PumpImage pump1Image;
+    private PumpImage pump2Image;
+    private Image poweroutImage;
+    private Image reactorImage;
+    private ControlRodsImage controlRods;
+    private ReactorWaterLevelImage reactorWaterLevel;
+    private TurbineImage turbineImage;
+    private MechanicImage mechanicImage;
+    private InformationPanels infoPanels;
+    private HoverButton pauseImage;
+    private Image consolebackImage;
+    private HoverButton crUpImage;
+    private HoverButton crDownImage;
+    private HoverButton pump1Button;
+    private HoverButton pump2Button;
+    private HoverButton valve1Button;
+    private HoverButton valve2Button;
+    private PiggyBank piggyImage;
+//   private Image sErrorImage;
+    
+    private float deltaSum;
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
@@ -200,6 +203,8 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve2Button);
         stage.addActor(piggyImage);
 //        stage.addActor(sErrorImage);
+        
+        deltaSum = 0f;
     }
     
     @Override
@@ -210,6 +215,12 @@ public class GameplayScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        try {
+            controller.step(delta);
+        }
+        catch(GameOverException e) {
+            game.setScreen(game.getGameOverScreen());
+        }
     }
     
     @Override

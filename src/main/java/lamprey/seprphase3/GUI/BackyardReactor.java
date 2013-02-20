@@ -3,6 +3,7 @@ package lamprey.seprphase3.GUI;
 import com.badlogic.gdx.Game;
 import eel.seprphase2.Simulator.Simulator;
 import lamprey.seprphase3.GUI.Screens.CreditsScreen;
+import lamprey.seprphase3.GUI.Screens.GameOverScreen;
 import lamprey.seprphase3.GUI.Screens.GameplayScreen;
 import lamprey.seprphase3.GUI.Screens.LogoScreen;
 import lamprey.seprphase3.GUI.Screens.MenuScreen;
@@ -20,6 +21,7 @@ public class BackyardReactor extends Game {
     GameplayScreen gameplayScreen;
     CreditsScreen creditsScreen;
     PauseScreen pauseScreen;
+    GameOverScreen gameOverScreen;
     
     public BackyardReactor() {
         simulator = new Simulator();
@@ -44,6 +46,10 @@ public class BackyardReactor extends Game {
     public CreditsScreen getCreditsScreen() {
         return creditsScreen;
     }
+    
+    public GameOverScreen getGameOverScreen() {
+        return gameOverScreen;
+    }
 
     //Game Methods
     
@@ -58,6 +64,7 @@ public class BackyardReactor extends Game {
         gameplayScreen = new GameplayScreen(this, simulator, simulator, simulator);
         creditsScreen  = new CreditsScreen(this);
         pauseScreen    = new PauseScreen(this, simulator, simulator, simulator);
+        gameOverScreen = new GameOverScreen(this, simulator, simulator, simulator);
         
     }
     

@@ -18,22 +18,22 @@ import lamprey.seprphase3.GUI.Images.HoverButtonType;
  * @author Simeon
  */
 public class MenuScreen extends AbstractScreen {
-    Texture menubgTexture;
-    Texture gamelogoTexture;
-    Texture newgameTexture;
-    Texture loadgameTexture;
-    Texture creditsTexture;
-    Texture lampreylogoTexture;
-    Image menubgImage;
-    Image gamelogoImage;
-    HoverButton newgameImage;
-    HoverButton loadgameImage;
-    HoverButton creditsImage;
-    Image lampreylogoImage;
+    private Texture menubgTexture;
+    private Texture gamelogoTexture;
+    private Texture newgameTexture;
+    private Texture loadgameTexture;
+    private Texture creditsTexture;
+    private Texture lampreylogoTexture;
+    private Image menubgImage;
+    private Image gamelogoImage;
+    private HoverButton newgameImage;
+    private HoverButton loadgameImage;
+    private HoverButton creditsImage;
+    private Image lampreylogoImage;
     
-    boolean isInputShown;
+    private boolean isInputShown;
     
-    OperatorNameInput nameListener;
+    private OperatorNameInput nameListener;
     
     public MenuScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
@@ -70,7 +70,7 @@ public class MenuScreen extends AbstractScreen {
         
         newgameImage.addListener(getNewgameListener());
         loadgameImage.addListener(new ClickListener());
-        creditsImage.addListener(new ClickListener());
+        creditsImage.addListener(getCreditsListener());
         
         stage.addActor(menubgImage);
         stage.addActor(gamelogoImage);
@@ -107,6 +107,16 @@ public class MenuScreen extends AbstractScreen {
                 if (!isInputShown) {
                     Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
                 }
+            }
+        };
+    }
+    
+    public ClickListener getCreditsListener() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(game.getCreditsScreen());
+                return true;
             }
         };
     }

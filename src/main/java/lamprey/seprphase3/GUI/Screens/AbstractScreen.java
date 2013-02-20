@@ -32,6 +32,18 @@ abstract class AbstractScreen implements Screen {
         this.stage = new Stage(width, height, keepAspectRatio);
     }
     
+    public AbstractScreen(BackyardReactor game) {
+        this.game  = game;
+        this.controller = null;
+        this.status = null;
+        this.manager = null;
+        
+        int width  = 960;
+        int height = 540;
+        boolean keepAspectRatio = true;
+        this.stage = new Stage(width, height, keepAspectRatio);
+    }
+    
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);

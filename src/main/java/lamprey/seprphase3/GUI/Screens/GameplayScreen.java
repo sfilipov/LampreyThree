@@ -48,7 +48,7 @@ public class GameplayScreen extends AbstractScreen {
     Texture valve1Texture;
     Texture valve2Texture;
     Texture piggyTexture;
-    Texture sErrorTexture;
+//    Texture sErrorTexture;
     
     Image gamebgImage;
     Image borderImage;
@@ -76,7 +76,7 @@ public class GameplayScreen extends AbstractScreen {
     HoverButton valve1Button;
     HoverButton valve2Button;
     PiggyBank piggyImage;
-    Image sErrorImage;
+//    Image sErrorImage;
     
     public GameplayScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
@@ -98,7 +98,7 @@ public class GameplayScreen extends AbstractScreen {
         valve1Texture      = new Texture(Gdx.files.internal("assets\\game\\valve1.png"));
         valve2Texture      = new Texture(Gdx.files.internal("assets\\game\\valve2.png"));
         piggyTexture       = new Texture(Gdx.files.internal("assets\\game\\piggybank.png"));
-        sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
+//        sErrorTexture      = new Texture(Gdx.files.internal("assets\\game\\softwareerror.png"));
         
         gamebgImage         = new Image(gamebgTexture);
         borderImage         = new Image(borderTexture);
@@ -126,7 +126,7 @@ public class GameplayScreen extends AbstractScreen {
         valve1Button        = new HoverButton(valve1Texture, HoverButtonType.NotTransparent);
         valve2Button        = new HoverButton(valve2Texture, HoverButtonType.NotTransparent);
         piggyImage          = new PiggyBank(piggyTexture, this.getPlantStatus());
-        sErrorImage         = new Image(sErrorTexture);
+//        sErrorImage         = new Image(sErrorTexture);
         
         gamebgImage.setPosition(0, 0);
         borderImage.setPosition(0, 0);
@@ -152,7 +152,7 @@ public class GameplayScreen extends AbstractScreen {
         valve1Button.setPosition(300, 22);
         valve2Button.setPosition(353, 22);
         piggyImage.setPosition(821, 10);
-        sErrorImage.setPosition(433, 18);
+//        sErrorImage.setPosition(433, 18);
         
         condenserImage.addListener(listeners.getCondenserListener());
         turbineImage.addListener(listeners.getTurbineListener());
@@ -199,7 +199,7 @@ public class GameplayScreen extends AbstractScreen {
         stage.addActor(valve1Button);
         stage.addActor(valve2Button);
         stage.addActor(piggyImage);
-        stage.addActor(sErrorImage);
+//        stage.addActor(sErrorImage);
     }
     
     @Override

@@ -27,7 +27,7 @@ public class LogoScreen extends AbstractScreen {
     
     @Override
     public void show() {
-        Action action = Actions.sequence(Actions.delay(1f, Actions.fadeOut(1f)),
+        Action action = Actions.sequence(Actions.fadeOut(3f),
                                          new Action() {
                                              public boolean act(float delta) {
                                                  game.setScreen(game.getMenuScreen());

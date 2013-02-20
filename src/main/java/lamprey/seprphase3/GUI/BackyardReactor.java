@@ -49,15 +49,16 @@ public class BackyardReactor extends Game {
     
     @Override
     public void create() {
-        simulator = new Simulator();
-        
         logoScreen     = new LogoScreen(this);
+        setScreen(getLogoScreen());
+        
+        simulator = new Simulator();
+
         menuScreen     = new MenuScreen(this, simulator, simulator, simulator);
         gameplayScreen = new GameplayScreen(this, simulator, simulator, simulator);
         creditsScreen  = new CreditsScreen(this);
         pauseScreen    = new PauseScreen(this, simulator, simulator, simulator);
         
-        setScreen(getLogoScreen());
     }
     
     @Override

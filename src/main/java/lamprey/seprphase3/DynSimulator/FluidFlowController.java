@@ -165,7 +165,8 @@ public class FluidFlowController implements PlantController {
 
     @Override
     public void wearCondenser() {
-        plant.condenser().wear();
+        Percentage damage = new Percentage(10);
+        plant.condenser().addWear(damage);
     }
 
     @Override
@@ -187,7 +188,7 @@ public class FluidFlowController implements PlantController {
         if (p.hasFailed()) {
             throw new CannotControlException("Pump " + pumpNumber + " is failed");
         }
-        p.setStatus(p.getStatus());
+        p.setStatus(!p.getStatus());
     }
 
   

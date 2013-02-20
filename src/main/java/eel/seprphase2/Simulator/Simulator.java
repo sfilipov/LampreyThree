@@ -28,11 +28,15 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     private String userName;
 
     public Simulator() {
+        initGame();
+        userName = "";
+    }
+    
+    public void initGame() {
         plant = new PlantModel();
         physicalModel = new PhysicalModel(plant);
         fluidFlowController = new FluidFlowController(plant);
         failureModel = new FailureModel(fluidFlowController, physicalModel);
-        userName = "";
     }
 
     @Override

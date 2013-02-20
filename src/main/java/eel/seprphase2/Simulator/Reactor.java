@@ -117,7 +117,7 @@ public class Reactor extends FailableComponent {
              * Calculates how much water turns to steam in one timestep at boiling point using remaining energy
              */
             temperature = kelvin(boilingPtAtPressure);
-            Mass deltaMass = kilograms((fuelPile.output(seconds) - neededEnergy) / latentHeatOfWater);
+            Mass deltaMass = kilograms(REACTOR_EVAPORATEMULTIPLIER * (fuelPile.output(seconds) - neededEnergy) / latentHeatOfWater);
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
             correctWaterMass();

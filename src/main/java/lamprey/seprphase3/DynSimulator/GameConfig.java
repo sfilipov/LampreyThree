@@ -38,6 +38,7 @@ public class GameConfig {
     public static final Percentage REACTOR_MINIMUMSAFEWATERLEVEL = percent(50);
     public static final Temperature REACTOR_MAXIMUMTEMPERATURE = kelvin(500);
     public static final Pressure REACTOR_MAXIMUMPRESSURE = pascals(30662500);
+    public static final double REACTOR_EVAPORATEMULTIPLIER = 15;
     // -- END  -- REACTOR CONFIG ---------- 
     
     

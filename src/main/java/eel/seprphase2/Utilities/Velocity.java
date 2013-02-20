@@ -1,10 +1,12 @@
 package eel.seprphase2.Utilities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author David
  */
-public class Velocity {
+public class Velocity implements Serializable  {
 
     private double metresPerSecond;
 

@@ -1,20 +1,15 @@
 package eel.seprphase2.Utilities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
 /**
  *
  * @author David
  */
-@JsonTypeName(value = "Temperature")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
-public class Temperature {
+public class Temperature implements Serializable {
 
     static private final double kelvinOffset = 273.15;
-    @JsonProperty
     private final double degreesKelvin;
 
     /**

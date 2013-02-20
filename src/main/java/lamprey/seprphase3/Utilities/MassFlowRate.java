@@ -8,15 +8,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Format;
 import eel.seprphase2.Utilities.Mass;
 import static eel.seprphase2.Utilities.Units.kilograms;
+import java.io.Serializable;
 
 /**
  *
  * @author will
  */
-public class MassFlowRate {
+public class MassFlowRate implements Serializable {
 
     // in kg/s
-    @JsonProperty
     private double kilogramsPerSecond;
 
     public MassFlowRate() {

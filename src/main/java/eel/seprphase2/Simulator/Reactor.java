@@ -1,7 +1,5 @@
 package eel.seprphase2.Simulator;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import eel.seprphase2.GameOverException;
 import static eel.seprphase2.Simulator.PhysicalConstants.*;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Mass;
@@ -11,37 +9,26 @@ import eel.seprphase2.Utilities.Temperature;
 import static eel.seprphase2.Utilities.Units.*;
 import eel.seprphase2.Utilities.Velocity;
 import eel.seprphase2.Utilities.Volume;
+import java.io.Serializable;
 import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
 import lamprey.seprphase3.DynSimulator.OutputPort;
 import static lamprey.seprphase3.DynSimulator.GameConfig.*;
 
 /**
- *
  * @author Marius
  */
-public class Reactor extends FailableComponent {
+public class Reactor extends FailableComponent implements Serializable {
 
-    @JsonProperty
     private final Mass maximumWaterMass = REACTOR_VOLUME.massAt(Density.ofLiquidWater());
-    @JsonProperty
     private final Mass minimumWaterMass = kilograms(maximumWaterMass.inKilograms() * REACTOR_MINIMUMSAFEWATERLEVEL.ratio());
-    @JsonProperty
-    private FuelPile fuelPile = new FuelPile();
-    @JsonProperty
+    private FuelPile fuelPile;
     private Mass waterMass;
-    @JsonProperty
     private Mass steamMass;
-    @JsonProperty
     private Temperature temperature;
-    @JsonProperty
     private Pressure pressure;
-    @JsonProperty
     private Density steamDensity;
-    @JsonProperty
     private double boilingPtAtPressure;
-    @JsonProperty
     private double neededEnergy;
-    @JsonProperty
     private double deltaSeconds;
 
     /**
@@ -49,6 +36,7 @@ public class Reactor extends FailableComponent {
      */
     public Reactor() {
         super();
+        fuelPile = new FuelPile();
         fuelPile.moveControlRods(new Percentage(0));
         waterMass = REACTOR_INITIALWATERMASS;
         steamMass = kilograms(0);
@@ -80,12 +68,6 @@ public class Reactor extends FailableComponent {
      *
      */
     public void step(double seconds) throws GameOverException {
-        System.out.println("Reactor: ");
-        System.out.println("\t steam mass: " + steamMass);
-        System.out.println("\t water mass: " + waterMass);
-        System.out.println("\t max water mass: " + maximumWaterMass);
-        System.out.println("\t min water mass: " + minimumWaterMass);
-
         deltaSeconds = seconds;
         updateSteamAndWater(seconds);
         if (hasFailed()) {
@@ -118,6 +100,7 @@ public class Reactor extends FailableComponent {
              */
             temperature = kelvin(boilingPtAtPressure);
             Mass deltaMass = kilograms(REACTOR_EVAPORATEMULTIPLIER * (fuelPile.output(seconds) - neededEnergy) / latentHeatOfWater);
+            System.out.println(deltaMass);
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
             correctWaterMass();
@@ -161,9 +144,7 @@ public class Reactor extends FailableComponent {
         Temperature deltaTemp = in.temperature.minus(this.temperature);
         Mass totalMass = this.steamMass.plus(this.waterMass);
         Mass massIn = in.flownThroughInTime(deltaSeconds);
-        
         deltaTemp = kelvin(deltaTemp.inKelvin() * (massIn.inKilograms() / totalMass.inKilograms()));
-        System.out.println("\t water mass in: " + massIn);
         return deltaTemp;
     }
 

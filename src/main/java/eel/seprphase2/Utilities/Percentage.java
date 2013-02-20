@@ -3,19 +3,15 @@ package eel.seprphase2.Utilities;
 import static java.lang.Math.round;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.fasterxml.jackson.annotation.*;
+import java.io.Serializable;
 
 /**
  *
  * @author David
  */
-@JsonTypeName(value = "Percentage")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
-public class Percentage {
+public class Percentage implements Serializable {
 
     private static final Pattern pattern = Pattern.compile("^([0-9]+(\\.[0-9])?)%?$");
-    @JsonProperty
     private final double percentagePoints;
 
     // default constructor required for serialization

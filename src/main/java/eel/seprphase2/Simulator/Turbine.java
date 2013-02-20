@@ -5,14 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
 import static eel.seprphase2.Utilities.Units.*;
+import java.io.Serializable;
 
 /**
  *
  * @author Marius
  */
-public class Turbine extends FailableComponent {
+public class Turbine extends FailableComponent implements Serializable {
 
-    @JsonProperty
     private double outputPower;
 
     /**

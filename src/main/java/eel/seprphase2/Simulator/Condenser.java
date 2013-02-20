@@ -5,6 +5,7 @@ import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.*;
 import static lamprey.seprphase3.Utilities.Units.*;
 import static eel.seprphase2.Simulator.PhysicalConstants.atmosphericPressure;
+import java.io.Serializable;
 import lamprey.seprphase3.DynSimulator.OutputPort;
 import static lamprey.seprphase3.DynSimulator.GameConfig.*;
 import lamprey.seprphase3.Utilities.MassFlowRate;
@@ -13,26 +14,17 @@ import lamprey.seprphase3.Utilities.MassFlowRate;
  * 
  * @author Marius
  */
-public class Condenser extends FailableComponent {
+public class Condenser extends FailableComponent implements Serializable {
 
-    @JsonProperty
     private final Mass maximumWaterMass = CONDENSER_VOLUME.massAt(Density.ofLiquidWater());
-    @JsonProperty
     private Mass steamMass;
-    @JsonProperty
     private Mass waterMass;
-    @JsonProperty
     private OutputPort coolantInput;
-    @JsonProperty
     private Pump coolantPump;
-    @JsonProperty
     private Temperature temperature;
-    @JsonProperty
     private Pressure pressure;
-    @JsonProperty
     private Percentage waterLevel = percent(0);
     // Duration for current step.
-    @JsonProperty
     private double deltaSeconds;
 
     public Condenser(Pump coolantPump) {
@@ -41,11 +33,6 @@ public class Condenser extends FailableComponent {
     }
 
     public void step(double seconds) {
-        System.out.println("Condenser: ");
-        System.out.println("\t steam mass: " + steamMass);
-        System.out.println("\t water mass: " + waterMass);
-        System.out.println("\t max water mass: " + maximumWaterMass);
-        
         deltaSeconds = seconds;
         pullInSteam();
         coolantEffect();
@@ -63,9 +50,6 @@ public class Condenser extends FailableComponent {
         double dropOffCoefficient = 0.3;
         MassFlowRate rateOfCondensation = kilogramsPerSecond(CONDENSER_MAXSTEAMCONDENSEDPERSEC.inKilogramsPerSecond()/((dropOffCoefficient * tempDiff.inKelvin()) + 1));
         Mass steamCondensed = rateOfCondensation.massFlowForTime(deltaSeconds);
-        System.out.println("Rate of condensation" + rateOfCondensation);
-        System.out.println("\tmax rate: " + CONDENSER_MAXSTEAMCONDENSEDPERSEC.inKilogramsPerSecond());
-        System.out.println("\ttemp ratio: " + (temperature.inKelvin() / coolantInput.temperature.inKelvin()));
 
         if (steamCondensed.inKilograms() > this.steamMass.inKilograms()) {
             steamCondensed = this.steamMass;
@@ -102,7 +86,6 @@ public class Condenser extends FailableComponent {
      */
     private Temperature calculateNewTemperature(OutputPort in) {
         Temperature deltaTemp = in.temperature.minus(this.temperature);
-        System.out.println("\t steam in temp diff: " + deltaTemp.inKelvin());
         Mass totalMass = this.steamMass.plus(this.waterMass);
         Mass massIn = in.flownThroughInTime(deltaSeconds);
         deltaTemp = kelvin(deltaTemp.inKelvin() * (massIn.inKilograms() / totalMass.inKilograms()));
@@ -120,7 +103,6 @@ public class Condenser extends FailableComponent {
 
     private void pullInSteam() {
         Mass incomingSteam = input.outputPort(this).flownThroughInTime(deltaSeconds);
-        System.out.println("\tIncoming steam: " + incomingSteam);
         if (incomingSteam.inKilograms() > 0) {
             this.temperature = temperature.plus(calculateNewTemperature(input.outputPort(this)));
             steamMass = steamMass.plus(incomingSteam);

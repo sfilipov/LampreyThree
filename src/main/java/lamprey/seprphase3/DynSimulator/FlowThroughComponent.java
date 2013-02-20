@@ -3,35 +3,31 @@ package lamprey.seprphase3.DynSimulator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import java.io.Serializable;
 
 /**
  * Base class for all components in the plant that allow fluid or steam to flow through them.
  *
  * @author Will
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-public abstract class FlowThroughComponent {
+public abstract class FlowThroughComponent implements Serializable {
 
     /**
      * Component that flows into this one.
      */
-    @JsonProperty
     public FlowThroughComponent input;
     /**
      * Component that this one flows into.
      */
-    @JsonProperty
     public FlowThroughComponent output;
     /**
      * Object representing the flow out of this component.
      */
-    @JsonProperty
     private OutputPort outputPort = new OutputPort();
     /**
      * Dictates whether or not this component is pressurised.
      * i.e. Reactor/Condenser
      */
-    @JsonProperty
     public boolean pressurised = false;
     
     /**

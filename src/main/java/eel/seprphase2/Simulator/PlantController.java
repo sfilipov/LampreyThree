@@ -1,7 +1,6 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
 import java.io.IOException;
 

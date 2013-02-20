@@ -1,22 +1,21 @@
 package eel.seprphase2.Simulator;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import eel.seprphase2.Utilities.Percentage;
 import static eel.seprphase2.Utilities.Units.percent;
+import java.io.Serializable;
 /**
  *
  * @author Marius
  */
-@JsonTypeName(value = "FuelPile")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
-public class FuelPile {
+public class FuelPile implements Serializable {
 
     private final int maximumOutput = 20000000;
-    @JsonProperty
-    private Percentage controlRodPosition = new Percentage(0);
+    private Percentage controlRodPosition;
 
+    public FuelPile() {
+        controlRodPosition = new Percentage(0);
+    }
+    
     /**
      *
      * @param extracted

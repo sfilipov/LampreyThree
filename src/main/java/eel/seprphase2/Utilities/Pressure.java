@@ -1,16 +1,15 @@
 package eel.seprphase2.Utilities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
 /**
  *
  * @author David
  */
-public class Pressure {
+public class Pressure implements Serializable {
 
     private static final double pascalsPerAtmosphere = 101325;
-    @JsonProperty
     private final double pascals;
 
     /**

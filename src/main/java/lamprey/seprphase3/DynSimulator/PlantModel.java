@@ -4,17 +4,14 @@
  */
 package lamprey.seprphase3.DynSimulator;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eel.seprphase2.Simulator.Condenser;
-import eel.seprphase2.Simulator.HeatSink;
 import eel.seprphase2.Simulator.Pump;
 import eel.seprphase2.Simulator.Reactor;
 import eel.seprphase2.Simulator.Turbine;
 import eel.seprphase2.Simulator.Valve;
 import eel.seprphase2.Utilities.Energy;
 import static eel.seprphase2.Utilities.Units.joules;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -23,41 +20,24 @@ import java.util.HashMap;
  *
  * @author will
  */
-public class PlantModel {
+public class PlantModel implements Serializable {
 
-    @JsonProperty
     private Reactor reactor;
-    @JsonProperty
     private Turbine turbine;
-    @JsonProperty
     private Condenser condenser;
-    @JsonProperty
     private Valve reactorToTurbine;
-    @JsonProperty
     private Valve bypassValve;
-    @JsonProperty
     private Pump condenserToReactor;
-    @JsonProperty
     private Pump heatsinkToCondenser;
-    @JsonProperty
     private Junction splitAfterReactor;
-    @JsonProperty
     private Junction joinBeforeCondenser;
-    @JsonProperty
     private HashMap<Integer, Pump> allPumps;
-    @JsonProperty
     private HashMap<Integer, Valve> allValves;
-    @JsonProperty
     private ArrayList<Junction> allJunctions;
-    @JsonProperty
     private ArrayList<FlowThroughComponent> allComponents;
-    @JsonProperty
     private ArrayList<BlockableComponent> allBlockable;
-    @JsonProperty
     private Energy energyGenerated = joules(0);
-    @JsonProperty
     private String currentWornComponent = "";
-    @JsonProperty
     private int softwareFailureTimeRemaining = 0;
 
     public PlantModel() {

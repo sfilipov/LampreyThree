@@ -1,19 +1,15 @@
 package eel.seprphase2.Utilities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.io.Serializable;
+
 
 /**
  * Encapsulate a value representing a physical Density
  *
  * @author David
  */
-@JsonTypeName(value = "Density")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
-public class Density {
+public class Density implements Serializable {
 
-    @JsonProperty
     protected double kilogramsPerCubicMetre;
 
     /**

@@ -3,6 +3,7 @@ package eel.seprphase2.Simulator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Density;
 import static eel.seprphase2.Utilities.Units.*;
+import java.io.Serializable;
 import lamprey.seprphase3.DynSimulator.OutputPort;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
 import static lamprey.seprphase3.DynSimulator.GameConfig.ROOMTEMPERATURE;
@@ -11,9 +12,8 @@ import static lamprey.seprphase3.DynSimulator.GameConfig.ROOMTEMPERATURE;
  *
  * @author James
  */
-public class HeatSink {
+public class HeatSink implements Serializable {
 
-    @JsonProperty
     private OutputPort outputPort;
 
     public HeatSink() {

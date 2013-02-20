@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
@@ -97,7 +99,15 @@ public class PauseScreen extends AbstractScreen {
     public ClickListener getSaveListener() {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                game.setScreen(game.getGameplayScreen());
+                // refactor out of here?
+                try {
+                    manager.saveGame();
+                    game.setScreen(game.getGameplayScreen());
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } 
                 return true;
             }
         };

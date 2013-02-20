@@ -1,20 +1,15 @@
 package eel.seprphase2.Utilities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import static eel.seprphase2.Utilities.Units.*;
+import java.io.Serializable;
 
 /**
  * Encapsulate a quantity representing a physical Mass
  *
  * @author David
  */
-@JsonTypeName(value = "Mass")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@class")
-public class Mass {
+public class Mass implements Serializable {
 
-    @JsonProperty
     private final double kilograms;
 
     /**

@@ -1,6 +1,7 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import lamprey.seprphase3.DynSimulator.BlockableComponent;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
@@ -9,11 +10,9 @@ import static lamprey.seprphase3.DynSimulator.GameConfig.VALVE_DEFAULTMAXTHROUGH
  *
  * @author james
  */
-public class Valve extends BlockableComponent {
+public class Valve extends BlockableComponent implements Serializable {
 
-    @JsonProperty
     private boolean open;
-    @JsonProperty
     private MassFlowRate maxThroughput;
 
     public Valve() {

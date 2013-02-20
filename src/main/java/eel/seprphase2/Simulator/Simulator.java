@@ -2,9 +2,7 @@ package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import eel.seprphase2.GameOverException;
-import eel.seprphase2.Persistence.FileSystem;
-import eel.seprphase2.Persistence.SaveGame;
+import lamprey.seprphase3.Persistence.SaveGame;
 import eel.seprphase2.Utilities.Energy;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
@@ -45,29 +43,16 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
 
     @Override
-    public void saveGame() throws JsonProcessingException {
+    public void saveGame() throws IOException, FileNotFoundException {
         SaveGame saveGame = new SaveGame(plant, userName);
-        try {
-            saveGame.save();
-        } catch (FileNotFoundException ex) {
-        } catch (IOException ex) {
-        }
+        saveGame.save();
     }
 
     @Override
-    public void loadGame(int gameNumber) {
-        try {
-            SaveGame saveGame = SaveGame.load(listGames()[gameNumber]);
-            this.plant = saveGame.getPlantModel();
-            this.userName = saveGame.getUserName();
-        } catch (JsonParseException ex) {
-        } catch (IOException ex) {
-        }
-    }
-
-    @Override
-    public String[] listGames() {
-        return FileSystem.listSaveGames(userName);
+    public void loadGame() throws IOException, FileNotFoundException, ClassNotFoundException {
+        SaveGame saveGame = SaveGame.load();
+        this.plant = saveGame.getPlantModel();
+        this.userName = saveGame.getUserName();
     }
 
     @Override

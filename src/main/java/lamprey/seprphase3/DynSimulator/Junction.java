@@ -3,6 +3,7 @@ package lamprey.seprphase3.DynSimulator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.kelvin;
+import java.io.Serializable;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,15 +14,16 @@ import lamprey.seprphase3.Utilities.MassFlowRate;
  *
  * @author will
  */
-public class Junction extends FlowThroughComponent {
+public class Junction extends FlowThroughComponent implements Serializable {
 
-    @JsonProperty
-    private HashMap<FlowThroughComponent, BlockablePort> outputPorts;
-    @JsonProperty
+    // map<internalOutputID, BlockablePort>
+    private HashMap<Integer, BlockablePort> outputPorts;
+    private ArrayList<FlowThroughComponent> outputs;
     private ArrayList<FlowThroughComponent> inputs;
 
     public Junction() {
-        this.outputPorts = new HashMap<FlowThroughComponent, BlockablePort>();
+        this.outputPorts = new HashMap<Integer, BlockablePort>();
+        this.outputs = new ArrayList<FlowThroughComponent>();
         this.inputs = new ArrayList<FlowThroughComponent>();
     }
 
@@ -31,7 +33,9 @@ public class Junction extends FlowThroughComponent {
      * @param component the component to connect as an output.
      */
     public void addOutput(FlowThroughComponent output) {
-        this.outputPorts.put(output, new BlockablePort());
+        this.outputs.add(output);
+        int internalID = this.outputs.indexOf(output);
+        this.outputPorts.put(internalID, new BlockablePort());
     }
 
     /**
@@ -59,7 +63,7 @@ public class Junction extends FlowThroughComponent {
      * @return a list of outputs connected to this Junction.
      */
     public ArrayList<FlowThroughComponent> outputs() {
-        return new ArrayList(this.outputPorts.keySet());
+        return this.outputs;
     }
 
     /**
@@ -73,26 +77,26 @@ public class Junction extends FlowThroughComponent {
      */
     @Override
     public OutputPort outputPort(FlowThroughComponent contextComponent) throws IllegalArgumentException {
-        if (this.outputPorts.containsKey(contextComponent)) {
-            return this.outputPorts.get(contextComponent);
+        if (outputExists(contextComponent)) {
+            return getPortFromComponent(contextComponent);
         } else {
             throw new IllegalArgumentException("Attempt to retrieve outputPort reference for a " +
                                                "component not attached to this junction.");
         }
     }
     
-    public HashMap<FlowThroughComponent, BlockablePort> outputPortMap() {
-        return outputPorts;
-    }
-    
     public boolean isBlocked(FlowThroughComponent componentToCheck) {
-        return this.outputPorts.get(componentToCheck).blocked;
+        if (outputExists(componentToCheck)) {
+            return getPortFromComponent(componentToCheck).blocked;
+        } else {
+            throw new IllegalArgumentException("Attempt to check if a component that is not "+
+                                                "connected to a Junction is blocked");
+        }
     }
 
     public void block(FlowThroughComponent componentToBlock) {
-        if (this.outputPorts.containsKey(componentToBlock)) {
-            BlockablePort attachedPort = this.outputPorts.get(componentToBlock);
-            attachedPort.blocked = true;
+        if (outputExists(componentToBlock)) {
+            getPortFromComponent(componentToBlock).blocked = true;
         } else {
             throw new IllegalArgumentException("Attempt to retrieve outputPort reference for a " +
                                                "component not attached to this junction.");
@@ -106,7 +110,7 @@ public class Junction extends FlowThroughComponent {
      */
     public int numOutputs() {
         int totalOutputs = 0;
-        for (Entry<FlowThroughComponent, BlockablePort> entry : this.outputPorts.entrySet()) {
+        for (Entry<Integer, BlockablePort> entry : this.outputPorts.entrySet()) {
             if (!entry.getValue().blocked) {
                 totalOutputs++;
             }
@@ -118,7 +122,7 @@ public class Junction extends FlowThroughComponent {
      * Resets all outputs to the not-blocked state.
      */
     public void resetState() {
-        for (Entry<FlowThroughComponent, BlockablePort> entry : this.outputPorts.entrySet()) {
+        for (Entry<Integer, BlockablePort> entry : this.outputPorts.entrySet()) {
             entry.getValue().blocked = false;
         }
     }
@@ -150,6 +154,19 @@ public class Junction extends FlowThroughComponent {
         }
     }
 
+    /**
+     * Returns a reference to the port attached to the parameter, output.
+     * @param output the component to get the port for.
+     * @return a reference to the port attached to the parameter, output.
+     */
+    private BlockablePort getPortFromComponent(FlowThroughComponent output) {
+        int ID = this.outputs.indexOf(output);
+        return this.outputPorts.get(ID);
+    }
+    
+    private boolean outputExists(FlowThroughComponent componentToCheck) {
+        return this.outputs.contains(componentToCheck);
+    }
     /**
      * A port that 'knows' if the path ahead is blocked.
      */

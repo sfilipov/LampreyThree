@@ -7,7 +7,7 @@ package lamprey.seprphase3.GUI.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import eel.seprphase2.GameOverException;
+import eel.seprphase2.Simulator.GameOverException;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;

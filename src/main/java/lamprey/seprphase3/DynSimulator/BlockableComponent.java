@@ -11,7 +11,6 @@ public abstract class BlockableComponent extends FlowThroughComponent {
     /**
      * Whether or not this component is blocked.
      */
-    @JsonProperty
     public boolean blocked;
     
     

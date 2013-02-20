@@ -1,7 +1,6 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
 import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
 
@@ -22,9 +21,7 @@ import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
  */
 public abstract class FailableComponent extends FlowThroughComponent {
 
-    @JsonProperty
     private boolean hasFailed;      //The state of the component
-    @JsonProperty
     private Percentage wear;                //Current wear level - capped at 100%
 
     /**

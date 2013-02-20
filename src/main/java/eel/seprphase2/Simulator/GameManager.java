@@ -1,6 +1,8 @@
 package eel.seprphase2.Simulator;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  *Interface class that defines the methods that'll be needed in order to save and load the game.
@@ -9,12 +11,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 public interface GameManager {
     
     void initGame();
-    
-    String[] listGames();
 
-    void loadGame(int gameNumber);
+    void loadGame() throws IOException, FileNotFoundException, ClassNotFoundException;
 
-    void saveGame() throws JsonProcessingException;
+    void saveGame() throws IOException, FileNotFoundException;
 
     void setUsername(String userName);
 }

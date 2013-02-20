@@ -4,16 +4,15 @@
  */
 package lamprey.seprphase3.Utilities;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Density;
 import eel.seprphase2.Utilities.Format;
+import java.io.Serializable;
 
 /**
  * @author will
  */
-public class VolumetricFlowRate {
+public class VolumetricFlowRate implements Serializable {
    
-    @JsonProperty
     private double cubicMetresPerSecond;
     
     public VolumetricFlowRate() {

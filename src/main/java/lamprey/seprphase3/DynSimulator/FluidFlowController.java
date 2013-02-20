@@ -4,7 +4,7 @@
  */
 package lamprey.seprphase3.DynSimulator;
 
-import eel.seprphase2.GameOverException;
+import eel.seprphase2.Simulator.GameOverException;
 import eel.seprphase2.Simulator.CannotControlException;
 import eel.seprphase2.Simulator.CannotRepairException;
 import eel.seprphase2.Simulator.Condenser;
@@ -428,7 +428,6 @@ public class FluidFlowController implements PlantController {
         Pressure pressureDiff = reactor.pressure().minus(condenser.getPressure());
         Velocity steamVelocity = FlowEquations.velocityFromPressureDiff(pressureDiff);
         MassFlowRate flowOut = FlowEquations.flowRateFromDensityVelocityArea(reactor.steamDensity(), steamVelocity, new Area(0.05));
-        System.out.println("Full flow out: " + flowOut);
         return (flowOut.inKilogramsPerSecond() < 0) ? kilogramsPerSecond(0) : flowOut;
     }
 

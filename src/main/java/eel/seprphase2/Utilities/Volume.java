@@ -1,10 +1,12 @@
 package eel.seprphase2.Utilities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author David
  */
-public class Volume {
+public class Volume implements Serializable  {
 
     private final double cubicMetres;
 

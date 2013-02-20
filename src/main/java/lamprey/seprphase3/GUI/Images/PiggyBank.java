@@ -28,10 +28,10 @@ public class PiggyBank extends Image {
     public PiggyBank(Texture texture, PlantStatus status) {
         super(texture);
         this.status = status;
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arial.ttf"));
-        font = generator.generateFont(30);
-        font = new BitmapFont();
-        fontX = 45f;
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arialbd.ttf"));
+        font = generator.generateFont(16);
+        font.setColor(1f, 1f, 1f, 0.5f);
+        fontX = 40f;
         fontY = 50f;
     }
     

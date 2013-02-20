@@ -25,15 +25,15 @@ public class MenuScreen extends AbstractScreen {
     Texture gamelogoTexture;
     Texture newgameTexture;
     Texture loadgameTexture;
-    Texture optionsTexture;
-    Texture highscoresTexture;
+//    Texture optionsTexture;
+//    Texture highscoresTexture;
     Texture lampreylogoTexture;
     Image menubgImage;
     Image gamelogoImage;
     HoverButton newgameImage;
     HoverButton loadgameImage;
-    HoverButton optionsImage;
-    HoverButton highscoresImage;
+//    HoverButton optionsImage;
+//    HoverButton highscoresImage;
     Image lampreylogoImage;
     
     boolean isInputShown;
@@ -46,8 +46,8 @@ public class MenuScreen extends AbstractScreen {
         gamelogoTexture    = new Texture(Gdx.files.internal("assets\\menu\\gamelogo.png"));
         newgameTexture     = new Texture(Gdx.files.internal("assets\\menu\\newgame.png"));
         loadgameTexture    = new Texture(Gdx.files.internal("assets\\menu\\loadgame.png"));
-        optionsTexture     = new Texture(Gdx.files.internal("assets\\menu\\options.png"));
-        highscoresTexture  = new Texture(Gdx.files.internal("assets\\menu\\highscores.png"));
+//        optionsTexture     = new Texture(Gdx.files.internal("assets\\menu\\options.png"));
+//        highscoresTexture  = new Texture(Gdx.files.internal("assets\\menu\\highscores.png"));
         lampreylogoTexture = new Texture(Gdx.files.internal("assets\\menu\\lampreylogo.png"));
         
         nameListener = new OperatorNameInput();
@@ -64,29 +64,29 @@ public class MenuScreen extends AbstractScreen {
         gamelogoImage    = new Image(gamelogoTexture);
         newgameImage     = new HoverButton(newgameTexture, HoverButtonType.Transparent);
         loadgameImage    = new HoverButton(loadgameTexture, HoverButtonType.Transparent);
-        optionsImage     = new HoverButton(optionsTexture, HoverButtonType.Transparent);
-        highscoresImage  = new HoverButton(highscoresTexture, HoverButtonType.Transparent);
+//        optionsImage     = new HoverButton(optionsTexture, HoverButtonType.Transparent);
+//        highscoresImage  = new HoverButton(highscoresTexture, HoverButtonType.Transparent);
         lampreylogoImage = new Image(lampreylogoTexture);
         
         menubgImage.setPosition(0, 0);
         gamelogoImage.setPosition(272, 333);
         newgameImage.setPosition(361, 283);
         loadgameImage.setPosition(349, 241);
-        optionsImage.setPosition(392, 199);
-        highscoresImage.setPosition(349, 155);
+//        optionsImage.setPosition(392, 199);
+//        highscoresImage.setPosition(349, 155);
         lampreylogoImage.setPosition(436, 0);
         
         newgameImage.addListener(getNewgameListener());
         loadgameImage.addListener(new ClickListener());
-        optionsImage.addListener(new ClickListener());
-        highscoresImage.addListener(new ClickListener());
+//        optionsImage.addListener(new ClickListener());
+//        highscoresImage.addListener(new ClickListener());
         
         stage.addActor(menubgImage);
         stage.addActor(gamelogoImage);
         stage.addActor(newgameImage);
         stage.addActor(loadgameImage);
-        stage.addActor(optionsImage);
-        stage.addActor(highscoresImage);
+//        stage.addActor(optionsImage);
+//        stage.addActor(highscoresImage);
         stage.addActor(lampreylogoImage);
     }
 

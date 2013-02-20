@@ -194,14 +194,14 @@ public class MechanicImage extends Image {
         }
         
         if (mechanicDirection == Direction.Right) {
-            shadowImage.setPosition(this.getX() - 30f, STATIC_Y - 15f);
+            shadowImage.setPosition(this.getX() + 8f, STATIC_Y - 1f);
             shadowImage.draw(batch, parentAlpha);
             
             this.setScale(scaleToUse);
             super.draw(batch, parentAlpha);
         }
         else if (mechanicDirection == Direction.Left) {
-            shadowImage.setPosition(this.getX() - 25f, STATIC_Y - 10f);
+            shadowImage.setPosition(this.getX() + 15f, STATIC_Y - 1f);
             shadowImage.draw(batch, parentAlpha);
             
             mechanicX = this.getX();

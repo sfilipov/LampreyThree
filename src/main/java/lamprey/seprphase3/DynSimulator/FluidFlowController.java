@@ -165,7 +165,29 @@ public class FluidFlowController implements PlantController {
 
     @Override
     public void wearCondenser() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        plant.condenser().wear();
+    }
+
+    @Override
+    public void flipValveState(int valveNumber) throws KeyNotFoundException {
+        if (plant.valves().containsKey(valveNumber)) {
+            Valve v = plant.valves().get(valveNumber);
+            v.setOpen(!v.getOpen());
+        } else {
+            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
+        }
+    }
+
+    @Override
+    public void flipPumpState(int pumpNumber) throws CannotControlException, KeyNotFoundException {
+        if (!plant.pumps().containsKey(pumpNumber)) {
+            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+        }
+        Pump p = plant.pumps().get(pumpNumber);
+        if (p.hasFailed()) {
+            throw new CannotControlException("Pump " + pumpNumber + " is failed");
+        }
+        p.setStatus(p.getStatus());
     }
 
   

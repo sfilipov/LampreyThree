@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lamprey.seprphase3.DynSimulator.BlockableComponent;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
-import static lamprey.seprphase3.DynSimulator.GameConfig.DefaultMaxFlowRateThroughValve;
+import static lamprey.seprphase3.DynSimulator.GameConfig.VALVE_DEFAULTMAXTHROUGHPUT;
 /**
  *
  * @author james
@@ -19,7 +19,7 @@ public class Valve extends BlockableComponent {
     public Valve() {
         this.open = true;
         this.blocked = false;
-        this.maxThroughput = DefaultMaxFlowRateThroughValve;
+        this.maxThroughput = VALVE_DEFAULTMAXTHROUGHPUT;
     }
     
     public Valve(MassFlowRate customMaxThroughput) {

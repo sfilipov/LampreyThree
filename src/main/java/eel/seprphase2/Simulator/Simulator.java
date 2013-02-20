@@ -212,36 +212,36 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
 
     @Override
     public void failCondenser() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        failureModel.failCondenser();
     }
 
     @Override
     public void wearReactor() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        failureModel.wearReactor();
     }
 
     @Override
     public boolean turbineHasFailed() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return failureModel.turbineHasFailed();
     }
 
     @Override
     public ArrayList<FailableComponent> failableComponents() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return failureModel.failableComponents();
     }
 
     @Override
     public Percentage pumpWear(int pumpID) throws KeyNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return failureModel.pumpWear(pumpID);
     }
 
     @Override
     public boolean isValveOpen(int valveID) throws KeyNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return failureModel.isValveOpen(valveID);
     }
 
     @Override
     public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return failureModel.getPumpStatus(pumpID);
     }
 }

@@ -13,6 +13,7 @@ import eel.seprphase2.Utilities.Velocity;
 import eel.seprphase2.Utilities.Volume;
 import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
 import lamprey.seprphase3.DynSimulator.OutputPort;
+import static lamprey.seprphase3.DynSimulator.GameConfig.*;
 
 /**
  *
@@ -20,9 +21,11 @@ import lamprey.seprphase3.DynSimulator.OutputPort;
  */
 public class Reactor extends FailableComponent {
 
-    private final Mass maximumWaterMass = kilograms(1000);
-    private final Mass minimumWaterMass = kilograms(800);
-    private final Volume reactorVolume = cubicMetres(5);
+    @JsonProperty
+    private final Mass maximumWaterMass = REACTOR_VOLUME.massAt(Density.ofLiquidWater());
+    @JsonProperty
+    private final Mass minimumWaterMass = kilograms(maximumWaterMass.inKilograms() * REACTOR_MINIMUMSAFEWATERLEVEL
+            .ratio());
     @JsonProperty
     private FuelPile fuelPile = new FuelPile();
     @JsonProperty
@@ -47,10 +50,11 @@ public class Reactor extends FailableComponent {
     public Reactor() {
         super();
         fuelPile.moveControlRods(new Percentage(0));
-        waterMass = maximumWaterMass;
+        waterMass = REACTOR_INITIALWATERMASS;
         steamMass = kilograms(0);
-        temperature = kelvin(350);
-        pressure = pascals(101325);
+        steamDensity = kilogramsPerCubicMetre(0);
+        temperature = ROOMTEMPERATURE.plus(kelvin(60));
+        pressure = pascals(atmosphericPressure);
         this.pressurised = true;
     }
 
@@ -74,96 +78,39 @@ public class Reactor extends FailableComponent {
 
     /**
      *
-     * @param extracted
-     */
-    public void moveControlRods(Percentage extracted) {
-        fuelPile.moveControlRods(extracted);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Percentage controlRodPosition() {
-        return fuelPile.controlRodPosition();
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Percentage waterLevel() {
-        return new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms()) * 100);
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Temperature temperature() {
-        return this.temperature;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Pressure pressure() {
-        return this.pressure;
-    }
-    
-    private Mass getMassComingInOverTime(double seconds){
-        return this.input.outputPort((FlowThroughComponent)this).flowRate.massFlowForTime(seconds);
-    }
-    
-    private Mass massOfSteamLeavingOverTime(double seconds) {
-        return this.outputPort(null).flownThroughInTime(seconds);
-    }
-
-    /**
-     *
      */
     public void step(double seconds) throws GameOverException {
-        System.out.println("RSM: " + steamMass);
-        System.out.println("RWM: " + waterMass);
-        deltaSeconds = seconds;
-        if (steamMass.inKilograms() > massOfSteamLeavingOverTime(seconds).inKilograms()) {
-            steamMass = steamMass.minus(massOfSteamLeavingOverTime(seconds));
-            waterMass = waterMass.plus(getMassComingInOverTime(seconds));
-            correctWaterMass();
-            calculateNewTemperature(input.outputPort(this));
-        } else {
-            waterMass = waterMass.plus(steamMass);
-            correctWaterMass();
-            steamMass = kilograms(0);
-            calculateNewTemperature(input.outputPort((FlowThroughComponent)this));
-        }
+        System.out.println("Reactor: ");
+        System.out.println("\t steam mass: " + steamMass);
+        System.out.println("\t water mass: " + waterMass);
+        System.out.println("\t max water mass: " + maximumWaterMass);
+        System.out.println("\t min water mass: " + minimumWaterMass);
 
+        deltaSeconds = seconds;
+        updateSteamAndWater(seconds);
         if (hasFailed()) {
             throw new GameOverException();
         }
+        updateTemperatureAndEvaporateAccordingly(seconds);
+        recalcPressure();
+        stepWear();
+    }
 
+    private void updateTemperatureAndEvaporateAccordingly(double seconds) {
         /*
          * Calculates the boiling point at the current pressure,
          * then it calculates the needed enegry to reach that boiling point
          */
-
         boilingPtAtPressure = boilingPointOfWater + 10 * Math.log(pressure.inPascals() / atmosphericPressure);
-
         neededEnergy = (boilingPtAtPressure - temperature.inKelvin()) * waterMass.inKilograms() * specificHeatOfWater;
-
-
         if (neededEnergy >= fuelPile.output(seconds)) {
-
             /*
              * Calculates how much the water heats if it's not at boiling point
              */
-
             temperature = kelvin(temperature.inKelvin() +
                                  fuelPile.output(seconds) / waterMass.inKilograms() /
                                  specificHeatOfWater);
         } else {
-
             /*
              * Sets temperature to boiling point
              * If any energy is left from the fuelpile after heating up:
@@ -175,53 +122,47 @@ public class Reactor extends FailableComponent {
             waterMass = waterMass.minus(deltaMass);
             correctWaterMass();
         }
+    }
 
-        /*
-         * Calculates volume of steam in this particular timestep
-         * Calculates pressure of said steam
-         */
+    public void updateSteamAndWater(double seconds) {
+        if (steamMass.inKilograms() > massOfSteamLeavingOverTime(seconds).inKilograms()) {
+            steamMass = steamMass.minus(massOfSteamLeavingOverTime(seconds));
+            waterMass = waterMass.plus(getMassComingInOverTime(seconds));
+            correctWaterMass();
+            temperature = temperature.plus(calculateNewTemperature(input.outputPort(this)));
+        } else {
+            waterMass = waterMass.plus(steamMass);
+            waterMass = waterMass.plus(getMassComingInOverTime(seconds));
+            correctWaterMass();
+            steamMass = kilograms(0);
+            temperature = temperature.plus(calculateNewTemperature(input.outputPort(this)));
+        }
+    }
 
-        Volume steamVolume = reactorVolume.minus(waterMass.volumeAt(Density.ofLiquidWater()));
+    /**
+     * Calculates pressure due to steam. Then also calculates the density.
+     */
+    public void recalcPressure() {
+        Volume steamVolume = REACTOR_VOLUME.minus(waterMass.volumeAt(Density.ofLiquidWater()));
         pressure = IdealGas.pressure(steamVolume, steamMass, temperature);
         if (pressure.inPascals() < atmosphericPressure) {
             pressure = pascals(atmosphericPressure);
         }
         steamDensity = steamMass.densityAt(steamVolume);
-        
-        /*
-         * Calculates component wear after a time step
-         */
-        stepWear();
     }
 
     /**
-     *
-     * @return
+     * Calculates the change in temperature due to the flow in from an OutputPort.
+     * @param in OutputPort to calculate the temperature difference from.
+     *           It will usually be the OutputPort connected to the input of this component.
+     * @return 
      */
-    public Velocity outputFlowVelocity() {
-        return metresPerSecond(pressure().inPascals() / 100);
-    }
-
-    public Mass maximumWaterMass() {
-        return maximumWaterMass;
-    }
-
-    public Mass minimumWaterMass() {
-        return minimumWaterMass;
-    }
-
-    public void calculateNewTemperature(OutputPort in) {
-        temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * getMassComingInOverTime(deltaSeconds)
-                              .inKilograms()) / (waterMass.inKilograms() + getMassComingInOverTime(deltaSeconds).inKilograms()));
-    }
-
-    @Override
-    public Percentage calculateWearDelta() {
-        return new Percentage(0);
-    }
-
-    public Percentage minimumWaterLevel() {
-        return new Percentage((this.minimumWaterMass.inKilograms() / this.maximumWaterMass.inKilograms()) * 100);
+    private Temperature calculateNewTemperature(OutputPort in) {
+        Temperature deltaTemp = in.temperature.minus(this.temperature);
+        Mass totalMass = this.steamMass.plus(this.waterMass);
+        Mass massIn = in.flownThroughInTime(deltaSeconds);
+        deltaTemp = kelvin(deltaTemp.inKelvin() * (massIn.inKilograms() / totalMass.inKilograms()));
+        return deltaTemp;
     }
 
     // avoid issues with floating-point error
@@ -233,6 +174,57 @@ public class Reactor extends FailableComponent {
             waterMass = kilograms(0);
         }
     }
-}
-
     
+    @Override
+    public Percentage calculateWearDelta() {
+        return new Percentage(0);
+    }
+
+    public Percentage minimumWaterLevel() {
+        return REACTOR_MINIMUMSAFEWATERLEVEL;
+    }
+    
+    public Mass maximumWaterMass() {
+        return maximumWaterMass;
+    }
+
+    public Mass minimumWaterMass() {
+        return minimumWaterMass;
+    }
+
+    public void moveControlRods(Percentage extracted) {
+        fuelPile.moveControlRods(extracted);
+    }
+
+    public Percentage controlRodPosition() {
+        return fuelPile.controlRodPosition();
+    }
+
+    /**
+     * Returns the water level in the reactor as a percentage of it's capacity.
+     * @return the water level in the reactor as a percentage of it's capacity. 
+     */
+    public Percentage waterLevel() {
+        return new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms()) * 100);
+    }
+
+    public Temperature temperature() {
+        return this.temperature;
+    }
+
+    public Pressure pressure() {
+        return this.pressure;
+    }
+
+    public Density steamDensity() {
+        return this.steamDensity;
+    }
+
+    private Mass getMassComingInOverTime(double seconds) {
+        return this.input.outputPort((FlowThroughComponent)this).flowRate.massFlowForTime(seconds);
+    }
+
+    private Mass massOfSteamLeavingOverTime(double seconds) {
+        return this.outputPort(null).flownThroughInTime(seconds);
+    }
+}

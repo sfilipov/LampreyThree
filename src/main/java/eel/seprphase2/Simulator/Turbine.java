@@ -31,7 +31,11 @@ public class Turbine extends FailableComponent {
             stepWear();
             return;
         }
-        outputPower = this.outputPort(null).flowRate.massFlowForTime(seconds).inKilograms() * 1000; //convert to grams. 
+        
+        outputPower = this.outputPort(null).flowRate.massFlowForTime(seconds).inKilograms(); //convert to grams. 
+//        System.out.println("Seconds: " + seconds);
+//        System.out.println("Kilograms: " + outputPower);
+//        System.out.println("Kg/s: " + this.outputPort(null).flowRate);
         stepWear();
 
     }

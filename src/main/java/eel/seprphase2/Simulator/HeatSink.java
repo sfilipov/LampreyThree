@@ -5,7 +5,7 @@ import eel.seprphase2.Utilities.Density;
 import static eel.seprphase2.Utilities.Units.*;
 import lamprey.seprphase3.DynSimulator.OutputPort;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
-import static lamprey.seprphase3.DynSimulator.GameConfig.RoomTemperature;
+import static lamprey.seprphase3.DynSimulator.GameConfig.ROOMTEMPERATURE;
 
 /**
  *
@@ -18,7 +18,7 @@ public class HeatSink {
 
     public HeatSink() {
         outputPort = new OutputPort();
-        outputPort.temperature = RoomTemperature;
+        outputPort.temperature = ROOMTEMPERATURE;
         outputPort.flowRate = kilogramsPerSecond(2);
     }
 

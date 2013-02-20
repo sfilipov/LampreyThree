@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Percentage;
 import static eel.seprphase2.Utilities.Units.*;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
-import static lamprey.seprphase3.DynSimulator.GameConfig.FlowRateInducedByPumps;
+import static lamprey.seprphase3.DynSimulator.GameConfig.PUMP_INDUCEDFLOWRATE;
 
 /**
  *
@@ -21,7 +21,7 @@ public class Pump extends FailableComponent {
 
     public void step() {
         if (status && !hasFailed()) {
-            outputPort(null).flowRate = FlowRateInducedByPumps;
+            outputPort(null).flowRate = PUMP_INDUCEDFLOWRATE;
         } else {
             outputPort(null).flowRate = kilogramsPerSecond(0);
         }

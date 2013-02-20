@@ -54,6 +54,7 @@ public class ErrorMessagesImage extends Image {
         softwareError = split[1][2];
         delta = 0f;
         buttonsRemoved = false;
+        drawable.setRegion(normal);
     }
     
     @Override
@@ -92,7 +93,6 @@ public class ErrorMessagesImage extends Image {
         else if(delta > 3f) {
             delta = 0;
         }
-        drawable.setRegion(normal);
         this.setDrawable(drawable);
         super.draw(batch, parentAlpha);
     }

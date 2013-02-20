@@ -49,7 +49,7 @@ public class InformationPanels extends Image {
         font11.draw(batch, status.condenserWaterLevel().toString(), 505, 264);
         
         double powerOutput = status.getOutputPower();
-        font16.draw(batch, "" + powerOutput, 780, 487);
+        font16.draw(batch, String.format("%.2g%n", powerOutput), 780, 487);
         font11.draw(batch, status.turbineWear().toString(), 850, 467);
         
         

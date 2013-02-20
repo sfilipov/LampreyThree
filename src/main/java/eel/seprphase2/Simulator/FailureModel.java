@@ -150,10 +150,20 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
+    public void flipValveState(int valveNumber) throws KeyNotFoundException {
+        controller.flipValveState(valveNumber);
+    }
+    
+    @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
         controller.changePumpState(pumpNumber, isPumping);
     }
 
+    @Override
+    public void flipPumpState(int pumpNumber) throws CannotControlException, KeyNotFoundException {
+        controller.flipPumpState(pumpNumber);
+    }
+    
     @Override
     public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
         controller.repairPump(pumpNumber);

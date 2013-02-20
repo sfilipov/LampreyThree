@@ -99,12 +99,22 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
         failureModel.changeValveState(valveNumber, isOpen);
     }
+    
+    @Override
+    public void flipValveState(int valveNumber) throws KeyNotFoundException {
+        failureModel.flipValveState(valveNumber);
+    }
 
     @Override
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
         failureModel.changePumpState(pumpNumber, isPumping);
     }
 
+    @Override
+    public void flipPumpState(int pumpNumber) throws CannotControlException, KeyNotFoundException {
+        failureModel.flipPumpState(pumpNumber);
+    }
+    
     @Override
     public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
         failureModel.repairPump(pumpNumber);

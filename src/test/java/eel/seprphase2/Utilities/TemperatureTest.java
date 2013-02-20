@@ -32,7 +32,7 @@ public class TemperatureTest {
 
     @Test
     public void shouldConvertToStringWithUnits() {
-        assertEquals("512.85 degrees C", temperature.toString());
+        assertEquals("512.85", temperature.toString());
     }
 
     @Test

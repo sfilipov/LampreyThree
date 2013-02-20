@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package lamprey.seprphase3.GUI;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;

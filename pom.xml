@@ -15,7 +15,12 @@
             <id>gdx-nightlies</id>
             <url>http://libgdx.badlogicgames.com/nightlies/maven</url>
         </repository>
+        <repository>
+            <id>repo</id>
+            <url>file://${project.basedir}/repo</url>
+        </repository>
     </repositories>
+    
   
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -72,6 +77,18 @@
             <groupId>com.badlogic.gdx</groupId>
             <artifactId>gdx-backend-lwjgl</artifactId>
             <version>0.9.9-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>        
+        <dependency>
+            <groupId>com.badlogic.gdx</groupId>
+            <artifactId>gdx-freetype-natives</artifactId>
+            <version>0.9.9</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogic.gdx</groupId>
+            <artifactId>gdx-freetype</artifactId>
+            <version>0.9.9</version>
             <type>jar</type>
         </dependency>
     </dependencies>

@@ -30,6 +30,7 @@ public class Condenser extends FailableComponent {
     @JsonProperty
     private Percentage waterLevel = percent(0);
     // Duration for current step.
+    @JsonProperty
     private double deltaSeconds;
 
     public Condenser() {

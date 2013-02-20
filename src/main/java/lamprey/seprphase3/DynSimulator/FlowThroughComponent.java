@@ -1,5 +1,7 @@
 package lamprey.seprphase3.DynSimulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Base class for all components in the plant that allow fluid or steam to flow through them.
  *
@@ -10,19 +12,23 @@ public abstract class FlowThroughComponent {
     /**
      * Component that flows into this one.
      */
+    @JsonProperty
     public FlowThroughComponent input;
     /**
      * Component that this one flows into.
      */
+    @JsonProperty
     public FlowThroughComponent output;
     /**
      * Object representing the flow out of this component.
      */
+    @JsonProperty
     private OutputPort outputPort = new OutputPort();
     /**
      * Dictates whether or not this component is pressurised.
      * i.e. Reactor/Condenser
      */
+    @JsonProperty
     public boolean pressurised = false;
     
     /**

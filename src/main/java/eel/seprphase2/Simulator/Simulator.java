@@ -42,7 +42,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
 
     @Override
     public void saveGame() throws JsonProcessingException {
-        SaveGame saveGame = new SaveGame(physicalModel, failureModel, userName);
+        SaveGame saveGame = new SaveGame(plant, userName);
         try {
             saveGame.save();
         } catch (FileNotFoundException ex) {
@@ -54,8 +54,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public void loadGame(int gameNumber) {
         try {
             SaveGame saveGame = SaveGame.load(listGames()[gameNumber]);
-            this.physicalModel = saveGame.getPhysicalModel();
-            //this.failureModel = new FailureModel(physicalModel, physicalModel);
+            this.plant = saveGame.getPlantModel();
             this.userName = saveGame.getUserName();
         } catch (JsonParseException ex) {
         } catch (IOException ex) {

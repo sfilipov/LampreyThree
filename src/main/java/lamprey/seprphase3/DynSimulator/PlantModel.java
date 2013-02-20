@@ -4,7 +4,9 @@
  */
 package lamprey.seprphase3.DynSimulator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eel.seprphase2.Simulator.Condenser;
 import eel.seprphase2.Simulator.HeatSink;
 import eel.seprphase2.Simulator.Pump;
@@ -21,6 +23,7 @@ import java.util.HashMap;
  *
  * @author will
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class PlantModel {
 
     @JsonProperty
@@ -53,6 +56,7 @@ public class PlantModel {
     private ArrayList<BlockableComponent> allBlockable;
     @JsonProperty
     private Energy energyGenerated = joules(0);
+    @JsonProperty
     private String currentWornComponent = "";
 
     public PlantModel() {

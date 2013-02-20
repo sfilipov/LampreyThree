@@ -1,5 +1,6 @@
 package lamprey.seprphase3.DynSimulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.*;
 import static eel.seprphase2.Utilities.Units.kelvin;
 import static lamprey.seprphase3.Utilities.Units.kilogramsPerSecond;
@@ -14,7 +15,9 @@ import lamprey.seprphase3.Utilities.MassFlowRate;
  */
 public class Junction extends FlowThroughComponent {
 
+    @JsonProperty
     private HashMap<FlowThroughComponent, BlockablePort> outputPorts;
+    @JsonProperty
     private ArrayList<FlowThroughComponent> inputs;
 
     public Junction() {

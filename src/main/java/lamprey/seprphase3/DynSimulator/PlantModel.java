@@ -211,6 +211,10 @@ public class PlantModel {
         return currentWornComponent;
     }
     
+    public int getSoftwareFailureTimeRemaining() {
+        return softwareFailureTimeRemaining;
+    }
+    
     public void increaseEnergyGenerated(Energy delta) {
         energyGenerated = energyGenerated.plus(delta);
     }

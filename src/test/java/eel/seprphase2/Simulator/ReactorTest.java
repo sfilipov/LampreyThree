@@ -82,7 +82,7 @@ public class ReactorTest {
         reactor.step(1);
         assertThat(reactor.pressure().inPascals(), greaterThan(101325.0));
     }
-
+/*
     @Test
     public void shouldSetOutputPressure() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
@@ -98,6 +98,7 @@ public class ReactorTest {
         reactor.step(1);
         assertThat(reactor.outputFlowVelocity().inMetresPerSecond(), greaterThan(0.0));
     }
+    */
 
     @Test
     public void shouldHaveMinimumWaterLevelAtEightyInitially() {
@@ -123,4 +124,17 @@ public class ReactorTest {
         assertThat(reactor.waterLevel().points(), not(equalTo(100.0)));
 
     }
+    /*
+    @Test
+    public void ShouldReturnMaxTemp(){
+        Temperature check = kelvin(3000);
+        assertEquals(check.toString(), reactor.maximumTemperature().toString());
+    }
+    
+    @Test
+    public void ShouldReturnMaxPressure(){
+        Pressure check = new Pressure(300000);
+        assertEquals(check.toString(), reactor.maximumPressure().toString());
+    }
+    */
 }

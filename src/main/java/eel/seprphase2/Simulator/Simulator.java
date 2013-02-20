@@ -71,6 +71,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         return failureModel.listFailedComponents();
     }
 
+    @Override
     public void step(double seconds) throws GameOverException {
         try {
             failureModel.step(seconds);

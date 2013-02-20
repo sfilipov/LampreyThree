@@ -24,8 +24,7 @@ public class Reactor extends FailableComponent {
     @JsonProperty
     private final Mass maximumWaterMass = REACTOR_VOLUME.massAt(Density.ofLiquidWater());
     @JsonProperty
-    private final Mass minimumWaterMass = kilograms(maximumWaterMass.inKilograms() * REACTOR_MINIMUMSAFEWATERLEVEL
-            .ratio());
+    private final Mass minimumWaterMass = kilograms(maximumWaterMass.inKilograms() * REACTOR_MINIMUMSAFEWATERLEVEL.ratio());
     @JsonProperty
     private FuelPile fuelPile = new FuelPile();
     @JsonProperty
@@ -42,6 +41,7 @@ public class Reactor extends FailableComponent {
     private double boilingPtAtPressure;
     @JsonProperty
     private double neededEnergy;
+    @JsonProperty
     private double deltaSeconds;
 
     /**
@@ -184,6 +184,14 @@ public class Reactor extends FailableComponent {
 
     public Percentage minimumWaterLevel() {
         return REACTOR_MINIMUMSAFEWATERLEVEL;
+    }
+    
+    public Temperature maximumTemperature() {
+        return REACTOR_MAXIMUMTEMPERATURE;
+    }
+    
+    public Pressure maximumPressure() {
+        return REACTOR_MAXIMUMPRESSURE;
     }
     
     public Mass maximumWaterMass() {

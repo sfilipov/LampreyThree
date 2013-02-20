@@ -21,7 +21,6 @@ import lamprey.seprphase3.DynSimulator.PlantModel;
  *
  * @author Marius
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class PhysicalModel implements PlantStatus {
 
     private PlantModel plant;
@@ -195,12 +194,12 @@ public class PhysicalModel implements PlantStatus {
     
     @Override
     public Pressure reactorMaximumPressure() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return plant.reactor().maximumPressure();
     }
 
     @Override
     public Temperature reactorMaximumTemperature() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return plant.reactor().maximumTemperature();
     }
 
     

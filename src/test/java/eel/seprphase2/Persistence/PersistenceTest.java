@@ -21,6 +21,7 @@ import static eel.seprphase2.Utilities.Units.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lamprey.seprphase3.DynSimulator.PlantModel;
 import org.junit.Ignore;
 
 /**
@@ -28,7 +29,7 @@ import org.junit.Ignore;
  * @author David
  */
 public class PersistenceTest {
-
+    private PlantModel plant;
     Persistence persistence;
     PhysicalModel before;
     PhysicalModel after;
@@ -36,7 +37,7 @@ public class PersistenceTest {
     @Before
     public void setUp() {
         persistence = new Persistence();
-        before = new PhysicalModel();
+        before = new PhysicalModel(plant);
     }
 
     @Test
@@ -91,7 +92,7 @@ public class PersistenceTest {
 
     @Test
     public void shouldSerializePhysicalModel() throws JsonProcessingException {
-        String result = persistence.serialize(new PhysicalModel());
+        String result = persistence.serialize(new PhysicalModel(plant));
         assertNotSame("", result);
     }
 

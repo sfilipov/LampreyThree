@@ -52,7 +52,7 @@ public class ReactorTest {
     public void reactorShouldStayInEquilibriumWithLowControlRods() throws GameOverException {
         Reactor instanceOfReactor = new Reactor(percent(0), percent(100),
                                                 kelvin(350), pascals(101325));
-        instanceOfReactor.step();
+        instanceOfReactor.step(1);
         assertEquals(percent(0), instanceOfReactor.controlRodPosition());
         assertEquals(percent(100), instanceOfReactor.waterLevel());
         assertEquals(kelvin(350), instanceOfReactor.temperature());
@@ -63,7 +63,7 @@ public class ReactorTest {
     public void shouldHeatUpWhenControlRodsExtracted() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(350), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertThat(reactor.temperature().inKelvin(), greaterThan(350.0));
     }
 
@@ -71,7 +71,7 @@ public class ReactorTest {
     public void shouldNotHeatBeyondBoilingPoint() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertEquals(373.15, reactor.temperature().inKelvin(), 0.005);
     }
 
@@ -79,7 +79,7 @@ public class ReactorTest {
     public void shouldIncreasePressureAtBoilingPoint() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertThat(reactor.pressure().inPascals(), greaterThan(101325.0));
     }
 
@@ -87,7 +87,7 @@ public class ReactorTest {
     public void shouldSetOutputPressure() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertEquals(reactor.pressure(), reactor.outputPort().pressure);
     }
 
@@ -95,7 +95,7 @@ public class ReactorTest {
     public void shouldSetOutputFlowRate() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertThat(reactor.outputFlowVelocity().inMetresPerSecond(), greaterThan(0.0));
     }
 
@@ -111,7 +111,7 @@ public class ReactorTest {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
 
-        reactor.step();
+        reactor.step(1);
         assertThat(reactor.waterLevel().points(), greaterThan(reactor.minimumWaterLevel().points()));
     }
 
@@ -119,7 +119,7 @@ public class ReactorTest {
     public void WaterLevelShouldDecreaseAfterStep() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(373.15), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertThat(reactor.waterLevel().points(), not(equalTo(100.0)));
 
     }

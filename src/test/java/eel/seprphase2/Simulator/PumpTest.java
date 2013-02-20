@@ -22,7 +22,7 @@ public class PumpTest {
         Port output = new Port();
         input.mass = kilograms(10);
         output.mass = kilograms(0);
-        Pump pump = new Pump(input, output);
+        Pump pump = new Pump();
         pump.setCapacity(kilograms(2));
         pump.step();
         assertEquals(kilograms(2), output.mass);

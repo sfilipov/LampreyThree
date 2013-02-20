@@ -26,7 +26,7 @@ public class TurbineTest {
         Turbine turbine = new Turbine();
         turbine.inputPort().pressure = pascals(101325);
         turbine.outputPort().pressure = pascals(101325);
-        turbine.step();
+        turbine.step(1);
         assertEquals(0, turbine.outputPower(), 0.1);
     }
 
@@ -34,7 +34,7 @@ public class TurbineTest {
     public void someMassGeneratesPower() {
         Turbine turbine = new Turbine();
         turbine.inputPort().mass = kilograms(5);
-        turbine.step();
+        turbine.step(1);
         assertThat(turbine.outputPower(), greaterThan(0.0));
     }
 }

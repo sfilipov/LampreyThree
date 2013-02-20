@@ -8,6 +8,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
  */
 public interface GameManager {
     
+    void initGame();
+    
     String[] listGames();
 
     void loadGame(int gameNumber);

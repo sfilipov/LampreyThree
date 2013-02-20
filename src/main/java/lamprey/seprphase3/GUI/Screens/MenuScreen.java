@@ -3,12 +3,9 @@ package lamprey.seprphase3.GUI.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -25,15 +22,13 @@ public class MenuScreen extends AbstractScreen {
     Texture gamelogoTexture;
     Texture newgameTexture;
     Texture loadgameTexture;
-//    Texture optionsTexture;
-//    Texture highscoresTexture;
+    Texture creditsTexture;
     Texture lampreylogoTexture;
     Image menubgImage;
     Image gamelogoImage;
     HoverButton newgameImage;
     HoverButton loadgameImage;
-//    HoverButton optionsImage;
-//    HoverButton highscoresImage;
+    HoverButton creditsImage;
     Image lampreylogoImage;
     
     boolean isInputShown;
@@ -46,8 +41,7 @@ public class MenuScreen extends AbstractScreen {
         gamelogoTexture    = new Texture(Gdx.files.internal("assets\\menu\\gamelogo.png"));
         newgameTexture     = new Texture(Gdx.files.internal("assets\\menu\\newgame.png"));
         loadgameTexture    = new Texture(Gdx.files.internal("assets\\menu\\loadgame.png"));
-//        optionsTexture     = new Texture(Gdx.files.internal("assets\\menu\\options.png"));
-//        highscoresTexture  = new Texture(Gdx.files.internal("assets\\menu\\highscores.png"));
+        creditsTexture    = new Texture(Gdx.files.internal("assets\\menu\\credits.png"));
         lampreylogoTexture = new Texture(Gdx.files.internal("assets\\menu\\lampreylogo.png"));
         
         nameListener = new OperatorNameInput();
@@ -64,29 +58,25 @@ public class MenuScreen extends AbstractScreen {
         gamelogoImage    = new Image(gamelogoTexture);
         newgameImage     = new HoverButton(newgameTexture, HoverButtonType.Transparent);
         loadgameImage    = new HoverButton(loadgameTexture, HoverButtonType.Transparent);
-//        optionsImage     = new HoverButton(optionsTexture, HoverButtonType.Transparent);
-//        highscoresImage  = new HoverButton(highscoresTexture, HoverButtonType.Transparent);
+        creditsImage     = new HoverButton(creditsTexture, HoverButtonType.Transparent);
         lampreylogoImage = new Image(lampreylogoTexture);
         
         menubgImage.setPosition(0, 0);
-        gamelogoImage.setPosition(272, 333);
-        newgameImage.setPosition(361, 283);
-        loadgameImage.setPosition(349, 241);
-//        optionsImage.setPosition(392, 199);
-//        highscoresImage.setPosition(349, 155);
+        gamelogoImage.setPosition(268, 316);
+        newgameImage.setPosition(361, 261);
+        loadgameImage.setPosition(349, 214);
+        creditsImage.setPosition(397, 173);
         lampreylogoImage.setPosition(436, 0);
         
         newgameImage.addListener(getNewgameListener());
         loadgameImage.addListener(new ClickListener());
-//        optionsImage.addListener(new ClickListener());
-//        highscoresImage.addListener(new ClickListener());
+        creditsImage.addListener(new ClickListener());
         
         stage.addActor(menubgImage);
         stage.addActor(gamelogoImage);
         stage.addActor(newgameImage);
         stage.addActor(loadgameImage);
-//        stage.addActor(optionsImage);
-//        stage.addActor(highscoresImage);
+        stage.addActor(creditsImage);
         stage.addActor(lampreylogoImage);
     }
 
@@ -98,7 +88,6 @@ public class MenuScreen extends AbstractScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-//        drawHovers();
     }
 
     @Override

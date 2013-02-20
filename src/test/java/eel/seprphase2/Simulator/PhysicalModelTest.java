@@ -13,7 +13,7 @@ import lamprey.seprphase3.DynSimulator.PlantModel;
 import static org.hamcrest.Matchers.*;
 
 /**
- *
+ *Tests Physical model and FluidFlowController
  * @author Marius
  */
 public class PhysicalModelTest {
@@ -36,7 +36,23 @@ public class PhysicalModelTest {
         controller.step(100);
         assertThat(model.energyGenerated().inJoules(), greaterThan(0.0));
     }
+    @Test
+    public void getsAndSetsSoftwareFailureTime() {
+        controller.setSoftwareFailureTimeRemaining(20);
+        assertEquals(20, model.getSoftwareFailureTimeRemaining());
+    }
     
+    @Test
+    public void decreasesSoftwareFailureTime() {
+        controller.setSoftwareFailureTimeRemaining(20);
+        try{
+        controller.step(1);
+        }
+        catch(Exception e) {
+            
+        }
+        assertEquals(19, model.getSoftwareFailureTimeRemaining());
+    }
      
     @Test
     public void shouldIncreaseReactorWear() {

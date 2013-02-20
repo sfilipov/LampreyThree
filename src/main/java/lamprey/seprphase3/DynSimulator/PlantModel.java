@@ -4,7 +4,9 @@
  */
 package lamprey.seprphase3.DynSimulator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import eel.seprphase2.Simulator.Condenser;
 import eel.seprphase2.Simulator.HeatSink;
 import eel.seprphase2.Simulator.Pump;
@@ -21,6 +23,7 @@ import java.util.HashMap;
  *
  * @author will
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class PlantModel {
 
     @JsonProperty
@@ -53,7 +56,10 @@ public class PlantModel {
     private ArrayList<BlockableComponent> allBlockable;
     @JsonProperty
     private Energy energyGenerated = joules(0);
+    @JsonProperty
     private String currentWornComponent = "";
+    @JsonProperty
+    private int softwareFailureTimeRemaining = 0;
 
     public PlantModel() {
         instantiateComponents();
@@ -185,8 +191,28 @@ public class PlantModel {
         currentWornComponent = wornComponent;
     }
     
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        if(softwareFailureTimeRemaining == 0) {
+            softwareFailureTimeRemaining = failureTime;
+        }
+    }
+    
+    public int getSoftwareFailureTimeRemaining() {
+        return softwareFailureTimeRemaining;
+    }
+    
+    public void reduceSoftwareFailureTime() {
+        if(softwareFailureTimeRemaining>0) {
+            softwareFailureTimeRemaining--;
+        }
+    }
+    
     public String getCurrentWornComponent() {
         return currentWornComponent;
+    }
+    
+    public int getSoftwareFailureTimeRemaining() {
+        return softwareFailureTimeRemaining;
     }
     
     public void increaseEnergyGenerated(Energy delta) {

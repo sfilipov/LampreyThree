@@ -53,6 +53,7 @@ public class FluidFlowController implements PlantController {
         for (Pump p : plant.pumps().values()) {
             p.step();
         }
+        plant.reduceSoftwareFailureTime();
         plant.increaseEnergyGenerated(joules(plant.turbine().outputPower()));
         //printFlowDebugInfo();
     }
@@ -160,8 +161,9 @@ public class FluidFlowController implements PlantController {
 
     @Override
     public void setSoftwareFailureTimeRemaining(int failureTime) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        plant.setSoftwareFailureTimeRemaining(failureTime);
     }
+    
 
     @Override
     public void wearCondenser() {

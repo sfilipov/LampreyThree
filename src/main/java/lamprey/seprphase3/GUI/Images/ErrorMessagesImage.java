@@ -33,6 +33,7 @@ public class ErrorMessagesImage extends Image {
     private TextureRegion softwareError;
     private TextureRegionDrawable drawable;
     private float delta;
+    private boolean buttonsRemoved;
     
     public ErrorMessagesImage(PlantStatus status, GameplayScreen screen) {
         super();
@@ -52,6 +53,7 @@ public class ErrorMessagesImage extends Image {
         condenser     = split[1][1];
         softwareError = split[1][2];
         delta = 0f;
+        buttonsRemoved = false;
     }
     
     @Override
@@ -59,10 +61,12 @@ public class ErrorMessagesImage extends Image {
         if (status.getSoftwareFailureTimeRemaining() > 0) {
             drawable.setRegion(softwareError);
             screen.removeButtonsListeners();
+            buttonsRemoved = true;
         }
-        else if (status.getSoftwareFailureTimeRemaining() == 0) {
+        else if (buttonsRemoved && status.getSoftwareFailureTimeRemaining() == 0) {
             drawable.setRegion(normal);
             screen.addButtonsListeners();
+            buttonsRemoved = false;
         }
         
         if(status.wornComponent().equals("Condenser") && delta < 3f) {
@@ -88,6 +92,7 @@ public class ErrorMessagesImage extends Image {
         else if(delta > 3f) {
             delta = 0;
         }
+        drawable.setRegion(normal);
         this.setDrawable(drawable);
         super.draw(batch, parentAlpha);
     }

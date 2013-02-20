@@ -19,29 +19,47 @@ import lamprey.seprphase3.GUI.BackyardReactor;
  * @author Simeon
  */
 public class PauseScreen extends AbstractScreen {
-    Texture pauseblurTexture;
-    Texture pausePopupTexture;
-    Image   pauseblurImage;
-    Image   pausePopupImage;
+    private Texture pauseBlurTexture;
+    private Texture pausePausedTexture;
+    private Texture pauseReturnTexture;
+    private Texture pauseSaveTexture;
+    private Texture pauseLoadTexture;
+    private Texture pauseMenuTexture;
+    
+    private Image pauseBlurImage;
+    private Image pausePausedImage;
+    private Image pauseReturnImage;
+    private Image pauseSaveImage;
+    private Image pauseLoadImage;
+    private Image pauseMenuImage;
 
     
     public PauseScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
-        pausePopupTexture = new Texture(Gdx.files.internal("assets\\pause\\pausepopup.png"));
-        pauseblurTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pauseBlurTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pausePausedTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pauseReturnTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pauseSaveTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pauseLoadTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pauseMenuTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
     }
     
     @Override
     public void show() {
         super.show();
-        pauseblurImage    = new Image(pauseblurTexture);
-        pausePopupImage = new Image(pausePopupTexture);
+        pauseBlurImage   = new Image(pauseBlurTexture);
+        pausePausedImage = new Image(pausePausedTexture);
+        pauseReturnImage = new Image(pauseReturnTexture);
+        pauseSaveImage   = new Image(pauseSaveTexture);
+        pauseLoadImage   = new Image(pauseLoadTexture);
+        pauseMenuImage   = new Image(pauseMenuTexture);
 
-        pausePopupImage.setPosition(240, 135);
-        pausePopupImage.addListener(getPopupListener());
-        
-        stage.addActor(pauseblurImage);
-        stage.addActor(pausePopupImage);
+        stage.addActor(pauseBlurImage);
+        stage.addActor(pausePausedImage);
+        stage.addActor(pauseReturnImage);
+        stage.addActor(pauseSaveImage);
+        stage.addActor(pauseLoadImage);
+        stage.addActor(pauseMenuImage);
     }
     
     @Override

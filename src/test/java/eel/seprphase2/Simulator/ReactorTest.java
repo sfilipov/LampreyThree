@@ -124,17 +124,17 @@ public class ReactorTest {
         assertThat(reactor.waterLevel().points(), not(equalTo(100.0)));
 
     }
-    /*
+    
     @Test
     public void ShouldReturnMaxTemp(){
-        Temperature check = kelvin(3000);
+        Temperature check = kelvin(500);
         assertEquals(check.toString(), reactor.maximumTemperature().toString());
     }
     
     @Test
     public void ShouldReturnMaxPressure(){
-        Pressure check = new Pressure(300000);
+        Pressure check = new Pressure(330662500);
         assertEquals(check.toString(), reactor.maximumPressure().toString());
     }
-    */
+    
 }

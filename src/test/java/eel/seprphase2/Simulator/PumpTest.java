@@ -58,7 +58,7 @@ public class PumpTest {
     public void shouldChangeStatus() {
         Port input = new Port();
         Port output = new Port();
-        Pump pump = new Pump(input, output);
+        Pump pump = new Pump();
         pump.setStatus(true);
         assertEquals(pump.getStatus(), true);
     }
@@ -70,7 +70,7 @@ public class PumpTest {
         input.mass = kilograms(2);
         output.mass = kilograms(0);
         input.temperature = kelvin(100);
-        Pump pump = new Pump(input, output);
+        Pump pump = new Pump();
         pump.setStatus(false);
         pump.setCapacity(kilograms(10));
         pump.step();
@@ -84,7 +84,7 @@ public class PumpTest {
         input.mass = kilograms(2);
         output.mass = kilograms(0);
         input.temperature = kelvin(100);
-        Pump pump = new Pump(input, output);
+        Pump pump = new Pump();
         pump.setStatus(true);
         pump.fail();
         pump.setCapacity(kilograms(10));
@@ -99,7 +99,7 @@ public class PumpTest {
         input.mass = kilograms(2);
         output.mass = kilograms(0);
         input.temperature = kelvin(100);
-        Pump pump = new Pump(input, output);
+        Pump pump = new Pump();
         pump.setCapacity(kilograms(10));
         pump.step();
         assertEquals(percent(1), pump.wear());

@@ -86,7 +86,7 @@ public class PhysicalModelTest {
         assertEquals(true, model.getReactorToTurbine());
 
     }
-    */
+    
      
     @Test
     public void shouldSetCondenserBackToNormalFailureState() {
@@ -111,6 +111,7 @@ public class PhysicalModelTest {
         }
         assertFalse(model.failableComponents().get(0).hasFailed());
     }
+    */
 
     @Test(expected = CannotRepairException.class)
     public void shouldNotSetCondenserBackToNormalFailureState() throws CannotRepairException {

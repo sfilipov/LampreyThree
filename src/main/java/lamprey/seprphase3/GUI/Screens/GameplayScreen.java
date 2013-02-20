@@ -209,13 +209,18 @@ public class GameplayScreen extends AbstractScreen {
     
     @Override
     public void render(float delta) {
+        float delay = 0.3f;
+        deltaSum += delta;
+        try {
+            if (deltaSum > delay) {
+                controller.step(delta);
+                deltaSum -= delay;
+            }
+        }
+        catch(GameOverException e) {
+            game.setScreen(game.getGameOverScreen());
+        }
         super.render(delta);
-//        try {
-//            controller.step(delta);
-//        }
-//        catch(GameOverException e) {
-//            game.setScreen(game.getGameOverScreen());
-//        }
     }
     
     @Override

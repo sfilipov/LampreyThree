@@ -58,6 +58,7 @@ public class PlantModel {
     private Energy energyGenerated = joules(0);
     @JsonProperty
     private String currentWornComponent = "";
+    @JsonProperty
     private int softwareFailureTimeRemaining = 0;
 
     public PlantModel() {
@@ -194,6 +195,10 @@ public class PlantModel {
         if(softwareFailureTimeRemaining == 0) {
             softwareFailureTimeRemaining = failureTime;
         }
+    }
+    
+    public int getSoftwareFailureTimeRemaining() {
+        return softwareFailureTimeRemaining;
     }
     
     public void reduceSoftwareFailureTime() {

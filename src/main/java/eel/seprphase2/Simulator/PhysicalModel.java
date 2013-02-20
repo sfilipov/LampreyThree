@@ -189,7 +189,7 @@ public class PhysicalModel implements PlantStatus {
     
     @Override
     public int getSoftwareFailureTimeRemaining() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return plant.getSoftwareFailureTimeRemaining();
     }
     
     @Override

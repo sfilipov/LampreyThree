@@ -6,7 +6,9 @@ package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -36,9 +38,40 @@ public class GameOverScreen extends AbstractScreen {
         gameoverRestart = new Texture(Gdx.files.internal("assets\\gameover\\gameoverRestart.png"));
         gameoverMenu    = new Texture(Gdx.files.internal("assets\\gameover\\gameoverMenu.png"));
         
+
+    }
+    
+    @Override
+    public void show() {
+        super.show();
         bgImage   = new Image(gameoverBg);
         signImage = new Image(gameoverSign);
         restartImage = new HoverButton(gameoverRestart, HoverButtonType.Transparent);
         menuImage    = new HoverButton(gameoverMenu, HoverButtonType.Transparent);
+        
+        signImage.setPosition(338, 257);
+        restartImage.setPosition(391, 188);
+        menuImage.setPosition(367, 149);
+        
+        restartImage.addListener(getRestartListener());
+        menuImage.addListener(getMenuListener());
+    }
+    
+    public ClickListener getRestartListener() {
+        return new ClickListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                //Restart
+                return true;
+            }
+        };
+    }
+    
+    public ClickListener getMenuListener() {
+        return new ClickListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(game.getMenuScreen());
+                return true;
+            }
+        };
     }
 }

@@ -64,9 +64,9 @@ public class CondenserWaterLevelImage extends Image {
         middleImage.setSize(182, 160);
         topImage.setSize(182, 20);
         
-        bottomImage.setColor(1f, 1f, 1f, 0.6f);
-        middleImage.setColor(1f, 1f, 1f, 0.6f);
-        topImage.setColor(1f, 1f, 1f, 0.6f);
+        bottomImage.setColor(1f, 1f, 1f, 0.7f);
+        middleImage.setColor(1f, 1f, 1f, 0.7f);
+        topImage.setColor(1f, 1f, 1f, 0.7f);
         
         stateTime = 1f; //Makes animation in reactor and condenser at different frames
     }

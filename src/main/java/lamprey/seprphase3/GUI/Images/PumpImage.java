@@ -32,6 +32,7 @@ public class PumpImage extends HoverButton {
     private TextureRegionDrawable drawable;
     private float stateTime;
     private boolean isPumping;
+    private boolean hasFailed;
     
     public PumpImage(PlantStatus status, int pumpNumber) {
         super(HoverButtonType.Component);
@@ -57,13 +58,21 @@ public class PumpImage extends HoverButton {
     public void draw (SpriteBatch batch, float parentAlpha) {
         try {
             isPumping = status.getPumpState(pumpNumber);
+            double wear = status.getPumpWear(pumpNumber).points();
+            if ( (100d - wear) < 0.001) {
+                hasFailed = true;
+            }
+            else {
+                hasFailed = false;
+            }
         }
         catch(KeyNotFoundException e) {
             //If a pump doesn't exist, then assume it is pumping and show animation
             isPumping = true;
+            hasFailed = false;
         }
         
-        if (isPumping) {
+        if (isPumping && !hasFailed) {
             stateTime += Gdx.graphics.getDeltaTime();
             frame = animation.getKeyFrame(stateTime, true);
             drawable.setRegion(frame);

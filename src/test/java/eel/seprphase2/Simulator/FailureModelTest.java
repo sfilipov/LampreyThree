@@ -272,24 +272,35 @@ public class FailureModelTest {
 
     @Test
     public void shouldSetReactorToTurbine() {
+        try {
         context.checking(new Expectations() {
             {
-                oneOf(plantController).setReactorToTurbine(true);
+                oneOf(plantController).changePumpState(1,true);
             }
         });
-        model.setReactorToTurbine(true);
+        model.changePumpState(1,true);
         context.assertIsSatisfied();
+        }
+        catch(Exception e) {
+            
+        }
     }
 
     @Test
     public void shouldGetReactorToTurbine() {
+        try {
         context.checking(new Expectations() {
             {
-                allowing(plantStatus).getReactorToTurbine();
+                allowing(plantStatus).getPumpState(1);
                 will(returnValue(false));
             }
         });
-        assertEquals(false, model.getReactorToTurbine());
+        assertEquals(false, model.getPumpState(1));
+        }
+        catch(Exception e) {
+            
+        }
+       
     }
 
     @Test

@@ -23,8 +23,7 @@ public class DynamicViscosityTest {
         Temperature roomTemperature = new Temperature(273.15+25); // 25 C
         Pressure normalPressure = new Pressure(PhysicalConstants.atmosphericPressure);
         Density normalDensity = new Density(); // assumes liquid water
-        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature, 
-                                                          normalPressure, 
+        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature,                                                          
                                                           normalDensity);
         assertEquals(expResult, result.inPascalSeconds(), accuracy);
     }
@@ -35,8 +34,7 @@ public class DynamicViscosityTest {
         Temperature roomTemperature = new Temperature(373.15); // 100 C
         Pressure normalPressure = new Pressure(PhysicalConstants.atmosphericPressure);
         Density normalDensity = new Density(); // assumes liquid water
-        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature, 
-                                                          normalPressure, 
+        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature,                                                            
                                                           normalDensity);
         assertEquals(expResult, result.inPascalSeconds(), accuracy);
     }
@@ -47,8 +45,7 @@ public class DynamicViscosityTest {
         Temperature roomTemperature = new Temperature(373.15); // 100 C
         Pressure normalPressure = new Pressure(PhysicalConstants.atmosphericPressure);
         Density normalDensity = new Density(0.597518);
-        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature, 
-                                                          normalPressure, 
+        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature,                                                           
                                                           normalDensity);
         assertEquals(expResult, result.inPascalSeconds(), accuracy);
     }
@@ -59,8 +56,7 @@ public class DynamicViscosityTest {
         Temperature roomTemperature = new Temperature(811); 
         Pressure normalPressure = new Pressure(3447501);
         Density normalDensity = new Density(56.3896);
-        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature, 
-                                                          normalPressure, 
+        Viscosity result = DynamicViscosity.dynamicViscosity(roomTemperature,                                                           
                                                           normalDensity);
         assertEquals(expResult, result.inPascalSeconds(), accuracy);
     }

@@ -76,14 +76,14 @@ public class FailableComponentTest {
     public void shouldIncreaseWearOfReactorWhenRunning() throws GameOverException {
         Reactor reactor = new Reactor(new Percentage(100), new Percentage(100),
                                       new Temperature(400), new Pressure(101325));
-        reactor.step();
+        reactor.step(1);
         assertThat(reactor.wear().ratio(), greaterThan(0.0));
     }
 
     @Test
     public void shouldIncreaseWearOfTurbineWhenRunning() {
         Turbine turbine = new Turbine();
-        turbine.step();
+        turbine.step(1);
         assertThat(turbine.wear().ratio(), greaterThan(0.0));
     }
 
@@ -95,8 +95,8 @@ public class FailableComponentTest {
         Turbine turbine = new Turbine();
 
         for (int i = 0; i < 150; i++) {
-            reactor.step();
-            turbine.step();
+            reactor.step(1);
+            turbine.step(1);
         }
         assertEquals(percent(100), reactor.wear());
         assertEquals(percent(100), turbine.wear());
@@ -123,13 +123,9 @@ public class FailableComponentTest {
     }
     
     @Test
-    public void shouldIncreasePumpWear() {     
-        
-        Port input = new Port();
-        Port output = new Port();
-        input.mass = kilograms(10);
-        output.mass = kilograms(0);
-        Pump pump = new Pump(input, output);
+    public void shouldIncreasePumpWear() {          
+       
+        Pump pump = new Pump();
         
         Percentage damage = new Percentage(10);
         pump.addWear(damage);

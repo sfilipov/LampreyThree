@@ -1,9 +1,8 @@
 package eel.seprphase2.Simulator;
 
+
 import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
-import eel.seprphase2.Utilities.Pressure;
-import eel.seprphase2.Utilities.Temperature;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static eel.seprphase2.Utilities.Units.*;
@@ -77,7 +76,7 @@ public class PhysicalModelTest {
         assertEquals(true, model.getReactorToTurbine());
 
     }
-     
+     /**
     @Test
     public void shouldSetCondenserBackToNormalFailureState() {
         PhysicalModel model = new PhysicalModel();
@@ -92,8 +91,13 @@ public class PhysicalModelTest {
 
     @Test
     public void shouldSetTurbineBackToNormalFailureState() {
+<<<<<<< HEAD
+        PhysicalModel model = new PhysicalModel();       
+        model.components().get(0).fail();
+=======
         PhysicalModel model = new PhysicalModel();
         model.failableComponents().get(0).fail();
+>>>>>>> dynamic-flow
         try {
             model.repairTurbine();
         } catch (CannotRepairException e) {
@@ -101,6 +105,7 @@ public class PhysicalModelTest {
         }
         assertFalse(model.failableComponents().get(0).hasFailed());
     }
+    **/
 
     @Test(expected = CannotRepairException.class)
     public void shouldNotSetCondenserBackToNormalFailureState() throws CannotRepairException {
@@ -159,8 +164,7 @@ public class PhysicalModelTest {
         assertTrue(model.getPumpStatus(1));
 
     }
-
-    @Test
+     @Test
     public void shouldSetPumpStateToOff() throws CannotControlException, KeyNotFoundException {
         PhysicalModel model = new PhysicalModel();
         assertTrue(model.getPumpStatus(1));
@@ -250,10 +254,20 @@ public class PhysicalModelTest {
         }
     }
     
+<<<<<<< HEAD
     @Test(expected = KeyNotFoundException.class)
     public void shouldRefuseToGiveWearOfInvalidPump() throws KeyNotFoundException {
         PhysicalModel model = new PhysicalModel();
         model.getPumpWear(100);
+=======
+    @Test
+    public void doesReturnHeatsinkToCondenserWear() {
+        PhysicalModel model = new PhysicalModel();   
+        ArrayList<FailableComponent> c = model.failableComponents();
+        Percentage wear = new Percentage(67);
+        c.get(4).addWear(wear); // 4 is reference of heatsinkToCondenser
+        assertEquals(percent(67), model.heatsinkToCondenserWear());
+>>>>>>> dynamic-flow
     }
     
     @Test

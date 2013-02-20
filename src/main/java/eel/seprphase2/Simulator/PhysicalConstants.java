@@ -23,4 +23,11 @@ public class PhysicalConstants {
     
     // in Pa
     public static final double atmosphericPressure = 101325;
+    
+    // no units
+    public static final double ratioOfSpecificHeatsSteam = 1.33;
+    
+    // in g/mol
+    public static final double molarMassOfWater = 18.12;
+
 }

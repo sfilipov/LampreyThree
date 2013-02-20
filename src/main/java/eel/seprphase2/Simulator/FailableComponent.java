@@ -3,6 +3,7 @@ package eel.seprphase2.Simulator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.GameOverException;
 import eel.seprphase2.Utilities.Percentage;
+import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
 
 /**
  * Base Class for all components which can fail.
@@ -19,7 +20,7 @@ import eel.seprphase2.Utilities.Percentage;
  * 
  * @author Marius Dumetrescu
  */
-public abstract class FailableComponent {
+public abstract class FailableComponent extends FlowThroughComponent {
 
     @JsonProperty
     private boolean hasFailed;      //The state of the component

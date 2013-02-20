@@ -10,7 +10,11 @@ import static lamprey.seprphase3.DynSimulator.GameConfig.*;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 
 /**
- * 
+<<<<<<< HEAD
+ * This class holds the variables that define the Condenser component in the program
+=======
+ *
+>>>>>>> dynamic-flow
  * @author Marius
  */
 public class Condenser extends FailableComponent {
@@ -35,6 +39,9 @@ public class Condenser extends FailableComponent {
     public Condenser() {
         initializeVariables();
     }
+    /*
+     * 
+     */
 
     public void step(double seconds) {
         System.out.println("Condenser: ");
@@ -141,11 +148,58 @@ public class Condenser extends FailableComponent {
         waterMass.minus(waterOut);
         try {
             waterLevel = new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms()) * 100);
-
         } catch (Exception e) {
             waterLevel = new Percentage(100);
             //This is over-pressure condition, however will be handeled by failure model and not needed to be done here
         }
+<<<<<<< HEAD
+
+
+        if (hasFailed()) {
+            //Do nothing until the condenser has been repaired
+
+            outputPort.mass = kilograms(0);
+            outputPort.pressure = pascals(101325);
+            buildUp = waterMass;
+
+        } else {
+            outputPort.mass = waterMass;
+            outputPort.temperature = temperature;
+            outputPort.pressure = pressure;
+            stepWear(); 
+        }
+
+
+    }
+
+    /*
+     * @Todo subtract water volume
+     */
+    private Volume calculateSteamVolume() {
+        return maximumWaterMass.volumeAt(Density.ofLiquidWater()).minus(waterMass.volumeAt(Density.ofLiquidWater()));
+    }
+
+    public void calculateNewTemperature(Port in) {
+        /*
+         temperature = kelvin((temperature.inKelvin() * waterMass.inKilograms() + in.temperature.inKelvin() * in.mass
+         .inKilograms()) / (waterMass.inKilograms() + in.mass.inKilograms()));
+         */
+
+
+        /*
+         * 4.19 kJ/kg = c_w of water (specific heat of water)
+         * h_fg = c_w * (t_f - t_0) = enthalpy of water
+         * t_f = steam saturation temperature = 100C
+         * t_0 = reference temperature = 0C
+         * 
+         * m_s*h_fg = mass of steam * enthalpy = thermal energy
+         */
+        temperature = temperature.plus(new Temperature(((4.19 * (in.temperature.inKelvin() - temperature.inKelvin())) /
+                                                        1000) * in.mass.inKilograms()));
+
+
+=======
+>>>>>>> dynamic-flow
     }
     
      // Possibly remove

@@ -12,17 +12,11 @@ import java.io.IOException;
  */
 public interface PlantController {
 
-    /**
-     *
-     * @param extracted
-     */
+
     public void moveControlRods(Percentage extracted);
     
     public void setWornComponent(FailableComponent currentWornComponent);
 
-    /**
-     *
-     */
     public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException;
 
     public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException;
@@ -41,7 +35,5 @@ public interface PlantController {
     
     public void wearCondenser();
 
-    public void setReactorToTurbine(boolean open);
-
-    public void step(int steps) throws GameOverException;
+    public void step(double seconds) throws GameOverException;
 }

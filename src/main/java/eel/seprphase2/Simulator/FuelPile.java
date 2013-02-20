@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import eel.seprphase2.Utilities.Percentage;
-
+import static eel.seprphase2.Utilities.Units.percent;
 /**
  *
  * @author Marius
@@ -32,8 +32,12 @@ public class FuelPile {
      *
      * @return
      */
-    public int output(int seconds) {
-        return (int)(maximumOutput * controlRodPosition.ratio() * seconds + 3000000);
+    public double output(double seconds) {
+        if (!controlRodPosition.equals(percent(0))) {
+            return (double)(maximumOutput * controlRodPosition.ratio() * seconds + 3000000);
+        } else {
+            return 0.0;
+        }
     }
 
     /**

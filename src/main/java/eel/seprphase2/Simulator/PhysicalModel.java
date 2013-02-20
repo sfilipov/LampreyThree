@@ -15,66 +15,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import lamprey.seprphase3.DynSimulator.PlantModel;
 
 /**
  *
  * @author Marius
  */
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@JsonAutoDetect(getterVisibility= JsonAutoDetect.Visibility.NONE, setterVisibility=JsonAutoDetect.Visibility.NONE)
-public class PhysicalModel implements PlantController, PlantStatus {
+public class PhysicalModel implements PlantStatus {
 
     @JsonProperty
-    private Reactor reactor = new Reactor();
-    @JsonProperty
-    private Turbine turbine = new Turbine();
-    @JsonProperty
-    private Condenser condenser = new Condenser();
-    @JsonProperty
-    private Energy energyGenerated = joules(0);
-    @JsonProperty
-    private Connection reactorToTurbine;
-    @JsonProperty
-    private Connection turbineToCondenser;
-    @JsonProperty
-    private Pump condenserToReactor;
-    @JsonProperty
-    private Pump heatsinkToCondenser;
-    @JsonProperty
-    private String username;
-    @JsonProperty
-    private HashMap<Integer, Pump> allPumps;
-    @JsonProperty
-    private HashMap<Integer, Connection> allConnections;
-    @JsonProperty
-    private HeatSink heatSink;
-    private String currentWornComponent = "";
-    @JsonProperty
-    private int softwareFailureTimeRemaining = 0;
-    /**
-     *
-     */
-    public PhysicalModel() {
+    private PlantModel plant;
 
-        heatSink = new HeatSink();
-
-        allPumps = new HashMap<Integer, Pump>();
-        allConnections = new HashMap<Integer, Connection>();
-
-        reactorToTurbine = new Connection(reactor.outputPort(), turbine.inputPort(), 0.05);
-        turbineToCondenser = new Connection(turbine.outputPort(), condenser.inputPort(), 0.05);
-
-
-        condenserToReactor = new Pump(condenser.outputPort(), reactor.inputPort());
-        heatsinkToCondenser = new Pump(heatSink.outputPort(), condenser.coolantInputPort());
-
-
-        allConnections.put(1, reactorToTurbine);
-        allConnections.put(2, turbineToCondenser);
-
-        allPumps.put(1, condenserToReactor);
-        allPumps.put(2, heatsinkToCondenser);
-
+    public PhysicalModel(PlantModel plant) {
+        this.plant = plant;
     }
 
     @Override
@@ -84,7 +38,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
         /*
          * Iterate through all pumps to get their IDs
          */
-        Iterator pumpIterator = allPumps.entrySet().iterator();
+        Iterator pumpIterator = plant.pumps().entrySet().iterator();
         while (pumpIterator.hasNext()) {
             Map.Entry pump = (Map.Entry)pumpIterator.next();
 
@@ -96,21 +50,21 @@ public class PhysicalModel implements PlantController, PlantStatus {
         /*
          * Check if reactor failed
          */
-        if (reactor.hasFailed()) {
+        if (plant.reactor().hasFailed()) {
             out.add("Reactor");
         }
 
         /*
          * Check if turbine failed
          */
-        if (turbine.hasFailed()) {
+        if (plant.turbine().hasFailed()) {
             out.add("Turbine");
         }
 
         /*
          * Check if condenser failed
          */
-        if (condenser.hasFailed()) {
+        if (plant.condenser().hasFailed()) {
             out.add("Condenser");
         }
 
@@ -118,187 +72,67 @@ public class PhysicalModel implements PlantController, PlantStatus {
 
     }
 
-    /**
-     *
-     * @param steps
-     */
-    @Override
-    public void step(int steps) throws GameOverException {
-        for (int i = 0; i < steps; i++) {
-            reactor.step();
-            turbine.step();
-            condenser.step();
-            energyGenerated = joules(energyGenerated.inJoules() + turbine.outputPower());
-            reactorToTurbine.step();
-            turbineToCondenser.step();
-            condenserToReactor.step();
-            heatsinkToCondenser.step();
-            reduceSoftwareFailureTimeRemaining();
-
-        }
-    }
-
-    /**
-     *
-     * @param percent
-     */
-    @Override
-    public void moveControlRods(Percentage percent) {
-        reactor.moveControlRods(percent);
-    }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public Temperature reactorTemperature() {
-        return reactor.temperature();
+        return plant.reactor().temperature();
     }
 
     public Mass reactorMinimumWaterMass() {
-        return reactor.minimumWaterMass();
+        return plant.reactor().minimumWaterMass();
     }
 
     public Mass reactorMaximumWaterMass() {
-        return reactor.maximumWaterMass();
+        return plant.reactor().maximumWaterMass();
     }
 
     @Override
     public Percentage reactorMinimumWaterLevel() {
-        return reactor.minimumWaterLevel();
-    }
-    
-    @Override
-    public Pressure reactorMaximumPressure(){ 
-        return reactor.maximumPressure();
-    }
-    
-    @Override
-    public Temperature reactorMaximumTemperature() {
-        return reactor.maximumTemperature();
+        return plant.reactor().minimumWaterLevel();
     }
 
-    @Override
-    public void wearReactor() {
-        Percentage damage = new Percentage(10);
-        reactor.addWear(damage);
-    }
-    
-    @Override
-    public void wearCondenser() {
-        Percentage damage = new Percentage(10);
-        condenser.addWear(damage);
-    }
-
-    @Override
-    public void failCondenser() {
-        condenser.fail();
-    }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public Energy energyGenerated() {
-        return energyGenerated;
+        return plant.energyGenerated();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Percentage controlRodPosition() {
-        return reactor.controlRodPosition();
+        return plant.reactor().controlRodPosition();
     }
-   
-    /**
-     *
-     * @return
-     */
+
     @Override
     public Pressure reactorPressure() {
-        return reactor.pressure();
+        return plant.reactor().pressure();
     }
 
-    /**
-     *
-     * @return
-     */
     @Override
     public Percentage reactorWaterLevel() {
-        return reactor.waterLevel();
+        return plant.reactor().waterLevel();
     }
-    
-     /**
-     *
-     * @return
-     */
     @Override
     public Percentage reactorWear() {
-        return reactor.wear();
+        return plant.reactor().wear();
     }
 
-    /**
-     *
-     * @param open
-     */
+    @Override
+    public boolean isValveOpen(int valveID) throws KeyNotFoundException {
+        if (plant.valves().containsKey(valveID)) {
+            return plant.valves().get(valveID).getOpen();
+        } else
+        {
+            throw new KeyNotFoundException("No valve with ID (" + valveID + ") exists!");
+        }
+    }
     
     @Override
-    public void setWornComponent(FailableComponent wornComponent) {
-        if(wornComponent == null) {            
-            currentWornComponent = "";           
-        }
-        else {
-            /*
-             * Check if a Valve was worn, if so get its Key.
-             */
-            Iterator pumpIterator = allPumps.entrySet().iterator();
-            while (pumpIterator.hasNext()) {
-                Map.Entry pump = (Map.Entry)pumpIterator.next();
-
-                if (((Pump)pump.getValue()).equals(wornComponent)) {
-                    currentWornComponent = ("Pump " + pump.getKey());                   
-                }
-            }
-
-            /*
-             * Check if the condenser was worn
-             */
-            if (wornComponent instanceof Condenser) {
-                currentWornComponent = ("Condenser");               
-            }
-            /*
-             * Check if the turbine was worn
-             */
-            else if (wornComponent instanceof Turbine) {
-                currentWornComponent = ("Turbine");               
-            }
+    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
+        if (plant.pumps().containsKey(pumpID)) {
+            return plant.pumps().get(pumpID).getStatus();
+        } else
+        {
+            throw new KeyNotFoundException("No pump with ID (" + pumpID + ") exists!");
         }
         
-        
-    }
-    
-    @Override
-    public void setReactorToTurbine(boolean open) {
-        reactorToTurbine.setOpen(open);
-    }
-    
-    /*
-     * This method allows the addition of time to the softwareFailureTimeRemaining
-     * if it isn't 0, it does not allow extra time to be added, this prevents
-     * a continuous softwarefailure time
-     */
-    @Override
-    public void setSoftwareFailureTimeRemaining(int failureTime) {
-        if(softwareFailureTimeRemaining == 0) {
-            softwareFailureTimeRemaining = failureTime;            
-        }
-        else {
-            
-        }             
     }
 
     /**
@@ -306,164 +140,59 @@ public class PhysicalModel implements PlantController, PlantStatus {
      * @return
      */
     @Override
-    public boolean getReactorToTurbine() {
-        return reactorToTurbine.getOpen();
-    }
-
-    @Override
-    public ArrayList<FailableComponent> components() {
+    public ArrayList<FailableComponent> failableComponents() {
         ArrayList<FailableComponent> c = new ArrayList<FailableComponent>();
-        c.add(0, turbine);
-        c.add(1, reactor);
-        c.add(2, condenser);
-        c.add(3, condenserToReactor);
-        c.add(4, heatsinkToCondenser);
+        c.add(0, plant.turbine());
+        c.add(1, plant.reactor());
+        c.add(2, plant.condenser());
+        c.addAll(plant.pumps().values());
         return c;
     }
 
     @Override
-    public void changeValveState(int valveNumber, boolean isOpen) throws KeyNotFoundException {
-        if (allConnections.containsKey(valveNumber)) {
-            allConnections.get(valveNumber).setOpen(isOpen);
-        } else {
-            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
-        }
-    }
-
-    @Override
-    public void changePumpState(int pumpNumber, boolean isPumping) throws CannotControlException, KeyNotFoundException {
-        /*
-         * If pump number given is higher than the amount of available pumps it throws an exception
-         */
-        if (!allPumps.containsKey(pumpNumber)) {
-            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
-        }
-        /*
-         * If the pump requested has failed, it cananot have its state changed so throws an exception
-         */
-
-        if (allPumps.get(pumpNumber).hasFailed()) {
-            throw new CannotControlException("Pump " + pumpNumber + " is failed");
-        }
-
-        allPumps.get(pumpNumber).setStatus(isPumping);
-    }
-
-    @Override
-    public void repairPump(int pumpNumber) throws KeyNotFoundException, CannotRepairException {
-        if (allPumps.containsKey(pumpNumber)) {
-            allPumps.get(pumpNumber).repair();
-
-
-            //These shouldn't need to be changed
-            //allPumps.get(pumpNumber).setStatus(true);
-            //allPumps.get(pumpNumber).setCapacity(kilograms(3));
-            //allPumps.get(pumpNumber).stepWear(new Percentage(0));
-
-        } else {
-            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
-        }
-    }
-
-    @Override
-    public void repairCondenser() throws CannotRepairException {
-        condenser.repair();
-    }
-
-    @Override
-    public void repairTurbine() throws CannotRepairException {
-        turbine.repair();
-    }
-    
-    @Override
-    public Percentage turbineWear(){
-        return turbine.wear();
-    }
-    
-    @Override
-    public double getOutputPower() {
-        return turbine.outputPower();
+    public Percentage turbineWear() {
+        return plant.turbine().wear();
     }
 
     @Override
     public Temperature condenserTemperature() {
-        return condenser.getTemperature();
+        return plant.condenser().getTemperature();
     }
-    
-    @Override
-    public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException  {
-         /*
-         * If the pump requested does not exist, it will throw an exception
-         */
-        if (!allPumps.containsKey(pumpNumber)) {
-            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
-        }
-        return allPumps.get(pumpNumber).getStatus();
-    }
-    
-    @Override
-    public int getSoftwareFailureTimeRemaining() {
-        return softwareFailureTimeRemaining;
-    }
-    
-    @Override
-    public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
-         /*
-         * If the valve requested does not exist, it will throw an exception
-         */
-        if (allConnections.containsKey(valveNumber)) {
-            return allConnections.get(valveNumber).getOpen();
-        } else {
-            throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
-        }
-    }
-    
 
     @Override
     public Pressure condenserPressure() {
-        return condenser.getPressure();
+        return plant.condenser().getPressure();
     }
 
     @Override
     public Percentage condenserWaterLevel() {
-        return condenser.getWaterLevel();
+        return plant.condenser().getWaterLevel();
     }
-    
+
     @Override
     public Percentage condenserWear() {
-        return condenser.wear();
+        return plant.condenser().wear();
     }
     
     @Override
     public String wornComponent() {
-        return currentWornComponent;
+        return plant.getCurrentWornComponent();
     }
     
     @Override
-    public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
-        /*
-         * If the pump requested does not exist, it will throw an exception
-         */
-        
-        if (!allPumps.containsKey(pumpNumber)) {
-            throw new KeyNotFoundException("Pump " + pumpNumber + " does not exist");
+    public Percentage pumpWear(int pumpID) throws KeyNotFoundException {
+        if (plant.pumps().containsKey(pumpID)) {
+            return plant.pumps().get(pumpID).wear();
+        } else
+        {
+            throw new KeyNotFoundException("No pump with ID (" + pumpID + ") exists!");
         }
-        return allPumps.get(pumpNumber).wear();
     }
 
     @Override
     public boolean turbineHasFailed() {
-        return turbine.hasFailed();
+        return plant.turbine().hasFailed();
     }
-        
-    public boolean getPumpStatus(int pumpNumber) {
-        return allPumps.get(pumpNumber).getStatus();
-    }
-    
-    private void reduceSoftwareFailureTimeRemaining() {
-        if(softwareFailureTimeRemaining > 0) {
-            softwareFailureTimeRemaining = softwareFailureTimeRemaining - 1;
-        }           
-    }
-    
+
+   
 }

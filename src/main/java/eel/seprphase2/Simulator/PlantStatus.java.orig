@@ -58,6 +58,7 @@ public interface PlantStatus {
      * @return
      */
     
+<<<<<<< HEAD
     
     
     public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException;
@@ -65,8 +66,13 @@ public interface PlantStatus {
     public Boolean getValveState(int valveNumber) throws KeyNotFoundException;
                                 
     public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException;
+=======
+    public Percentage pumpWear(int pumpID) throws KeyNotFoundException;
     
-    public boolean getReactorToTurbine();
+    public boolean isValveOpen(int valveID) throws KeyNotFoundException;
+>>>>>>> dynamic-flow
+    
+    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException;
     
     public int getSoftwareFailureTimeRemaining();
     

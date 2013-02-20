@@ -21,11 +21,19 @@ import static lamprey.seprphase3.DynSimulator.GameConfig.*;
  */
 public class Reactor extends FailableComponent {
 
+<<<<<<< HEAD
+    private final Mass maximumWaterMass = kilograms(1000);
+    private final Mass minimumWaterMass = kilograms(800);
+    private final Temperature maximumTemperature = kelvin(3000);
+    private final Pressure maximumPressure = new Pressure(30662500);
+    private final Volume reactorVolume = cubicMetres(2);
+=======
     @JsonProperty
     private final Mass maximumWaterMass = REACTOR_VOLUME.massAt(Density.ofLiquidWater());
     @JsonProperty
     private final Mass minimumWaterMass = kilograms(maximumWaterMass.inKilograms() * REACTOR_MINIMUMSAFEWATERLEVEL
             .ratio());
+>>>>>>> dynamic-flow
     @JsonProperty
     private FuelPile fuelPile = new FuelPile();
     @JsonProperty
@@ -208,6 +216,14 @@ public class Reactor extends FailableComponent {
      */
     public Percentage waterLevel() {
         return new Percentage((waterMass.inKilograms() / maximumWaterMass.inKilograms()) * 100);
+    }
+    
+    public Pressure maximumPressure() {
+        return maximumPressure;
+    }
+    
+    public Temperature maximumTemperature() {
+        return maximumTemperature;
     }
 
     public Temperature temperature() {

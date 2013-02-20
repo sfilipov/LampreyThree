@@ -42,7 +42,7 @@ public class CondenserTest {
         Temperature result = instance.getTemperature();
         assertEquals(expResult, result);
         for (int i = 0; i < 100; i++) {
-            instance.step();
+            instance.step(1);
             assertEquals(expResult, result);
         }
     }
@@ -53,10 +53,10 @@ public class CondenserTest {
         instance.inputPort().pressure = new Pressure(201325);
         instance.inputPort().mass = kilograms(5);
         instance.inputPort().temperature = kelvin(373.15);
-        instance.step();
+        instance.step(1);
         double previous = instance.getTemperature().inKelvin();
         for (int i = 0; i < 100; i++) {
-            instance.step();
+            instance.step(1);
             assertTrue(instance.getTemperature().inKelvin() > previous);
             previous = instance.getTemperature().inKelvin();
         }
@@ -67,10 +67,10 @@ public class CondenserTest {
         Condenser instance = new Condenser();
         instance.coolantInputPort().mass = kilograms(5);
         instance.coolantInputPort().temperature = kelvin(285.15);
-        instance.step();
+        instance.step(1);
         double previous = instance.getTemperature().inKelvin();
         for (int i = 0; i < 100; i++) {
-            instance.step();
+            instance.step(1);
             assertTrue(instance.getTemperature().inKelvin() < previous);
             previous = instance.getTemperature().inKelvin();
         }
@@ -97,7 +97,7 @@ public class CondenserTest {
         Condenser instance = new Condenser();
         instance.inputPort().pressure = new Pressure(201325);
         instance.inputPort().mass = kilograms(5);
-        instance.step();
+        instance.step(1);
         Percentage p = instance.getWaterLevel();
         assertNotSame(instance.getWaterLevel(), new Percentage(0));
 
@@ -107,7 +107,7 @@ public class CondenserTest {
     public void shouldNotIncreaseWaterMassWithNoMoreSteam() {
 
         Condenser instance = new Condenser();
-        instance.step();
+        instance.step(1);
         Percentage p = instance.getWaterLevel();
         assertTrue(instance.getWaterLevel().equals(new Percentage(0)));
     }
@@ -126,7 +126,7 @@ public class CondenserTest {
     @Test
     public void shouldNotPutWaterToOutputPortWithNoSteam() {
         Condenser instance = new Condenser();
-        instance.step();
+        instance.step(1);
 
         assertEquals(instance.outputPort().mass, kilograms(0));
 
@@ -138,7 +138,7 @@ public class CondenserTest {
 
         double previous = instance.wear().ratio();
         for (int i = 0; i < 100; i++) {
-            instance.step();
+            instance.step(1);
             assertTrue(instance.wear().ratio() > previous);
             previous = instance.wear().ratio();
         }
@@ -148,9 +148,9 @@ public class CondenserTest {
     @Test
     public void shouldIncreaseWaterMassWithWaterOnInputPort() {
         Condenser instance = new Condenser();
-        instance.step();
+        instance.step(1));
         instance.inputPort().mass = kilograms(10);
-        instance.step();
+        instance.step(1);
         assertTrue(instance.getWaterLevel().ratio() > 0);
 
     }

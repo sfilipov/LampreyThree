@@ -165,7 +165,8 @@ public class FluidFlowController implements PlantController {
 
     @Override
     public void wearCondenser() {
-        plant.condenser().wear();
+        Percentage damage = new Percentage(10);
+        plant.condenser().addWear(damage);
     }
 
     @Override

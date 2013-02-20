@@ -63,9 +63,9 @@ public class PauseScreen extends AbstractScreen {
         pauseMenuImage.setPosition(367, 145);
         
         pauseReturnImage.addListener(getReturnListener());
-        pauseSaveImage.addListener(new ClickListener());
-        pauseLoadImage.addListener(new ClickListener());
-        pauseMenuImage.addListener(new ClickListener());
+        pauseSaveImage.addListener(getSaveListener());
+        pauseLoadImage.addListener(getLoadListener());
+        pauseMenuImage.addListener(getMenuListener());
 
         stage.addActor(pauseBlurImage);
         stage.addActor(pausePausedImage);
@@ -89,6 +89,34 @@ public class PauseScreen extends AbstractScreen {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(game.getGameplayScreen());
+                return true;
+            }
+        };
+    }
+    
+    public ClickListener getSaveListener() {
+        return new ClickListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                game.setScreen(game.getGameplayScreen());
+                return true;
+            }
+        };
+    }
+    
+    public ClickListener getLoadListener() {
+        return new ClickListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+//                game.setScreen(game.getGameplayScreen());
+                return true;
+            }
+        };
+    }
+    
+    public ClickListener getMenuListener() {
+        return new ClickListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                //Reset game
+                game.setScreen(game.getMenuScreen());
                 return true;
             }
         };

@@ -36,7 +36,9 @@ public class PiggyBank extends Image {
         super.draw(batch, parentAlpha);
         textDrawX = this.getX() + fontX;
         textDrawY = this.getY() + fontY;
-        font.draw(batch, status.energyGenerated().toString(), textDrawX, textDrawY);
+        
+        Double energyGenerated = status.energyGenerated().inKJoules();
+        font.draw(batch, "£" + energyGenerated.toString(), textDrawX, textDrawY);
     }
     
     public void setFontPosition(float fontX, float fontY) {

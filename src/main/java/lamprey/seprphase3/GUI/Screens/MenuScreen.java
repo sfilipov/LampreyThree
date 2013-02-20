@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
+import java.io.IOException;
 import lamprey.seprphase3.GUI.BackyardReactor;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
@@ -69,7 +70,7 @@ public class MenuScreen extends AbstractScreen {
         lampreylogoImage.setPosition(436, 0);
         
         newgameImage.addListener(getNewgameListener());
-        loadgameImage.addListener(new ClickListener());
+        loadgameImage.addListener(getLoadListener());
         creditsImage.addListener(getCreditsListener());
         
         stage.addActor(menubgImage);
@@ -107,6 +108,23 @@ public class MenuScreen extends AbstractScreen {
                 if (!isInputShown) {
                     Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
                 }
+            }
+        };
+    }
+        
+    public ClickListener getLoadListener() {
+        return new ClickListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                try {
+                    manager.loadGame();
+                    game.setScreen(game.getGameplayScreen());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
             }
         };
     }

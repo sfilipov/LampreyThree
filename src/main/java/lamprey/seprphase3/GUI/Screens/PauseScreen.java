@@ -116,7 +116,15 @@ public class PauseScreen extends AbstractScreen {
     public ClickListener getLoadListener() {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                game.setScreen(game.getGameplayScreen());
+                try {
+                    manager.loadGame();
+                    game.setScreen(game.getGameplayScreen());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return true;
             }
         };

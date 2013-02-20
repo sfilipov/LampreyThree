@@ -54,6 +54,7 @@ public class PlantModel {
     @JsonProperty
     private Energy energyGenerated = joules(0);
     private String currentWornComponent = "";
+    private int softwareFailureTimeRemaining = 0;
 
     public PlantModel() {
         instantiateComponents();
@@ -183,6 +184,18 @@ public class PlantModel {
     
     public void setCurrentWornComponent(String wornComponent) {
         currentWornComponent = wornComponent;
+    }
+    
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        if(softwareFailureTimeRemaining == 0) {
+            softwareFailureTimeRemaining = failureTime;
+        }
+    }
+    
+    public void reduceSoftwareFailureTime() {
+        if(softwareFailureTimeRemaining>0) {
+            softwareFailureTimeRemaining--;
+        }
     }
     
     public String getCurrentWornComponent() {

@@ -37,6 +37,8 @@ public interface PlantController {
 
     public void wearReactor();
     
+    public void setSoftwareFailureTimeRemaining(int failureTime);
+    
     public void wearCondenser();
 
     public void setReactorToTurbine(boolean open);

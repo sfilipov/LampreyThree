@@ -49,6 +49,8 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @JsonProperty
     private HeatSink heatSink;
     private String currentWornComponent = "";
+    @JsonProperty
+    private int softwareFailureTimeRemaining = 0;
     /**
      *
      */
@@ -131,6 +133,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
             turbineToCondenser.step();
             condenserToReactor.step();
             heatsinkToCondenser.step();
+            reduceSoftwareFailureTimeRemaining();
 
         }
     }
@@ -210,7 +213,7 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public Percentage controlRodPosition() {
         return reactor.controlRodPosition();
     }
-
+   
     /**
      *
      * @return
@@ -281,6 +284,21 @@ public class PhysicalModel implements PlantController, PlantStatus {
     @Override
     public void setReactorToTurbine(boolean open) {
         reactorToTurbine.setOpen(open);
+    }
+    
+    /*
+     * This method allows the addition of time to the softwareFailureTimeRemaining
+     * if it isn't 0, it does not allow extra time to be added, this prevents
+     * a continuous softwarefailure time
+     */
+    @Override
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        if(softwareFailureTimeRemaining == 0) {
+            softwareFailureTimeRemaining = failureTime;            
+        }
+        else {
+            
+        }             
     }
 
     /**
@@ -384,6 +402,11 @@ public class PhysicalModel implements PlantController, PlantStatus {
     }
     
     @Override
+    public int getSoftwareFailureTimeRemaining() {
+        return softwareFailureTimeRemaining;
+    }
+    
+    @Override
     public Boolean getValveState(int valveNumber) throws KeyNotFoundException {
          /*
          * If the valve requested does not exist, it will throw an exception
@@ -432,8 +455,15 @@ public class PhysicalModel implements PlantController, PlantStatus {
     public boolean turbineHasFailed() {
         return turbine.hasFailed();
     }
-    
+        
     public boolean getPumpStatus(int pumpNumber) {
         return allPumps.get(pumpNumber).getStatus();
     }
+    
+    private void reduceSoftwareFailureTimeRemaining() {
+        if(softwareFailureTimeRemaining > 0) {
+            softwareFailureTimeRemaining = softwareFailureTimeRemaining - 1;
+        }           
+    }
+    
 }

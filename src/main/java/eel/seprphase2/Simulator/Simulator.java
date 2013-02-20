@@ -165,6 +165,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
     
     @Override
+    public int getSoftwareFailureTimeRemaining() {
+        return failureModel.getSoftwareFailureTimeRemaining();
+    }
+    
+    @Override
     public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
         return failureModel.getPumpWear(pumpNumber);
     }
@@ -172,6 +177,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     @Override
     public void setReactorToTurbine(boolean open) {
         failureModel.setReactorToTurbine(open);
+    }
+    
+    @Override
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        failureModel.setSoftwareFailureTimeRemaining(failureTime);
     }
 
     @Override

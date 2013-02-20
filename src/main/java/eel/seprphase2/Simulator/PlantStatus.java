@@ -68,6 +68,8 @@ public interface PlantStatus {
     
     public boolean getReactorToTurbine();
     
+    public int getSoftwareFailureTimeRemaining();
+    
     public Percentage turbineWear();
     
     public String wornComponent();

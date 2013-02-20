@@ -37,6 +37,8 @@ public class FailureModel implements PlantController, PlantStatus {
     PlantStatus status;
     private Random failChance = new Random();
     private final Pressure condenserMaxPressure = new Pressure(30662500);
+    private final int lengthOfSoftwareFailures = 25;
+    private final Percentage wearToDamagedComponents = new Percentage(20);
 
     private FailureModel() {
     }
@@ -64,6 +66,7 @@ public class FailureModel implements PlantController, PlantStatus {
         checkCondenserPressure();
         failStateCheck(); // Requires a third check, because randomWearCheck may have cause a component to reach 100% wear
         checkTurbineFailure();
+        checkForSoftwareFailure();
     }
 
     /**
@@ -103,9 +106,8 @@ public class FailureModel implements PlantController, PlantStatus {
         //If more than one component has been selected to be worn, only of these is selected randomly from the array
         if(faults > 0) {
             int selection = failChance.nextInt(faults);
-            FailableComponent failedComponent = wornComponents.get(selection);
-            Percentage damage = new Percentage(20);
-            failedComponent.addWear(damage);
+            FailableComponent failedComponent = wornComponents.get(selection);            
+            failedComponent.addWear(wearToDamagedComponents );
             // The current wornComponent is set to the one that has just received wear
             setWornComponent(failedComponent);
 	}
@@ -114,6 +116,23 @@ public class FailureModel implements PlantController, PlantStatus {
             setWornComponent(null);
         }
     }  
+    /*
+     * This method checks if there is a software failure, if there is it sets softwareFailuretimeRemaining to a number,
+     * this number is decremented each time step
+     * It cannot run if softwareFailureTimeRemaining is above 0, as this means there is an existing software failure, and we
+     * do not want two happening at once, making one massive failure.
+     */
+    
+    public void checkForSoftwareFailure() {
+        if(status.getSoftwareFailureTimeRemaining() == 0) {
+            //Makes a new random number from 0-1000
+            int chanceOfFailure = failChance.nextInt(1000);
+            //Check if it is above 990 (1% chance to fail per time step)
+            if (chanceOfFailure>990) {
+                controller.setSoftwareFailureTimeRemaining(lengthOfSoftwareFailures);
+            }
+        }
+    }
         
    
     @Override
@@ -191,6 +210,11 @@ public class FailureModel implements PlantController, PlantStatus {
         return status.turbineWear();
     }
     
+    @Override
+    public int getSoftwareFailureTimeRemaining() {
+        return status.getSoftwareFailureTimeRemaining();
+    }
+    
     @Override 
     public Percentage reactorWear() {
         return status.reactorWear();
@@ -259,6 +283,11 @@ public class FailureModel implements PlantController, PlantStatus {
     @Override
     public void failCondenser() {
         controller.failCondenser();
+    }
+    
+    @Override
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        controller.setSoftwareFailureTimeRemaining(failureTime);
     }
     
     @Override

@@ -221,7 +221,7 @@ public class Reactor extends FailableComponent {
     }
 
     private Mass getMassComingInOverTime(double seconds) {
-        return this.input.outputPort((FlowThroughComponent)this).flowRate.massFlowForTime(seconds);
+        return this.input.outputPort(this).flownThroughInTime(seconds);
     }
 
     private Mass massOfSteamLeavingOverTime(double seconds) {

@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import eel.seprphase2.Simulator.KeyNotFoundException;
 import eel.seprphase2.Simulator.PlantStatus;
@@ -19,15 +20,16 @@ import eel.seprphase2.Utilities.Energy;
  */
 public class InformationPanels extends Image {
     private final static Texture texture = new Texture(Gdx.files.internal("assets\\game\\infopanels.png"));
-    PlantStatus status;
+    private PlantStatus status;
     private BitmapFont font;
+    private FreeTypeFontGenerator generator;
 
     
     public InformationPanels(PlantStatus status) {
         super(texture);
         this.status = status;
-        font = new BitmapFont();
-        font.setScale(0.8f);
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arial.ttf"));
+        font = generator.generateFont(12);
     }
     
     @Override

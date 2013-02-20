@@ -4,12 +4,13 @@
  */
 package lamprey.seprphase3.GUI.Images;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import eel.seprphase2.Simulator.PlantStatus;
-
 /**
  * PiggyBank provides functionality to write text on top of an Image using BitmapFonts  
  * 
@@ -22,10 +23,13 @@ public class PiggyBank extends Image {
     private float fontY;
     private float textDrawX;
     private float textDrawY;
+    private FreeTypeFontGenerator generator;
     
     public PiggyBank(Texture texture, PlantStatus status) {
         super(texture);
         this.status = status;
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arial.ttf"));
+        font = generator.generateFont(30);
         font = new BitmapFont();
         fontX = 45f;
         fontY = 50f;

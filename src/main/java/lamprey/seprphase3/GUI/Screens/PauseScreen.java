@@ -7,12 +7,14 @@ package lamprey.seprphase3.GUI.Screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
+import lamprey.seprphase3.GUI.Images.HoverButton;
+import lamprey.seprphase3.GUI.Images.HoverButtonType;
 
 /**
  *
@@ -22,26 +24,26 @@ public class PauseScreen extends AbstractScreen {
     private Texture pauseBlurTexture;
     private Texture pausePausedTexture;
     private Texture pauseReturnTexture;
-    private Texture pauseSaveTexture;
+//    private Texture pauseSaveTexture;
     private Texture pauseLoadTexture;
     private Texture pauseMenuTexture;
     
     private Image pauseBlurImage;
     private Image pausePausedImage;
-    private Image pauseReturnImage;
-    private Image pauseSaveImage;
-    private Image pauseLoadImage;
-    private Image pauseMenuImage;
+    private HoverButton pauseReturnImage;
+//    private HoverButton pauseSaveImage;
+    private HoverButton pauseLoadImage;
+    private HoverButton pauseMenuImage;
 
     
     public PauseScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
-        pauseBlurTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
-        pausePausedTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
-        pauseReturnTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
-        pauseSaveTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
-        pauseLoadTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
-        pauseMenuTexture = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pauseBlurTexture   = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
+        pausePausedTexture = new Texture(Gdx.files.internal("assets\\pause\\pause_PAUSED.png"));
+        pauseReturnTexture = new Texture(Gdx.files.internal("assets\\pause\\pause_RETURN.png"));
+//        pauseSaveTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_SAVE.png"));
+        pauseLoadTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_LOAD.png"));
+        pauseMenuTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_MENU.png"));
     }
     
     @Override
@@ -49,15 +51,24 @@ public class PauseScreen extends AbstractScreen {
         super.show();
         pauseBlurImage   = new Image(pauseBlurTexture);
         pausePausedImage = new Image(pausePausedTexture);
-        pauseReturnImage = new Image(pauseReturnTexture);
-        pauseSaveImage   = new Image(pauseSaveTexture);
-        pauseLoadImage   = new Image(pauseLoadTexture);
-        pauseMenuImage   = new Image(pauseMenuTexture);
+        pauseReturnImage = new HoverButton(pauseReturnTexture, HoverButtonType.Transparent);
+//        pauseSaveImage   = new HoverButton(pauseSaveTexture, HoverButtonType.Transparent);
+        pauseLoadImage   = new HoverButton(pauseLoadTexture, HoverButtonType.Transparent);
+        pauseMenuImage   = new HoverButton(pauseMenuTexture, HoverButtonType.Transparent);
+        
+        pausePausedImage.setPosition(367, 322);
+        pauseReturnImage.setPosition(399, 248);
+        pauseReturnImage.setPosition(399, 248);
+        
+        pauseReturnImage.addListener(getReturnListener());
+//        pauseSaveImage.addListener(new ClickListener());
+        pauseLoadImage.addListener(new ClickListener());
+        pauseMenuImage.addListener(new ClickListener());
 
         stage.addActor(pauseBlurImage);
         stage.addActor(pausePausedImage);
         stage.addActor(pauseReturnImage);
-        stage.addActor(pauseSaveImage);
+//        stage.addActor(pauseSaveImage);
         stage.addActor(pauseLoadImage);
         stage.addActor(pauseMenuImage);
     }
@@ -72,14 +83,11 @@ public class PauseScreen extends AbstractScreen {
         stage.clear();
     }
     
-    public InputListener getPopupListener() {
-        return new InputListener() {
+    public ClickListener getReturnListener() {
+        return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-            
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 game.setScreen(game.getGameplayScreen());
+                return true;
             }
         };
     }

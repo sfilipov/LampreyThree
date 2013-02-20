@@ -190,6 +190,6 @@ public class PlantModel {
     }
     
     public void increaseEnergyGenerated(Energy delta) {
-        energyGenerated.plus(delta);
+        energyGenerated = energyGenerated.plus(delta);
     }
 }

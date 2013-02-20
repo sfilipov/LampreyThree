@@ -19,14 +19,15 @@ import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Percentage;
 import eel.seprphase2.Utilities.Pressure;
 import static eel.seprphase2.Utilities.Units.*;
+import eel.seprphase2.Utilities.Velocity;
 import static lamprey.seprphase3.Utilities.Units.*;
-import lamprey.seprphase3.DynSimulator.FlowEquations;
 import static lamprey.seprphase3.DynSimulator.GameConfig.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import lamprey.seprphase3.Extra.Area;
 import lamprey.seprphase3.Utilities.MassFlowRate;
 
 /**
@@ -49,10 +50,10 @@ public class FluidFlowController implements PlantController {
         plant.reactor().step(seconds);
         plant.turbine().step(seconds);
         plant.condenser().step(seconds);
-        plant.increaseEnergyGenerated(joules(plant.turbine().outputPower()));
         for (Pump p : plant.pumps().values()) {
             p.step();
         }
+        plant.increaseEnergyGenerated(joules(plant.turbine().outputPower()));
         //printFlowDebugInfo();
     }
 
@@ -390,7 +391,9 @@ public class FluidFlowController implements PlantController {
         Reactor reactor = this.plant.reactor();
         Condenser condenser = this.plant.condenser();
         Pressure pressureDiff = reactor.pressure().minus(condenser.getPressure());
-        MassFlowRate flowOut = FlowEquations.flowRateFromPressure(pressureDiff);
+        Velocity steamVelocity = FlowEquations.velocityFromPressureDiff(pressureDiff);
+        MassFlowRate flowOut = FlowEquations.flowRateFromDensityVelocityArea(reactor.steamDensity(), steamVelocity, new Area(0.05));
+        System.out.println("Full flow out: " + flowOut);
         return (flowOut.inKilogramsPerSecond() < 0) ? kilogramsPerSecond(0) : flowOut;
     }
 
@@ -487,11 +490,15 @@ public class FluidFlowController implements PlantController {
      */
     private void propagateFlowFromPumpsToCondenser() {
         Condenser condenser = this.plant.condenser();
-        // Iterate through all pumps and start tracking back through the system
-        for (Pump p : this.plant.pumps().values()) {
-            // If the pump is broken, move onto the next one.
-            if (!(p.wear().points() == 100) && p.input != null) {
-                increaseCondenserFlowFromPump(p);
+        // Hacky check to make the condenser not run dry :P
+        // (You'll probably have died by then anyway ;D)
+        if (condenser.getWaterMass().inKilograms() > 5) {
+            // Iterate through all pumps and start tracking back through the system
+            for (Pump p : this.plant.pumps().values()) {
+                // If the pump is broken, move onto the next one.
+                if (!(p.wear().points() == 100) && p.input != null) {
+                    increaseCondenserFlowFromPump(p);
+                }
             }
         }
     }
@@ -509,7 +516,7 @@ public class FluidFlowController implements PlantController {
         // to the flowOut rate of the condenser.
         if (isPathTo(p, condenser, false)) {
             MassFlowRate condenserFlowOut = condenser.outputPort(null).flowRate;
-            condenser.outputPort(null).flowRate = condenserFlowOut.plus(FlowRateInducedByPumps);
+            condenser.outputPort(null).flowRate = condenserFlowOut.plus(PUMP_INDUCEDFLOWRATE);
         }
     }
 

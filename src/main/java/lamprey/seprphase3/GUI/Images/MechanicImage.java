@@ -122,7 +122,7 @@ public class MechanicImage extends Image {
         deltaMovement  += delta;
         deltaRepairing += delta;
         
-        if (currentlyRepairing != CurrentlyRepairing.None && !moving && deltaRepairing > 0.33) {
+        if (currentlyRepairing != CurrentlyRepairing.None && !moving && deltaRepairing > 0.5f) {
             try {
                 if (currentlyRepairing == CurrentlyRepairing.Condenser) {
                     controller.repairCondenser();
@@ -143,7 +143,10 @@ public class MechanicImage extends Image {
             catch(KeyNotFoundException e) {
             }
 
-            deltaRepairing -= 0.33;
+            deltaRepairing -= 0.5f;
+        }
+        else if (currentlyRepairing == CurrentlyRepairing.None) {
+            deltaRepairing = 0;
         }
 
         

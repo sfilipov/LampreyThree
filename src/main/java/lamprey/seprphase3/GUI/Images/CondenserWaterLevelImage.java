@@ -18,8 +18,8 @@ import eel.seprphase2.Simulator.PlantStatus;
  * @author Simeon
  */
 public class CondenserWaterLevelImage extends Image {
-    private final static Texture bottom   = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwaterbottom.png"));
-    private final static Texture middle   = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwatermiddle.png"));
+    private final static Texture bottom   = new Texture(Gdx.files.internal("assets\\game\\water\\condenserwaterbottom.png"));
+    private final static Texture middle   = new Texture(Gdx.files.internal("assets\\game\\water\\condenserwatermiddle.png"));
     private final static Texture topSheet = new Texture(Gdx.files.internal("assets\\game\\water\\waterspritesheet.png"));
     private final static Texture glass    = new Texture(Gdx.files.internal("assets\\game\\water\\condenserglass.png"));
     private final static float BASE_Y = 150;
@@ -60,12 +60,12 @@ public class CondenserWaterLevelImage extends Image {
         }
         animation = new Animation(0.033f, topFrames);
         
-        bottomImage.setPosition(562, 131);
+        bottomImage.setPosition(562, 133);
         middleImage.setPosition(565, BASE_Y);
         glassImage.setPosition(563, 137);
         
         bottomImage.setSize(190, 27);
-        middleImage.setSize(182, 160);
+        middleImage.setSize(182, 159);
         topImage.setSize(182, 20);
         
         bottomImage.setColor(1f, 1f, 1f, 0.7f);
@@ -87,7 +87,7 @@ public class CondenserWaterLevelImage extends Image {
                                                                          //can be only between 0 and 100.
         waterSize = condenserWaterLevel * 1.6f;
         
-        middleImage.setSize(206, waterSize);
+        middleImage.setSize(182, waterSize);
         topImage.setPosition(565, BASE_Y + waterSize);
         
         topImage.draw(batch, parentAlpha);

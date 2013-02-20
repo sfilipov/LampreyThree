@@ -161,7 +161,9 @@ public class Reactor extends FailableComponent {
         Temperature deltaTemp = in.temperature.minus(this.temperature);
         Mass totalMass = this.steamMass.plus(this.waterMass);
         Mass massIn = in.flownThroughInTime(deltaSeconds);
+        
         deltaTemp = kelvin(deltaTemp.inKelvin() * (massIn.inKilograms() / totalMass.inKilograms()));
+        System.out.println("\t water mass in: " + massIn);
         return deltaTemp;
     }
 

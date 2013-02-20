@@ -18,9 +18,10 @@ import eel.seprphase2.Simulator.PlantStatus;
  * @author Simeon
  */
 public class CondenserWaterLevelImage extends Image {
-    private final static Texture bottom = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwaterbottom.png"));
-    private final static Texture middle = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwatermiddle.png"));
+    private final static Texture bottom   = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwaterbottom.png"));
+    private final static Texture middle   = new Texture(Gdx.files.internal("assets\\game\\water\\reactorwatermiddle.png"));
     private final static Texture topSheet = new Texture(Gdx.files.internal("assets\\game\\water\\waterspritesheet.png"));
+    private final static Texture glass    = new Texture(Gdx.files.internal("assets\\game\\water\\condenserglass.png"));
     private final static float BASE_Y = 150;
     private final static int COLS = 1;
     private final static int ROWS = 60;
@@ -29,6 +30,7 @@ public class CondenserWaterLevelImage extends Image {
     private Image bottomImage;
     private Image middleImage;
     private Image topImage;
+    private Image glassImage;
     private TextureRegion[] topFrames;
     private Animation animation;
     private TextureRegionDrawable drawable;
@@ -44,6 +46,7 @@ public class CondenserWaterLevelImage extends Image {
         bottomImage = new Image(bottom);
         middleImage = new Image(middle);
         topImage    = new Image();
+        glassImage  = new Image(glass);
         drawable = new TextureRegionDrawable();
         
         TextureRegion[][] split = TextureRegion.split(topSheet, topSheet.getWidth() / COLS, topSheet.getHeight() / ROWS);
@@ -59,6 +62,7 @@ public class CondenserWaterLevelImage extends Image {
         
         bottomImage.setPosition(562, 131);
         middleImage.setPosition(565, BASE_Y);
+        glassImage.setPosition(563, 137);
         
         bottomImage.setSize(190, 27);
         middleImage.setSize(182, 160);
@@ -67,6 +71,7 @@ public class CondenserWaterLevelImage extends Image {
         bottomImage.setColor(1f, 1f, 1f, 0.7f);
         middleImage.setColor(1f, 1f, 1f, 0.7f);
         topImage.setColor(1f, 1f, 1f, 0.7f);
+        glassImage.setColor(1f, 1f, 1f, 0.3f);
         
         stateTime = 1f; //Makes animation in reactor and condenser at different frames
     }
@@ -88,5 +93,6 @@ public class CondenserWaterLevelImage extends Image {
         topImage.draw(batch, parentAlpha);
         bottomImage.draw(batch, parentAlpha);
         middleImage.draw(batch, parentAlpha);
+        glassImage.draw(batch, parentAlpha);
     }
 }

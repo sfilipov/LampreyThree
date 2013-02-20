@@ -19,7 +19,7 @@ import static eel.seprphase2.Utilities.Units.*;
 public class FlowEquations {
    
     public static Velocity velocityFromPressureDiff(Pressure deltaP) {
-        Velocity resultingFlow = metresPerSecond(deltaP.inPascals() / 10000);
+        Velocity resultingFlow = metresPerSecond(deltaP.inAtmospheres() / 30);
         return resultingFlow;
     }
     

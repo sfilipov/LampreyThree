@@ -55,6 +55,11 @@ public class GameOverScreen extends AbstractScreen {
         
         restartImage.addListener(getRestartListener());
         menuImage.addListener(getMenuListener());
+        
+        stage.addActor(bgImage);
+        stage.addActor(signImage);
+        stage.addActor(restartImage);
+        stage.addActor(menuImage);
     }
     
     public ClickListener getRestartListener() {

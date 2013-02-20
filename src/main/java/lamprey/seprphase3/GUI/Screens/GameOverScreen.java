@@ -65,7 +65,8 @@ public class GameOverScreen extends AbstractScreen {
     public ClickListener getRestartListener() {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-//                manager.
+                manager.initGame();
+                game.setScreen(game.getGameplayScreen());
                 return true;
             }
         };
@@ -74,6 +75,7 @@ public class GameOverScreen extends AbstractScreen {
     public ClickListener getMenuListener() {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                manager.initGame();
                 game.setScreen(game.getMenuScreen());
                 return true;
             }

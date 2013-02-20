@@ -19,7 +19,7 @@ import eel.seprphase2.Simulator.PlantStatus;
  */
 public class CondenserWaterLevelImage extends Image {
     private final static Texture bottom   = new Texture(Gdx.files.internal("assets\\game\\water\\condenserwaterbottom.png"));
-    private final static Texture middle   = new Texture(Gdx.files.internal("assets\\game\\water\\condenserwatermiddle.png"));
+    private Texture middle;//   = new Texture(Gdx.files.internal("assets\\game\\water\\condenserwatermiddle.png"));
     private final static Texture topSheet = new Texture(Gdx.files.internal("assets\\game\\water\\waterspritesheet.png"));
     private final static Texture glass    = new Texture(Gdx.files.internal("assets\\game\\water\\condenserglass.png"));
     private final static float BASE_Y = 150;
@@ -43,6 +43,7 @@ public class CondenserWaterLevelImage extends Image {
     public CondenserWaterLevelImage(PlantStatus status) {
         super();
         this.status = status;
+        middle   = new Texture(Gdx.files.internal("assets\\game\\water\\condenserwatermiddle.png"));
         bottomImage = new Image(bottom);
         middleImage = new Image(middle);
         topImage    = new Image();
@@ -73,7 +74,7 @@ public class CondenserWaterLevelImage extends Image {
         topImage.setColor(1f, 1f, 1f, 0.7f);
         glassImage.setColor(1f, 1f, 1f, 0.3f);
         
-        stateTime = 1f; //Makes animation in reactor and condenser at different frames
+        stateTime = 0f; //Makes animation in reactor and condenser at different frames
     }
     
     @Override

@@ -65,7 +65,7 @@ public class GameOverScreen extends AbstractScreen {
     public ClickListener getRestartListener() {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //Restart
+//                manager.
                 return true;
             }
         };

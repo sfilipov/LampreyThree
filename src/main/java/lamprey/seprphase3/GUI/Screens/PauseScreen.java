@@ -24,14 +24,14 @@ public class PauseScreen extends AbstractScreen {
     private Texture pauseBlurTexture;
     private Texture pausePausedTexture;
     private Texture pauseReturnTexture;
-//    private Texture pauseSaveTexture;
+    private Texture pauseSaveTexture;
     private Texture pauseLoadTexture;
     private Texture pauseMenuTexture;
     
     private Image pauseBlurImage;
     private Image pausePausedImage;
     private HoverButton pauseReturnImage;
-//    private HoverButton pauseSaveImage;
+    private HoverButton pauseSaveImage;
     private HoverButton pauseLoadImage;
     private HoverButton pauseMenuImage;
 
@@ -41,7 +41,7 @@ public class PauseScreen extends AbstractScreen {
         pauseBlurTexture   = new Texture(Gdx.files.internal("assets\\pause\\pauseblur.png"));
         pausePausedTexture = new Texture(Gdx.files.internal("assets\\pause\\pause_PAUSED.png"));
         pauseReturnTexture = new Texture(Gdx.files.internal("assets\\pause\\pause_RETURN.png"));
-//        pauseSaveTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_SAVE.png"));
+        pauseSaveTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_SAVE.png"));
         pauseLoadTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_LOAD.png"));
         pauseMenuTexture   = new Texture(Gdx.files.internal("assets\\pause\\pause_MENU.png"));
     }
@@ -52,23 +52,25 @@ public class PauseScreen extends AbstractScreen {
         pauseBlurImage   = new Image(pauseBlurTexture);
         pausePausedImage = new Image(pausePausedTexture);
         pauseReturnImage = new HoverButton(pauseReturnTexture, HoverButtonType.Transparent);
-//        pauseSaveImage   = new HoverButton(pauseSaveTexture, HoverButtonType.Transparent);
+        pauseSaveImage   = new HoverButton(pauseSaveTexture, HoverButtonType.Transparent);
         pauseLoadImage   = new HoverButton(pauseLoadTexture, HoverButtonType.Transparent);
         pauseMenuImage   = new HoverButton(pauseMenuTexture, HoverButtonType.Transparent);
         
-        pausePausedImage.setPosition(367, 322);
-        pauseReturnImage.setPosition(399, 248);
-        pauseReturnImage.setPosition(399, 248);
+        pausePausedImage.setPosition(367, 347);
+        pauseReturnImage.setPosition(399, 276);
+        pauseSaveImage.setPosition(368, 232);
+        pauseLoadImage.setPosition(361, 188);
+        pauseMenuImage.setPosition(367, 145);
         
         pauseReturnImage.addListener(getReturnListener());
-//        pauseSaveImage.addListener(new ClickListener());
+        pauseSaveImage.addListener(new ClickListener());
         pauseLoadImage.addListener(new ClickListener());
         pauseMenuImage.addListener(new ClickListener());
 
         stage.addActor(pauseBlurImage);
         stage.addActor(pausePausedImage);
         stage.addActor(pauseReturnImage);
-//        stage.addActor(pauseSaveImage);
+        stage.addActor(pauseSaveImage);
         stage.addActor(pauseLoadImage);
         stage.addActor(pauseMenuImage);
     }

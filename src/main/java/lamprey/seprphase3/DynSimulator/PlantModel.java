@@ -23,7 +23,6 @@ import java.util.HashMap;
  *
  * @author will
  */
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class PlantModel {
 
     @JsonProperty
@@ -70,11 +69,11 @@ public class PlantModel {
     private void instantiateComponents() {
         reactor = new Reactor();
         turbine = new Turbine();
-        condenser = new Condenser();
+        heatsinkToCondenser = new Pump();
+        condenser = new Condenser(heatsinkToCondenser);
         reactorToTurbine = new Valve();
         bypassValve = new Valve();
         condenserToReactor = new Pump();
-        heatsinkToCondenser = new Pump();
         splitAfterReactor = new Junction();
         joinBeforeCondenser = new Junction();
     }

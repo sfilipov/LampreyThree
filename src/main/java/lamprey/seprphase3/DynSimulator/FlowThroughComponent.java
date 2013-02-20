@@ -1,12 +1,15 @@
 package lamprey.seprphase3.DynSimulator;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * Base class for all components in the plant that allow fluid or steam to flow through them.
  *
  * @author Will
  */
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public abstract class FlowThroughComponent {
 
     /**

@@ -531,8 +531,11 @@ public class FluidFlowController implements PlantController {
             // Iterate through all pumps and start tracking back through the system
             for (Pump p : this.plant.pumps().values()) {
                 // If the pump is broken, move onto the next one.
+                // null p.input would be the case for the heatsink pump.
                 if (!(p.wear().points() == 100) && p.input != null) {
-                    increaseCondenserFlowFromPump(p);
+                    if (p.getStatus()) {
+                        increaseCondenserFlowFromPump(p);
+                    }
                 }
             }
         }

@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eel.seprphase2.Simulator.PhysicalModel;
 import eel.seprphase2.Utilities.Percentage;
 import java.io.IOException;
+import lamprey.seprphase3.DynSimulator.FlowThroughComponent;
+import lamprey.seprphase3.DynSimulator.PlantModel;
 
 /**
  * JSON Serialization
@@ -53,9 +55,9 @@ public class Persistence {
      * @throws JsonMappingException
      * @throws IOException
      */
-    public PhysicalModel deserializePhysicalModel(String representation) throws JsonParseException, JsonMappingException,
+    public PlantModel deserializePlantModel(String representation) throws JsonParseException, JsonMappingException,
                                                                                 IOException {
-        return mapper.readValue(representation, PhysicalModel.class);
+        return mapper.readValue(representation, PlantModel.class);
     }
 
     /**
@@ -68,5 +70,9 @@ public class Persistence {
      */
     public Percentage deserializePercentage(String representation) throws IOException {
         return mapper.readValue(representation, Percentage.class);
+    }
+    
+    public FlowThroughComponent deserializeFlowThroughComponent(String representation) throws IOException {
+        return mapper.readValue(representation, FlowThroughComponent.class);
     }
 }

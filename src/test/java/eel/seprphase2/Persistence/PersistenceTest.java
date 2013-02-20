@@ -21,6 +21,7 @@ import static eel.seprphase2.Utilities.Units.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import lamprey.seprphase3.DynSimulator.FluidFlowController;
 import lamprey.seprphase3.DynSimulator.PlantModel;
 import org.junit.Ignore;
 
@@ -29,15 +30,20 @@ import org.junit.Ignore;
  * @author David
  */
 public class PersistenceTest {
-    private PlantModel plant;
-    Persistence persistence;
-    PhysicalModel before;
-    PhysicalModel after;
+    private Persistence persistence;
+    private PhysicalModel statusBefore;
+    private PhysicalModel statusAfter;
+    private FluidFlowController controller;
+    private PlantModel before;
+    private PlantModel after;
+    
+
 
     @Before
     public void setUp() {
         persistence = new Persistence();
-        before = new PhysicalModel(plant);
+        before = new PlantModel();
+        controller = new FluidFlowController(before);
     }
 
     @Test
@@ -91,8 +97,8 @@ public class PersistenceTest {
     }
 
     @Test
-    public void shouldSerializePhysicalModel() throws JsonProcessingException {
-        String result = persistence.serialize(new PhysicalModel(plant));
+    public void shouldSerializePlantModel() throws JsonProcessingException {
+        String result = persistence.serialize(new PlantModel());
         assertNotSame("", result);
     }
 
@@ -106,27 +112,27 @@ public class PersistenceTest {
     }
 
     @Test
-    public void shouldPersistPhysicalModel() throws JsonProcessingException, IOException {
+    public void shouldPersistPlantModel() throws JsonProcessingException, IOException {
         shouldPersistConsistently();
     }
 
     @Test
     public void shouldPersistChangesToControlRodPosition() throws IOException, JsonProcessingException {
-        before.moveControlRods(percent(57));
+        controller.moveControlRods(percent(57));
         shouldPersistConsistently();
     }
 
     @Test
     public void shouldPersistConditions() throws GameOverException {
-        before.moveControlRods(percent(67));
-        before.step(100);
+        controller.moveControlRods(percent(67));
+        controller.step(100);
         shouldPersistConsistently();
     }
 
     private void backAndForthPersistence() {
         try {
             String representation = persistence.serialize(before);
-            after = persistence.deserializePhysicalModel(representation);
+            after = persistence.deserializePlantModel(representation);
         } catch (JsonParseException ex) {
             Logger.getLogger(PersistenceTest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (JsonMappingException ex) {
@@ -140,10 +146,12 @@ public class PersistenceTest {
         backAndForthPersistence();
         assertNotNull(after);
         assertNotSame(before, after);
-        assertEquals(before.controlRodPosition(), after.controlRodPosition());
-        assertEquals(before.energyGenerated(), after.energyGenerated());
-        assertEquals(before.reactorPressure(), after.reactorPressure());
-        assertEquals(before.reactorTemperature(), after.reactorTemperature());
-        assertEquals(before.reactorWaterLevel(), after.reactorWaterLevel());
+        statusBefore = new PhysicalModel(before);
+        statusAfter = new PhysicalModel(after);
+        assertEquals(statusBefore.controlRodPosition(), statusAfter.controlRodPosition());
+        assertEquals(statusBefore.energyGenerated(), statusAfter.energyGenerated());
+        assertEquals(statusBefore.reactorPressure(), statusAfter.reactorPressure());
+        assertEquals(statusBefore.reactorTemperature(), statusAfter.reactorTemperature());
+        assertEquals(statusBefore.reactorWaterLevel(), statusAfter.reactorWaterLevel());
     }
 }

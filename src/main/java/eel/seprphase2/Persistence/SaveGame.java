@@ -8,6 +8,7 @@ import eel.seprphase2.Simulator.PhysicalModel;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
+import lamprey.seprphase3.DynSimulator.PlantModel;
 
 /**
  * Saveable/Loadable game state
@@ -17,7 +18,7 @@ import java.util.Calendar;
 public class SaveGame {
 
     @JsonProperty
-    private PhysicalModel physicalModel;
+    private PlantModel plantModel;
     @JsonProperty
     private String userName;
 
@@ -35,8 +36,8 @@ public class SaveGame {
     }
     
 
-    public SaveGame(PhysicalModel physicalModel, FailureModel failureModel, String userName) {
-        this.physicalModel = physicalModel;
+    public SaveGame(PlantModel plantModel, String userName) {
+        this.plantModel = plantModel;
         this.userName = userName;
     }
 
@@ -55,8 +56,8 @@ public class SaveGame {
         return this.userName;
     }
 
-    public PhysicalModel getPhysicalModel() {
-        return this.physicalModel;
+    public PlantModel getPlantModel() {
+        return this.plantModel;
     }
     
     /**

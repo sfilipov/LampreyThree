@@ -24,6 +24,8 @@ public class Condenser extends FailableComponent {
     @JsonProperty
     private OutputPort coolantInput;
     @JsonProperty
+    private Pump coolantPump;
+    @JsonProperty
     private Temperature temperature;
     @JsonProperty
     private Pressure pressure;
@@ -33,7 +35,8 @@ public class Condenser extends FailableComponent {
     @JsonProperty
     private double deltaSeconds;
 
-    public Condenser() {
+    public Condenser(Pump coolantPump) {
+        this.coolantPump = coolantPump;
         initializeVariables();
     }
 
@@ -125,7 +128,7 @@ public class Condenser extends FailableComponent {
     }
 
     private void coolantEffect() {
-        if (!hasFailed()) {
+        if (!hasFailed() && !coolantPump.getStatus()) {
             temperature = temperature.plus(calculateNewTemperature(coolantInput));
         }
     }

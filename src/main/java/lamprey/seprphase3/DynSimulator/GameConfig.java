@@ -19,9 +19,9 @@ public class GameConfig {
     
     // ---------- FLOW CONFIG ---------- 
     // Mass flow rate induced by a running pump.
-    public static final MassFlowRate PUMP_INDUCEDFLOWRATE = kilogramsPerSecond(20);
+    public static final MassFlowRate PUMP_INDUCEDFLOWRATE = kilogramsPerSecond(50);
     // Default maximum flow rate through a valve (Can be redefined on a per valve basis).
-    public static final MassFlowRate VALVE_DEFAULTMAXTHROUGHPUT = kilogramsPerSecond(2);    
+    public static final MassFlowRate VALVE_DEFAULTMAXTHROUGHPUT = kilogramsPerSecond(50);    
     // -- END  -- FLOW CONFIG ----------
  
     // ---------- CONDENSER CONFIG ---------- 

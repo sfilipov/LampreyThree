@@ -32,7 +32,7 @@ public class Turbine extends FailableComponent {
             return;
         }
         
-        outputPower = this.outputPort(null).flowRate.massFlowForTime(seconds).inKilograms(); //convert to grams. 
+        outputPower = this.outputPort(null).flowRate.massFlowForTime(seconds).inKilograms() * 100000;
 //        System.out.println("Seconds: " + seconds);
 //        System.out.println("Kilograms: " + outputPower);
 //        System.out.println("Kg/s: " + this.outputPort(null).flowRate);
@@ -54,6 +54,6 @@ public class Turbine extends FailableComponent {
      */
     @Override
     public Percentage calculateWearDelta() {
-        return new Percentage(1);
+        return new Percentage(0);
     }
 }

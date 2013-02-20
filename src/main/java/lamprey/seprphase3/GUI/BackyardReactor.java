@@ -5,6 +5,7 @@ import eel.seprphase2.Simulator.Simulator;
 import lamprey.seprphase3.GUI.Screens.CreditsScreen;
 import lamprey.seprphase3.GUI.Screens.GameOverScreen;
 import lamprey.seprphase3.GUI.Screens.GameplayScreen;
+import lamprey.seprphase3.GUI.Screens.IntroScreen;
 import lamprey.seprphase3.GUI.Screens.LogoScreen;
 import lamprey.seprphase3.GUI.Screens.MenuScreen;
 import lamprey.seprphase3.GUI.Screens.PauseScreen;
@@ -18,6 +19,7 @@ public class BackyardReactor extends Game {
     
     LogoScreen logoScreen;
     MenuScreen menuScreen;
+    IntroScreen introScreen;
     GameplayScreen gameplayScreen;
     CreditsScreen creditsScreen;
     PauseScreen pauseScreen;
@@ -33,6 +35,10 @@ public class BackyardReactor extends Game {
     
     public MenuScreen getMenuScreen() {
         return menuScreen;
+    }    
+    
+    public IntroScreen getIntroScreen() {
+        return introScreen;
     }
     
     public GameplayScreen getGameplayScreen() {
@@ -61,6 +67,7 @@ public class BackyardReactor extends Game {
         simulator = new Simulator();
 
         menuScreen     = new MenuScreen(this, simulator, simulator, simulator);
+        introScreen    = new IntroScreen(this);
         gameplayScreen = new GameplayScreen(this, simulator, simulator, simulator);
         creditsScreen  = new CreditsScreen(this);
         pauseScreen    = new PauseScreen(this, simulator, simulator, simulator);

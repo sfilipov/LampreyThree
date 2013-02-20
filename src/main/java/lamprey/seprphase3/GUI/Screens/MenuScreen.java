@@ -125,7 +125,7 @@ public class MenuScreen extends AbstractScreen {
         @Override
         public void input (String text) {
             manager.setUsername(text);
-            game.setScreen(game.getGameplayScreen());
+            game.setScreen(game.getIntroScreen());
         }
 
         @Override

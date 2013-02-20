@@ -20,10 +20,7 @@ import static lamprey.seprphase3.DynSimulator.GameConfig.*;
  * @author Marius
  */
 public class Reactor extends FailableComponent {
-    @JsonProperty
-    private final Temperature maximumTemperature = kelvin(3000);
-    @JsonProperty
-    private final Pressure maximumPressure = new Pressure(30662500);
+
     @JsonProperty
     private final Mass maximumWaterMass = REACTOR_VOLUME.massAt(Density.ofLiquidWater());
     @JsonProperty
@@ -231,14 +228,6 @@ public class Reactor extends FailableComponent {
 
     public Density steamDensity() {
         return this.steamDensity;
-    }
-    
-    public Temperature maximumTemperature(){
-        return maximumTemperature;
-    }
-    
-    public Pressure maximumPressure() {
-        return maximumPressure;
     }
 
     private Mass getMassComingInOverTime(double seconds) {

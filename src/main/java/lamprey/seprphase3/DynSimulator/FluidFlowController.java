@@ -187,7 +187,7 @@ public class FluidFlowController implements PlantController {
         if (p.hasFailed()) {
             throw new CannotControlException("Pump " + pumpNumber + " is failed");
         }
-        p.setStatus(p.getStatus());
+        p.setStatus(!p.getStatus());
     }
 
   

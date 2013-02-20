@@ -1,5 +1,6 @@
 package lamprey.seprphase3.DynSimulator;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eel.seprphase2.Utilities.Mass;
 import eel.seprphase2.Utilities.Temperature;
 import lamprey.seprphase3.Utilities.MassFlowRate;
@@ -10,7 +11,9 @@ import lamprey.seprphase3.Utilities.MassFlowRate;
  */
 public class OutputPort {
     
+    @JsonProperty
     public MassFlowRate flowRate;
+    @JsonProperty
     public Temperature temperature;
     
     public OutputPort() {

@@ -29,13 +29,15 @@ public class GameConfig {
     public static final Volume CONDENSER_VOLUME = cubicMetres(2); 
     // Max steam condensed per second (When it's COLD!) (Kg/s)
     public static final MassFlowRate CONDENSER_MAXSTEAMCONDENSEDPERSEC = kilogramsPerSecond(5);
-    public static final Pressure CONDENSER_MAXIMUMPRESSURE = new Pressure(30662500);
+    public static final Pressure CONDENSER_MAXIMUMPRESSURE = pascals(30662500);
     // -- END  -- CONDENSER CONFIG ---------- 
 
     // ---------- REACTOR CONFIG ---------- 
     public static final Mass REACTOR_INITIALWATERMASS = kilograms(2500);
     public static final Volume REACTOR_VOLUME = cubicMetres(3);
     public static final Percentage REACTOR_MINIMUMSAFEWATERLEVEL = percent(50);
+    public static final Temperature REACTOR_MAXIMUMTEMPERATURE = kelvin(500);
+    public static final Pressure REACTOR_MAXIMUMPRESSURE = pascals(30662500);
     // -- END  -- REACTOR CONFIG ---------- 
     
     

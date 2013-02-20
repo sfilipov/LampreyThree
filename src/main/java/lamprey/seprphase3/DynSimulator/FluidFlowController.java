@@ -163,6 +163,7 @@ public class FluidFlowController implements PlantController {
     public void setSoftwareFailureTimeRemaining(int failureTime) {
         plant.setSoftwareFailureTimeRemaining(failureTime);
     }
+    
 
     @Override
     public void wearCondenser() {

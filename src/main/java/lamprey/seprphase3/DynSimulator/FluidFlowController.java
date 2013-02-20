@@ -158,6 +158,16 @@ public class FluidFlowController implements PlantController {
         plant.turbine().repair();
     }
 
+    @Override
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void wearCondenser() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
   
      // ----------------------------------- CODE TO CONVERT! -----------------------------
      /**

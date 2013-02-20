@@ -31,9 +31,7 @@ import java.util.Random;
  */
 public class FailureModel implements PlantController, PlantStatus {
 
-    @JsonProperty
     PlantController controller;
-    @JsonProperty
     PlantStatus status;
     private Random failChance = new Random();
     private final Pressure condenserMaxPressure = new Pressure(30662500);
@@ -93,7 +91,7 @@ public class FailureModel implements PlantController, PlantStatus {
         int faults = 0;
         
         //This section checks if any components have been worn randomly, if so they are added to the wornComponents ArrayList
-        for (FailableComponent component: status.components()) {
+        for (FailableComponent component: status.failableComponents()) {
             if(component.wear().toString().equals("100%") || component instanceof Reactor ) {
             }                       
             else{
@@ -194,11 +192,6 @@ public class FailureModel implements PlantController, PlantStatus {
     @Override
     public Energy energyGenerated() {
         return status.energyGenerated();
-    }
-
-    @Override
-    public boolean isValveOpen(int valveID) throws KeyNotFoundException {
-        return status.isValveOpen(valveID);
     }
     
     @Override
@@ -306,15 +299,10 @@ public class FailureModel implements PlantController, PlantStatus {
     }
 
     @Override
-    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
-        return status.getPumpStatus(pumpID);
-	}
-
-    @Override
     public ArrayList<FailableComponent> failableComponents() {
         return status.failableComponents();
     }
-
+    
     /**
      * This method checks the reactor is not above its minimumWaterLevel, if it is
      * it receives wear     *

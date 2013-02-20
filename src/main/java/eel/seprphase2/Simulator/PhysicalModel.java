@@ -24,7 +24,6 @@ import lamprey.seprphase3.DynSimulator.PlantModel;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public class PhysicalModel implements PlantStatus {
 
-    @JsonProperty
     private PlantModel plant;
 
     public PhysicalModel(PlantModel plant) {
@@ -115,7 +114,7 @@ public class PhysicalModel implements PlantStatus {
     }
 
     @Override
-    public boolean isValveOpen(int valveID) throws KeyNotFoundException {
+    public Boolean getValveState(int valveID) throws KeyNotFoundException {
         if (plant.valves().containsKey(valveID)) {
             return plant.valves().get(valveID).getOpen();
         } else
@@ -125,7 +124,7 @@ public class PhysicalModel implements PlantStatus {
     }
     
     @Override
-    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
+    public Boolean getPumpState(int pumpID) throws KeyNotFoundException {
         if (plant.pumps().containsKey(pumpID)) {
             return plant.pumps().get(pumpID).getStatus();
         } else
@@ -180,7 +179,7 @@ public class PhysicalModel implements PlantStatus {
     }
     
     @Override
-    public Percentage pumpWear(int pumpID) throws KeyNotFoundException {
+    public Percentage getPumpWear(int pumpID) throws KeyNotFoundException {
         if (plant.pumps().containsKey(pumpID)) {
             return plant.pumps().get(pumpID).wear();
         } else
@@ -192,6 +191,26 @@ public class PhysicalModel implements PlantStatus {
     @Override
     public boolean turbineHasFailed() {
         return plant.turbine().hasFailed();
+    }
+
+    @Override
+    public int getSoftwareFailureTimeRemaining() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public double getOutputPower() {
+        return plant.turbine().outputPower();
+    }
+
+    @Override
+    public Pressure reactorMaximumPressure() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public Temperature reactorMaximumTemperature() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
    

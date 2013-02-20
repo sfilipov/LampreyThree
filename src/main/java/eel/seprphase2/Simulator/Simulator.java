@@ -12,6 +12,8 @@ import eel.seprphase2.Utilities.Temperature;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import lamprey.seprphase3.DynSimulator.FluidFlowController;
+import lamprey.seprphase3.DynSimulator.PlantModel;
 
 /**
  *
@@ -19,13 +21,17 @@ import java.util.ArrayList;
  */
 public class Simulator implements PlantController, PlantStatus, GameManager {
 
+    private PlantModel plant;
     private PhysicalModel physicalModel;
     private FailureModel failureModel;
+    private FluidFlowController fluidFlowController;
     private String userName;
 
     public Simulator() {
-        physicalModel = new PhysicalModel();
-        failureModel = new FailureModel(physicalModel, physicalModel);
+        plant = new PlantModel();
+        physicalModel = new PhysicalModel(plant);
+        fluidFlowController = new FluidFlowController(plant);
+        failureModel = new FailureModel(fluidFlowController, physicalModel);
         userName = "";
     }
 
@@ -49,7 +55,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         try {
             SaveGame saveGame = SaveGame.load(listGames()[gameNumber]);
             this.physicalModel = saveGame.getPhysicalModel();
-            this.failureModel = new FailureModel(physicalModel, physicalModel);
+            //this.failureModel = new FailureModel(physicalModel, physicalModel);
             this.userName = saveGame.getUserName();
         } catch (JsonParseException ex) {
         } catch (IOException ex) {
@@ -66,9 +72,9 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
         return failureModel.listFailedComponents();
     }
 
-    public void step() throws GameOverException {
+    public void step(double seconds) throws GameOverException {
         try {
-            failureModel.step();
+            failureModel.step(seconds);
         } catch (GameOverException e) {
             throw new GameOverException("Dear " + userName + ",\n\n" +
                                         "YOU HAVE FAILED\n\n" +
@@ -167,23 +173,11 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     @Override
     public int getSoftwareFailureTimeRemaining() {
         return failureModel.getSoftwareFailureTimeRemaining();
-	}
-
-    public Percentage condenserToReactorWear() throws KeyNotFoundException {
-        return failureModel.pumpWear(1);
     }
     
     @Override
     public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException {
         return failureModel.getPumpWear(pumpNumber);
-    }
-
-	public Percentage heatsinkToCondenserWear() throws KeyNotFoundException {
-        return failureModel.pumpWear(2);
-    }
-
-    public boolean getReactorToTurbine() throws KeyNotFoundException {
-        return failureModel.isValveOpen(1);
     }
     
     @Override
@@ -220,16 +214,7 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Percentage reactorMinimumWaterLevel() {
         return failureModel.reactorMinimumWaterLevel();
     }
-   /** 
-    @Override
-    public Pressure reactorMaximumPressure(){ 
-        return failureModel.reactorMaximumPressure();
-    }
     
-    /**
-     *
-     * @return
-     */
     @Override
     public Temperature reactorMaximumTemperature() {
         return failureModel.reactorMaximumTemperature();
@@ -256,17 +241,17 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     }
 
     @Override
-    public Percentage pumpWear(int pumpID) throws KeyNotFoundException {
-        return failureModel.pumpWear(pumpID);
+    public void setSoftwareFailureTimeRemaining(int failureTime) {
+        failureModel.setSoftwareFailureTimeRemaining(failureTime);
     }
 
     @Override
-    public boolean isValveOpen(int valveID) throws KeyNotFoundException {
-        return failureModel.isValveOpen(valveID);
+    public void wearCondenser() {
+        failureModel.wearCondenser();
     }
 
     @Override
-    public boolean getPumpStatus(int pumpID) throws KeyNotFoundException {
-        return failureModel.getPumpStatus(pumpID);
+    public Pressure reactorMaximumPressure() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

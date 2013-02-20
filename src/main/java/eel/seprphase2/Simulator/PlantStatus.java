@@ -15,59 +15,24 @@ import java.util.ArrayList;
  */
 public interface PlantStatus {
 
-    /**
-     *
-     * @return
-     */
     public Percentage controlRodPosition();
 
-    /**
-     *
-     * @return
-     */
     public Pressure reactorPressure();
 
-    /**
-     *
-     * @return
-     */
     public Temperature reactorTemperature();
 
-    /**
-     *
-     * @return
-     */
     public Percentage reactorWaterLevel();
 
-    /**
-     *
-     * @return
-     */
-    
     public Percentage reactorWear();
-    
-    /**
-     *
-     * @return
-     */
-    
+
     public Energy energyGenerated();
 
-    /**
-     *
-     * @return
-     */
-    
-    
-    
     public Boolean getPumpState(int pumpNumber) throws KeyNotFoundException;
     
     public Boolean getValveState(int valveNumber) throws KeyNotFoundException;
                                 
     public Percentage getPumpWear(int pumpNumber)throws KeyNotFoundException;
-    
-    public boolean getReactorToTurbine();
-    
+        
     public int getSoftwareFailureTimeRemaining();
     
     public Percentage turbineWear();

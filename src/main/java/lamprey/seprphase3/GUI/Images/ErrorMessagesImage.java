@@ -56,39 +56,38 @@ public class ErrorMessagesImage extends Image {
     
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {        
-//        if (status.getSoftwareFailureTimeRemaining() > 0) {
-//            drawable.setRegion(softwareError);
-//            screen.removeButtonsListeners();
-//        }
-//        else if (status.getSoftwareFailureTimeRemaining() == 0) {
-//            drawable.setRegion(normal);
-//            screen.addButtonsListeners();
-//        }
-//        
-//        if(status.wornComponent().equals("Condenser") && delta < 3f) {
-//            drawable.setRegion(condenser);
-//            delta += Gdx.graphics.getDeltaTime();
-//        }
-//        else if(status.wornComponent().equals("Turbine") && delta < 3f) {
-//            drawable.setRegion(turbine);
-//            delta += Gdx.graphics.getDeltaTime();
-//       }
-//        else if(status.wornComponent().equals("Pump 1") && delta < 3f) {
-//            drawable.setRegion(pump1);
-//            delta += Gdx.graphics.getDeltaTime();
-//        }
-//        else if(status.wornComponent().equals("Pump 2") && delta < 3f) {
-//            drawable.setRegion(pump2);
-//            delta += Gdx.graphics.getDeltaTime();
-//        }
-//        else if(delta > 3f && status.getSoftwareFailureTimeRemaining() == 0) {
-//            drawable.setRegion(normal);
-//            delta = 0;
-//        }
-//        else if(delta > 3f) {
-//            delta = 0;
-//        }
-        drawable.setRegion(condenser);
+        if (status.getSoftwareFailureTimeRemaining() > 0) {
+            drawable.setRegion(softwareError);
+            screen.removeButtonsListeners();
+        }
+        else if (status.getSoftwareFailureTimeRemaining() == 0) {
+            drawable.setRegion(normal);
+            screen.addButtonsListeners();
+        }
+        
+        if(status.wornComponent().equals("Condenser") && delta < 3f) {
+            drawable.setRegion(condenser);
+            delta += Gdx.graphics.getDeltaTime();
+        }
+        else if(status.wornComponent().equals("Turbine") && delta < 3f) {
+            drawable.setRegion(turbine);
+            delta += Gdx.graphics.getDeltaTime();
+       }
+        else if(status.wornComponent().equals("Pump 1") && delta < 3f) {
+            drawable.setRegion(pump1);
+            delta += Gdx.graphics.getDeltaTime();
+        }
+        else if(status.wornComponent().equals("Pump 2") && delta < 3f) {
+            drawable.setRegion(pump2);
+            delta += Gdx.graphics.getDeltaTime();
+        }
+        else if(delta > 3f && status.getSoftwareFailureTimeRemaining() == 0) {
+            drawable.setRegion(normal);
+            delta = 0;
+        }
+        else if(delta > 3f) {
+            delta = 0;
+        }
         this.setDrawable(drawable);
         super.draw(batch, parentAlpha);
     }

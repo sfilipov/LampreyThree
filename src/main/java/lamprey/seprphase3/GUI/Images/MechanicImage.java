@@ -43,6 +43,9 @@ public class MechanicImage extends Image {
     private Animation repairingAnimation;
     private TextureRegionDrawable drawable;
    
+    private Texture shadow;
+    private Image shadowImage;
+    
     private PlantController controller;
     private CurrentlyRepairing currentlyRepairing;
     private float mechanicX;
@@ -97,6 +100,10 @@ public class MechanicImage extends Image {
             }
         }
         repairingAnimation = new Animation(0.03f, repairingFrames);
+        
+        shadow = new Texture(Gdx.files.internal("assets\\game\\mechshadow.png"));
+        shadowImage = new Image(shadow);
+        shadowImage.setColor(1f, 1f, 1f, 0.3f);
         
         this.mechanicDirection = Direction.Right;
         stateTime = 0;
@@ -187,10 +194,16 @@ public class MechanicImage extends Image {
         }
         
         if (mechanicDirection == Direction.Right) {
+            shadowImage.setPosition(this.getX() - 30f, STATIC_Y - 15f);
+            shadowImage.draw(batch, parentAlpha);
+            
             this.setScale(scaleToUse);
             super.draw(batch, parentAlpha);
         }
         else if (mechanicDirection == Direction.Left) {
+            shadowImage.setPosition(this.getX() - 25f, STATIC_Y - 10f);
+            shadowImage.draw(batch, parentAlpha);
+            
             mechanicX = this.getX();
             mechanicWidth = this.getWidth();
             this.setX(mechanicX + mechanicWidth);

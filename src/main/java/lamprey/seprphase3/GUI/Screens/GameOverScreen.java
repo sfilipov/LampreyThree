@@ -6,8 +6,12 @@ package lamprey.seprphase3.GUI.Screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
@@ -31,6 +35,10 @@ public class GameOverScreen extends AbstractScreen {
     private HoverButton restartImage;
     private HoverButton menuImage;
     
+    private Label score;
+    private BitmapFont font;
+    private FreeTypeFontGenerator generator;
+    
     public GameOverScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
         gameoverBg      = new Texture(Gdx.files.internal("assets\\gameover\\gameoverBg.png"));
@@ -38,7 +46,9 @@ public class GameOverScreen extends AbstractScreen {
         gameoverRestart = new Texture(Gdx.files.internal("assets\\gameover\\gameoverRestart.png"));
         gameoverMenu    = new Texture(Gdx.files.internal("assets\\gameover\\gameoverMenu.png"));
         
-
+        score = new Label();
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arialbd.ttf"));
+        font = generator.generateFont(30);
     }
     
     @Override
@@ -49,7 +59,7 @@ public class GameOverScreen extends AbstractScreen {
         restartImage = new HoverButton(gameoverRestart, HoverButtonType.Transparent);
         menuImage    = new HoverButton(gameoverMenu, HoverButtonType.Transparent);
         
-        signImage.setPosition(338, 257);
+        signImage.setPosition(338, 287);
         restartImage.setPosition(391, 188);
         menuImage.setPosition(367, 149);
         

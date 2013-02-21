@@ -85,7 +85,7 @@ public class ReactorWaterLevelImage extends Image {
         
         reactorWaterLevel = (float) status.reactorWaterLevel().points(); //Don't worry about the cast - Percentage 
                                                                          //can be only between 0 and 100.
-        waterSize = reactorWaterLevel * 1.6f;
+        waterSize = 160f;//reactorWaterLevel * 1.6f;
         
         middleImage.setSize(206, waterSize);
         topImage.setPosition(50, BASE_Y + waterSize);

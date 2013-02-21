@@ -38,18 +38,18 @@ public class InformationPanels extends Image {
     public void draw(SpriteBatch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         
-        font11.draw(batch, status.reactorPressure().toString(), 287, 324);
+        font11.draw(batch, String.format("%.4g%n", status.reactorPressure().inAtmospheres()), 287, 324);
         font11.draw(batch, status.reactorTemperature().toString(), 287, 296);
         font11.draw(batch, status.reactorWear().toString(), 293, 266);
         font11.draw(batch, status.reactorWaterLevel().toString(), 287, 245);
         
-        font11.draw(batch, status.condenserPressure().toString(), 500, 337);
+        font11.draw(batch, String.format("%.4g%n", status.reactorPressure().inAtmospheres()), 500, 337);
         font11.draw(batch, status.condenserTemperature().toString(), 505, 307);
         font11.draw(batch, status.condenserWear().toString(), 505, 284);
         font11.draw(batch, status.condenserWaterLevel().toString(), 505, 264);
         
         double powerOutput = status.getOutputPower();
-        font16.draw(batch, String.format("%.2g%n", powerOutput), 780, 487);
+        font16.draw(batch, String.format("%.5g%n", powerOutput), 775, 487);
         font11.draw(batch, status.turbineWear().toString(), 850, 467);
         
         

@@ -133,7 +133,7 @@ public class PauseScreen extends AbstractScreen {
     public ClickListener getMenuListener() {
         return new ClickListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //Reset game
+                manager.initGame();
                 game.setScreen(game.getMenuScreen());
                 return true;
             }

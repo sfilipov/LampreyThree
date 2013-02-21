@@ -229,32 +229,6 @@ public class FluidFlowController implements PlantController {
         //moveWater(seconds);
     }
 
-    // THESE NEED TO BE IMPLEMENTED! otherwise we could get water loss if condenser runs dry!
-//    /**
-//     * Moves water out of the condenser and into the reactor due to the flow in and out of the components.
-//     */
-//    private void moveWater(double seconds) {
-//        Condenser condenser = this.plant.condenser();
-//        Reactor reactor = this.plant.reactor();
-//        Mass waterInCondenser = condenser.getWaterMass();
-//        Mass massTryingToFlowOut = condenser.outputPort(null).flowRate.massFlowForTime(seconds);
-//        // Check if there's enough water in the condenser to fulfil the flow rate.
-//        Mass delta = (waterInCondenser.inKilograms() > massTryingToFlowOut.inKilograms()) ? massTryingToFlowOut : waterInCondenser;
-//        condenser.updateWaterVolume(-delta);
-//        // This should really use reactor's input's flow out but ah well.
-//        reactor.updateWaterVolume(delta);
-//    }
-//
-//    /**
-//     * Forcefully removes steam from the reactor and places it into the condenser. 
-//     */
-//    private void moveSteam(double seconds) {
-//        Reactor reactor = this.plant.reactor();
-//        Condenser condenser = this.plant.condenser();
-//        reactor.updateSteamVolume(-reactor.getFlowOut().getRate());
-//        condenser.updateSteamVolume(condenser.getInput().getFlowOut().getRate());
-//    }
-
     /**
      * Resets all Junction paths to unblocked. We do this to all Junctions at the beginning of each
      * updateFlow() before propagating the blockages since valves can change state between steps.

@@ -209,7 +209,7 @@ public class GameplayScreen extends AbstractScreen {
     
     @Override
     public void render(float delta) {
-        float delay = 0.3f;
+        float delay = 0.2f;
         deltaSum += delta;
         try {
             if (deltaSum > delay) {

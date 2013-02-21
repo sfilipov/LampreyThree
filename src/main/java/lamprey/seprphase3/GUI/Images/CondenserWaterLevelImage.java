@@ -86,7 +86,7 @@ public class CondenserWaterLevelImage extends Image {
 
         condenserWaterLevel = (float) status.condenserWaterLevel().points(); //Don't worry about the cast - Percentage 
                                                                          //can be only between 0 and 100.
-        waterSize = condenserWaterLevel * 1.6f;
+        waterSize = 60f;//condenserWaterLevel * 1.6f;
         
         middleImage.setSize(182, waterSize);
         topImage.setPosition(565, BASE_Y + waterSize);

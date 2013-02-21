@@ -38,6 +38,7 @@ public class FluidFlowController implements PlantController {
 
     PlantModel plant;
     double deltaSeconds; // Time elapsed in during an update.
+    boolean printInfo = false; 
 
     public FluidFlowController(PlantModel plant) {
         this.plant = plant;
@@ -55,7 +56,7 @@ public class FluidFlowController implements PlantController {
         }
         plant.reduceSoftwareFailureTime();
         plant.increaseEnergyGenerated(joules(plant.turbine().outputPower()));
-        //printFlowDebugInfo();
+        printFlowDebugInfo();
     }
 
     /**
@@ -118,6 +119,7 @@ public class FluidFlowController implements PlantController {
         } else {
             throw new KeyNotFoundException("Valve " + valveNumber + " does not exist");
         }
+        printInfo = true;
     }
 
     @Override
@@ -622,6 +624,7 @@ public class FluidFlowController implements PlantController {
 	 * Prints debug info related to the flow of the plant to the console.
 	 */
 	private void printFlowDebugInfo() {
+            if (printInfo) {
 		System.out.println("--------------------------");
 		for (FlowThroughComponent c : this.plant.components()) {
 			System.out.println("-----");
@@ -637,6 +640,8 @@ public class FluidFlowController implements PlantController {
                             }
                         }
 		}
+            }
+            printInfo = false;
 			
 	}
     

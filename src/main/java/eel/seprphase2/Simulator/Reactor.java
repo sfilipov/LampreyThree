@@ -100,7 +100,6 @@ public class Reactor extends FailableComponent implements Serializable {
              */
             temperature = kelvin(boilingPtAtPressure);
             Mass deltaMass = kilograms(REACTOR_EVAPORATEMULTIPLIER * (fuelPile.output(seconds) - neededEnergy) / latentHeatOfWater);
-            System.out.println(deltaMass);
             steamMass = steamMass.plus(deltaMass);
             waterMass = waterMass.minus(deltaMass);
             correctWaterMass();

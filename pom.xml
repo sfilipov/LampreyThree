@@ -143,12 +143,34 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>eel.seprphase2.App</mainClass>
+                            <mainClass>lamprey.seprphase3.GUI.GameStarter</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-my-jar-with-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>lamprey.seprphase3.GUI.GameStarter</mainClass>
+                            <packageName>lamprey.seprphase3.GUI</packageName>
+                            <addClasspath>true</addClasspath>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>

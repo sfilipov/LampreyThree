@@ -17,6 +17,7 @@ import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantController;
 import eel.seprphase2.Simulator.PlantStatus;
 import lamprey.seprphase3.GUI.BackyardReactor;
+import lamprey.seprphase3.GUI.Images.GameOverText;
 import lamprey.seprphase3.GUI.Images.HoverButton;
 import lamprey.seprphase3.GUI.Images.HoverButtonType;
 
@@ -35,9 +36,7 @@ public class GameOverScreen extends AbstractScreen {
     private HoverButton restartImage;
     private HoverButton menuImage;
     
-    private Label score;
-    private BitmapFont font;
-    private FreeTypeFontGenerator generator;
+    private GameOverText score;
     
     public GameOverScreen(BackyardReactor game, PlantController controller, PlantStatus status, GameManager manager) {
         super(game, controller, status, manager);
@@ -45,10 +44,8 @@ public class GameOverScreen extends AbstractScreen {
         gameoverSign    = new Texture(Gdx.files.internal("assets\\gameover\\gameoverSign.png"));
         gameoverRestart = new Texture(Gdx.files.internal("assets\\gameover\\gameoverRestart.png"));
         gameoverMenu    = new Texture(Gdx.files.internal("assets\\gameover\\gameoverMenu.png"));
-        
-        score = new Label();
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arialbd.ttf"));
-        font = generator.generateFont(30);
+        score = new GameOverText(status);
+
     }
     
     @Override
@@ -62,6 +59,7 @@ public class GameOverScreen extends AbstractScreen {
         signImage.setPosition(338, 287);
         restartImage.setPosition(391, 188);
         menuImage.setPosition(367, 149);
+        score.setPosition(260, 270);
         
         restartImage.addListener(getRestartListener());
         menuImage.addListener(getMenuListener());
@@ -70,6 +68,7 @@ public class GameOverScreen extends AbstractScreen {
         stage.addActor(signImage);
         stage.addActor(restartImage);
         stage.addActor(menuImage);
+        stage.addActor(score);
     }
     
     public ClickListener getRestartListener() {

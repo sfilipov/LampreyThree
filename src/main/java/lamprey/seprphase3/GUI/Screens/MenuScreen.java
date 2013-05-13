@@ -106,7 +106,7 @@ public class MenuScreen extends AbstractScreen {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
                 if (!isInputShown) {
-                    Gdx.input.getTextInput(nameListener, "Please enter your name", "Player");
+                    Gdx.input.getTextInput(nameListener, "Please enter your name", "");
                 }
             }
         };

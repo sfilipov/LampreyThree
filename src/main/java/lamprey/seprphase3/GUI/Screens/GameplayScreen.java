@@ -250,11 +250,11 @@ public class GameplayScreen extends AbstractScreen {
     }
     
     public void removeButtonsListeners() {
-        crUpImage.removeListener(crUpImage.getListeners().first());
-        crDownImage.removeListener(crDownImage.getListeners().first());
-        valve1Button.removeListener(valve1Button.getListeners().first());
-        valve2Button.removeListener(valve2Button.getListeners().first());
-        pump1Button.removeListener(pump1Button.getListeners().first());
-        pump2Button.removeListener(pump2Button.getListeners().first());
+//        crUpImage.removeListener(crUpImage.getListeners().first());
+//        crDownImage.removeListener(crDownImage.getListeners().first());
+//        valve1Button.removeListener(valve1Button.getListeners().first());
+//        valve2Button.removeListener(valve2Button.getListeners().first());
+//        pump1Button.removeListener(pump1Button.getListeners().first());
+//        pump2Button.removeListener(pump2Button.getListeners().first());
     }
 }

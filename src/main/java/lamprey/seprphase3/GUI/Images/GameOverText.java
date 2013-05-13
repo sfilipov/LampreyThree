@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import eel.seprphase2.Simulator.GameManager;
 import eel.seprphase2.Simulator.PlantStatus;
 
 
@@ -26,13 +27,13 @@ public class GameOverText extends Image {
         this.status = status;
         generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts\\arialbd.ttf"));
         font = generator.generateFont(36);
-        font.setColor(1f, 1f, 1f, 0.8f);
+        font.setColor(0f, 0f, 0f, 0.8f);
     }
     
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
         Double energyGenerated = status.energyGenerated().inKJoules();
-        font.draw(batch, "Your final score is: £" + String.format("%.5g%n", energyGenerated), this.getX(), this.getY());
+        font.draw(batch, status.getUsername() + ", your final score is: £" + energyGenerated.intValue(), this.getX(), this.getY());
         super.draw(batch, parentAlpha);
     }
 }

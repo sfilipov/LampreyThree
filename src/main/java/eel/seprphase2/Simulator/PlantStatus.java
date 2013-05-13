@@ -61,4 +61,6 @@ public interface PlantStatus {
 
     public ArrayList<FailableComponent> failableComponents();
    
+    public String getUsername();
+    
 }

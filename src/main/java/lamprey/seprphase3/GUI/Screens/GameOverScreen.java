@@ -59,7 +59,8 @@ public class GameOverScreen extends AbstractScreen {
         signImage.setPosition(338, 287);
         restartImage.setPosition(391, 188);
         menuImage.setPosition(367, 149);
-        score.setPosition(260, 270);
+        score.setPosition(193, 270);
+        System.out.println(score.getImageWidth());
         
         restartImage.addListener(getRestartListener());
         menuImage.addListener(getMenuListener());

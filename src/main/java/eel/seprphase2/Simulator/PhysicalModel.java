@@ -201,5 +201,10 @@ public class PhysicalModel implements PlantStatus {
         return plant.reactor().maximumTemperature();
     }
 
+    @Override
+    public String getUsername() {
+        return "";
+    }
+
     
 }

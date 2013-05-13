@@ -95,7 +95,7 @@ public class FailureModel implements PlantController, PlantStatus {
             }                       
             else{
                 componentFailChance = failChance.nextInt(1000);
-                if(componentFailChance<=10) {  // As doing nextInt(1000). Less than 50 is 5% chance, using 1000 to give more options of failure chance.
+                if(componentFailChance<=1) {  // As doing nextInt(1000). Less than 50 is 5% chance, using 1000 to give more options of failure chance.
                     wornComponents.add(component);
 		    faults++;
                 }                
@@ -358,5 +358,10 @@ public class FailureModel implements PlantController, PlantStatus {
         if (status.turbineHasFailed()) {
             controller.moveControlRods(percent(0));
         }
+    }
+
+    @Override
+    public String getUsername() {
+        return status.getUsername();
     }
 }

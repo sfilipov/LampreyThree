@@ -253,4 +253,9 @@ public class Simulator implements PlantController, PlantStatus, GameManager {
     public Pressure reactorMaximumPressure() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String getUsername() {
+        return this.userName;
+    }
 }
